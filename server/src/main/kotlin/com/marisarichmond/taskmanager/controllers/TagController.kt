@@ -23,7 +23,7 @@ class TagController(private val tagService: TagService) {
     fun createNewTag(@RequestBody createTagRequestBody: CreateTagRequestBody): ResponseEntity<Tag?> {
         return when (val newTag = tagService.createNewTag(createTagRequestBody)) {
             is Tag -> ResponseEntity.status(HttpStatus.CREATED).body(newTag)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
     }
 
@@ -32,7 +32,7 @@ class TagController(private val tagService: TagService) {
     fun getTagById(@PathVariable id: UUID): ResponseEntity<Tag?> {
         return when (val tagById = tagService.getTagById(id)) {
             is Tag -> ResponseEntity.status(HttpStatus.FOUND).body(tagById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
     }
 
@@ -51,7 +51,7 @@ class TagController(private val tagService: TagService) {
     fun updateTagById(@PathVariable id: UUID, @RequestBody updateTagRequestBody: UpdateTagRequestBody): ResponseEntity<Tag?> {
         return when (val updatedTagById = tagService.updateTagById(id, updateTagRequestBody)) {
             is Tag -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTagById)
-            else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null)
+            else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
         }
     }
 

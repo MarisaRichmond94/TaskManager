@@ -67,4 +67,3 @@ fun User.validateFields(): User {
 
     return this
 }
-
