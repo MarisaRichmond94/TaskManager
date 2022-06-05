@@ -17,23 +17,20 @@ class UserService(private val userRepository: UserRepository) {
         private val logger = KotlinLogging.logger {}
     }
 
-    fun createNewUser(createUserRequestBody: CreateUserRequestBody): User? {
-        return try {
-            val newUser = User(
-                firstName = createUserRequestBody.firstName,
-                lastName = createUserRequestBody.lastName,
-                email = createUserRequestBody.email,
-            ).validateFields()
-            userRepository.save(newUser)
-            newUser
-        } catch (exception: Exception) {
-            when (exception) {
-                is EntityValidationException -> logger.error { "Validation failed for User entity: $this" }
-                is HibernateException -> logger.error { "Create failed for User: $this." }
-            }
-
-            null
+    fun createNewUser(createUserRequestBody: CreateUserRequestBody): User? = try {
+        val newUser = User(
+            firstName = createUserRequestBody.firstName,
+            lastName = createUserRequestBody.lastName,
+            email = createUserRequestBody.email,
+        ).validateFields()
+        userRepository.save(newUser)
+        newUser
+    } catch (exception: Exception) {
+        when (exception) {
+            is EntityValidationException -> logger.error { "Validation failed for User entity: $this" }
+            is HibernateException -> logger.error { "Create failed for User: $this." }
         }
+        null
     }
 
     fun getUserById(id: UUID): User? = try {
