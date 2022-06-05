@@ -1,7 +1,10 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.exceptions.EntityValidationException
+import com.marisarichmond.taskmanager.extensions.isAlphaOnly
+import com.marisarichmond.taskmanager.extensions.isValidEmail
 import org.hibernate.Hibernate
-import java.util.UUID
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
@@ -28,3 +31,40 @@ data class User(
         return id == other.id
     }
 }
+
+/**
+ * Explicit validation functionality to ensure that a user's first and last name only contain alpha characters
+ * and that the given email is a valid email address.
+ */
+@Throws(EntityValidationException::class)
+fun User.validateFields(): User {
+    when {
+        !this.firstName.isAlphaOnly() -> {
+            throw EntityValidationException(
+                this::class::simpleName.toString(),
+                "firstName",
+                this.firstName,
+                "Only alphabet types allowed",
+            )
+        }
+        !this.lastName.isAlphaOnly() -> {
+            throw EntityValidationException(
+                this::class::simpleName.toString(),
+                "lastName",
+                this.lastName,
+                "Only alphabet types allowed",
+            )
+        }
+        !this.email.isValidEmail() -> {
+            throw EntityValidationException(
+                this::class::simpleName.toString(),
+                "email",
+                this.email,
+                "Invalid email address format"
+            )
+        }
+    }
+
+    return this
+}
+
