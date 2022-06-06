@@ -11,7 +11,6 @@ import java.util.*
 data class CreateTaskRequestBody(
     val objective: String,
     val description: String?,
-    @JsonProperty("task_list_id") val taskListId: UUID,
     @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
 )
 
@@ -39,16 +38,6 @@ class TaskController(private val taskService: TaskService) {
         return when (val taskById = taskService.getTaskById(id)) {
             is Task -> ResponseEntity.status(HttpStatus.FOUND).body(taskById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-    }
-
-    @ResponseBody
-    @GetMapping
-    fun getTasksByTaskListId(@RequestParam taskListId: UUID): ResponseEntity<List<Task>> {
-        val tasksByTaskListId = taskService.getTasksByTaskListId(taskListId)
-        return when {
-            tasksByTaskListId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(tasksByTaskListId)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
         }
     }
 

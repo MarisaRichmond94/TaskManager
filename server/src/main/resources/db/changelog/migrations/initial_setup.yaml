@@ -70,39 +70,6 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: task_lists
-      changes:
-        - createTable:
-            tableName: task_lists
-            columns:
-              - column:
-                  name: id
-                  type: UUID
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: task_list_pkey
-              - column:
-                  name: name
-                  type: varchar
-                  constraints:
-                    nullable: false
-              - column:
-                  name: description
-                  type: text
-              - column:
-                  name: user_id
-                  type: UUID
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_user_id
-                    references: users(id)
-  - changeSet:
-      id: 05242022100235-4
-      author: marisarichmond
-      preConditions:
-        - onFail: MARK_RAN
-        - not:
-            - tableExists:
                 tableName: tasks
       changes:
         - createTable:
@@ -131,10 +98,3 @@ databaseChangeLog:
                   constraints:
                     foreignKeyName: fk_tag_id
                     references: tags(id)
-              - column:
-                  name: task_list_id
-                  type: UUID
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_task_list_id
-                    references: task_lists(id)

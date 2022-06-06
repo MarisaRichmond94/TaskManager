@@ -12,9 +12,6 @@ data class Task(
     val objective: String,
     val orderIndex: Int,
     val description: String? = null,
-    @OneToOne
-    @JoinColumn(name = "task_list_id")
-    val taskList: TaskList,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "tag_id")
     val tags: Set<Tag>? = setOf(),

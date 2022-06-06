@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface TaskRepository : JpaRepository<Task, UUID> {
-    fun findAllByTaskListId(taskListId: UUID): List<Task>
-}
+interface TaskRepository : JpaRepository<Task, UUID>

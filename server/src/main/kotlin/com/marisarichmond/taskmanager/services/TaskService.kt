@@ -14,7 +14,6 @@ import java.util.*
 @Service
 class TaskService(
     private val tagService: TagService,
-    private val taskListService: TaskListService,
     private val taskRepository: TaskRepository,
 ) {
     companion object {
@@ -22,13 +21,6 @@ class TaskService(
     }
 
     fun createNewTask(createTaskRequestBody: CreateTaskRequestBody): Task? = try {
-        val taskListById = taskListService.getTaskListById(createTaskRequestBody.taskListId)
-            ?: throw EntityValidationException(
-                "Task",
-                "taskList",
-                "${createTaskRequestBody.taskListId}",
-                "Task List with id ${createTaskRequestBody.taskListId} does not exist."
-            )
         val tagsByIds = createTaskRequestBody.tagIds?.map {
             tagService.getTagById(it) ?: throw EntityValidationException(
                 "Task",
@@ -37,13 +29,11 @@ class TaskService(
                 "Tag with id $it does not exist."
             )
         }?.toSet() ?: setOf()
-        val existingTasksByTagListId = taskRepository.findAllByTaskListId(createTaskRequestBody.taskListId).sortedBy { it.orderIndex }
 
         val newTask = Task(
             objective = createTaskRequestBody.objective,
-            orderIndex = existingTasksByTagListId.lastIndex + 1,
+            orderIndex = -1,
             description = createTaskRequestBody.description,
-            taskList = taskListById,
             tags = tagsByIds,
         )
         taskRepository.save(newTask)
@@ -61,13 +51,6 @@ class TaskService(
     } catch (exception: HibernateException) {
         logger.error { "Get failed for Task with id \"$id\": $this." }
         null
-    }
-
-    fun getTasksByTaskListId(taskListId: UUID): List<Task> = try {
-        taskRepository.findAllByTaskListId(taskListId)
-    } catch (exception: HibernateException) {
-        logger.error { "Get failed for Task with task list id \"$taskListId\": $this." }
-        emptyList()
     }
 
     fun updateTaskById(id: UUID, updateTaskRequestBody: UpdateTaskRequestBody): Task? = try {
