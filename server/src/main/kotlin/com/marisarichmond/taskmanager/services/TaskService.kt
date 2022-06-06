@@ -9,18 +9,28 @@ import com.marisarichmond.taskmanager.repositories.TaskRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 
 @Service
 class TaskService(
     private val tagService: TagService,
     private val taskRepository: TaskRepository,
+    private val userService: UserService,
 ) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }
 
     fun createNewTask(createTaskRequestBody: CreateTaskRequestBody): Task? = try {
+        // Get associated user by id
+        val userById = userService.getUserById(createTaskRequestBody.userId) ?: throw EntityValidationException(
+            "Task",
+            "User",
+            "${createTaskRequestBody.userId}",
+            "User with id \"${createTaskRequestBody.userId}\" does not exist."
+        )
+        // Get associated tags by ids
         val tagsByIds = createTaskRequestBody.tagIds?.map {
             tagService.getTagById(it) ?: throw EntityValidationException(
                 "Task",
@@ -32,9 +42,11 @@ class TaskService(
 
         val newTask = Task(
             objective = createTaskRequestBody.objective,
-            orderIndex = -1,
             description = createTaskRequestBody.description,
+            isPinned = createTaskRequestBody.isPinned ?: false,
+            dueDate = Instant.ofEpochMilli(createTaskRequestBody.dueDate),
             tags = tagsByIds,
+            user = userById,
         )
         taskRepository.save(newTask)
         newTask
@@ -53,6 +65,13 @@ class TaskService(
         null
     }
 
+    fun getTasksByUserId(userId: UUID): List<Task> = try {
+        taskRepository.findAllByUserId(userId)
+    } catch (exception: HibernateException) {
+        logger.error { "Get failed for Task with user id \"$userId\": $this." }
+        emptyList()
+    }
+
     fun updateTaskById(id: UUID, updateTaskRequestBody: UpdateTaskRequestBody): Task? = try {
         val tagsByIds = updateTaskRequestBody.tagIds?.map {
             tagService.getTagById(it) ?: throw EntityValidationException(
@@ -65,6 +84,8 @@ class TaskService(
         taskRepository.findById(id).unwrap()!!.copy(
             objective = updateTaskRequestBody.objective,
             description = updateTaskRequestBody.description,
+            isPinned = updateTaskRequestBody.isPinned ?: false,
+            dueDate = Instant.ofEpochMilli(updateTaskRequestBody.dueDate),
             tags = tagsByIds,
         )
     } catch (exception: HibernateException) {

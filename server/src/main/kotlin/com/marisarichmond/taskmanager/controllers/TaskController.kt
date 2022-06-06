@@ -6,17 +6,23 @@ import com.marisarichmond.taskmanager.services.TaskService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.Instant
 import java.util.*
 
 data class CreateTaskRequestBody(
     val objective: String,
-    val description: String?,
+    @JsonProperty("user_id") val userId: UUID,
+    val description: String? = null,
+    @JsonProperty("due_date") val dueDate: Long = Instant.now().toEpochMilli(),
+    @JsonProperty("is_pinned") val isPinned: Boolean? = null,
     @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
 )
 
 data class UpdateTaskRequestBody(
     val objective: String,
-    val description: String?,
+    val description: String? = null,
+    @JsonProperty("due_date") val dueDate: Long = Instant.now().toEpochMilli(),
+    @JsonProperty("is_pinned") val isPinned: Boolean? = null,
     @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
 )
 
@@ -38,6 +44,16 @@ class TaskController(private val taskService: TaskService) {
         return when (val taskById = taskService.getTaskById(id)) {
             is Task -> ResponseEntity.status(HttpStatus.FOUND).body(taskById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
+    }
+
+    @ResponseBody
+    @GetMapping
+    fun getTasksByUserId(@RequestParam userId: UUID): ResponseEntity<List<Task>> {
+        val tasksByUserId = taskService.getTasksByUserId(userId)
+        return when {
+            tasksByUserId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(tasksByUserId)
+            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
         }
     }
 

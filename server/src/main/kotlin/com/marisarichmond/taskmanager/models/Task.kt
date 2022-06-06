@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models
 
 import org.hibernate.Hibernate
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -10,7 +11,13 @@ data class Task(
     @Id
     val id: UUID = UUID.randomUUID(),
     val objective: String,
-    val orderIndex: Int,
+    val dueDate: Instant = Instant.now(),
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
+    val isPinned: Boolean = false,
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    val user: User,
     val description: String? = null,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "tag_id")
@@ -18,7 +25,7 @@ data class Task(
 ) {
     override fun toString(): String {
         return this::class.simpleName +
-            "(id = $id, objective = $objective, orderIndex = $orderIndex, description = $description)"
+            "(id = $id, objective = $objective, dueDate = $dueDate, description = $description, isPinned = $isPinned)"
     }
 
     override fun hashCode(): Int = super.hashCode()
