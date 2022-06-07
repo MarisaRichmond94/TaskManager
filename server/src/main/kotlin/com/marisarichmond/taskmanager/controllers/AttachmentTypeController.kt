@@ -17,10 +17,9 @@ class AttachmentTypeController(private val attachmentTypeService: AttachmentType
 
     @ResponseBody
     @GetMapping("/{id}")
-    fun getAttachmentTypeById(@PathVariable id: UUID): ResponseEntity<AttachmentType?> {
-        return when (val attachmentTypeById = attachmentTypeService.getAttachmentTypeById(id)) {
+    fun getAttachmentTypeById(@PathVariable id: UUID): ResponseEntity<AttachmentType?> =
+        when (val attachmentTypeById = attachmentTypeService.getAttachmentTypeById(id)) {
             is AttachmentType -> ResponseEntity.status(HttpStatus.FOUND).body(attachmentTypeById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
-    }
 }

@@ -21,7 +21,7 @@ data class CreateTaskRequestBody(
 data class UpdateTaskRequestBody(
     val objective: String,
     val description: String? = null,
-    @JsonProperty("due_date") val dueDate: Long = Instant.now().toEpochMilli(),
+    @JsonProperty("due_date") val dueDate: Long?,
     @JsonProperty("is_pinned") val isPinned: Boolean? = null,
     @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
 )
@@ -31,21 +31,19 @@ data class UpdateTaskRequestBody(
 class TaskController(private val taskService: TaskService) {
     @ResponseBody
     @PostMapping
-    fun createNewTask(@RequestBody createTaskRequestBody: CreateTaskRequestBody): ResponseEntity<Task?> {
-        return when (val newTask = taskService.createNewTask(createTaskRequestBody)) {
+    fun createNewTask(@RequestBody createTaskRequestBody: CreateTaskRequestBody): ResponseEntity<Task?> =
+        when (val newTask = taskService.createNewTask(createTaskRequestBody)) {
             is Task -> ResponseEntity.status(HttpStatus.CREATED).body(newTask)
             else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
-    }
 
     @ResponseBody
     @GetMapping("/{id}")
-    fun getTaskById(@PathVariable id: UUID): ResponseEntity<Task?> {
-        return when (val taskById = taskService.getTaskById(id)) {
+    fun getTaskById(@PathVariable id: UUID): ResponseEntity<Task?> =
+        when (val taskById = taskService.getTaskById(id)) {
             is Task -> ResponseEntity.status(HttpStatus.FOUND).body(taskById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
-    }
 
     @ResponseBody
     @GetMapping
@@ -59,19 +57,20 @@ class TaskController(private val taskService: TaskService) {
 
     @ResponseBody
     @PatchMapping("/{id}")
-    fun updateTaskById(@PathVariable id: UUID, @RequestBody updateTaskRequestBody: UpdateTaskRequestBody): ResponseEntity<Task?> {
-        return when (val updatedTaskById = taskService.updateTaskById(id, updateTaskRequestBody)) {
+    fun updateTaskById(
+        @PathVariable id: UUID,
+        @RequestBody updateTaskRequestBody: UpdateTaskRequestBody,
+    ): ResponseEntity<Task?> =
+        when (val updatedTaskById = taskService.updateTaskById(id, updateTaskRequestBody)) {
             is Task -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTaskById)
             else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
         }
-    }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteTaskById(@PathVariable id: UUID): ResponseEntity<Unit> {
-        return when (taskService.deleteTaskById(id)) {
+    fun deleteTaskById(@PathVariable id: UUID): ResponseEntity<Unit> =
+        when (taskService.deleteTaskById(id)) {
             true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
             else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
         }
-    }
 }

@@ -57,6 +57,7 @@ class TagService(
     }
 
     fun updateTagById(id: UUID, updateTagRequestBody: UpdateTagRequestBody): Tag? = try {
+        tagRepository.updateTagName(id, updateTagRequestBody.name)
         tagRepository.findById(id).unwrap()!!.copy(name = updateTagRequestBody.name)
     } catch (exception: HibernateException) {
         logger.error(exception) { "Update failed for Tag with id \"$id\": $exception." }

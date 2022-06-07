@@ -6,16 +6,19 @@ import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.repositories.TaskRepository
+import com.marisarichmond.taskmanager.repositories.TaskTagRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
+import javax.transaction.Transactional
 
 @Service
 class TaskService(
     private val tagService: TagService,
     private val taskRepository: TaskRepository,
+    private val taskTagRepository: TaskTagRepository,
     private val userService: UserService,
 ) {
     companion object {
@@ -52,7 +55,7 @@ class TaskService(
         newTask
     } catch (exception: Exception) {
         when (exception) {
-            is EntityValidationException -> logger.error(exception) { "Validation failed for Task entity: exceptions" }
+            is EntityValidationException -> logger.error(exception) { "Validation failed for Task entity: $exception." }
             is HibernateException -> logger.error(exception) { "Create failed for Task: $exception." }
         }
         null
@@ -72,6 +75,7 @@ class TaskService(
         emptyList()
     }
 
+    @Transactional
     fun updateTaskById(id: UUID, updateTaskRequestBody: UpdateTaskRequestBody): Task? = try {
         val tagsByIds = updateTaskRequestBody.tagIds?.map {
             tagService.getTagById(it) ?: throw EntityValidationException(
@@ -81,11 +85,24 @@ class TaskService(
                 "Tag with id $it does not exist."
             )
         }?.toSet() ?: setOf()
-        taskRepository.findById(id).unwrap()!!.copy(
+
+        val existingTask = taskRepository.findById(id).unwrap()
+
+        taskRepository.updateObjective(id, updateTaskRequestBody.objective)
+        taskRepository.updateDescription(id, updateTaskRequestBody.description)
+        if (updateTaskRequestBody.isPinned != null) taskRepository.updateIsPinned(id, updateTaskRequestBody.isPinned)
+        if (updateTaskRequestBody.dueDate != null) {
+            taskRepository.updateDueDate(id, Instant.ofEpochMilli(updateTaskRequestBody.dueDate))
+        }
+        // TODO - figure out how to modify tags
+
+        existingTask!!.copy(
             objective = updateTaskRequestBody.objective,
             description = updateTaskRequestBody.description,
             isPinned = updateTaskRequestBody.isPinned ?: false,
-            dueDate = Instant.ofEpochMilli(updateTaskRequestBody.dueDate),
+            dueDate =
+            if (updateTaskRequestBody.dueDate != null) Instant.ofEpochMilli(updateTaskRequestBody.dueDate)
+            else existingTask.dueDate,
             tags = tagsByIds,
         )
     } catch (exception: HibernateException) {
