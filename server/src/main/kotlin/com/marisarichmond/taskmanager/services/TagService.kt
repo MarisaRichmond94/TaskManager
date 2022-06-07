@@ -36,8 +36,8 @@ class TagService(
         newTag
     } catch (exception: Exception) {
         when (exception) {
-            is EntityValidationException -> logger.error { "Validation failed for Tag entity: $this" }
-            is HibernateException -> logger.error { "Create failed for Tag: $this." }
+            is EntityValidationException -> logger.error(exception) { "Validation failed for Tag entity: $exception." }
+            is HibernateException -> logger.error(exception) { "Create failed for Tag: $exception." }
         }
         null
     }
@@ -45,21 +45,21 @@ class TagService(
     fun getTagById(id: UUID): Tag? = try {
         tagRepository.findById(id).unwrap()
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for Tag with id \"$id\": $this." }
+        logger.error(exception) { "Get failed for Tag with id \"$id\": $exception." }
         null
     }
 
     fun getTagsByUserId(userId: UUID): List<Tag> = try {
         tagRepository.findAllByUserId(userId)
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for Tag with user id \"$userId\": $this." }
+        logger.error(exception) { "Get failed for Tag with user id \"$userId\": $exception." }
         emptyList()
     }
 
     fun updateTagById(id: UUID, updateTagRequestBody: UpdateTagRequestBody): Tag? = try {
         tagRepository.findById(id).unwrap()!!.copy(name = updateTagRequestBody.name)
     } catch (exception: HibernateException) {
-        logger.error { "Update failed for Tag with id \"$id\": $this." }
+        logger.error(exception) { "Update failed for Tag with id \"$id\": $exception." }
         null
     }
 
@@ -67,7 +67,7 @@ class TagService(
         tagRepository.deleteById(id)
         true
     } catch (exception: HibernateException) {
-        logger.error { "Delete failed for Tag with id \"$id\": $this." }
+        logger.error(exception) { "Delete failed for Tag with id \"$id\": $exception." }
         false
     }
 }

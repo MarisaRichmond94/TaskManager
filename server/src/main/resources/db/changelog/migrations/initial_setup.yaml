@@ -70,6 +70,50 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
             - tableExists:
+                tableName: attachment_types
+      changes:
+        - createTable:
+            tableName: attachment_types
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: attachment_type_pkey
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 05242022100235-4
+      author: marisarichmond
+      comment: "populate attachment_types table with enums"
+      changes:
+        - loadData:
+            file: data/AttachmentTypes.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: attachment_types
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: name
+                  name: name
+                  type: string
+  - changeSet:
+      id: 05242022100235-5
+      author: marisarichmond
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
                 tableName: tasks
       changes:
         - createTable:

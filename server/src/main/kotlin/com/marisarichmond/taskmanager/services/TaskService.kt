@@ -52,8 +52,8 @@ class TaskService(
         newTask
     } catch (exception: Exception) {
         when (exception) {
-            is EntityValidationException -> logger.error { "Validation failed for Task entity: $this" }
-            is HibernateException -> logger.error { "Create failed for Task: $this." }
+            is EntityValidationException -> logger.error(exception) { "Validation failed for Task entity: exceptions" }
+            is HibernateException -> logger.error(exception) { "Create failed for Task: $exception." }
         }
         null
     }
@@ -61,14 +61,14 @@ class TaskService(
     fun getTaskById(id: UUID): Task? = try {
         taskRepository.findById(id).unwrap()
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for Task with id \"$id\": $this." }
+        logger.error(exception) { "Get failed for Task with id \"$id\": $exception." }
         null
     }
 
     fun getTasksByUserId(userId: UUID): List<Task> = try {
         taskRepository.findAllByUserId(userId)
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for Task with user id \"$userId\": $this." }
+        logger.error(exception) { "Get failed for Task with user id \"$userId\": $exception." }
         emptyList()
     }
 
@@ -89,7 +89,7 @@ class TaskService(
             tags = tagsByIds,
         )
     } catch (exception: HibernateException) {
-        logger.error { "Update failed for Task with id \"$id\": $this." }
+        logger.error(exception) { "Update failed for Task with id \"$id\": $exception." }
         null
     }
 
@@ -97,7 +97,7 @@ class TaskService(
         taskRepository.deleteById(id)
         true
     } catch (exception: HibernateException) {
-        logger.error { "Delete failed for Task with id \"$id\": $this." }
+        logger.error(exception) { "Delete failed for Task with id \"$id\": $exception." }
         false
     }
 }

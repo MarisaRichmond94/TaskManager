@@ -27,8 +27,8 @@ class UserService(private val userRepository: UserRepository) {
         newUser
     } catch (exception: Exception) {
         when (exception) {
-            is EntityValidationException -> logger.error { "Validation failed for User entity: $this" }
-            is HibernateException -> logger.error { "Create failed for User: $this." }
+            is EntityValidationException -> logger.error(exception) { "Validation failed for User entity: $exception." }
+            is HibernateException -> logger.error(exception) { "Create failed for User: $exception." }
         }
         null
     }
@@ -36,14 +36,14 @@ class UserService(private val userRepository: UserRepository) {
     fun getUserById(id: UUID): User? = try {
         userRepository.findById(id).unwrap()
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for User with id \"$id\": $this." }
+        logger.error(exception) { "Get failed for User with id \"$id\": $exception." }
         null
     }
 
     fun getUserByEmail(email: String): User? = try {
         userRepository.findByEmail(email)
     } catch (exception: HibernateException) {
-        logger.error { "Get failed for User with email \"$email\": $this." }
+        logger.error(exception) { "Get failed for User with email \"$email\": $exception." }
         null
     }
 
@@ -51,7 +51,7 @@ class UserService(private val userRepository: UserRepository) {
         userRepository.deleteById(id)
         true
     } catch (exception: HibernateException) {
-        logger.error { "Delete failed for User with id \"$id\": $this." }
+        logger.error(exception) { "Delete failed for User with id \"$id\": $exception." }
         false
     }
 }
