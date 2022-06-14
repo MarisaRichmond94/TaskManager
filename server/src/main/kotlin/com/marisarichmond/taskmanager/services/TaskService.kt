@@ -6,7 +6,6 @@ import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.repositories.TaskRepository
-import com.marisarichmond.taskmanager.repositories.TaskTagRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
@@ -18,13 +17,14 @@ import javax.transaction.Transactional
 class TaskService(
     private val tagService: TagService,
     private val taskRepository: TaskRepository,
-    private val taskTagRepository: TaskTagRepository,
+    private val taskTagService: TaskTagService,
     private val userService: UserService,
 ) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }
 
+    @Transactional
     fun createNewTask(createTaskRequestBody: CreateTaskRequestBody): Task? = try {
         // Get associated user by id
         val userById = userService.getUserById(createTaskRequestBody.userId) ?: throw EntityValidationException(
@@ -33,25 +33,23 @@ class TaskService(
             "${createTaskRequestBody.userId}",
             "User with id \"${createTaskRequestBody.userId}\" does not exist."
         )
-        // Get associated tags by ids
-        val tagsByIds = createTaskRequestBody.tagIds?.map {
-            tagService.getTagById(it) ?: throw EntityValidationException(
-                "Task",
-                "tag",
-                "$it",
-                "Tag with id $it does not exist."
-            )
-        }?.toSet() ?: setOf()
 
         val newTask = Task(
             objective = createTaskRequestBody.objective,
             description = createTaskRequestBody.description,
             isPinned = createTaskRequestBody.isPinned ?: false,
             dueDate = Instant.ofEpochMilli(createTaskRequestBody.dueDate),
-            tags = tagsByIds,
             user = userById,
         )
         taskRepository.save(newTask)
+
+        if (createTaskRequestBody.tagIds != null && createTaskRequestBody.tagIds.isNotEmpty()) {
+            // create associated tags
+            val tagsByIds = createTaskRequestBody.tagIds.mapNotNull(tagService::getTagById)
+            // create associated task tags
+            tagsByIds.map { taskTagService.createTaskTag(newTask, it) }
+        }
+
         newTask
     } catch (exception: Exception) {
         when (exception) {
@@ -77,15 +75,6 @@ class TaskService(
 
     @Transactional
     fun updateTaskById(id: UUID, updateTaskRequestBody: UpdateTaskRequestBody): Task? = try {
-        val tagsByIds = updateTaskRequestBody.tagIds?.map {
-            tagService.getTagById(it) ?: throw EntityValidationException(
-                "Task",
-                "tag",
-                "$it",
-                "Tag with id $it does not exist."
-            )
-        }?.toSet() ?: setOf()
-
         val existingTask = taskRepository.findById(id).unwrap()
 
         taskRepository.updateObjective(id, updateTaskRequestBody.objective)
@@ -103,7 +92,6 @@ class TaskService(
             dueDate =
             if (updateTaskRequestBody.dueDate != null) Instant.ofEpochMilli(updateTaskRequestBody.dueDate)
             else existingTask.dueDate,
-            tags = tagsByIds,
         )
     } catch (exception: HibernateException) {
         logger.error(exception) { "Update failed for Task with id \"$id\": $exception." }

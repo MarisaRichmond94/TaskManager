@@ -5,23 +5,25 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "tags")
-data class Tag(
+@Table(name = "task_tags")
+data class TaskTag(
     @Id
     val id: UUID = UUID.randomUUID(),
-    val name: String,
     @OneToOne
-    @JoinColumn(name = "user_id")
-    val user: User
+    @JoinColumn(name = "task_id")
+    val task: Task,
+    @OneToOne
+    @JoinColumn(name = "tag_id")
+    val tag: Tag,
 ) {
-    override fun toString(): String = this::class.simpleName + "(id = $id, name = $name)"
+    override fun toString(): String = this::class.simpleName + "(id = $id)"
 
     override fun hashCode(): Int = super.hashCode()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as Tag
+        other as TaskTag
 
         return id == other.id
     }

@@ -19,9 +19,6 @@ data class Task(
     @JoinColumn(name = "user_id")
     val user: User,
     val description: String? = null,
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tag_id")
-    val tags: Set<Tag>? = setOf(),
 ) {
     override fun toString(): String {
         return this::class.simpleName +

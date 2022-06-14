@@ -15,7 +15,7 @@ data class CreateTaskRequestBody(
     val description: String? = null,
     @JsonProperty("due_date") val dueDate: Long = Instant.now().toEpochMilli(),
     @JsonProperty("is_pinned") val isPinned: Boolean? = null,
-    @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
+    @JsonProperty("tag_ids") val tagIds: List<UUID>? = listOf(),
 )
 
 data class UpdateTaskRequestBody(
@@ -23,7 +23,7 @@ data class UpdateTaskRequestBody(
     val description: String? = null,
     @JsonProperty("due_date") val dueDate: Long?,
     @JsonProperty("is_pinned") val isPinned: Boolean? = null,
-    @JsonProperty("tag_ids") val tagIds: Set<UUID>? = setOf(),
+    @JsonProperty("tag_ids") val tagIds: List<UUID>? = listOf(),
 )
 
 @RestController
