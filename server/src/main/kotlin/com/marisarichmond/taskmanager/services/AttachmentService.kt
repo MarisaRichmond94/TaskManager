@@ -1,10 +1,13 @@
 package com.marisarichmond.taskmanager.services
 
+import com.marisarichmond.taskmanager.controllers.AttachmentInfo
 import com.marisarichmond.taskmanager.controllers.CreateAttachmentRequestBody
 import com.marisarichmond.taskmanager.controllers.UpdateAttachmentRequestBody
 import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.Attachment
+import com.marisarichmond.taskmanager.models.AttachmentType
+import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.repositories.AttachmentRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
@@ -22,6 +25,7 @@ class AttachmentService(
         private val logger = KotlinLogging.logger {}
     }
 
+    // Controller to service functionality
     fun createNewAttachment(createAttachmentRequestBody: CreateAttachmentRequestBody): Attachment? = try {
         // Get associated task by id
         val taskById = taskService.getTaskById(createAttachmentRequestBody.taskId) ?: throw EntityValidationException(
@@ -40,39 +44,24 @@ class AttachmentService(
                     "AttachmentType with id \"${createAttachmentRequestBody.attachmentTypeId}\" does not exist.",
                 )
 
-        val newAttachment = Attachment(
+        Attachment(
             link = createAttachmentRequestBody.link,
             name = createAttachmentRequestBody.name,
             task = taskById,
             attachmentType = attachmentTypeById,
-        )
-        attachmentRepository.save(newAttachment)
-        newAttachment
+        ).let(attachmentRepository::save)
     } catch (exception: Exception) {
         when (exception) {
-            is EntityValidationException -> logger.error(exception) { "Validation failed for Attachment entity: $exception." }
+            is EntityValidationException -> {
+                logger.error(exception) { "Validation failed for Attachment entity: $exception." }
+            }
             is HibernateException -> logger.error(exception) { "Create failed for Attachment: $exception." }
         }
         null
     }
 
-    fun getAttachmentById(id: UUID): Attachment? = try {
-        attachmentRepository.findById(id).unwrap()
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for Attachment with id \"$id\": $exception." }
-        null
-    }
-
-    fun getAttachmentsByTaskId(taskId: UUID): List<Attachment> = try {
-        attachmentRepository.findAllByTaskId(taskId)
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for Attachment with task id \"$taskId\": $exception." }
-        emptyList()
-    }
-
     @Transactional
     fun updateAttachmentById(id: UUID, updateAttachmentRequestBody: UpdateAttachmentRequestBody): Attachment? = try {
-        // Get associated attachment type by id
         val attachmentTypeById =
             attachmentTypeService.getAttachmentTypeById(updateAttachmentRequestBody.attachmentTypeId)
                 ?: throw EntityValidationException(
@@ -85,12 +74,7 @@ class AttachmentService(
         attachmentRepository.updateLink(id, updateAttachmentRequestBody.link)
         attachmentRepository.updateName(id, updateAttachmentRequestBody.name)
         attachmentRepository.updateAttachmentType(id, attachmentTypeById)
-
-        attachmentRepository.findById(id).unwrap()!!.copy(
-            link = updateAttachmentRequestBody.link,
-            name = updateAttachmentRequestBody.name,
-            attachmentType = attachmentTypeById,
-        )
+        attachmentRepository.findById(id).unwrap()
     } catch (exception: HibernateException) {
         logger.error(exception) { "Update failed for Attachment with id \"$id\": $exception." }
         null
@@ -104,11 +88,22 @@ class AttachmentService(
         false
     }
 
-    fun deleteAttachmentsByTaskId(taskId: UUID): Boolean = try {
-        attachmentRepository.deleteByTaskId(taskId)
-        true
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Delete failed for Attachments with taskId \"$taskId\": $exception." }
-        false
-    }
+    // Service to service functionality
+    @Throws(HibernateException::class)
+    fun createAttachment(task: Task, attachmentType: AttachmentType, attachmentInfo: AttachmentInfo): Attachment =
+        Attachment(
+            link = attachmentInfo.link,
+            name = attachmentInfo.name,
+            task = task,
+            attachmentType = attachmentType,
+        ).let(attachmentRepository::save)
+
+    @Throws(HibernateException::class)
+    fun getAttachmentById(id: UUID): Attachment? = attachmentRepository.findById(id).unwrap()
+
+    @Throws(HibernateException::class)
+    fun getAttachmentsByTaskId(taskId: UUID): List<Attachment> = attachmentRepository.findAllByTaskId(taskId)
+
+    @Throws(HibernateException::class)
+    fun deleteAttachmentsByTaskId(taskId: UUID) = attachmentRepository.deleteAllByTaskId(taskId)
 }

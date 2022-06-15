@@ -15,7 +15,6 @@ data class CreateTaskRequestBody(
     val description: String? = null,
     @JsonProperty("due_date") val dueDate: Long = Instant.now().toEpochMilli(),
     @JsonProperty("is_pinned") val isPinned: Boolean? = null,
-    @JsonProperty("tag_ids") val tagIds: List<UUID>? = listOf(),
 )
 
 data class UpdateTaskRequestBody(
@@ -23,7 +22,6 @@ data class UpdateTaskRequestBody(
     val description: String? = null,
     @JsonProperty("due_date") val dueDate: Long?,
     @JsonProperty("is_pinned") val isPinned: Boolean? = null,
-    @JsonProperty("tag_ids") val tagIds: List<UUID>? = listOf(),
 )
 
 @RestController
@@ -36,24 +34,6 @@ class TaskController(private val taskService: TaskService) {
             is Task -> ResponseEntity.status(HttpStatus.CREATED).body(newTask)
             else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
-
-    @ResponseBody
-    @GetMapping("/{id}")
-    fun getTaskById(@PathVariable id: UUID): ResponseEntity<Task?> =
-        when (val taskById = taskService.getTaskById(id)) {
-            is Task -> ResponseEntity.status(HttpStatus.FOUND).body(taskById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-
-    @ResponseBody
-    @GetMapping
-    fun getTasksByUserId(@RequestParam userId: UUID): ResponseEntity<List<Task>> {
-        val tasksByUserId = taskService.getTasksByUserId(userId)
-        return when {
-            tasksByUserId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(tasksByUserId)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
-        }
-    }
 
     @ResponseBody
     @PatchMapping("/{id}")

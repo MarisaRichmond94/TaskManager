@@ -29,50 +29,6 @@ class TaskTagController(private val taskTagService: TaskTagService) {
     }
 
     @ResponseBody
-    @GetMapping
-    fun getTaskTagsByTaskId(
-        @RequestParam taskId: UUID,
-        @RequestParam tagId: UUID,
-    ): ResponseEntity<List<TaskTag>> {
-        return if (taskId != null) {
-            val taskTagsByTaskId = taskTagService.getTaskTagsByTaskId(taskId)
-            return when {
-                taskTagsByTaskId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(taskTagsByTaskId)
-                else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
-            }
-        } else if (tagId != null) {
-            val taskTagsByTagId = taskTagService.getTaskTagsByTagId(tagId)
-            return when {
-                taskTagsByTagId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(taskTagsByTagId)
-                else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
-            }
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-    }
-
-    @ResponseBody
-    @DeleteMapping
-    fun deleteTaskTags(
-        @RequestParam taskId: UUID,
-        @RequestParam tagId: UUID,
-    ): ResponseEntity<Unit> {
-        return if (taskId != null) {
-            return when (taskTagService.deleteTaskTagsByTaskId(taskId)) {
-                true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
-                else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-            }
-        } else if (tagId != null) {
-            return when (taskTagService.deleteTaskTagsByTagId(tagId)) {
-                true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
-                else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-            }
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-        }
-    }
-
-    @ResponseBody
     @DeleteMapping("/{id}")
     fun deleteTaskTagById(@PathVariable id: UUID): ResponseEntity<Unit> =
         when (taskTagService.deleteTaskTagById(id)) {

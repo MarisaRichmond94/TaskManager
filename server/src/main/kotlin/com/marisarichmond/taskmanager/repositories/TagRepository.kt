@@ -16,4 +16,6 @@ interface TagRepository : JpaRepository<Tag, UUID> {
     @Modifying
     @Query("update Tag t set t.name = ?2 where t.id = ?1")
     fun updateTagName(id: UUID, name: String)
+
+    fun deleteAllByUserId(userId: UUID)
 }

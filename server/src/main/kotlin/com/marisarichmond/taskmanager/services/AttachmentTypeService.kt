@@ -14,17 +14,9 @@ class AttachmentTypeService(private val attachmentTypeRepository: AttachmentType
         private val logger = KotlinLogging.logger {}
     }
 
-    fun getAttachmentTypeById(id: UUID): AttachmentType? = try {
-        attachmentTypeRepository.findById(id).unwrap()
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for AttachmentType with id \"$id\": $exception." }
-        null
-    }
+    @Throws(HibernateException::class)
+    fun getAttachmentTypeById(id: UUID): AttachmentType? = attachmentTypeRepository.findById(id).unwrap()
 
-    fun getAttachmentTypes(): List<AttachmentType> = try {
-        attachmentTypeRepository.findAll()
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for AttachmentTypes: $exception." }
-        emptyList()
-    }
+    @Throws(HibernateException::class)
+    fun getAttachmentTypes(): List<AttachmentType> = attachmentTypeRepository.findAll()
 }

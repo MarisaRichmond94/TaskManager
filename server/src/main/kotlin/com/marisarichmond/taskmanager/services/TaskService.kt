@@ -4,6 +4,8 @@ import com.marisarichmond.taskmanager.controllers.CreateTaskRequestBody
 import com.marisarichmond.taskmanager.controllers.UpdateTaskRequestBody
 import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
+import com.marisarichmond.taskmanager.models.Attachment
+import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.repositories.TaskRepository
 import mu.KotlinLogging
@@ -13,8 +15,15 @@ import java.time.Instant
 import java.util.*
 import javax.transaction.Transactional
 
+data class PopulatedTask(
+    val task: Task,
+    val attachments: List<Attachment>,
+    val tags: List<Tag>,
+)
+
 @Service
 class TaskService(
+    private val attachmentService: AttachmentService,
     private val tagService: TagService,
     private val taskRepository: TaskRepository,
     private val taskTagService: TaskTagService,
@@ -26,7 +35,6 @@ class TaskService(
 
     @Transactional
     fun createNewTask(createTaskRequestBody: CreateTaskRequestBody): Task? = try {
-        // Get associated user by id
         val userById = userService.getUserById(createTaskRequestBody.userId) ?: throw EntityValidationException(
             "Task",
             "User",
@@ -34,23 +42,13 @@ class TaskService(
             "User with id \"${createTaskRequestBody.userId}\" does not exist."
         )
 
-        val newTask = Task(
+        Task(
             objective = createTaskRequestBody.objective,
             description = createTaskRequestBody.description,
             isPinned = createTaskRequestBody.isPinned ?: false,
             dueDate = Instant.ofEpochMilli(createTaskRequestBody.dueDate),
             user = userById,
-        )
-        taskRepository.save(newTask)
-
-        if (createTaskRequestBody.tagIds != null && createTaskRequestBody.tagIds.isNotEmpty()) {
-            // create associated tags
-            val tagsByIds = createTaskRequestBody.tagIds.mapNotNull(tagService::getTagById)
-            // create associated task tags
-            tagsByIds.map { taskTagService.createTaskTag(newTask, it) }
-        }
-
-        newTask
+        ).let(taskRepository::save)
     } catch (exception: Exception) {
         when (exception) {
             is EntityValidationException -> logger.error(exception) { "Validation failed for Task entity: $exception." }
@@ -59,50 +57,51 @@ class TaskService(
         null
     }
 
-    fun getTaskById(id: UUID): Task? = try {
-        taskRepository.findById(id).unwrap()
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for Task with id \"$id\": $exception." }
-        null
-    }
-
-    fun getTasksByUserId(userId: UUID): List<Task> = try {
-        taskRepository.findAllByUserId(userId)
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for Task with user id \"$userId\": $exception." }
-        emptyList()
-    }
-
     @Transactional
     fun updateTaskById(id: UUID, updateTaskRequestBody: UpdateTaskRequestBody): Task? = try {
-        val existingTask = taskRepository.findById(id).unwrap()
-
         taskRepository.updateObjective(id, updateTaskRequestBody.objective)
         taskRepository.updateDescription(id, updateTaskRequestBody.description)
         if (updateTaskRequestBody.isPinned != null) taskRepository.updateIsPinned(id, updateTaskRequestBody.isPinned)
         if (updateTaskRequestBody.dueDate != null) {
             taskRepository.updateDueDate(id, Instant.ofEpochMilli(updateTaskRequestBody.dueDate))
         }
-        // TODO - figure out how to modify tags
 
-        existingTask!!.copy(
-            objective = updateTaskRequestBody.objective,
-            description = updateTaskRequestBody.description,
-            isPinned = updateTaskRequestBody.isPinned ?: false,
-            dueDate =
-            if (updateTaskRequestBody.dueDate != null) Instant.ofEpochMilli(updateTaskRequestBody.dueDate)
-            else existingTask.dueDate,
-        )
+        taskRepository.findById(id).unwrap()
     } catch (exception: HibernateException) {
         logger.error(exception) { "Update failed for Task with id \"$id\": $exception." }
         null
     }
 
+    @Transactional
     fun deleteTaskById(id: UUID): Boolean = try {
+        taskTagService.deleteTaskTagsByTaskId(id)
+        attachmentService.deleteAttachmentsByTaskId(id)
         taskRepository.deleteById(id)
         true
     } catch (exception: HibernateException) {
         logger.error(exception) { "Delete failed for Task with id \"$id\": $exception." }
         false
     }
+
+    @Throws(HibernateException::class)
+    fun getTaskById(id: UUID): PopulatedTask? = taskRepository.findById(id).unwrap()?.let(::buildPopulatedTask)
+
+    @Throws(HibernateException::class)
+    fun getTasksByUserId(userId: UUID): List<PopulatedTask> =
+        taskRepository.findAllByUserId(userId).mapNotNull(::buildPopulatedTask)
+
+    @Throws(HibernateException::class)
+    fun deleteByUserId(userId: UUID) {
+        taskRepository.findAllByUserId(userId).forEach {
+            taskTagService.deleteTaskTagsByTaskId(it.id)
+            attachmentService.deleteAttachmentsByTaskId(it.id)
+        }
+        taskRepository.deleteAllByUserId(userId)
+    }
+
+    private fun buildPopulatedTask(task: Task): PopulatedTask = PopulatedTask(
+        task = task,
+        attachments = attachmentService.getAttachmentsByTaskId(task.id),
+        tags = taskTagService.getTaskTagsByTaskId(task.id).mapNotNull { it.tag },
+    )
 }

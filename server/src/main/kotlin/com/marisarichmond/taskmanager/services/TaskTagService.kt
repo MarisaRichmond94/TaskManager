@@ -10,6 +10,7 @@ import mu.KotlinLogging
 import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.transaction.Transactional
 
 @Service
 class TaskTagService(
@@ -21,12 +22,11 @@ class TaskTagService(
         private val logger = KotlinLogging.logger {}
     }
 
+    // Controller to service functionality
     fun createNewTaskTags(createTaskTagsRequestBody: CreateTaskTagsRequestBody): List<TaskTag> = try {
-        val newTaskTags = createTaskTagsRequestBody.tagIds.map {
+        createTaskTagsRequestBody.tagIds.map {
             createNewTaskTag(createTaskTagsRequestBody.taskId, it)
         }
-        newTaskTags.forEach { taskTagRepository.save(it) }
-        newTaskTags
     } catch (exception: Exception) {
         when (exception) {
             is HibernateException -> println("Oh no!")
@@ -58,13 +58,6 @@ class TaskTagService(
         return taskTag
     }
 
-    @Throws(HibernateException::class)
-    fun createTaskTag(task: Task, tag: Tag): TaskTag {
-        val taskTag = TaskTag(task = task, tag = tag)
-        taskTagRepository.save(taskTag)
-        return taskTag
-    }
-
     fun getTaskTagsByTaskId(taskId: UUID): List<TaskTag> = try {
         taskTagRepository.findAllByTaskId(taskId)
     } catch (exception: HibernateException) {
@@ -72,29 +65,7 @@ class TaskTagService(
         emptyList()
     }
 
-    fun getTaskTagsByTagId(tagId: UUID): List<TaskTag> = try {
-        taskTagRepository.findAllByTagId(tagId)
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Failed to get TaskTags by tagId \"$tagId\": $exception" }
-        emptyList()
-    }
-
-    fun deleteTaskTagsByTaskId(taskId: UUID): Boolean = try {
-        taskTagRepository.deleteAllByTaskId(taskId)
-        true
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Delete failed for TaskTags by taskId \"$taskId\": $exception" }
-        false
-    }
-
-    fun deleteTaskTagsByTagId(tagId: UUID): Boolean = try {
-        taskTagRepository.deleteAllByTagId(tagId)
-        true
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Delete failed for TaskTags by tagId \"$tagId\": $exception" }
-        false
-    }
-
+    @Transactional
     fun deleteTaskTagById(id: UUID): Boolean = try {
         taskTagRepository.deleteById(id)
         true
@@ -102,4 +73,23 @@ class TaskTagService(
         logger.error(exception) { "Delete failed for TaskTag with id \"$id\": $exception." }
         false
     }
+
+    // Service to service functionality
+    fun getTaskTagsByTagId(tagId: UUID): List<TaskTag> = taskTagRepository.findAllByTagId(tagId)
+    
+    @Throws(HibernateException::class)
+    fun createTaskTags(task: Task, tags: List<Tag>): List<TaskTag> = tags.map { createTaskTag(task, it) }
+
+    @Throws(HibernateException::class)
+    fun createTaskTag(task: Task, tag: Tag): TaskTag {
+        val taskTag = TaskTag(task = task, tag = tag)
+        taskTagRepository.save(taskTag)
+        return taskTag
+    }
+
+    @Throws(HibernateException::class)
+    fun deleteTaskTagsByTaskId(taskId: UUID) = taskTagRepository.deleteAllByTaskId(taskId)
+
+    @Throws(HibernateException::class)
+    fun deleteTaskTagsByTagId(tagId: UUID) = taskTagRepository.deleteAllByTagId(tagId)
 }

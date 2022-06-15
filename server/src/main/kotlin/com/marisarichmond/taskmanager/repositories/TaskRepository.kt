@@ -27,4 +27,6 @@ interface TaskRepository : JpaRepository<Task, UUID> {
     @Modifying
     @Query("update Task t set t.dueDate = ?2 where t.id = ?1")
     fun updateDueDate(id: UUID, dueDate: Instant)
+
+    fun deleteAllByUserId(userId: UUID)
 }

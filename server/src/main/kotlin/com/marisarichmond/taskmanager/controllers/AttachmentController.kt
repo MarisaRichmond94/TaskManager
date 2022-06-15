@@ -35,26 +35,6 @@ class AttachmentController(private val attachmentService: AttachmentService) {
         }
 
     @ResponseBody
-    @GetMapping("/{id}")
-    fun getAttachmentById(@PathVariable id: UUID): ResponseEntity<Attachment?> =
-        when (val attachmentById = attachmentService.getAttachmentById(id)) {
-            is Attachment -> ResponseEntity.status(HttpStatus.FOUND).body(attachmentById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-
-    @ResponseBody
-    @GetMapping
-    fun getAttachmentsByTaskId(
-        @RequestParam @JsonProperty("task_id") taskId: UUID
-    ): ResponseEntity<List<Attachment>> {
-        val attachmentsByTaskId = attachmentService.getAttachmentsByTaskId(taskId)
-        return when {
-            attachmentsByTaskId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(attachmentsByTaskId)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
-        }
-    }
-
-    @ResponseBody
     @PatchMapping("/{id}")
     fun updateAttachmentById(
         @PathVariable id: UUID,
@@ -69,14 +49,6 @@ class AttachmentController(private val attachmentService: AttachmentService) {
     @DeleteMapping("/{id}")
     fun deleteAttachmentById(@PathVariable id: UUID): ResponseEntity<Boolean> =
         when (attachmentService.deleteAttachmentById(id)) {
-            true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
-            else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-        }
-
-    @ResponseBody
-    @DeleteMapping
-    fun deleteAttachmentsByTaskId(@RequestParam @JsonProperty("task_id") taskId: UUID): ResponseEntity<Boolean> =
-        when (attachmentService.deleteAttachmentsByTaskId(taskId)) {
             true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
             else -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
         }

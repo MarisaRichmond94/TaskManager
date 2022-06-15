@@ -12,7 +12,7 @@ import java.util.*
 interface AttachmentRepository : JpaRepository<Attachment, UUID> {
     fun findAllByTaskId(taskId: UUID): List<Attachment>
 
-    fun deleteByTaskId(taskId: UUID)
+    fun deleteAllByTaskId(taskId: UUID)
 
     @Modifying
     @Query("update Attachment a set a.link = ?2 where a.id = ?1")

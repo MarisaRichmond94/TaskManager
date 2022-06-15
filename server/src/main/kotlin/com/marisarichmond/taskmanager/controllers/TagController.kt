@@ -27,24 +27,6 @@ class TagController(private val tagService: TagService) {
         }
 
     @ResponseBody
-    @GetMapping("/{id}")
-    fun getTagById(@PathVariable id: UUID): ResponseEntity<Tag?> =
-        when (val tagById = tagService.getTagById(id)) {
-            is Tag -> ResponseEntity.status(HttpStatus.FOUND).body(tagById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-
-    @ResponseBody
-    @GetMapping
-    fun getTagsByUserId(@RequestParam userId: UUID): ResponseEntity<List<Tag>> {
-        val tagsByUserId = tagService.getTagsByUserId(userId)
-        return when {
-            tagsByUserId.isNotEmpty() -> ResponseEntity.status(HttpStatus.FOUND).body(tagsByUserId)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
-        }
-    }
-
-    @ResponseBody
     @PatchMapping("/{id}")
     fun updateTagById(
         @PathVariable id: UUID,
