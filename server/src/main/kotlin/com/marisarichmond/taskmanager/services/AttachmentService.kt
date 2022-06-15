@@ -1,13 +1,10 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.controllers.AttachmentInfo
 import com.marisarichmond.taskmanager.controllers.CreateAttachmentRequestBody
 import com.marisarichmond.taskmanager.controllers.UpdateAttachmentRequestBody
 import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.Attachment
-import com.marisarichmond.taskmanager.models.AttachmentType
-import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.repositories.AttachmentRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
@@ -28,12 +25,13 @@ class AttachmentService(
     // Controller to service functionality
     fun createNewAttachment(createAttachmentRequestBody: CreateAttachmentRequestBody): Attachment? = try {
         // Get associated task by id
-        val taskById = taskService.getTaskById(createAttachmentRequestBody.taskId) ?: throw EntityValidationException(
-            "Attachment",
-            "Task",
-            "${createAttachmentRequestBody.taskId}",
-            "Task with id \"${createAttachmentRequestBody.taskId}\" does not exist.",
-        )
+        val taskById = taskService.getTaskById(createAttachmentRequestBody.taskId)?.task
+            ?: throw EntityValidationException(
+                "Attachment",
+                "Task",
+                "${createAttachmentRequestBody.taskId}",
+                "Task with id \"${createAttachmentRequestBody.taskId}\" does not exist.",
+            )
         // Get associated attachment type by id
         val attachmentTypeById =
             attachmentTypeService.getAttachmentTypeById(createAttachmentRequestBody.attachmentTypeId)
@@ -89,15 +87,6 @@ class AttachmentService(
     }
 
     // Service to service functionality
-    @Throws(HibernateException::class)
-    fun createAttachment(task: Task, attachmentType: AttachmentType, attachmentInfo: AttachmentInfo): Attachment =
-        Attachment(
-            link = attachmentInfo.link,
-            name = attachmentInfo.name,
-            task = task,
-            attachmentType = attachmentType,
-        ).let(attachmentRepository::save)
-
     @Throws(HibernateException::class)
     fun getAttachmentById(id: UUID): Attachment? = attachmentRepository.findById(id).unwrap()
 

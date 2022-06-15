@@ -38,7 +38,7 @@ class TaskTagService(
 
     @Throws(EntityValidationException::class)
     fun createNewTaskTag(taskId: UUID, tagId: UUID): TaskTag {
-        val taskById = taskService.getTaskById(taskId) ?: throw EntityValidationException(
+        val taskById = taskService.getTaskById(taskId)?.task ?: throw EntityValidationException(
             "TaskTag",
             "Task",
             "$taskId",
@@ -76,7 +76,7 @@ class TaskTagService(
 
     // Service to service functionality
     fun getTaskTagsByTagId(tagId: UUID): List<TaskTag> = taskTagRepository.findAllByTagId(tagId)
-    
+
     @Throws(HibernateException::class)
     fun createTaskTags(task: Task, tags: List<Tag>): List<TaskTag> = tags.map { createTaskTag(task, it) }
 

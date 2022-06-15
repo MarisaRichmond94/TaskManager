@@ -238,3 +238,48 @@ databaseChangeLog:
                     foreignKeyName: fk_attachment_type_id
                     references: attachment_types(id)
                     nullable: false
+  - changeSet:
+      id: 05242022100235-8
+      author: marisarichmond
+      comment: create status_types table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: status_types
+      changes:
+        - createTable:
+            tableName: status_types
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: status_type_pkey
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 05242022100235-9
+      author: marisarichmond
+      comment: populate status_types table with enums
+      changes:
+        - loadData:
+            file: data/StatusTypes.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: status_types
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: name
+                  name: name
+                  type: string

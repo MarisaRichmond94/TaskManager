@@ -2,6 +2,7 @@ package com.marisarichmond.taskmanager.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.marisarichmond.taskmanager.models.AttachmentType
+import com.marisarichmond.taskmanager.models.StatusType
 import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.User
 import com.marisarichmond.taskmanager.services.PopulatedTask
@@ -20,6 +21,7 @@ data class CreateUserRequestBody(
 data class UserTaskData(
     val user: User,
     val attachmentTypes: List<AttachmentType>,
+    val statusTypes: List<StatusType>,
     val tasks: List<PopulatedTask>,
     val tags: List<Tag>,
 )

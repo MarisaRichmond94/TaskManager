@@ -16,6 +16,7 @@ import javax.transaction.Transactional
 @Service
 class UserService(
     private val attachmentTypeService: AttachmentTypeService,
+    private val statusTypeService: StatusTypeService,
     private val tagService: TagService,
     private val taskService: TaskService,
     private val userRepository: UserRepository,
@@ -38,10 +39,11 @@ class UserService(
         try {
             val user = getUserById(id) ?: return null
             return UserTaskData(
-                user = user,
-                attachmentTypes = attachmentTypeService.getAttachmentTypes(),
-                tasks = taskService.getTasksByUserId(id),
-                tags = tagService.getTagsByUserId(id),
+                user,
+                attachmentTypeService.getAttachmentTypes(),
+                statusTypeService.getStatusTypes(),
+                taskService.getTasksByUserId(id),
+                tagService.getTagsByUserId(id),
             )
         } catch (exception: HibernateException) {
             logger.error(exception) { "Failed to get task data for User with id \"$id\": $exception." }
