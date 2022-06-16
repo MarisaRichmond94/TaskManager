@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0001_create_user_table
+      id: 0001_create_and_populate_user_table_1
       author: marisarichmond
       comment: create users table
       preConditions:
@@ -34,3 +34,32 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+  - changeSet:
+      id: 0001_create_and_populate_user_table_2
+      author: marisarichmond
+      comment: populate users table with test user
+      changes:
+        - loadData:
+            file: data/User.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: users
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: first_name
+                  name: first_name
+                  type: string
+              - column:
+                  header: last_name
+                  name: last_name
+                  type: string
+              - column:
+                  header: email
+                  name: email
+                  type: string
