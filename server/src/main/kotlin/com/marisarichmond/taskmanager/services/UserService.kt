@@ -1,7 +1,6 @@
 package com.marisarichmond.taskmanager.services
 
 import com.marisarichmond.taskmanager.controllers.CreateUserRequestBody
-import com.marisarichmond.taskmanager.controllers.UserTaskData
 import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.User
@@ -15,10 +14,6 @@ import javax.transaction.Transactional
 
 @Service
 class UserService(
-    private val attachmentTypeService: AttachmentTypeService,
-    private val statusTypeService: StatusTypeService,
-    private val tagService: TagService,
-    private val taskService: TaskService,
     private val userRepository: UserRepository,
 ) {
     companion object {
@@ -33,22 +28,6 @@ class UserService(
     } catch (exception: HibernateException) {
         logger.error(exception) { "Get failed for User with email \"$email\": $exception." }
         null
-    }
-
-    fun getUserTaskDataById(id: UUID): UserTaskData? {
-        try {
-            val user = getUserById(id) ?: return null
-            return UserTaskData(
-                user,
-                attachmentTypeService.getAttachmentTypes(),
-                statusTypeService.getStatusTypes(),
-                taskService.getTasksByUserId(id),
-                tagService.getTagsByUserId(id),
-            )
-        } catch (exception: HibernateException) {
-            logger.error(exception) { "Failed to get task data for User with id \"$id\": $exception." }
-            return null
-        }
     }
 
     @Transactional
@@ -68,8 +47,6 @@ class UserService(
 
     @Transactional
     fun deleteUserById(id: UUID): Boolean = try {
-        taskService.deleteByUserId(id)
-        tagService.deleteByUserId(id)
         userRepository.deleteById(id)
         true
     } catch (exception: HibernateException) {

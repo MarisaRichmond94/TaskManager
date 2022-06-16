@@ -283,3 +283,36 @@ databaseChangeLog:
                   header: name
                   name: name
                   type: string
+  - changeSet:
+      id: 05242022100235-10
+      author: marisarichmond
+      comment: create statuses table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: statuses
+      changes:
+        - createTable:
+            tableName: statuses
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: status_pkey
+              - column:
+                  name: task_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_task_id
+                    references: tasks(id)
+                    nullable: false
+              - column:
+                  name: status_type_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_status_type_id
+                    references: status_types(id)
+                    nullable: false

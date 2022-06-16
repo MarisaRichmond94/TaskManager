@@ -1,11 +1,7 @@
 package com.marisarichmond.taskmanager.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.marisarichmond.taskmanager.models.AttachmentType
-import com.marisarichmond.taskmanager.models.StatusType
-import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.User
-import com.marisarichmond.taskmanager.services.PopulatedTask
 import com.marisarichmond.taskmanager.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,14 +12,6 @@ data class CreateUserRequestBody(
     val email: String,
     @JsonProperty("first_name") val firstName: String,
     @JsonProperty("last_name") val lastName: String,
-)
-
-data class UserTaskData(
-    val user: User,
-    val attachmentTypes: List<AttachmentType>,
-    val statusTypes: List<StatusType>,
-    val tasks: List<PopulatedTask>,
-    val tags: List<Tag>,
 )
 
 @RestController
@@ -50,14 +38,6 @@ class UserController(private val userService: UserService) {
     fun getUserByEmail(@RequestParam email: String): ResponseEntity<User?> =
         when (val userByEmail = userService.getUserByEmail(email)) {
             is User -> ResponseEntity.status(HttpStatus.FOUND).body(userByEmail)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-
-    @ResponseBody
-    @GetMapping("/{id}/tasks")
-    fun getUserTaskDataById(@PathVariable id: UUID): ResponseEntity<UserTaskData?> =
-        when (val userTaskDataById = userService.getUserTaskDataById(id)) {
-            is UserTaskData -> ResponseEntity.status(HttpStatus.FOUND).body(userTaskDataById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
 
