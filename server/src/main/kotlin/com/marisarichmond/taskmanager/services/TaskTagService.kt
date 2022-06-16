@@ -5,9 +5,7 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class TaskTagService(
-    private val taskTagRepository: TaskTagRepository
-) {
+class TaskTagService(private val taskTagRepository: TaskTagRepository) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }

@@ -1,11 +1,11 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.repositories.TagRepository
+import com.marisarichmond.taskmanager.repositories.CommentRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class TagService(private val tagRepository: TagRepository) {
+class CommentService(private val commentRepository: CommentRepository) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }

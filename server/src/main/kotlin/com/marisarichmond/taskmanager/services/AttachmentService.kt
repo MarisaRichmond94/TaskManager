@@ -5,9 +5,7 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class AttachmentService(
-    private val attachmentRepository: AttachmentRepository,
-) {
+class AttachmentService(private val attachmentRepository: AttachmentRepository) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }

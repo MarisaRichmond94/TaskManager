@@ -316,3 +316,37 @@ databaseChangeLog:
                     foreignKeyName: fk_status_type_id
                     references: status_types(id)
                     nullable: false
+  - changeSet:
+      id: 05242022100235-11
+      author: marisarichmond
+      comment: create comments table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: comments
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: comment_pkey
+              - column:
+                  name: text
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false

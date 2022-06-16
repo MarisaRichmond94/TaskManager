@@ -13,9 +13,7 @@ import java.util.*
 import javax.transaction.Transactional
 
 @Service
-class UserService(
-    private val userRepository: UserRepository,
-) {
+class UserService(private val userRepository: UserRepository) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }
