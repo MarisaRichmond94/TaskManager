@@ -1,26 +1,36 @@
 databaseChangeLog:
   - changeSet:
-      id: 0009_create_comments_table
+      id: 0010_create_checklist_items_table
       author: marisarichmond
-      comment: create comments table
+      comment: create checklist_items table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: comments
+                tableName: checklist_items
       changes:
         - createTable:
-            tableName: comments
+            tableName: checklist_items
             columns:
               - column:
                   name: id
                   type: UUID
                   constraints:
                     primaryKey: true
-                    primaryKeyName: comment_pkey
+                    primaryKeyName: checklist_item_pkey
               - column:
-                  name: text
+                  name: description
                   type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_completed
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_index
+                  type: integer
                   constraints:
                     nullable: false
               - column:
