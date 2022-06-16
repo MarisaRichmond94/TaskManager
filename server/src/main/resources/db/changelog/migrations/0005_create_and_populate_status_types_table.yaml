@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0003_create_and_populate_status_types_table_1
+      author: marisarichmond
+      comment: create status_types table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: status_types
+      changes:
+        - createTable:
+            tableName: status_types
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: status_type_pkey
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 0003_create_and_populate_status_types_table_2
+      author: marisarichmond
+      comment: populate status_types table with enums
+      changes:
+        - loadData:
+            file: data/StatusTypes.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: status_types
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: name
+                  name: name
+                  type: string

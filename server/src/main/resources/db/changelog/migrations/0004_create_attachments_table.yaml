@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0004_create_attachments_table
+      author: marisarichmond
+      comment: create attachments table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: attachments
+      changes:
+        - createTable:
+            tableName: attachments
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: attachment_pkey
+              - column:
+                  name: link
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar
+              - column:
+                  name: task_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_task_id
+                    references: tasks(id)
+                    nullable: false
+              - column:
+                  name: attachment_type_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_attachment_type_id
+                    references: attachment_types(id)
+                    nullable: false

@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0003_create_and_populate_attachment_types_table_1
+      author: marisarichmond
+      comment: create attachment_types table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: attachment_types
+      changes:
+        - createTable:
+            tableName: attachment_types
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: attachment_type_pkey
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 0003_create_and_populate_attachment_types_table_2
+      author: marisarichmond
+      comment: populate attachment_types table with enums
+      changes:
+        - loadData:
+            file: data/AttachmentTypes.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: attachment_types
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: name
+                  name: name
+                  type: string
