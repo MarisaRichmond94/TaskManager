@@ -1,0 +1,9 @@
+@import '../variables/variables';
+
+.tm-button {
+  &:disabled {
+    pointer-events: none;
+    background-color: $disabled-grey;
+    border-color: $disabled-grey;
+  }
+}

@@ -1,0 +1,38 @@
+@mixin prevent-highlight {
+  cursor: default;
+  user-select: none;
+}
+
+.thick { font-family: $sub-header-font-family; }
+.bold { font-family: $header-font-family; }
+
+.large-title-text { font-size: $large-title-font-size; }
+.title-text { font-size: $title-font-size; }
+.sub-title-text { font-size: $sub-title-font-size; }
+.small-title-text { font-size: $small-title-font-size; }
+.large-header-text { font-size: $large-header-font-size; }
+.header-text { font-size: $header-font-size; }
+.sub-header-text { font-size: $sub-header-font-size; }
+.paragraph-text { font-size: $paragraph-font-size; }
+
+.text {
+  &.white { color: $white; }
+  &.off-white { color: $off-white; }
+  &.off-black { color: $off-black; }
+  &.medium-grey { color: $medium-grey; }
+  &.primary-red { color: $primary-red; }
+  &.primary-green { color: $primary-green; }
+  &.transparent { color: transparent !important }
+}
+
+// Limits this feature to the desktop only because is breaks the mobile app experience
+@media (min-width: 1024px) {
+  .large-title-text { @include prevent-highlight; }
+  .title-text { @include prevent-highlight; }
+  .sub-title-text { @include prevent-highlight; }
+  .small-title-text { @include prevent-highlight; }
+  .large-header-text { @include prevent-highlight; }
+  .header-text { @include prevent-highlight; }
+  .sub-header-text { @include prevent-highlight; }
+  .paragraph-text { @include prevent-highlight; }
+}
