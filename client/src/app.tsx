@@ -1,38 +1,29 @@
-import { useRoutes } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import GoalsPage from 'routes/goals';
-import HomePage from 'routes/home';
-import NotesPage from 'routes/notes';
-import TasksPage from 'routes/tasks';
-import { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } from 'settings';
+import TMLoader from 'components/tm_loader';
+import TMRouter from 'routes/tm_router';
+import TMHeader from 'routes/components/header';
+import TMSidebar from 'routes/components/sidebar';
 
 const App: React.FC = (): JSX.Element => {
-  const mainRoutes = {
-    path: ROOT_ROUTE,
-    element: <HomePage />,
-    children: [],
-  };
+  const [isAuthenticating, setIsAuthenticating] = useState(false); // TODO - setup authentication
 
-  const goalRoutes = {
-    path: GOALS_ROUTE,
-    element: <GoalsPage />,
-    children: [],
-  };
-
-  const noteRoutes = {
-    path: NOTES_ROUTE,
-    element: <NotesPage />,
-    children: [],
-  };
-
-  const taskRoutes = {
-    path: TASKS_ROUTE,
-    element: <TasksPage />,
-    children: [],
-  };
-
-  const routing = useRoutes([mainRoutes, goalRoutes, noteRoutes, taskRoutes]);
-  return <>{routing}</>;
+  return isAuthenticating
+    ? <TMLoader color='#99B83B' text='authenticating...' />
+    : (
+      <>
+        <div id='page-container'>
+          <BrowserRouter>
+            <TMHeader />
+            <div id='body-container'>
+              <TMSidebar />
+              <TMRouter />
+            </div>
+          </BrowserRouter>
+        </div>
+      </>
+    )
 }
 
 export default App;

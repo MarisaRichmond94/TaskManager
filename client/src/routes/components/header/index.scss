@@ -1,0 +1,18 @@
+@import 'global.scss';
+
+#tm-header {
+  @include centered-flex-box;
+  background-color: $black;
+  height: $header-height;
+  padding: 0 $medium-padding;
+
+  .app-logo {
+    height: $header-height - 20px;
+    padding-top: 8px;
+  };
+
+  div:last-child {
+    @include centered-flex-box;
+    margin-left: auto;
+  };
+};

@@ -1,0 +1,41 @@
+@import 'global.scss';
+
+.tm-toggle {
+  width: 45px;
+  background-color: $off-white;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 20px;
+  padding: 2px;
+  height: 25px;
+  position: relative;
+}
+
+.tm-toggle-button {
+  font-size: 12px;
+  line-height: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: $primary-green;
+  color: $white;
+  padding: 8px 2px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  min-width: unset;
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  left: 16px;
+  transition: all 0.3s ease;
+}
+
+.unselected {
+  background-color: $medium-grey;
+  left: 2px;
+}

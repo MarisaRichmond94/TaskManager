@@ -2,8 +2,7 @@ import { ReactElement } from 'react';
 
 const GoalsPage = (): ReactElement => {
   return (
-    <div id='goals-page'>
-      Goals Page
+    <div id='goals-page' className='content-container'>
     </div>
   );
 };

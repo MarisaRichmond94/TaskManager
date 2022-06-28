@@ -1,3 +1,5 @@
+@import '../variables/variables';
+
 body {
   height: 100vh;
   margin: 0;
@@ -8,5 +10,20 @@ body {
 }
 
 #root {
+  background-color: $medium-grey;
   height: 100%;
+  max-width: 600px !important;
+
+  .tm-loader-container {
+    padding-top: 35%;
+  }
+
+  #body-container {
+    display: flex;
+
+    .content-container {
+      padding: $large-padding;
+      width: calc(100% - 60px);
+    }
+  }
 }
