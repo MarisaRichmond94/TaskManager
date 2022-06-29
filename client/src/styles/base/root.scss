@@ -10,7 +10,6 @@ body {
 }
 
 #root {
-  background-color: $medium-grey;
   height: 100%;
   max-width: 600px !important;
 
@@ -18,11 +17,24 @@ body {
     padding-top: 35%;
   }
 
+  .collapsed-app {
+    #body-container {
+      #content-container {
+        padding: 0;
+        width: 0;
+        .contents { display: none; }
+      }
+    }
+  }
+
   #body-container {
     display: flex;
 
-    .content-container {
+    #content-container {
+      background-color: $medium-grey;
       padding: $large-padding;
+      transition: width 1s ease;
+      -webkit-transition: width 1s ease;
       width: calc(100% - 60px);
     }
   }

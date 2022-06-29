@@ -5,6 +5,7 @@ import AppContext from 'providers/app/context';
 
 const AppProvider = (props: object) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [user, setUser] = useState<undefined | User>();
 
   // TODO - replace this w/ actual authorization functionality
@@ -20,9 +21,13 @@ const AppProvider = (props: object) => {
     }, 100);
   }, []);
 
+  const toggleIsExpanded = () => { setIsExpanded(!isExpanded); };
+
   const value = {
+    isExpanded,
     isLoggedIn,
     user,
+    toggleIsExpanded,
   };
 
   return <AppContext.Provider value={value} {...props} />;

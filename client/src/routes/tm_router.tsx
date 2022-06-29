@@ -33,7 +33,11 @@ const TMRouter: React.FC = (): JSX.Element => {
   };
 
   const routing = useRoutes([goalRoutes, noteRoutes, taskRoutes]);
-  return <>{routing}</>;
+  return (
+    <div id='content-container'>
+      {routing}
+    </div>
+  );
 }
 
 export default TMRouter;

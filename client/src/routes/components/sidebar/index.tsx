@@ -1,6 +1,5 @@
 import './index.scss';
 
-import { useState } from 'react';
 import { BsTrophyFill } from 'react-icons/bs';
 import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
@@ -8,18 +7,19 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TMButton } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_button/tm_toggle';
+import { useApp } from 'providers/app';
 import { GOALS_ROUTE, NOTES_ROUTE, TASKS_ROUTE } from 'settings';
 
 const TMSidebar: React.FC = (): JSX.Element => {
+  const { isExpanded, toggleIsExpanded } = useApp();
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
-  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <div id='tm-sidebar'>
       <div id='tm-top-menu'>
         <TMToggleButton
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => toggleIsExpanded()}
           selected={isExpanded}
         />
       </div>
