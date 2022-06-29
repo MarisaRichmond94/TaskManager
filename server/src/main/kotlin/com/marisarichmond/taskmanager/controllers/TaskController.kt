@@ -9,13 +9,14 @@ import java.util.*
 
 data class CreateNewTaskRequestBody(val id: UUID = UUID.randomUUID(), val objective: String)
 
+@CrossOrigin
 @RestController
 @RequestMapping("/tasks")
 class TaskController(private val taskService: TaskService) {
     @ResponseBody
     @PostMapping
     fun createNewTask(
-        @RequestHeader("user_id") userId: UUID,
+        @RequestHeader("userId") userId: UUID,
         @RequestBody createNewTaskRequestBody: CreateNewTaskRequestBody,
     ): ResponseEntity<Task?> =
         when (val newTask = taskService.createNewTask(userId, createNewTaskRequestBody)) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import BaseApi from 'api/base';
 import UsersApi from 'api/users';
 import AppContext from 'providers/app/context';
 
@@ -14,6 +15,7 @@ const AppProvider = (props: object) => {
       const userResponse = await UsersApi.get();
       setUser(userResponse[0]);
       setIsLoggedIn(true);
+      BaseApi.setUserId(userResponse[0].id);
     };
 
     setTimeout(() => {
