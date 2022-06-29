@@ -2,6 +2,7 @@
   "name": "task_manager_client",
   "version": "0.1.0",
   "private": true,
+  "typings": "src/types/common/index.d.ts",
   "dependencies": {
     "@fontsource/cooper-hewitt": "^4.5.3",
     "axios": "^0.27.2",

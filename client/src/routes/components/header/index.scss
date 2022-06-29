@@ -11,8 +11,9 @@
     padding-top: 8px;
   };
 
-  div:last-child {
+  #control-panel-container {
     @include centered-flex-box;
     margin-left: auto;
+    p { color: $white; }
   };
 };

@@ -18,15 +18,11 @@ class UserService(private val userRepository: UserRepository) {
         private val logger = KotlinLogging.logger {}
     }
 
+    // TODO - Delete this once you've added real authentication
+    fun getUsers(): List<User> = userRepository.findAll()
+
     @Throws(HibernateException::class)
     fun getUserById(id: UUID): User? = userRepository.findById(id).unwrap()
-
-    fun getUserByEmail(email: String): User? = try {
-        userRepository.findByEmail(email)
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Get failed for User with email \"$email\": $exception." }
-        null
-    }
 
     @Transactional
     fun createNewUser(createUserRequestBody: CreateUserRequestBody): User? = try {

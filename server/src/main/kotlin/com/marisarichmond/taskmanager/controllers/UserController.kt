@@ -14,6 +14,7 @@ data class CreateUserRequestBody(
     @JsonProperty("last_name") val lastName: String,
 )
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 class UserController(private val userService: UserService) {
@@ -25,19 +26,22 @@ class UserController(private val userService: UserService) {
             else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
 
+    // TODO - Delete this once you've added real authentication
+    @ResponseBody
+    @GetMapping
+    fun getUsers(): ResponseEntity<List<User>> {
+        val users = userService.getUsers()
+        return when {
+            users.isNotEmpty() -> ResponseEntity.status(HttpStatus.OK).body(users)
+            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())
+        }
+    }
+
     @ResponseBody
     @GetMapping("/{id}")
     fun getUserById(@PathVariable id: UUID): ResponseEntity<User?> =
         when (val userById = userService.getUserById(id)) {
-            is User -> ResponseEntity.status(HttpStatus.FOUND).body(userById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
-
-    @ResponseBody
-    @GetMapping
-    fun getUserByEmail(@RequestParam email: String): ResponseEntity<User?> =
-        when (val userByEmail = userService.getUserByEmail(email)) {
-            is User -> ResponseEntity.status(HttpStatus.FOUND).body(userByEmail)
+            is User -> ResponseEntity.status(HttpStatus.OK).body(userById)
             else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
 
