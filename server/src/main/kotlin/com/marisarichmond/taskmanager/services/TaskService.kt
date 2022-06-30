@@ -30,4 +30,6 @@ class TaskService(
         logger.error(exception) { "Create failed for Task: $exception" }
         null
     }
+
+    fun getTasksByUserId(userId: UUID): List<Task> = taskRepository.findAllByUserId(userId)
 }

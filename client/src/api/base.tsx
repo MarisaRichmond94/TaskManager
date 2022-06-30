@@ -12,15 +12,12 @@ class BaseApi {
   static userId: string = undefined;
   static setAccessToken(accessToken: string) { BaseApi.accessToken = accessToken };
   static setUserId(userId: string) { BaseApi.userId = userId; };
-  static config: any = {
-    headers: { userId: BaseApi.userId },
-  };
 
   async post(body: any) {
     let response;
 
     try {
-      response = await axios.post(this.url, body, BaseApi.config);
+      response = await axios.post(this.url, body, this.buildConfig());
     } catch (error) {
       this.handleError(error, 'POST');
     }
@@ -32,7 +29,7 @@ class BaseApi {
     let response;
 
     try {
-      response = await axios.get(`${this.url}?${this.buildQueryString(query)}`, BaseApi.config);
+      response = await axios.get(`${this.url}?${this.buildQueryString(query)}`, this.buildConfig());
     } catch (error) {
       this.handleError(error, 'GET');
     }
@@ -44,7 +41,7 @@ class BaseApi {
     let response;
 
     try {
-      response = await axios.get(`${this.url}/${id}`, BaseApi.config);
+      response = await axios.get(`${this.url}/${id}`, this.buildConfig());
     } catch (error) {
       this.handleError(error, 'GET by id');
     }
@@ -56,7 +53,7 @@ class BaseApi {
     let response;
 
     try {
-      response = await axios.patch(`${this.url}/${id}`, body, BaseApi.config);
+      response = await axios.patch(`${this.url}/${id}`, body, this.buildConfig());
     } catch (error) {
       this.handleError(error, 'PATCH');
     }
@@ -68,13 +65,17 @@ class BaseApi {
     let response;
 
     try {
-      response = await axios.delete(`${this.url}/${id}`, BaseApi.config);
+      response = await axios.delete(`${this.url}/${id}`, this.buildConfig());
     } catch (error) {
       this.handleError(error, 'DELETE by id');
     }
 
     return this.handleResponse(response);
   };
+
+  buildConfig = () => {
+    return { headers: { userId: BaseApi.userId } };
+  }
 
   buildQueryString = (query: any) => {
     const queryString = Object.keys(query).reduce((accumulation, key) => {

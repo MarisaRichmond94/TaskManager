@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useRoutes } from 'react-router-dom';
 
+import TasksProvider from 'providers/tasks/provider';
 import GoalsPage from 'routes/goals';
 import NotesPage from 'routes/notes';
 import TasksPage from 'routes/tasks';
@@ -28,7 +29,11 @@ const TMRouter: React.FC = (): JSX.Element => {
 
   const taskRoutes = {
     path: TASKS_ROUTE,
-    element: <TasksPage />,
+    element: (
+      <TasksProvider>
+        <TasksPage />
+      </TasksProvider>
+    ),
     children: [],
   };
 
