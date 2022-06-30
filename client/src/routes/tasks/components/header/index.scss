@@ -1,0 +1,9 @@
+@import 'global';
+
+#task-header {
+  display: flex;
+  form {
+    margin-right: $medium-margin;
+    width: 85%;
+  }
+};

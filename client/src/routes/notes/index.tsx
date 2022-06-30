@@ -1,6 +1,4 @@
-import { ReactElement } from 'react';
-
-const NotesPage = (): ReactElement => {
+const NotesPage: React.FC = (): JSX.Element => {
   return (
     <div id='notes-page' className='contents'>
     </div>
