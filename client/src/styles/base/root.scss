@@ -7,15 +7,15 @@ body {
   font-weight: 100;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+};
 
 #root {
-  height: 100%;
+  height: 100vh;
   max-width: 600px !important;
 
   .tm-loader-container {
     padding-top: 35%;
-  }
+  };
 
   .collapsed-app {
     #body-container {
@@ -23,19 +23,22 @@ body {
         padding: 0;
         width: 0;
         .contents { display: none; }
-      }
-    }
-  }
+      };
+    };
+  };
 
   #body-container {
     display: flex;
 
     #content-container {
       background-color: $medium-grey;
-      padding: $large-padding;
+      padding: 0;
       transition: width 1s ease;
-      -webkit-transition: width 1s ease;
       width: calc(100% - 60px);
-    }
-  }
-}
+      .contents {
+        height: calc(100vh - 80px);
+        padding: $medium-padding;
+      };
+    };
+  };
+};

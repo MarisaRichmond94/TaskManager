@@ -24,6 +24,10 @@
   width: 100%;
 }
 
+.tm-panel {
+  padding: $medium-padding 0;
+};
+
 .visible { display: block; }
 .hidden { display: none; }
 .text-center { text-align: center; }

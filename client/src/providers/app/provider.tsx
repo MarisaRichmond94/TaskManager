@@ -18,7 +18,7 @@ const AppProvider = (props: object) => {
 
     setTimeout(() => {
       getUser();
-    }, 500);
+    }, 1000);
   }, []);
 
   const toggleIsExpanded = () => { setIsExpanded(!isExpanded); };

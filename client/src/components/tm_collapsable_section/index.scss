@@ -1,0 +1,42 @@
+@import 'global';
+
+.tm-collapsable-section {
+  user-select: none;
+
+  .header {
+    @include centered-flex-box;
+    color: $off-black;
+    cursor: default;
+    margin: $medium-margin;
+
+    .text-container {
+      align-items: center;
+      display: flex;
+      &:first-child {
+        cursor: pointer;
+      }
+      div {
+        &:last-child { margin-left: $small-margin; }
+      }
+    }
+
+    .content-float-right { margin-left: auto; }
+  }
+
+  &.clickable-header {
+    cursor: pointer;
+    .header-text { cursor: pointer; }
+  }
+
+  .divider {
+    background-color: $off-black;
+    border: none;
+    height: 2px;
+    margin: auto;
+  }
+
+  &.off-white {
+    .header { color: $off-white; }
+    .divider { background-color: $off-white; }
+  }
+}

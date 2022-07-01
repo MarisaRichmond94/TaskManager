@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 
 interface TasksContextType {
+  searchedTasks?: Task[],
   tags?: Tag[],
-  tasks?: Task[],
+  taskMap?: Map<string, Task[]>,
+  userTaskDataLoaded: boolean,
 };
 
 const TasksContext = createContext<undefined | TasksContextType>(undefined);

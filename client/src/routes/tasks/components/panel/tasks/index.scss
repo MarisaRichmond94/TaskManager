@@ -1,0 +1,18 @@
+@import 'global';
+
+#tasks-panel {
+  height: calc(100% - 55px);
+  overflow: hidden auto;
+  padding: 0;
+  .task-count { margin: 0; };
+
+  .tasks-container {
+    color: $white;
+    padding-top: $medium-padding;
+
+    .empty-task-section {
+      padding: $medium-padding;
+      padding-top: 0;
+    };
+  };
+};

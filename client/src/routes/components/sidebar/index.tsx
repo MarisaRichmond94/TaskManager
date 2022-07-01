@@ -5,6 +5,7 @@ import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import userProfilePic from 'assets/profile.jpeg'; // TODO - this is a placeholder
 import { TMButton } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_button/tm_toggle';
 import { useApp } from 'providers/app';
@@ -18,6 +19,11 @@ const TMSidebar: React.FC = (): JSX.Element => {
   return (
     <div id='tm-sidebar'>
       <div id='tm-top-menu'>
+        <img
+          alt='google user profile'
+          id='user-profile-pic'
+          src={userProfilePic}
+        />
         <TMToggleButton
           onClick={() => toggleIsExpanded()}
           selected={isExpanded}
