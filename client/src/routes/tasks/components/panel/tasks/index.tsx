@@ -6,7 +6,7 @@ import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMLoader from 'components/tm_loader';
 import { useTasks } from 'providers/tasks';
 
-enum SectionTypes {
+enum SectionType {
   Today = 'Today',
   Tomorrow = 'Tomorrow',
   Upcoming = 'Upcoming',
@@ -19,32 +19,32 @@ const TasksPanel = (): ReactElement => {
   const generateSectionTitle = (sectionType: string): string => {
     const today = new Date();
     switch (sectionType) {
-      case `${SectionTypes.Today}`:
+      case `${SectionType.Today}`:
         return `${sectionType} (${today.getMonth() + 1}/${today.getDate()})`
-      case `${SectionTypes.Tomorrow}`:
+      case `${SectionType.Tomorrow}`:
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
         return `${sectionType} (${tomorrow.getMonth() + 1}/${tomorrow.getDate()})`
-      case `${SectionTypes.Upcoming}`:
-      case `${SectionTypes.Overdue}`:
+      case `${SectionType.Upcoming}`:
+      case `${SectionType.Overdue}`:
       default:
         return sectionType;
     }
   };
 
-  const getEmptyResponseText = (sectionType: string): string => {
+  const getEmptyResponseText = (sectionType: SectionType): string => {
     switch (sectionType) {
-      case `${SectionTypes.Today}`:
-      case `${SectionTypes.Tomorrow}`:
+      case `${SectionType.Today}`:
+      case `${SectionType.Tomorrow}`:
         return `No tasks due ${sectionType.toLowerCase()}`
-      case `${SectionTypes.Upcoming}`:
-      case `${SectionTypes.Overdue}`:
+      case `${SectionType.Upcoming}`:
+      case `${SectionType.Overdue}`:
       default:
         return `No ${sectionType.toLowerCase()} tasks`;
     }
   };
 
-  const getSectionTasks = (sectionType: string): ReactElement => {
+  const getSectionTasks = (sectionType: SectionType): ReactElement => {
     const sectionTasks = taskMap.get(sectionType);
     if (!sectionTasks.length) {
       const emptyResponseText = getEmptyResponseText(sectionType);
@@ -62,28 +62,28 @@ const TasksPanel = (): ReactElement => {
       ? (
         <div className='tm-panel' id='tasks-panel'>
           <TasksSection
-            tasks={getSectionTasks(SectionTypes.Today)}
-            title={generateSectionTitle(SectionTypes.Today)}
-            total={taskMap.get(SectionTypes.Today).length}
-            type={SectionTypes.Today.toLowerCase()}
+            tasks={getSectionTasks(SectionType.Today)}
+            title={generateSectionTitle(SectionType.Today)}
+            total={taskMap.get(SectionType.Today).length}
+            type={SectionType.Today.toLowerCase()}
           />
           <TasksSection
-            tasks={getSectionTasks(SectionTypes.Tomorrow)}
-            title={generateSectionTitle(SectionTypes.Tomorrow)}
-            total={taskMap.get(SectionTypes.Tomorrow).length}
-            type={SectionTypes.Tomorrow.toLowerCase()}
+            tasks={getSectionTasks(SectionType.Tomorrow)}
+            title={generateSectionTitle(SectionType.Tomorrow)}
+            total={taskMap.get(SectionType.Tomorrow).length}
+            type={SectionType.Tomorrow.toLowerCase()}
           />
           <TasksSection
-            tasks={getSectionTasks(SectionTypes.Upcoming)}
-            title={generateSectionTitle(SectionTypes.Upcoming)}
-            total={taskMap.get(SectionTypes.Upcoming).length}
-            type={SectionTypes.Upcoming.toLowerCase()}
+            tasks={getSectionTasks(SectionType.Upcoming)}
+            title={generateSectionTitle(SectionType.Upcoming)}
+            total={taskMap.get(SectionType.Upcoming).length}
+            type={SectionType.Upcoming.toLowerCase()}
           />
           <TasksSection
-            tasks={getSectionTasks(SectionTypes.Overdue)}
-            title={generateSectionTitle(SectionTypes.Overdue)}
-            total={taskMap.get(SectionTypes.Overdue).length}
-            type={SectionTypes.Overdue.toLowerCase()}
+            tasks={getSectionTasks(SectionType.Overdue)}
+            title={generateSectionTitle(SectionType.Overdue)}
+            total={taskMap.get(SectionType.Overdue).length}
+            type={SectionType.Overdue.toLowerCase()}
           />
         </div>
       )

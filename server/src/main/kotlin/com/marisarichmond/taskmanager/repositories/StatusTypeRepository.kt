@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface StatusTypeRepository : JpaRepository<StatusType, UUID>
+interface StatusTypeRepository : JpaRepository<StatusType, UUID> {
+    fun findByNameIgnoreCase(name: String): StatusType?
+}

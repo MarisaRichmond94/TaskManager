@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models
 
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.persistence.*
 
@@ -10,7 +11,7 @@ data class Task(
     @Id
     override val id: UUID = UUID.randomUUID(),
     val objective: String,
-    val dueDate: Instant = Instant.now(),
+    val dueDate: Instant = Instant.now().plus(1, ChronoUnit.DAYS),
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
     val isPinned: Boolean = false,

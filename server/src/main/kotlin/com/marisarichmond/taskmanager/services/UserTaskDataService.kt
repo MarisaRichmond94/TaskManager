@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserTaskService(
+class UserTaskDataService(
     private val taskService: TaskService,
     private val tagService: TagService,
 ) {

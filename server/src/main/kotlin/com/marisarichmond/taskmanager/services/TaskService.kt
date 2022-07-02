@@ -11,6 +11,7 @@ import java.util.*
 
 @Service
 class TaskService(
+    private val statusService: StatusService,
     private val taskRepository: TaskRepository,
     private val userService: UserService,
 ) {
@@ -25,7 +26,7 @@ class TaskService(
             id = createNewTaskRequestBody.id,
             objective = createNewTaskRequestBody.objective,
             user = userById,
-        ).let(taskRepository::save)
+        ).let(taskRepository::save).also { statusService.initializeTaskStatus(it) }
     } catch (exception: HibernateException) {
         logger.error(exception) { "Create failed for Task: $exception" }
         null
