@@ -11,6 +11,7 @@ import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.StatusRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 import javax.transaction.Transactional
 
@@ -33,6 +34,7 @@ class StatusService(
             statusRepository.getById(id).let { existingStatus ->
                 statusRepository.save(
                     existingStatus.copy(
+                        updatedAt = Instant.now(),
                         statusType = if (statusTypeId != null && statusTypeId != existingStatus.statusType.id) {
                             statusTypeService.getById(statusTypeId)
                                 ?: throw EntityNotFoundException(STATUS_TYPE, statusTypeId)

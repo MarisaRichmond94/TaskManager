@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -9,6 +10,8 @@ data class Tag(
     @Id
     override val id: UUID = UUID.randomUUID(),
     val name: String,
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
     @OneToOne
     @JoinColumn(name = "user_id")
     val user: User

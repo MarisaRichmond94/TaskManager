@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models.dtos
 
 import org.hibernate.Hibernate
+import java.time.Instant
 import java.util.*
 
 // Response DTOs
@@ -8,6 +9,8 @@ data class TaskTagDTO(
     val id: UUID,
     val tagId: UUID,
     val tagName: String,
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

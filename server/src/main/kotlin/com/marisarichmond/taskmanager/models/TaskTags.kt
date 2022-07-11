@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models
 
 import com.marisarichmond.taskmanager.models.dtos.TaskTagDTO
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -9,6 +10,8 @@ import javax.persistence.*
 data class TaskTag(
     @Id
     override val id: UUID = UUID.randomUUID(),
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
     @OneToOne
     @JoinColumn(name = "task_id")
     val task: Task,
@@ -23,5 +26,7 @@ fun TaskTag.toDTO(): TaskTagDTO =
             id = id,
             tagId = tag.id,
             tagName = tag.name,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
         )
     }

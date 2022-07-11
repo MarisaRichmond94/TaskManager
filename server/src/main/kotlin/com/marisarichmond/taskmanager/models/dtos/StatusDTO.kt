@@ -1,12 +1,15 @@
 package com.marisarichmond.taskmanager.models.dtos
 
 import org.hibernate.Hibernate
+import java.time.Instant
 import java.util.*
 
 // Response DTOs
 data class StatusDTO(
     val id: UUID,
     val name: String,
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

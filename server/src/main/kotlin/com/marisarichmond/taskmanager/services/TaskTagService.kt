@@ -8,6 +8,7 @@ import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.TaskTagRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 import javax.transaction.Transactional
 
@@ -43,6 +44,7 @@ class TaskTagService(
             taskTagRepository.getById(id).let { existingTaskTag ->
                 taskTagRepository.save(
                     existingTaskTag.copy(
+                        updatedAt = Instant.now(),
                         tag = if (tagId != null && tagId != existingTaskTag.tag.id) {
                             tagService.getById(tagId)
                         } else existingTaskTag.tag,

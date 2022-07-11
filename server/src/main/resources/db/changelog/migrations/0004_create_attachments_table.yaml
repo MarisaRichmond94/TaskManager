@@ -27,6 +27,16 @@ databaseChangeLog:
                   name: name
                   type: varchar
               - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
                   name: task_id
                   type: UUID
                   constraints:

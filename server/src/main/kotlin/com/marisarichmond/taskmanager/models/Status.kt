@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models
 
 import com.marisarichmond.taskmanager.models.dtos.StatusDTO
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -9,6 +10,8 @@ import javax.persistence.*
 data class Status(
     @Id
     override val id: UUID = UUID.randomUUID(),
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
     @OneToOne
     @JoinColumn(name = "task_id")
     val task: Task,
@@ -17,4 +20,11 @@ data class Status(
     val statusType: StatusType,
 ) : Base(id)
 
-fun Status.toDTO(): StatusDTO = this.run { StatusDTO(id = id, name = statusType.name) }
+fun Status.toDTO(): StatusDTO = this.run {
+    StatusDTO(
+        id = id,
+        name = statusType.name,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+    )
+}

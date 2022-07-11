@@ -9,6 +9,7 @@ import com.marisarichmond.taskmanager.models.dtos.UpdateTagDTO
 import com.marisarichmond.taskmanager.repositories.TagRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 import javax.transaction.Transactional
 
@@ -46,7 +47,7 @@ class TagService(
     fun updateById(id: UUID, updateTagDTO: UpdateTagDTO): Tag? = try {
         updateTagDTO.run {
             tagRepository.getById(id).let { existingTag ->
-                tagRepository.save(existingTag.copy(name = name ?: existingTag.name))
+                tagRepository.save(existingTag.copy(name = name ?: existingTag.name, updatedAt = Instant.now()))
             }
         }
     } catch (exception: Exception) {

@@ -1,6 +1,7 @@
 package com.marisarichmond.taskmanager.models
 
 import com.marisarichmond.taskmanager.models.dtos.AttachmentDTO
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -11,6 +12,8 @@ data class Attachment(
     override val id: UUID = UUID.randomUUID(),
     val link: String,
     val name: String? = null,
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
     @OneToOne
     @JoinColumn(name = "task_id")
     val task: Task,
@@ -32,5 +35,7 @@ fun Attachment.toDTO(): AttachmentDTO =
             link = link,
             type = attachmentType.name,
             name = name,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
         )
     }

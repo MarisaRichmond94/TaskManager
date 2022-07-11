@@ -8,6 +8,7 @@ import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.AttachmentRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 import javax.transaction.Transactional
 
@@ -47,6 +48,7 @@ class AttachmentService(
                     existingAttachment.copy(
                         link = link ?: existingAttachment.link,
                         name = name ?: existingAttachment.name,
+                        updatedAt = Instant.now(),
                         task = if (taskId != null && taskId != existingAttachment.task.id) {
                             taskService.getById(taskId)
                         } else existingAttachment.task,
