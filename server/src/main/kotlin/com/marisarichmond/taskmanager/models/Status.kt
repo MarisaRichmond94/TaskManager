@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.StatusDTO
 import java.util.*
 import javax.persistence.*
 
@@ -15,3 +16,5 @@ data class Status(
     @JoinColumn(name = "status_type_id")
     val statusType: StatusType,
 ) : Base(id)
+
+fun Status.toDTO(): StatusDTO = this.run { StatusDTO(id = id, name = statusType.name) }

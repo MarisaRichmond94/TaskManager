@@ -1,17 +1,22 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.controllers.CreateNewTaskRequestBody
-import com.marisarichmond.taskmanager.exceptions.EntityValidationException
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.TASK
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.UPDATE
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.USER
+import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
+import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessException
 import com.marisarichmond.taskmanager.models.Task
+import com.marisarichmond.taskmanager.models.dtos.CreateNewTaskDTO
+import com.marisarichmond.taskmanager.models.dtos.UpdateTaskByIdDTO
 import com.marisarichmond.taskmanager.repositories.TaskRepository
 import mu.KotlinLogging
-import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
+import javax.transaction.Transactional
 
 @Service
 class TaskService(
-    private val statusService: StatusService,
     private val taskRepository: TaskRepository,
     private val userService: UserService,
 ) {
@@ -19,18 +24,43 @@ class TaskService(
         private val logger = KotlinLogging.logger {}
     }
 
-    fun createNewTask(userId: UUID, createNewTaskRequestBody: CreateNewTaskRequestBody): Task? = try {
-        val userById = userService.getUserById(userId)
-            ?: throw EntityValidationException("Task", "User", "$userId", "User with id \"$userId\" does not exist.")
-        Task(
-            id = createNewTaskRequestBody.id,
-            objective = createNewTaskRequestBody.objective,
-            user = userById,
-        ).let(taskRepository::save).also { statusService.initializeTaskStatus(it) }
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Create failed for Task: $exception" }
+    @Transactional
+    fun create(userId: UUID, createNewTaskDTO: CreateNewTaskDTO): Task? = try {
+        createNewTaskDTO.run {
+            Task(
+                id = id,
+                user = userService.getUserById(userId) ?: throw EntityNotFoundException(USER, userId),
+            ).let(taskRepository::save)
+        }
+    } catch (exception: Exception) {
+        logger.error(exception) { "Failed to create Task: $exception." }
         null
     }
 
-    fun getTasksByUserId(userId: UUID): List<Task> = taskRepository.findAllByUserId(userId)
+    fun getByUserId(userId: UUID): List<Task> = taskRepository.findAllByUserId(userId)
+
+    @Throws(EntityNotFoundException::class)
+    fun getById(id: UUID): Task = try {
+        taskRepository.getById(id)
+    } catch (exception: javax.persistence.EntityNotFoundException) {
+        throw EntityNotFoundException(TASK, id)
+    }
+
+    @Transactional
+    @Throws(EntityNotFoundException::class, UnauthorizedEntityAccessException::class)
+    fun updateById(userId: UUID, id: UUID, updateTaskByIdDTO: UpdateTaskByIdDTO): Task? =
+        updateTaskByIdDTO.run {
+            taskRepository.getById(id).let { existingTask ->
+                if (existingTask.user.id != userId) throw UnauthorizedEntityAccessException(userId, UPDATE, id, TASK)
+                existingTask.copy(
+                    objective = objective ?: existingTask.objective,
+                    description = description ?: existingTask.description,
+                    dueDate = dueDate ?: existingTask.dueDate,
+                    isPinned = isPinned ?: existingTask.isPinned,
+                    updatedAt = Instant.now(),
+                ).also { taskRepository.save(it) }
+            }
+        }
+
+    fun deleteById(id: UUID) = taskRepository.deleteById(id)
 }

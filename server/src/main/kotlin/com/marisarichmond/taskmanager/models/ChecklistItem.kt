@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.ChecklistItemDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -25,3 +26,15 @@ data class ChecklistItem(
         "orderIndex = $orderIndex",
     ).joinToString(", ")
 }
+
+fun ChecklistItem.toDTO(): ChecklistItemDTO =
+    this.run {
+        ChecklistItemDTO(
+            id = id,
+            description = description,
+            isCompleted = isCompleted,
+            orderIndex = orderIndex,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+        )
+    }

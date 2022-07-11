@@ -1,3 +1,25 @@
+interface Attachment {
+  id: string,
+  link: string,
+  name: string,
+  attachmentType: AttachmentType,
+};
+
+enum AttachmentType {
+    jira = "JIRA",
+    google = "Google",
+    github = "GitHub",
+};
+
+interface ChecklistItem {
+  id: string,
+  description: string,
+  isCompleted: boolean,
+  orderIndex: number,
+  createdAt: string,
+  updatedAt: string,
+};
+
 interface Comment {
   id: string,
   text: string,
@@ -11,18 +33,6 @@ enum StatusType {
   inProgress = 'In Progress',
   archived = 'Archived',
   blocked = 'Blocked',
-};
-
-interface SubTask {
-  id: string,
-  objective: string,
-  description?: string,
-  dueDate: string,
-  createdAt: string,
-  updatedAt: string,
-  user: User,
-  tags?: Tag[],
-  comments?: Comment[],
 };
 
 interface Tag {
@@ -42,7 +52,7 @@ interface Task {
   user: User,
   tags?: Tag[],
   status?: StatusType,
-  subTasks?: SubTask[],
+  checklistItems?: ChecklistItem[],
   comments?: Comment[],
 };
 

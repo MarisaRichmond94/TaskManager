@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import BaseApi from 'api/base';
-import UserTasksApi from 'api/userTasks';
+import TaskManagerApi from 'api/taskManager';
 import TasksContext from 'providers/tasks/context';
 
 const TasksProvider = (props: object) => {
@@ -14,7 +14,7 @@ const TasksProvider = (props: object) => {
 
   useEffect(() => {
     async function getTaskDataForUserById() {
-      const userTaskData = await UserTasksApi.get();
+      const userTaskData = await TaskManagerApi.get();
       setTasks(userTaskData.tasks);
       setTags(userTaskData.tags);
       buildTaskLists(userTaskData.tasks);

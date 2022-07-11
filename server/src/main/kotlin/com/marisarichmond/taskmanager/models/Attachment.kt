@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.AttachmentDTO
 import java.util.*
 import javax.persistence.*
 
@@ -23,3 +24,13 @@ data class Attachment(
         "name = $name",
     ).joinToString(", ")
 }
+
+fun Attachment.toDTO(): AttachmentDTO =
+    this.run {
+        AttachmentDTO(
+            id = id,
+            link = link,
+            type = attachmentType.name,
+            name = name,
+        )
+    }

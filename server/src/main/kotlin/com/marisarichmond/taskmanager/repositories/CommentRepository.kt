@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface CommentRepository : JpaRepository<Comment, UUID>
+interface CommentRepository : JpaRepository<Comment, UUID> {
+    fun findAllByTaskId(taskId: UUID): List<Comment>
+
+    fun deleteAllByTaskId(taskId: UUID)
+}

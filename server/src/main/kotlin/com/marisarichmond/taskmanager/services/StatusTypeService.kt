@@ -15,11 +15,11 @@ class StatusTypeService(private val statusTypeRepository: StatusTypeRepository) 
     }
 
     @Throws(HibernateException::class)
-    fun getStatusTypeById(id: UUID): StatusType? = statusTypeRepository.findById(id).unwrap()
+    fun getById(id: UUID): StatusType? = statusTypeRepository.findById(id).unwrap()
 
     @Throws(HibernateException::class)
-    fun getStatusTypeByName(name: String): StatusType? = statusTypeRepository.findByNameIgnoreCase(name)
+    fun getByName(name: String): StatusType? = statusTypeRepository.findByNameIgnoreCase(name)
 
     @Throws(HibernateException::class)
-    fun getStatusTypes(): List<StatusType> = statusTypeRepository.findAll()
+    fun get(): List<StatusType> = statusTypeRepository.findAll()
 }

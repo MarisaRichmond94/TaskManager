@@ -1,12 +1,18 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.exceptions.EntityValidationException
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.STATUS_TYPE
+import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.models.Status
+import com.marisarichmond.taskmanager.models.StatusType
 import com.marisarichmond.taskmanager.models.Task
+import com.marisarichmond.taskmanager.models.dtos.StatusDTO
+import com.marisarichmond.taskmanager.models.dtos.UpdateTaskStatusDTO
+import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.StatusRepository
 import mu.KotlinLogging
-import org.hibernate.HibernateException
 import org.springframework.stereotype.Service
+import java.util.*
+import javax.transaction.Transactional
 
 @Service
 class StatusService(
@@ -14,20 +20,31 @@ class StatusService(
     private val statusTypeService: StatusTypeService,
 ) {
     companion object {
-        const val INITIALIZATION_STATUS_TYPE_NAME = "To Do"
         private val logger = KotlinLogging.logger {}
     }
 
-    fun initializeTaskStatus(task: Task) = try {
-        val statusType = statusTypeService.getStatusTypeByName(INITIALIZATION_STATUS_TYPE_NAME)
-            ?: throw EntityValidationException(
-                "Status",
-                "StatusType",
-                INITIALIZATION_STATUS_TYPE_NAME,
-                "Status type with id \"$INITIALIZATION_STATUS_TYPE_NAME\" does not exist.",
-            )
-        Status(task = task, statusType = statusType).let(statusRepository::save)
-    } catch (exception: HibernateException) {
-        logger.error(exception) { "Create failed for Status: $exception" }
+    fun initializeTaskStatus(task: Task, statusType: StatusType) = Status(task = task, statusType = statusType).let(statusRepository::save)
+
+    fun getByTaskId(taskId: UUID): Status? = statusRepository.findByTaskId(taskId)
+
+    @Transactional
+    fun updateById(id: UUID, updateTaskStatusDTO: UpdateTaskStatusDTO): StatusDTO? = try {
+        updateTaskStatusDTO.run {
+            statusRepository.getById(id).let { existingStatus ->
+                statusRepository.save(
+                    existingStatus.copy(
+                        statusType = if (statusTypeId != null && statusTypeId != existingStatus.statusType.id) {
+                            statusTypeService.getById(statusTypeId)
+                                ?: throw EntityNotFoundException(STATUS_TYPE, statusTypeId)
+                        } else existingStatus.statusType,
+                    )
+                ).toDTO()
+            }
+        }
+    } catch (exception: Exception) {
+        logger.error(exception) { "Failed to update Status: $exception." }
+        null
     }
+
+    fun deleteByTaskId(taskId: UUID) = statusRepository.deleteByTaskId(taskId)
 }

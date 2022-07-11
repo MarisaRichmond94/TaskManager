@@ -10,7 +10,6 @@ import javax.persistence.*
 data class Task(
     @Id
     override val id: UUID = UUID.randomUUID(),
-    val objective: String,
     val dueDate: Instant = Instant.now().plus(1, ChronoUnit.DAYS),
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
@@ -18,6 +17,7 @@ data class Task(
     @OneToOne
     @JoinColumn(name = "user_id")
     val user: User,
+    val objective: String? = null,
     val description: String? = null,
 ) : Base(id) {
     override fun toString(): String = this::class.simpleName + listOf(

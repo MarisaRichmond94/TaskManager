@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.TaskTagDTO
 import java.util.*
 import javax.persistence.*
 
@@ -15,3 +16,12 @@ data class TaskTag(
     @JoinColumn(name = "tag_id")
     val tag: Tag,
 ) : Base(id)
+
+fun TaskTag.toDTO(): TaskTagDTO =
+    this.run {
+        TaskTagDTO(
+            id = id,
+            tagId = tag.id,
+            tagName = tag.name,
+        )
+    }

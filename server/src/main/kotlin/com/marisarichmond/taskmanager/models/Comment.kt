@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.CommentDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -18,3 +19,13 @@ data class Comment(
 ) : Base(id) {
     override fun toString(): String = this::class.simpleName + "(id = $id, text = $text)"
 }
+
+fun Comment.toDTO(): CommentDTO =
+    this.run {
+        CommentDTO(
+            id = id,
+            text = text,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+        )
+    }
