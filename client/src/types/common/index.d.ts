@@ -38,6 +38,7 @@ enum StatusType {
 interface Tag {
   id: string,
   name: string,
+  hexColor: string,
   user: User,
 };
 

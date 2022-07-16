@@ -9,7 +9,7 @@ data class AttachmentDTO(
     val id: UUID,
     val link: String,
     val type: String,
-    val name: String? = null,
+    val name: String,
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
 ) {
@@ -37,7 +37,7 @@ data class CreateTaskAttachmentDTO(
     val link: String,
     val taskId: UUID,
     val attachmentTypeId: UUID,
-    val name: String? = null,
+    val name: String,
 )
 
 data class UpdateTaskAttachmentDTO(
