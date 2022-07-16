@@ -1,7 +1,9 @@
 import { createContext } from 'react';
 
 interface TasksContextType {
+  attachmentTypes?: AttachmentType[],
   searchedTasks?: Task[],
+  statusTypes?: Status[],
   tags?: Tag[],
   taskMap?: Map<string, Task[]>,
   userTaskDataLoaded: boolean,

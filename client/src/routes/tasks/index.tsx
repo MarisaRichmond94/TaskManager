@@ -39,7 +39,7 @@ const TaskPage: React.FC = (): JSX.Element => {
         {searchText ? <SearchPanel /> : <TasksPanel />}
       </div>
     )
-    : <TMLoader color='#99B83B' text='fetching user tasks...' />;
+    : <TMLoader color='#99B83B' text='fetching tasks...' />;
 };
 
 export default TaskPage;

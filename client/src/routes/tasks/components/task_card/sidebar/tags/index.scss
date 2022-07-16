@@ -1,0 +1,21 @@
+@import 'global';
+
+.task-tag-container {
+  margin: extra-small-margin;
+  margin-bottom: $extra-large-margin;
+  padding-top: $medium-padding;
+  text-align: center;
+
+  .no-tags {
+    margin-left: 35px;
+    text-align: left;
+  };
+
+  .task-tag {
+    @include centered-flex-box;
+    background-color: $secondary-blue; // TODO - get rid of this once tag colors are added
+    border-radius: 10px;
+    padding: $medium-padding;
+    button { margin-left: auto; };
+  };
+};

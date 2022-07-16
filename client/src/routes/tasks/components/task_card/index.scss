@@ -1,1 +1,28 @@
 @import 'global';
+
+.tm-task-card {
+  background-color: $white;
+  border-radius: 8px;
+  color: $off-black;
+  margin-bottom: $large-margin;
+
+  &:last-child { margin-bottom: 0; };
+
+  .tm-content-container {
+    display: flex;
+  };
+
+  .task-section {
+    .header {
+      color: $grey;
+      font-weight: 600;
+    };
+
+    .divider {
+      background-color: $light-grey;
+      height: 3px;
+    }
+
+    button { padding: 0; };
+  }
+};

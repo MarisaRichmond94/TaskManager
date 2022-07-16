@@ -1,0 +1,15 @@
+@import 'global';
+
+.task-details-container {
+  padding: $medium-padding;
+
+  .task-detail {
+    @include centered-flex-box;
+    margin-bottom: $medium-margin;
+
+    svg {
+      font-size: $large-phone-base-font-size;
+      margin-right: $small-margin;
+    }
+  }
+};

@@ -5,6 +5,8 @@ import TaskManagerApi from 'api/taskManager';
 import TasksContext from 'providers/tasks/context';
 
 const TasksProvider = (props: object) => {
+  const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
+  const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
   const [tags, setTags] = useState<undefined | Tag[]>();
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
@@ -15,6 +17,8 @@ const TasksProvider = (props: object) => {
   useEffect(() => {
     async function getTaskDataForUserById() {
       const userTaskData = await TaskManagerApi.get();
+      setAttachmentTypes(userTaskData.attachmentTypes);
+      setStatusTypes(userTaskData.statusTypes);
       setTasks(userTaskData.tasks);
       setTags(userTaskData.tags);
       buildTaskLists(userTaskData.tasks);
@@ -55,7 +59,9 @@ const TasksProvider = (props: object) => {
   };
 
   const value = {
+    attachmentTypes,
     searchedTasks,
+    statusTypes,
     tags,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),

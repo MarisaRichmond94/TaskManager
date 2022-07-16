@@ -1,0 +1,10 @@
+@import 'global';
+
+.tm-task-body {
+  padding: $large-padding;
+  width: calc(100% - 220px);
+
+  .task-objective {
+    margin-bottom: $small-margin;
+  };
+};

@@ -5,6 +5,7 @@ import { ReactElement, ReactNode } from 'react';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMLoader from 'components/tm_loader';
 import { useTasks } from 'providers/tasks';
+import TaskCard from 'routes/tasks/components/task_card';
 
 enum SectionType {
   Today = 'Today',
@@ -48,11 +49,15 @@ const TasksPanel = (): ReactElement => {
     const sectionTasks = taskMap.get(sectionType);
     if (!sectionTasks.length) {
       const emptyResponseText = getEmptyResponseText(sectionType);
-      return <div className='header-text empty-task-section'>{emptyResponseText}</div>
+      return (
+        <div className='header-text empty-task-section'>
+          {emptyResponseText}
+        </div>
+      );
     }
     return (
       <div className='header-text task-section'>
-        TODO - put tasks here
+        {sectionTasks.map(task => <TaskCard key={`task-card-${task.id}`} task={task} />)}
       </div>
     );
   };

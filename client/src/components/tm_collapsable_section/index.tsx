@@ -1,7 +1,7 @@
 import './index.scss';
 
 import { ReactElement, useState } from 'react';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 export interface TMCollapsableSectionProps {
   children: ReactElement,
@@ -38,8 +38,8 @@ export const TMCollapsableSection = ({
         <div className='text-container' onClick={wholeHeaderClickable ? () => {} : () => onToggle(!isVisible)}>
           {
             isVisible
-              ? <IoIosArrowDown />
-              : <IoIosArrowUp  />
+              ? <BsChevronDown />
+              : <BsChevronUp  />
           }
           <div className='title'>{sectionTitle}</div>
         </div>

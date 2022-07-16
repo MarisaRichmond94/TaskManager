@@ -1,0 +1,40 @@
+@import 'global';
+
+.task-attachment {
+  @include centered-flex-box;
+  color: $dark-grey;
+  min-height: 25px;
+  padding-top: $medium-padding;
+  text-align: center;
+  max-width: 195px;
+
+  .attachment-icon {
+    display: flex;
+    font-size: $header-font-size;
+    margin-left: $medium-margin;
+    width: 20px;
+  }
+
+  .attachment-name {
+    @include hide-overflow-ellipsis;
+    margin-left: $small-margin;
+    text-align: left;
+    width: calc(100% - 60px);
+  }
+
+  .edit-attachment-button {
+    visibility: hidden;
+    margin-left: auto;
+    margin-right: $medium-margin;
+    width: 20px;
+  };
+
+  &:hover {
+    .edit-attachment-button { visibility: visible };
+  }
+}
+
+.no-attachments {
+  margin-left: $extra-large-margin;
+  padding: $medium-padding;
+};
