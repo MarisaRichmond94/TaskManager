@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0007_create_and_populate_task_table_1
+      author: marisarichmond
+      comment: create tags table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: tags
+      changes:
+        - createTable:
+            tableName: tags
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: tag_pkey
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: hex_color
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_id
+                    references: users(id)
+  - changeSet:
+      id: 0007_create_and_populate_task_table_2
+      author: marisarichmond
+      comment: populate tags table with mock data
+      changes:
+        - loadData:
+            file: data/Tags.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: tags
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: UUID
+              - column:
+                  header: name
+                  name: name
+                  type: varchar
+              - column:
+                  header: hex_color
+                  name: hex_color
+                  type: varchar
+              - column:
+                  header: created_at
+                  name: created_at
+                  valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: updated_at
+                  name: updated_at
+                  valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: user_id
+                  name: user_id
+                  type: UUID

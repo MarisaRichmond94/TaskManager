@@ -28,6 +28,7 @@ class TagService(
             Tag(
                 id = id,
                 name = name,
+                hexColor = hexColor,
                 user = userService.getUserById(userId) ?: throw EntityNotFoundException(USER, userId)
             ).let(tagRepository::save)
         }
@@ -47,7 +48,13 @@ class TagService(
     fun updateById(id: UUID, updateTagDTO: UpdateTagDTO): Tag? = try {
         updateTagDTO.run {
             tagRepository.getById(id).let { existingTag ->
-                tagRepository.save(existingTag.copy(name = name ?: existingTag.name, updatedAt = Instant.now()))
+                tagRepository.save(
+                    existingTag.copy(
+                        name = name ?: existingTag.name,
+                        hexColor = hexColor ?: existingTag.hexColor,
+                        updatedAt = Instant.now(),
+                    )
+                )
             }
         }
     } catch (exception: Exception) {

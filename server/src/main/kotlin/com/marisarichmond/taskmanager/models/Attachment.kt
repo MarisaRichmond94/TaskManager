@@ -11,7 +11,7 @@ data class Attachment(
     @Id
     override val id: UUID = UUID.randomUUID(),
     val link: String,
-    val name: String? = null,
+    val name: String,
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
     @OneToOne
