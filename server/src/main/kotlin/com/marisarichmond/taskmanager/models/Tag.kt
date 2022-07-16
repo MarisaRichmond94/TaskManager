@@ -10,6 +10,7 @@ data class Tag(
     @Id
     override val id: UUID = UUID.randomUUID(),
     val name: String,
+    val hexColor: String = "#868686",
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
     @OneToOne
