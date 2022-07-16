@@ -1,0 +1,6 @@
+"id";"description";"is_completed";"order_index";task_id";"created_at";"updated_at"
+"bba10901-cfad-4e11-b8f9-ff0e41a2c081";"Gather dank memes";"true";"0";"27e30c8e-66cb-4e6c-8942-d31b4247eb92";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"df10fef2-e540-4eb5-8862-e3db33d7cd72";"Add some non-NSFW jokes";"false";"1";"27e30c8e-66cb-4e6c-8942-d31b4247eb92";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"70a4eb88-fa7e-4d8f-a5d3-8716a581dd87";"Practice for Emma to see if she laughs at the jokes";"false";"2";"27e30c8e-66cb-4e6c-8942-d31b4247eb92";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"4afd4993-e5fb-4d37-90c1-a9ca5518871e";"Setup load testing";"true";"0";"c753042b-25db-4cbc-b0cf-7ab65c92f68c";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"d0b29410-8214-4bfc-b325-d81df12cb2b9";"Make a demo video for product";"true";"1";"c753042b-25db-4cbc-b0cf-7ab65c92f68c";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"

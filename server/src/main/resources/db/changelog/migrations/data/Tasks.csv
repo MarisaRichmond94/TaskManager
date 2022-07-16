@@ -1,0 +1,4 @@
+"id";"objective";"description";due_date";"created_at";"updated_at";"is_pinned";"user_id"
+"9a88e6a1-b6ed-4575-b991-0a6d05017829";"Get FE Ticket Reviewed By Product";"Use ngrok to create a link for the product manager to take a look at and then make any changes they suggest";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";true;"866df6bf-2449-4c46-9aa2-cce44616a18d"
+"27e30c8e-66cb-4e6c-8942-d31b4247eb92";"Prepare For Demo Day";"Make sure my PowerPoint presentation has an adequate number of memes to keep the engineering team engaged";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";false;"866df6bf-2449-4c46-9aa2-cce44616a18d"
+"c753042b-25db-4cbc-b0cf-7ab65c92f68c";"Integrate Ticket With Feature Branch";"No description necessary";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229";false;"866df6bf-2449-4c46-9aa2-cce44616a18d"

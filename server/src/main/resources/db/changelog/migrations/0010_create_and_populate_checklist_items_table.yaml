@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0010_create_checklist_items_table
+      id: 0010_create_and_populate_checklist_items_table_1
       author: marisarichmond
       comment: create checklist_items table
       preConditions:
@@ -50,3 +50,44 @@ databaseChangeLog:
                     foreignKeyName: fk_task_id
                     references: tasks(id)
                     nullable: false
+  - changeSet:
+      id: 0010_create_and_populate_checklist_items_table_2
+      author: marisarichmond
+      comment: populate checklist_items table
+      changes:
+        - loadData:
+            file: data/ChecklistItems.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: checklist_items
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: description
+                  name: description
+                  type: string
+              - column:
+                  header: is_completed
+                  name: is_completed
+                  type: boolean
+              - column:
+                  header: order_index
+                  name: order_index
+                  type: integer
+              - column:
+                  header: task_id
+                  name: task_id
+                  type: uuid
+              - column:
+                  header: created_at
+                  name: created_at
+                  valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: updated_at
+                  name: updated_at
+                  valueDate: CURRENT_TIMESTAMP

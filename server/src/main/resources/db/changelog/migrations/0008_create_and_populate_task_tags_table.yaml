@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0008_create_task_tags_table
+      id: 0008_create_and_populate_task_tags_table_1
       author: marisarichmond
       comment: create task_tags table
       preConditions:
@@ -42,3 +42,36 @@ databaseChangeLog:
                     foreignKeyName: fk_tag_id
                     references: tags(id)
                     nullable: false
+  - changeSet:
+      id: 0008_create_and_populate_task_tags_table_2
+      author: marisarichmond
+      comment: populate task_tags table
+      changes:
+        - loadData:
+            file: data/TaskTags.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: task_tags
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: task_id
+                  name: task_id
+                  type: uuid
+              - column:
+                  header: tag_id
+                  name: tag_id
+                  type: uuid
+              - column:
+                  header: created_at
+                  name: created_at
+                  valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: updated_at
+                  name: updated_at
+                  valueDate: CURRENT_TIMESTAMP

@@ -1,0 +1,4 @@
+"id";task_id";"text";"created_at";"updated_at"
+"4b22d1fa-20a4-442c-b139-ac3578969063";"9a88e6a1-b6ed-4575-b991-0a6d05017829";"Product wants all font sizes set to 14px by default";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"daa0ca9c-8e20-47d3-befc-94aa8ec48a77";"9a88e6a1-b6ed-4575-b991-0a6d05017829";"The task is blocked by a long weekend in London. Must wait for lead designer to return on Tuesday.";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"
+"3ab31eb7-7781-4c93-b6bd-ca1edf8e8936";"c753042b-25db-4cbc-b0cf-7ab65c92f68c";"Manager requests loading testing be done with Cypress.io.";"2022-07-12 21:06:21.229";"2022-07-12 21:06:21.229"

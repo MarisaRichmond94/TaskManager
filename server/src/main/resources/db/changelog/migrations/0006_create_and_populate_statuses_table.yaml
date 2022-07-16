@@ -1,8 +1,8 @@
 databaseChangeLog:
   - changeSet:
-      id: 0006_create_statuses_table
+      id: 0004_create_and_populate_attachments_table_1
       author: marisarichmond
-      comment: create statuses table
+      comment: create attachments table
       preConditions:
         - onFail: MARK_RAN
         - not:
@@ -42,3 +42,36 @@ databaseChangeLog:
                     foreignKeyName: fk_status_type_id
                     references: status_types(id)
                     nullable: false
+  - changeSet:
+      id: 0004_create_and_populate_attachments_table_2
+      author: marisarichmond
+      comment: populate attachments table
+      changes:
+        - loadData:
+            file: data/Statuses.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: statuses
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: task_id
+                  name: task_id
+                  type: uuid
+              - column:
+                  header: status_type_id
+                  name: status_type_id
+                  type: uuid
+              - column:
+                  header: created_at
+                  name: created_at
+                  valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: updated_at
+                  name: updated_at
+                  valueDate: CURRENT_TIMESTAMP

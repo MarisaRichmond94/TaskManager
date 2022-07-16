@@ -1,31 +1,32 @@
 databaseChangeLog:
   - changeSet:
-      id: 0007_create_and_populate_task_table_1
+      id: 0002_create_and_populate_task_table_1
       author: marisarichmond
-      comment: create tags table
+      comment: create tasks table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: tags
+                tableName: tasks
       changes:
         - createTable:
-            tableName: tags
+            tableName: tasks
             columns:
               - column:
                   name: id
-                  type: UUID
+                  type: uuid
                   constraints:
                     primaryKey: true
-                    primaryKeyName: tag_pkey
+                    primaryKeyName: task_pkey
               - column:
-                  name: name
+                  name: objective
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
-                  name: hex_color
+                  name: description
                   type: varchar
+              - column:
+                  name: due_date
+                  type: datetime
                   constraints:
                     nullable: false
               - column:
@@ -39,23 +40,28 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: user_id
-                  type: UUID
+                  name: is_pinned
+                  type: boolean
                   constraints:
                     nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
                     foreignKeyName: fk_user_id
                     references: users(id)
+                    nullable: false
   - changeSet:
-      id: 0007_create_and_populate_task_table_2
+      id: 0002_create_and_populate_task_table_2
       author: marisarichmond
-      comment: populate tags table with mock data
+      comment: populate tasks table
       changes:
         - loadData:
-            file: data/Tags.csv
+            file: data/Tasks.csv
             encoding: UTF-8
             quotChar: '"'
             separator: ;
-            tableName: tags
+            tableName: tasks
             relativeToChangelogFile: true
             columns:
               - column:
@@ -63,13 +69,17 @@ databaseChangeLog:
                   name: id
                   type: uuid
               - column:
-                  header: name
-                  name: name
-                  type: varchar
+                  header: objective
+                  name: objective
+                  type: string
               - column:
-                  header: hex_color
-                  name: hex_color
-                  type: varchar
+                  header: description
+                  name: description
+                  type: string
+              - column:
+                  header: due_date
+                  name: due_date
+                  valueDate: CURRENT_TIMESTAMP
               - column:
                   header: created_at
                   name: created_at
@@ -78,6 +88,10 @@ databaseChangeLog:
                   header: updated_at
                   name: updated_at
                   valueDate: CURRENT_TIMESTAMP
+              - column:
+                  header: is_pinned
+                  name: is_pinned
+                  type: boolean
               - column:
                   header: user_id
                   name: user_id
