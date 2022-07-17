@@ -8,8 +8,10 @@
 
   &:last-child { margin-bottom: 0; };
 
-  .tm-content-container {
+  .task-content-container {
     display: flex;
+    max-height: 350px;
+    overflow: hidden auto;
   };
 
   .task-section {

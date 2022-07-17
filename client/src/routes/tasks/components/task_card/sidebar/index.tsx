@@ -15,7 +15,14 @@ interface SidebarProps {
   updatedAt: string,
 };
 
-const Sidebar = ({ id, attachments, createdAt, dueDate, tags, updatedAt }: SidebarProps): ReactElement => {
+const Sidebar = ({
+  id,
+  attachments,
+  createdAt,
+  dueDate,
+  tags,
+  updatedAt,
+}: SidebarProps): ReactElement => {
   return (
     <div className='tm-task-sidebar'>
       <TaskTags id={id} tags={tags} />

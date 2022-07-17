@@ -67,6 +67,7 @@ const TasksPanel = (): ReactElement => {
       ? (
         <div className='tm-panel' id='tasks-panel'>
           <TasksSection
+            initiallyVisible
             tasks={getSectionTasks(SectionType.Today)}
             title={generateSectionTitle(SectionType.Today)}
             total={taskMap.get(SectionType.Today).length}
@@ -97,18 +98,25 @@ const TasksPanel = (): ReactElement => {
 };
 
 interface TasksSectionProps {
+  initiallyVisible?: boolean,
   tasks: ReactNode,
   title: string,
   total: number,
   type: string,
 };
 
-const TasksSection = ({tasks, title, total, type }: TasksSectionProps): ReactElement => {
+const TasksSection = ({
+  initiallyVisible = false,
+  tasks,
+  title,
+  total,
+  type,
+}: TasksSectionProps): ReactElement => {
   return (
     <TMCollapsableSection
       classNames={['off-white']}
       id={`${type}-collapsable`}
-      initiallyVisible
+      initiallyVisible={initiallyVisible}
       rightBlock={<p className='task-count'>({total})</p>}
       sectionTitle={title}
     >

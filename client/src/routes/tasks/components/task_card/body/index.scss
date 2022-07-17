@@ -2,9 +2,7 @@
 
 .tm-task-body {
   padding: $large-padding;
-  width: calc(100% - 220px);
+  width: calc(100% - 200px);
 
-  .task-objective {
-    margin-bottom: $small-margin;
-  };
+  .task-objective { margin-bottom: $small-margin; };
 };

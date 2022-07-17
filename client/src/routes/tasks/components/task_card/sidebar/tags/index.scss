@@ -1,9 +1,12 @@
 @import 'global';
 
+.task-tags-section {
+  .add-tag-button { visibility: hidden; };
+  &:hover { .add-tag-button { visibility: visible; }; }
+};
+
 .task-tag-container {
-  margin: extra-small-margin;
-  margin-bottom: $extra-large-margin;
-  padding-top: $medium-padding;
+  padding: $medium-padding 0;
   text-align: center;
 
   .no-tags {
@@ -13,9 +16,13 @@
 
   .task-tag {
     @include centered-flex-box;
-    background-color: $secondary-blue; // TODO - get rid of this once tag colors are added
     border-radius: 10px;
+    margin-bottom: $medium-margin;
     padding: $medium-padding;
     button { margin-left: auto; };
+
+    &:last-child {
+      margin-bottom: 0;
+    };
   };
 };

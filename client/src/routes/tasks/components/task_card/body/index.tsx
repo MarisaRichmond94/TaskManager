@@ -2,7 +2,8 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TaskChecklistItems from 'routes/tasks/components/task_card/body/checklist_items';
+import TaskComments from 'routes/tasks/components/task_card/body/comments';
 
 interface BodyProps {
   id: string,
@@ -13,24 +14,16 @@ interface BodyProps {
 };
 
 const Body = ({ id, checklistItems, comments, description, objective }: BodyProps): ReactElement => {
-  const completed = checklistItems.filter(x => x.isCompleted).length;
-  const total = checklistItems.length;
-
   return (
     <div className='tm-task-body'>
       <div className='large-header-text task-objective'>
         <b>{objective}</b>
       </div>
-      <div className='header-text'>{description}</div>
-      {/* <TMCollapsableSection
-        classNames={['unlined-task-card-section']}
-        id={`task-${id}-checklist-items`}
-        initiallyVisible
-        sectionTitle={`Checklist Items (${completed}/${total})`}
-        onToggleCallback={() => console.log('should toggle')}
-      >
-        <div>TODO</div>
-      </TMCollapsableSection> */}
+      <div className='sub-header-text'>
+        {description || 'No description'}
+      </div>
+      <TaskChecklistItems id={id} checklistItems={checklistItems} />
+      <TaskComments id={id} comments={comments} />
     </div>
   );
 };

@@ -4,6 +4,8 @@
   height: calc(100% - 55px);
   overflow: hidden auto;
   padding: 0;
+  padding-right: $medium-padding; // TODO - figure out how to only add this when overflow
+
   .task-count { margin: 0; };
 
   .tasks-container {

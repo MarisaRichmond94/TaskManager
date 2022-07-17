@@ -11,6 +11,10 @@
   &.off-white { background-color: $off-white; }
 }
 
+.tm-text-area {
+  resize: none;
+}
+
 .searchable-tm-input {
   border-radius: $large-border-radius;
   position: relative;

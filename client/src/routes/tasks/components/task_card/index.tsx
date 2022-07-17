@@ -18,7 +18,7 @@ const TaskCard = ({ task }: TaskCardProps): ReactElement => {
   return (
     <div className='tm-task-card'>
       <Header isPinned={isPinned} status={status} />
-      <div className='tm-content-container'>
+      <div className='task-content-container'>
         <Body
           id={id}
           checklistItems={checklistItems}

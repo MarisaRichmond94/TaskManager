@@ -25,13 +25,13 @@ const TaskAttachments = ({ id, attachments }: TaskAttachmentsProps): ReactElemen
 
   return (
     <TMCollapsableSection
-      classNames={['off-black', 'task-section']}
+      classNames={['off-black', 'task-section', 'task-attachment-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
       rightBlock={<AddAttachmentButton />}
-      sectionTitle='Attach.'
+      sectionTitle='Links'
     >
-      <div className='task-attachments-container'>
+      <div className='task-attachments-container task-sidebar-collapsable-container'>
         {populateTaskAttachments(attachments)}
       </div>
     </TMCollapsableSection>
@@ -62,7 +62,11 @@ const TaskAttachment = ({ attachment }: AttachmentProps): ReactElement => {
       <div className='attachment-icon'>
         {populateIcon(type)}
       </div>
-      <div className='sub-header-text attachment-name' onClick={() => console.log(`Navigate to ${link}`)}>
+      <div
+        className='sub-header-text attachment-name hide-overflow-ellipsis'
+        onClick={() => console.log(`Navigate to ${link}`)}
+        title={name}
+      >
         <b>{name}</b>
       </div>
       <TMButton
@@ -79,7 +83,7 @@ const TaskAttachment = ({ attachment }: AttachmentProps): ReactElement => {
 
 const AddAttachmentButton = (): ReactElement => (
   <TMButton
-    classNames={['grey']}
+    classNames={['grey', 'add-attachment-button']}
     buttonStyle='icon'
     size='medium'
     onClick={() => console.log('add attachment')}
@@ -90,7 +94,7 @@ const AddAttachmentButton = (): ReactElement => (
 
 const NoAttachmentsToDisplay = (): ReactElement => (
   <div className='sub-header-text no-attachments'>
-    No attachments
+    No links
   </div>
 );
 

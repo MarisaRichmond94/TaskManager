@@ -19,29 +19,30 @@ const TaskTags = ({ id, tags }: TaskTagsProps): ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;
 
     return taskTags.map((taskTag: Tag, index: number) => {
-      return <TaskTag key={`task-tag-${index}`} name={taskTag.name} />;
+      const { name, hexColor } = taskTag;
+      return <TaskTag key={`task-tag-${index}`} name={name} hexColor={hexColor} />;
     });
   };
 
   return (
     <TMCollapsableSection
-      classNames={['off-black', 'task-section']}
+      classNames={['off-black', 'task-section', 'task-tags-section']}
       id={`task-card-${id}-tags`}
       initiallyVisible
       rightBlock={<AddTagButton />}
       sectionTitle='Tags'
     >
-      <div className='task-tag-container'>
+      <div className='task-tag-container task-sidebar-collapsable-container'>
         {populateTaskTags(tags)}
       </div>
     </TMCollapsableSection>
   );
 };
 
-interface TaskTagProps { name: string };
+interface TaskTagProps { name: string, hexColor: string };
 
-const TaskTag = ({ name }: TaskTagProps): ReactElement => (
-  <div className='task-tag'>
+const TaskTag = ({ name, hexColor }: TaskTagProps): ReactElement => (
+  <div className='task-tag' style={{ backgroundColor: hexColor }}>
     <div className='sub-header-text'>{name}</div>
     <TMButton
       buttonStyle='icon'
@@ -55,7 +56,7 @@ const TaskTag = ({ name }: TaskTagProps): ReactElement => (
 
 const AddTagButton = (): ReactElement => (
   <TMButton
-    classNames={['grey']}
+    classNames={['grey', 'add-tag-button']}
     buttonStyle='icon'
     size='medium'
     onClick={() => console.log('add tag')}

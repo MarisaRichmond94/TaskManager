@@ -41,7 +41,7 @@ export const TMCollapsableSection = ({
               ? <BsChevronDown />
               : <BsChevronUp  />
           }
-          <div className='title'>{sectionTitle}</div>
+          <div className='title hide-overflow-ellipsis'>{sectionTitle}</div>
         </div>
         {rightBlock && <div className='content-float-right'>{rightBlock}</div>}
       </div>

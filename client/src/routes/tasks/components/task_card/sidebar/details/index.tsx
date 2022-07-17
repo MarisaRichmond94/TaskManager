@@ -21,7 +21,7 @@ const TaskDetails = ({ id, createdAt, dueDate, updatedAt }: TaskDetailsProps): R
       initiallyVisible
       sectionTitle='Details'
     >
-      <div className='task-details-container'>
+      <div className='task-details-container task-sidebar-collapsable-container'>
         <TaskDetail datetime={createdAt} icon={<MdOutlineAddTask />} />
         <TaskDetail datetime={updatedAt} icon={<BsPencilSquare />} />
         <TaskDetail datetime={dueDate} icon={<BsCalendarDate />} />

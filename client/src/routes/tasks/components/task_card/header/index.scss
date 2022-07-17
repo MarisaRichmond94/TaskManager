@@ -6,14 +6,14 @@
 
   .tm-dropdown {
     padding: $large-padding;
-    width: calc(100% - 220px);
+    width: calc(100% - 200px);
   };
 
   .tm-task-menu {
     @include centered-flex-box;
     margin-left: auto;
     padding: $large-padding;
-    width: 220px;
+    width: 200px;
 
     .tm-button {
       padding: 6px;

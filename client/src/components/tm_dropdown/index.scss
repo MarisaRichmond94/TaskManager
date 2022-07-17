@@ -28,10 +28,11 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    left: $large-margin; // moving left 15px to account for 15px padding around parent container
     max-height: 200px;
     overflow: hidden auto;
     position: absolute;
-    width: 100%;
+    width: calc(100% - 30px); // subtracting 30px due to 15px padding around parent container
     z-index: 1;
 
     .tm-dropdown-option {
