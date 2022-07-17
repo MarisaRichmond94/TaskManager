@@ -1,0 +1,28 @@
+@import 'global';
+
+.task-tags-section {
+  .add-tag-button { visibility: hidden; };
+  &:hover { .add-tag-button { visibility: visible; }; }
+};
+
+.task-tag-container {
+  padding: $medium-padding 0;
+  text-align: center;
+
+  .no-tags {
+    margin-left: 35px;
+    text-align: left;
+  };
+
+  .task-tag {
+    @include centered-flex-box;
+    border-radius: 10px;
+    margin-bottom: $medium-margin;
+    padding: $medium-padding;
+    button { margin-left: auto; };
+
+    &:last-child {
+      margin-bottom: 0;
+    };
+  };
+};

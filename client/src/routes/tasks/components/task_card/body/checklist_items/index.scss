@@ -1,0 +1,24 @@
+@import 'global';
+
+.checklist-items-section {
+  .header { margin-left: 0; };
+
+  .add-checklist-item-button { visibility: hidden; };
+
+  .no-checklist-items {
+    margin-left: 25px;
+  };
+
+  .task-checklist-items-container {
+    padding: $medium-padding 0;
+
+    .task-checklist-item {
+      margin-bottom: $medium-margin;
+      &:last-child { margin-bottom: 0; };
+    };
+  };
+
+  &:hover {
+    .add-checklist-item-button { visibility: visible; };
+  }
+};

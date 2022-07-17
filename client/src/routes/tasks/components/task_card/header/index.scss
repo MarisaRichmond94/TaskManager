@@ -1,0 +1,23 @@
+@import 'global';
+
+.tm-task-header {
+  @include centered-flex-box;
+  border-bottom: 2px solid $off-white;
+
+  .tm-dropdown {
+    padding: $large-padding;
+    width: calc(100% - 200px);
+  };
+
+  .tm-task-menu {
+    @include centered-flex-box;
+    margin-left: auto;
+    padding: $large-padding;
+    width: 200px;
+
+    .tm-button {
+      padding: 6px;
+      &:last-child { margin-left: auto; };
+    };
+  };
+}

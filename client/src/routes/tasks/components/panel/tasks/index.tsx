@@ -5,6 +5,7 @@ import { ReactElement, ReactNode } from 'react';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMLoader from 'components/tm_loader';
 import { useTasks } from 'providers/tasks';
+import TaskCard from 'routes/tasks/components/task_card';
 
 enum SectionType {
   Today = 'Today',
@@ -48,11 +49,15 @@ const TasksPanel = (): ReactElement => {
     const sectionTasks = taskMap.get(sectionType);
     if (!sectionTasks.length) {
       const emptyResponseText = getEmptyResponseText(sectionType);
-      return <div className='header-text empty-task-section'>{emptyResponseText}</div>
+      return (
+        <div className='header-text empty-task-section'>
+          {emptyResponseText}
+        </div>
+      );
     }
     return (
       <div className='header-text task-section'>
-        TODO - put tasks here
+        {sectionTasks.map(task => <TaskCard key={`task-card-${task.id}`} task={task} />)}
       </div>
     );
   };
@@ -62,6 +67,7 @@ const TasksPanel = (): ReactElement => {
       ? (
         <div className='tm-panel' id='tasks-panel'>
           <TasksSection
+            initiallyVisible
             tasks={getSectionTasks(SectionType.Today)}
             title={generateSectionTitle(SectionType.Today)}
             total={taskMap.get(SectionType.Today).length}
@@ -92,18 +98,25 @@ const TasksPanel = (): ReactElement => {
 };
 
 interface TasksSectionProps {
+  initiallyVisible?: boolean,
   tasks: ReactNode,
   title: string,
   total: number,
   type: string,
 };
 
-const TasksSection = ({tasks, title, total, type }: TasksSectionProps): ReactElement => {
+const TasksSection = ({
+  initiallyVisible = false,
+  tasks,
+  title,
+  total,
+  type,
+}: TasksSectionProps): ReactElement => {
   return (
     <TMCollapsableSection
       classNames={['off-white']}
       id={`${type}-collapsable`}
-      initiallyVisible
+      initiallyVisible={initiallyVisible}
       rightBlock={<p className='task-count'>({total})</p>}
       sectionTitle={title}
     >

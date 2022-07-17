@@ -1,0 +1,15 @@
+@import 'global';
+
+.tm-checkbox {
+  align-items: flex-start;
+  display: flex;
+
+  .tm-button {
+    margin-top: 2px;
+    margin-right: $medium-margin;
+  }
+
+  &.disabled {
+    .tm-button { color: $disabled-grey; }
+  }
+}

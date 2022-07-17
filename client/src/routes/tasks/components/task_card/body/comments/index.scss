@@ -1,0 +1,31 @@
+@import 'global';
+
+.comments-section {
+  .header { margin-left: 0; };
+
+  .task-comments-container {
+    padding: $medium-padding 0;
+
+    .task-comment-box { background-color: $off-white; };
+
+    .task-comment {
+      margin-top: $large-margin;
+      .comment-details {
+        @include centered-flex-box;
+        margin-top: $small-margin;
+        justify-content: end;
+
+        button {
+          margin-left: $small-margin;
+          visibility: hidden;
+        };
+      };
+
+      &:hover {
+        .comment-details {
+          button { visibility: visible; };
+        };
+      };
+    };
+  };
+};

@@ -2,7 +2,7 @@ interface Attachment {
   id: string,
   link: string,
   name: string,
-  attachmentType: AttachmentType,
+  type: AttachmentType,
 };
 
 enum AttachmentType {
@@ -27,6 +27,11 @@ interface Comment {
   updatedAt: string,
 };
 
+interface Status {
+  id: string,
+  name: StatusType,
+};
+
 enum StatusType {
   toDo = 'To Do',
   complete = 'Complete',
@@ -44,17 +49,18 @@ interface Tag {
 
 interface Task {
   id: string,
-  objective: string,
+  attachments?: Attachment[],
+  checklistItems?: ChecklistItem[],
+  comments?: Comment[],
+  createdAt: string,
   description?: string,
   dueDate: string,
   isPinned: boolean,
-  createdAt: string,
+  objective: string,
+  status?: Status,
+  tags?: Tag[],
   updatedAt: string,
   user: User,
-  tags?: Tag[],
-  status?: StatusType,
-  checklistItems?: ChecklistItem[],
-  comments?: Comment[],
 };
 
 interface User {
@@ -62,4 +68,11 @@ interface User {
   firstName: string,
   lastName: string,
   email: string,
+};
+
+// misc. types
+interface DropdownOption {
+  id: string,
+  displayName: string,
+  name?: string,
 };
