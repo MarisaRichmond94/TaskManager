@@ -56,6 +56,7 @@ class TaskService(
                     objective = objective ?: existingTask.objective,
                     description = description ?: existingTask.description,
                     dueDate = dueDate ?: existingTask.dueDate,
+                    isArchived = isArchived ?: existingTask.isArchived,
                     isPinned = isPinned ?: existingTask.isPinned,
                     updatedAt = Instant.now(),
                 ).also { taskRepository.save(it) }

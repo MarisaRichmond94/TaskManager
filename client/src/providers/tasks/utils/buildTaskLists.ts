@@ -7,6 +7,7 @@ const buildTaskLists = (
       ['Tomorrow', []],
       ['Upcoming', []],
       ['Overdue', []],
+      ['Archived', []],
     ]);
 
     const yesterday = new Date();
@@ -19,7 +20,8 @@ const buildTaskLists = (
 
     taskList.forEach(task => {
       const dueDate = new Date(task.dueDate);
-      if (yesterday < dueDate && dueDate < tomorrow) taskMap.get('Today').push(task);
+      if (task.isArchived) taskMap.get('Archived').push(task);
+      else if (yesterday < dueDate && dueDate < tomorrow) taskMap.get('Today').push(task);
       else if (today < dueDate && dueDate < theDayAfterTomorrow) taskMap.get('Tomorrow').push(task);
       else if (tomorrow < dueDate) taskMap.get('Upcoming').push(task);
       else taskMap.get('Overdue').push(task);

@@ -5,6 +5,7 @@ import { ReactElement, ReactNode } from 'react';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMLoader from 'components/tm_loader';
 import { useTasks } from 'providers/tasks';
+import { TaskProvider } from 'providers/task';
 import TaskCard from 'routes/tasks/components/task_card';
 
 enum SectionType {
@@ -12,6 +13,7 @@ enum SectionType {
   Tomorrow = 'Tomorrow',
   Upcoming = 'Upcoming',
   Overdue = 'Overdue',
+  Archived = 'Archived',
 };
 
 const TasksPanel = (): ReactElement => {
@@ -57,7 +59,13 @@ const TasksPanel = (): ReactElement => {
     }
     return (
       <div className='header-text task-section'>
-        {sectionTasks.map(task => <TaskCard key={`task-card-${task.id}`} task={task} />)}
+        {
+          sectionTasks.map(task => (
+            <TaskProvider key={`task-card-${task.id}`} task={task}>
+              <TaskCard />
+            </TaskProvider>
+          ))
+        }
       </div>
     );
   };
@@ -90,6 +98,12 @@ const TasksPanel = (): ReactElement => {
             title={generateSectionTitle(SectionType.Overdue)}
             total={taskMap.get(SectionType.Overdue).length}
             type={SectionType.Overdue.toLowerCase()}
+          />
+          <TasksSection
+            tasks={getSectionTasks(SectionType.Archived)}
+            title={generateSectionTitle(SectionType.Archived)}
+            total={taskMap.get(SectionType.Archived).length}
+            type={SectionType.Archived.toLowerCase()}
           />
         </div>
       )

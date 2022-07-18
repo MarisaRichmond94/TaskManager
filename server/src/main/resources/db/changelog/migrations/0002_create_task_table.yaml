@@ -40,6 +40,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: is_archived
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
                   name: is_pinned
                   type: boolean
                   constraints:

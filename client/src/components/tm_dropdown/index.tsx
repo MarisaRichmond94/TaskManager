@@ -23,6 +23,11 @@ const TMDropdown = ({
   const [isVisible, setIsVisible] = useState(false);
   const activeInputText = selectedOption?.displayName || placeholder;
 
+  const handleOptionSelect = (option: DropdownOption) => {
+    onOptionSelect(option);
+    setIsVisible(false);
+  };
+
   const populateDropdownOptions = (): ReactElement[] => {
     const dropdownOptions = selectedOption
       ? options.filter(option => option.displayName !== selectedOption.displayName)
@@ -41,7 +46,7 @@ const TMDropdown = ({
         <span
           className='sub-header-text tm-dropdown-option'
           key={`${option.id}-${index}`}
-          onClick={() => onOptionSelect(option)}
+          onClick={() => handleOptionSelect(option)}
         >
           {option.displayName}
         </span>
@@ -52,7 +57,9 @@ const TMDropdown = ({
   return (
     <div className={['tm-dropdown', ...classNames].join(' ')}>
       <button
-        className={`tm-dropdown-button sub-header-text ${isVisible ? 'menu-visible' : 'menu-hidden'}`}
+        className={
+          `tm-dropdown-button sub-header-text ${isVisible ? 'menu-visible' : 'menu-hidden'}`
+        }
         disabled={isDisabled}
         onClick={() => setIsVisible(!isVisible)}
       >

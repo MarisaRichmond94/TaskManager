@@ -7,6 +7,8 @@ interface TasksContextType {
   tags?: Tag[],
   taskMap?: Map<string, Task[]>,
   userTaskDataLoaded: boolean,
+  archiveTaskById: (archivedTask: Task) => void,
+  deleteTaskById: (taskId: string) => void,
 };
 
 const TasksContext = createContext<undefined | TasksContextType>(undefined);

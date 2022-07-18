@@ -13,7 +13,7 @@
       .comment-details {
         @include centered-flex-box;
         margin-top: $small-margin;
-        justify-content: end;
+        justify-content: flex-end;
 
         button {
           margin-left: $small-margin;

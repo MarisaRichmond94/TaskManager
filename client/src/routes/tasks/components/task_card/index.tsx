@@ -2,22 +2,20 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
+import { useTask } from 'providers/task';
 import Body from 'routes/tasks/components/task_card/body';
 import Header from 'routes/tasks/components/task_card/header';
 import Sidebar from 'routes/tasks/components/task_card/sidebar';
 
-interface TaskCardProps {
-  task: Task,
-};
-
-const TaskCard = ({ task }: TaskCardProps): ReactElement => {
-  const { isPinned, status } = task;
+const TaskCard = (): ReactElement => {
+  const { task } = useTask();
+  const { isArchived, isPinned, status } = task;
   const { id, checklistItems, comments, description, objective } = task;
   const { attachments, createdAt, dueDate, tags, updatedAt } = task;
 
   return (
     <div className='tm-task-card'>
-      <Header isPinned={isPinned} status={status} />
+      <Header isArchived={isArchived} isPinned={isPinned} status={status} />
       <div className='task-content-container'>
         <Body
           id={id}

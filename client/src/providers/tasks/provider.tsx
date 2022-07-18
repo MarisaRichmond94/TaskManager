@@ -28,6 +28,21 @@ const TasksProvider = (props: object) => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
+  const archiveTaskById = (archivedTask: Task) => {
+    const updatedTasks = tasks.map(task => task.id === archivedTask.id ? archivedTask : task);
+    console.log(JSON.stringify(tasks) === JSON.stringify(updatedTasks));
+    setTasks(updatedTasks);
+    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== archivedTask.id));
+    buildTaskLists(updatedTasks, setTaskMap);
+  };
+
+  const deleteTaskById = (taskId: string) => {
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
+    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
+    buildTaskLists(updatedTasks, setTaskMap);
+  };
+
   const value = {
     attachmentTypes,
     searchedTasks,
@@ -35,6 +50,8 @@ const TasksProvider = (props: object) => {
     tags,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
+    archiveTaskById,
+    deleteTaskById,
   };
 
   return <TasksContext.Provider value={value} {...props} />;

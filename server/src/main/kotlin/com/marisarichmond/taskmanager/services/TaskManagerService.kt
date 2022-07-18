@@ -40,6 +40,7 @@ class TaskManagerService(
             dueDate = dueDate,
             createdAt = createdAt,
             updatedAt = updatedAt,
+            isArchived = isArchived,
             isPinned = isPinned,
             objective = objective,
             description = description,

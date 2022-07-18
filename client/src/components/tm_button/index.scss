@@ -18,8 +18,8 @@
     &:hover {
       border-color: $secondary-blue;
       background-color: $secondary-blue;
-    }
-  }
+    };
+  };
   &.green {
     border-color: $primary-green;
     background-color: $primary-green;
@@ -27,8 +27,8 @@
     &:hover {
       border-color: $secondary-green;
       background-color: $secondary-green;
-    }
-  }
+    };
+  };
   &.grey {
     border-color: $grey;
     background-color: $grey;
@@ -36,8 +36,8 @@
     &:hover {
       border-color: $light-grey;
       background-color: $light-grey;
-    }
-  }
+    };
+  };
   &.light-blue {
     border-color: $secondary-blue;
     background-color: $secondary-blue;
@@ -45,8 +45,8 @@
     &:hover {
       border-color: $grey;
       background-color: $grey;
-    }
-  }
+    };
+  };
   &.medium-grey {
     border-color: $medium-grey;
     background-color: $medium-grey;
@@ -54,8 +54,8 @@
     &:hover {
       border-color: $dark-grey;
       background-color: $dark-grey;
-    }
-  }
+    };
+  };
   &.off-black {
     border-color: $off-black;
     background-color: $off-black;
@@ -63,8 +63,8 @@
     &:hover {
       border-color: $medium-grey;
       background-color: $medium-grey;
-    }
-  }
+    };
+  };
   &.off-white {
     border-color: $off-white;
     background-color: $off-white;
@@ -72,8 +72,8 @@
     &:hover {
       border-color: $medium-grey;
       background-color: $medium-grey;
-    }
-  }
+    };
+  };
   &.purple {
     border-color: $primary-purple;
     background-color: $primary-purple;
@@ -81,8 +81,8 @@
     &:hover {
       border-color: $secondary-purple;
       background-color: $secondary-purple;
-    }
-  }
+    };
+  };
   &.red {
     border-color: $primary-red;
     background-color: $primary-red;
@@ -90,8 +90,8 @@
     &:hover {
       border-color: $secondary-red;
       background-color: $secondary-red;
-    }
-  }
+    };
+  };
   &.teal {
     border-color: $primary-teal;
     background-color: $primary-teal;
@@ -99,70 +99,74 @@
     &:hover {
       border-color: $secondary-teal;
       background-color: $secondary-teal;
-    }
-  }
+    };
+  };
   &.transparent {
     background-color: transparent !important;
 
     &.blue {
       color: $primary-blue;
-      &:hover { color: $secondary-blue; }
-    }
+      &:hover { color: $secondary-blue; };
+    };
     &.green {
       color: $primary-green;
-      &:hover { color: $secondary-green; }
-    }
+      &:hover { color: $secondary-green; };
+    };
     &.grey {
       color: $grey;
-      &:hover { color: $light-grey; }
-    }
+      &:hover { color: $light-grey; };
+    };
     &.light-blue {
       color: $secondary-blue;
-      &:hover { color: $grey; }
-    }
+      &:hover { color: $grey; };
+    };
     &.medium-grey {
       color: $medium-grey;
-      &:hover { color: $dark-grey; }
-    }
+      &:hover { color: $dark-grey; };
+    };
     &.off-black {
       color: $off-black;
-      &:hover { color: $medium-grey; }
-    }
+      &:hover { color: $medium-grey; };
+    };
     &.off-white {
       color: $off-white;
-      &:hover { color: $medium-grey; }
-    }
+      &:hover { color: $medium-grey; };
+    };
     &.purple {
       color: $primary-purple;
-      &:hover { color: $secondary-purple; }
-    }
+      &:hover { color: $secondary-purple; };
+    };
     &.red {
       color: $primary-red;
-      &:hover { color: $secondary-red; }
-    }
+      &:hover { color: $secondary-red; };
+    };
     &.teal {
       color: $primary-teal;
-      &:hover { color: $secondary-teal; }
-    }
-  }
+      &:hover { color: $secondary-teal; };
+    };
+    &:disabled {
+      color: $disabled-grey;
+      &:hover { color: $disabled-grey; };;
+    };
+  };
 
   // Button types
   &.icon {
     border: none;
     padding: $small-padding $medium-padding;
-  }
-  &.solid, &.outline { border-radius: $small-border-radius; }
-  &.pill, &.outlinepill {  border-radius: $extra-large-border-radius; }
+  };
+  &.solid, &.outline { border-radius: $small-border-radius; };
+  &.pill, &.outlinepill {  border-radius: $extra-large-border-radius; };
   &.underline {
     border: none;
     border-bottom: solid 2px;
     padding-bottom: $small-padding;
-  }
+  };
 
   // Button sizes
-  &.extra-small { font-size: $paragraph-font-size; }
-  &.small { font-size: $sub-header-font-size; }
-  &.medium { font-size: $header-font-size; }
-  &.large { font-size: $large-header-font-size; }
-  &.extra-large { font-size: $small-title-font-size; }
-}
+  &.extra-small { font-size: $paragraph-font-size; };
+  &.small { font-size: $sub-header-font-size; };
+  &.medium { font-size: $header-font-size; };
+  &.large { font-size: $large-header-font-size; };
+  &.extra-large { font-size: $small-title-font-size; };
+};

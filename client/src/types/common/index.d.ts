@@ -55,6 +55,7 @@ interface Task {
   createdAt: string,
   description?: string,
   dueDate: string,
+  isArchived: boolean,
   isPinned: boolean,
   objective: string,
   status?: Status,
