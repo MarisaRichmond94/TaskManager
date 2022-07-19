@@ -1,0 +1,16 @@
+@import 'global';
+
+.react-datepicker-wrapper {
+  margin: $extra-small-margin 0;
+
+  .react-datepicker__input-container {
+    input {
+      background-color: $off-white;
+      border: none;
+      border-radius: 5px;
+      font-family: $paragraph-font-family;
+      padding: $medium-padding;
+      width: 90%;
+    }
+  };
+};

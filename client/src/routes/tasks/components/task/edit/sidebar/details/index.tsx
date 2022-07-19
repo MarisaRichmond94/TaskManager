@@ -1,7 +1,7 @@
 import './index.scss';
 
 import { ReactElement } from 'react';
-import { BsCalendarDate, BsPencilSquare } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
@@ -9,11 +9,10 @@ import { TMCollapsableSection } from 'components/tm_collapsable_section';
 interface TaskDetailsProps {
   id: string,
   createdAt: string,
-  dueDate: string,
   updatedAt: string,
 };
 
-const TaskDetails = ({ id, createdAt, dueDate, updatedAt }: TaskDetailsProps): ReactElement => {
+const TaskDetails = ({ id, createdAt, updatedAt }: TaskDetailsProps): ReactElement => {
   return (
     <TMCollapsableSection
       classNames={['off-black', 'task-section']}
@@ -24,7 +23,6 @@ const TaskDetails = ({ id, createdAt, dueDate, updatedAt }: TaskDetailsProps): R
       <div className='task-details-container task-sidebar-collapsable-container'>
         <TaskDetail datetime={createdAt} icon={<MdOutlineAddTask />} />
         <TaskDetail datetime={updatedAt} icon={<BsPencilSquare />} />
-        <TaskDetail datetime={dueDate} icon={<BsCalendarDate />} />
       </div>
     </TMCollapsableSection>
   );
