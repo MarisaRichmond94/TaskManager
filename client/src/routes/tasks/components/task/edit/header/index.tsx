@@ -3,20 +3,21 @@ import './index.scss';
 import { ReactElement } from 'react';
 import { BsBookmarks, BsBookmarksFill, BsInboxes, BsTrash, BsXLg } from 'react-icons/bs';
 
-import { TMButton } from 'components/tm_button';
 import TMDropdown from 'components/tm_dropdown';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
+import TaskActionButton from 'routes/tasks/components/task/action_button';
 
 interface HeaderProps {
+  id: string,
   isArchived: boolean,
   isPinned: boolean,
   status: Status,
 };
 
-const Header = ({ isArchived, isPinned, status }: HeaderProps): ReactElement => {
-  const { statusTypes } = useTasks();
-  const { archiveTask, deleteTask, updateStatus, updateTask } = useTask();
+const Header = ({ id, isArchived, isPinned, status }: HeaderProps): ReactElement => {
+  const { archiveTask, deleteTaskById, statusTypes, updateActiveTask } = useTasks();
+  const { updateStatus, updateTask } = useTask();
 
   return (
     <div className='tm-task-header'>
@@ -31,43 +32,21 @@ const Header = ({ isArchived, isPinned, status }: HeaderProps): ReactElement => 
           icon={isPinned ? <BsBookmarksFill /> : <BsBookmarks />}
         />
         <TaskActionButton
-          action={archiveTask}
+          action={() => archiveTask(id)}
           icon={<BsInboxes />}
           isDisabled={isArchived}
         />
         <TaskActionButton
-          action={deleteTask}
+          action={() => deleteTaskById(id)}
           icon={<BsTrash />}
         />
         <TaskActionButton
-          action={() => console.log('this should exit task view')}
+          action={() => updateActiveTask()}
           icon={<BsXLg />}
         />
       </div>
     </div>
   );
 };
-
-interface TaskActionButtonProps {
-  action: () => void,
-  icon: ReactElement,
-  isDisabled?: boolean,
-};
-
-const TaskActionButton = ({
-  action,
-  icon,
-  isDisabled = false,
-}: TaskActionButtonProps): ReactElement => (
-  <TMButton
-    buttonStyle='icon'
-    classNames={['off-black']}
-    isDisabled={isDisabled}
-    onClick={action}
-    size='medium'
-  >
-    {icon}
-  </TMButton>
-);
 
 export default Header;

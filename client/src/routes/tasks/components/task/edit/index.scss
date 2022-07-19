@@ -1,11 +1,10 @@
 @import 'global';
 
-.tm-task-card {
+.edit-task-card {
   background-color: $white;
   border-radius: 8px;
   color: $off-black;
   margin-bottom: $large-margin;
-
   &:last-child { margin-bottom: 0; };
 
   .task-content-container {

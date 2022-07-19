@@ -8,6 +8,7 @@ import { useTasks } from 'providers/tasks';
 import Header from 'routes/tasks/components/header';
 import SearchPanel from 'routes/tasks/components/panel/search';
 import TasksPanel from 'routes/tasks/components/panel/tasks';
+import WorkspacePanel from 'routes/tasks/components/panel/workspace';
 
 const TaskPage: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const TaskPage: React.FC = (): JSX.Element => {
       <div id='task-page' className='contents'>
         <Header searchText={searchText} updateSearchText={updateSearchText} />
         {searchText ? <SearchPanel /> : <TasksPanel />}
+        <WorkspacePanel />
       </div>
     )
     : <TMLoader color='#99B83B' text='fetching tasks...' />;

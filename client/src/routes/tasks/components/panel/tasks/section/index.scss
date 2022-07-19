@@ -1,0 +1,11 @@
+@import 'global';
+
+.tasks-container {
+  color: $white;
+  padding-top: $medium-padding;
+
+  .empty-task-section {
+    padding: $medium-padding;
+    padding-top: 0;
+  };
+};

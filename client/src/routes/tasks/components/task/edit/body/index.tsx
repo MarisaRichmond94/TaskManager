@@ -2,8 +2,8 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
-import TaskChecklistItems from 'routes/tasks/components/task_card/body/checklist_items';
-import TaskComments from 'routes/tasks/components/task_card/body/comments';
+import TaskChecklistItems from 'routes/tasks/components/task/edit/body/checklist_items';
+import TaskComments from 'routes/tasks/components/task/edit/body/comments';
 
 interface BodyProps {
   id: string,

@@ -1,0 +1,110 @@
+import './index.scss';
+
+import { ReactElement } from 'react';
+import {
+  BsCalendarDate, BsChatSquareText, BsCardChecklist, BsFlag,
+  BsInbox, BsInboxes, BsLightning, BsTags, BsTrash, BsTrophy,
+} from 'react-icons/bs';
+
+import { useTasks } from 'providers/tasks';
+import TaskActionButton from 'routes/tasks/components/task/action_button';
+
+interface TaskCardProps { task: Task };
+
+const TaskCard = ({ task }: TaskCardProps): ReactElement => {
+  const { activeTask, updateActiveTask } = useTasks();
+  const {
+    checklistItems, comments, description, dueDate, id, isArchived, objective, status, tags,
+  } = task;
+
+  const activeClass = activeTask?.id === id ? 'active' : '';
+
+  return (
+    <div className={['task-card', activeClass].join(' ')} onClick={() => updateActiveTask(task)}>
+      <Header id={id} isArchived={isArchived} objective={objective} status={status} />
+      <Body description={description} />
+      <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />
+    </div>
+  );
+};
+
+interface HeaderProps {
+  id: string,
+  isArchived: boolean,
+  objective: string,
+  status: Status,
+};
+
+const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElement => {
+  const { archiveTask, deleteTaskById } = useTasks();
+
+  const getStatusIcon = (statusName: string): ReactElement => {
+    switch (statusName) {
+      case 'To Do': return <BsInbox className='to-do' />;
+      case 'In Progress': return <BsLightning className='in-progress' />;
+      case 'Blocked': return <BsFlag className='blocked' />;
+      case 'Complete': return <BsTrophy className='complete' />;
+      default: throw Error(`Invalid status name ${statusName}`);
+    }
+  };
+
+  return (
+    <div className={['task-card-header', 'header-text'].join(' ')}>
+      {getStatusIcon(status.name)}
+      <b className='task-objective'>{objective}</b>
+      <div className='action-menu'>
+        <TaskActionButton
+          action={() => archiveTask(id)}
+          icon={<BsInboxes />}
+          isDisabled={isArchived}
+        />
+        <TaskActionButton
+          action={() => deleteTaskById(id)}
+          icon={<BsTrash />}
+        />
+      </div>
+    </div>
+  );
+};
+
+const Body = ({ description } : { description: string }): ReactElement => (
+  <div className='task-card-body sub-header-text'>
+    {description}
+  </div>
+);
+
+interface FooterProps {
+  checklistItems: ChecklistItem[],
+  comments: Comment[],
+  dueDate: string,
+  tags: Tag[],
+};
+
+const Footer = ({ checklistItems, comments, dueDate, tags } : FooterProps): ReactElement => {
+  const completed = checklistItems.filter(x => x.isCompleted).length;
+  const total = checklistItems.length;
+  const date = new Date(dueDate);
+
+  return (
+    <div className='task-card-footer sub-header-text'>
+      <FooterStat icon={<BsCardChecklist />} stat={`${completed}/${total}`} />
+      <FooterStat icon={<BsChatSquareText />} stat={comments.length.toString()} />
+      <FooterStat icon={<BsTags />} stat={tags.length.toString()} />
+      <FooterStat icon={<BsCalendarDate />} stat={`${date.getUTCMonth()+1}/${date.getUTCDate()}`} />
+    </div>
+  );
+};
+
+interface FooterStatProps {
+  icon: ReactElement,
+  stat: string,
+};
+
+const FooterStat = ({ icon, stat }: FooterStatProps): ReactElement => (
+  <div className='footer-stat'>
+    {icon}
+    {stat}
+  </div>
+);
+
+export default TaskCard;

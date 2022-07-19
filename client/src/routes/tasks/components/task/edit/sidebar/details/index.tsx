@@ -40,7 +40,7 @@ const TaskDetail = ({ datetime, icon }: TaskDetailProps): ReactElement => {
   return (
     <div className='sub-header-text task-detail'>
       {icon}
-      {`${date.getUTCMonth()}/${date.getUTCDate()}/${date.getUTCFullYear()}`}
+      {`${date.getUTCMonth()+1}/${date.getUTCDate()}/${date.getUTCFullYear()}`}
     </div>
   );
 };

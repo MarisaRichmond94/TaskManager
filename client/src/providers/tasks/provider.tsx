@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 
 import BaseApi from 'api/base';
 import TaskManagerApi from 'api/taskManager';
+import TasksApi from 'api/tasks';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 
 const TasksProvider = (props: object) => {
+  const [activeTask, setActiveTask] = useState<undefined | Task>();
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
@@ -28,30 +30,42 @@ const TasksProvider = (props: object) => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
-  const archiveTaskById = (archivedTask: Task) => {
+  const archiveTask = async (taskId: string) => {
+    const taskById = tasks.find(task => task.id === taskId);
+    const archivedTask = {...taskById};
+    const updatedTask = await TasksApi.update(taskId, { isArchived: true });
+    archivedTask.isArchived = updatedTask.isArchived;
     const updatedTasks = tasks.map(task => task.id === archivedTask.id ? archivedTask : task);
-    console.log(JSON.stringify(tasks) === JSON.stringify(updatedTasks));
     setTasks(updatedTasks);
     if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== archivedTask.id));
     buildTaskLists(updatedTasks, setTaskMap);
   };
 
-  const deleteTaskById = (taskId: string) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
-    setTasks(updatedTasks);
-    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
-    buildTaskLists(updatedTasks, setTaskMap);
+  const deleteTaskById = async (taskId: string) => {
+    const isSuccessfullyDeleted = await TaskManagerApi.deleteById(taskId);
+    if (isSuccessfullyDeleted) {
+      const updatedTasks = tasks.filter(task => task.id !== taskId);
+      setTasks(updatedTasks);
+      if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
+      buildTaskLists(updatedTasks, setTaskMap);
+    }
+  };
+
+  const updateActiveTask = (task?: Task) => {
+    if (activeTask?.id !== task?.id) setActiveTask(task);
   };
 
   const value = {
+    activeTask,
     attachmentTypes,
     searchedTasks,
     statusTypes,
     tags,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
-    archiveTaskById,
+    archiveTask,
     deleteTaskById,
+    updateActiveTask,
   };
 
   return <TasksContext.Provider value={value} {...props} />;

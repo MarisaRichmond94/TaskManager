@@ -2,9 +2,9 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
-import TaskAttachments from 'routes/tasks/components/task_card/sidebar/attachments';
-import TaskDetails from 'routes/tasks/components/task_card/sidebar/details';
-import TaskTags from 'routes/tasks/components/task_card/sidebar/tags';
+import TaskAttachments from 'routes/tasks/components/task/edit/sidebar/attachments';
+import TaskDetails from 'routes/tasks/components/task/edit/sidebar/details';
+import TaskTags from 'routes/tasks/components/task/edit/sidebar/tags';
 
 interface SidebarProps {
   id: string,

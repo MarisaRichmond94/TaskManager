@@ -1,0 +1,43 @@
+@import 'global';
+
+.task-card {
+  background-color: $off-white;
+  border-radius: 8px;
+  color: $off-black;
+  margin-bottom: $large-margin;
+  max-height: 100px;
+  overflow: hidden auto;
+  padding: $large-padding;
+  &.active { background-color: $white; };
+  &:last-child { margin-bottom: 0; };
+
+  .task-card-header {
+    @include centered-flex-box;
+    margin-bottom: $medium-margin;
+
+    .to-do { color: $primary-blue; };
+    .in-progress { color: $primary-yellow; };
+    .blocked { color: $primary-red; };
+    .complete { color: $primary-green; };
+
+    .task-objective { margin-left: $small-margin; };
+
+    .action-menu {
+      @include centered-flex-box;
+      margin-left: auto;
+      button { padding: $extra-small-padding; };
+    }
+  }
+
+  .task-card-footer {
+    @include centered-flex-box;
+    justify-content: flex-end;
+    margin-top: $medium-margin;
+
+    .footer-stat {
+      @include centered-flex-box;
+      margin-left: $medium-margin;
+      svg { margin-right: $small-margin; };
+    };
+  }
+};

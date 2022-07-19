@@ -1,10 +1,9 @@
 @import 'global';
 
 #tasks-panel {
-  height: calc(100% - 55px);
   overflow: hidden auto;
   padding: 0;
-  padding-right: $medium-padding; // TODO - figure out how to only add this when overflow
+  padding-right: $medium-padding;
 
   .task-count { margin: 0; };
 
