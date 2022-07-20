@@ -6,6 +6,7 @@ import { BsCloudUpload, BsEraser, BsTrash } from 'react-icons/bs';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
+import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
 interface TaskCommentsProps {
   id: string,
@@ -51,12 +52,9 @@ const TaskComment = ({ checklistItem }: CommentProps): ReactElement => {
   const { text, updatedAt } = checklistItem;
   const [isInEditMode, setIsInEditMode] = useState(false);
 
-  const getCommentTimestamp = (datetime: string): string => {
-    const date = new Date(datetime);
-    return [
-      `${date.getUTCMonth()}/${date.getUTCDate()}/${date.getUTCFullYear()}`,
-      `at ${date.getUTCHours()}:${date.getUTCMinutes()} ${date.getHours() > 12 ? 'PM' : 'AM'}`,
-    ].join(' ')
+  const getCommentTimestamp = (secondsSinceEpoch: number): string => {
+    const date = toClientDatetime(secondsSinceEpoch);
+    return `${getFullDateString(date)} at ${getTimestampString(date)}`;
   };
 
   return (

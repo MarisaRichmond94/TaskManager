@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import java.time.Instant
 import java.util.*
 
 @Repository
@@ -26,7 +25,7 @@ interface TaskRepository : JpaRepository<Task, UUID> {
 
     @Modifying
     @Query("update Task t set t.dueDate = ?2 where t.id = ?1")
-    fun updateDueDate(id: UUID, dueDate: Instant)
+    fun updateDueDate(id: UUID, dueDate: Long)
 
     fun deleteAllByUserId(userId: UUID)
 }

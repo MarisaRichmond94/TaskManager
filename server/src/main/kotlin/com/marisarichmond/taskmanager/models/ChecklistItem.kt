@@ -13,8 +13,8 @@ data class ChecklistItem(
     val description: String,
     val isCompleted: Boolean = false,
     val orderIndex: Int,
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
     @ManyToOne
     @JoinColumn(name = "task_id")
     val task: Task,

@@ -8,6 +8,7 @@ import {
 
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
+import { getDayMonthDateString, toClientDatetime } from 'utils/date';
 
 interface TaskCardProps { task: Task };
 
@@ -76,21 +77,21 @@ const Body = ({ description } : { description: string }): ReactElement => (
 interface FooterProps {
   checklistItems: ChecklistItem[],
   comments: Comment[],
-  dueDate: string,
+  dueDate: number,
   tags: Tag[],
 };
 
 const Footer = ({ checklistItems, comments, dueDate, tags } : FooterProps): ReactElement => {
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
-  const date = new Date(dueDate);
+  const date = toClientDatetime(dueDate);
 
   return (
     <div className='task-card-footer sub-header-text'>
       <FooterStat icon={<BsCardChecklist />} stat={`${completed}/${total}`} />
       <FooterStat icon={<BsChatSquareText />} stat={comments.length.toString()} />
       <FooterStat icon={<BsTags />} stat={tags.length.toString()} />
-      <FooterStat icon={<BsCalendarDate />} stat={`${date.getUTCMonth()+1}/${date.getUTCDate()}`} />
+      <FooterStat icon={<BsCalendarDate />} stat={getDayMonthDateString(date)} />
     </div>
   );
 };

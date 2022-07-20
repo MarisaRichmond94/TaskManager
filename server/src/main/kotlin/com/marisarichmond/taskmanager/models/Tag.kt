@@ -11,8 +11,8 @@ data class Tag(
     override val id: UUID = UUID.randomUUID(),
     val name: String,
     val hexColor: String = "#868686",
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
     @OneToOne
     @JoinColumn(name = "user_id")
     val user: User

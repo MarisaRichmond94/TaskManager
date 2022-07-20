@@ -48,7 +48,7 @@ class AttachmentService(
                     existingAttachment.copy(
                         link = link ?: existingAttachment.link,
                         name = name ?: existingAttachment.name,
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                         task = if (taskId != null && taskId != existingAttachment.task.id) {
                             taskService.getById(taskId)
                         } else existingAttachment.task,

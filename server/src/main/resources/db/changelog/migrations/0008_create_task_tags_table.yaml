@@ -20,12 +20,12 @@ databaseChangeLog:
                     primaryKeyName: task_tag_pkey
               - column:
                   name: created_at
-                  type: datetime
+                  type: bigint
                   constraints:
                     nullable: false
               - column:
                   name: updated_at
-                  type: datetime
+                  type: bigint
                   constraints:
                     nullable: false
               - column:

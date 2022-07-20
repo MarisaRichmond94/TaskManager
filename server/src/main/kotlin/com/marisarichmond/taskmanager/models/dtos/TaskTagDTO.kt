@@ -9,8 +9,8 @@ data class TaskTagDTO(
     val id: UUID,
     val tagId: UUID,
     val tagName: String,
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

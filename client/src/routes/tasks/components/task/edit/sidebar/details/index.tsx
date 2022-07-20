@@ -5,11 +5,12 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import { getFullDateString, toClientDatetime } from 'utils/date';
 
 interface TaskDetailsProps {
   id: string,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: number,
+  updatedAt: number,
 };
 
 const TaskDetails = ({ id, createdAt, updatedAt }: TaskDetailsProps): ReactElement => {
@@ -21,24 +22,24 @@ const TaskDetails = ({ id, createdAt, updatedAt }: TaskDetailsProps): ReactEleme
       sectionTitle='Details'
     >
       <div className='task-details-container task-sidebar-collapsable-container'>
-        <TaskDetail datetime={createdAt} icon={<MdOutlineAddTask />} />
-        <TaskDetail datetime={updatedAt} icon={<BsPencilSquare />} />
+        <TaskDetail secondsSinceEpoch={createdAt} icon={<MdOutlineAddTask />} />
+        <TaskDetail secondsSinceEpoch={updatedAt} icon={<BsPencilSquare />} />
       </div>
     </TMCollapsableSection>
   );
 };
 
 interface TaskDetailProps {
-  datetime: string,
+  secondsSinceEpoch: number,
   icon: ReactElement,
 };
 
-const TaskDetail = ({ datetime, icon }: TaskDetailProps): ReactElement => {
-  const date = new Date(datetime);
+const TaskDetail = ({ secondsSinceEpoch, icon }: TaskDetailProps): ReactElement => {
+  const date = toClientDatetime(secondsSinceEpoch);
   return (
     <div className='sub-header-text task-detail'>
       {icon}
-      {`${date.getUTCMonth()+1}/${date.getUTCDate()}/${date.getUTCFullYear()}`}
+      {getFullDateString(date)}
     </div>
   );
 };

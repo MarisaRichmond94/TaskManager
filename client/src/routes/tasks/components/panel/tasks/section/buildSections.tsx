@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 
 import TasksSection from 'routes/tasks/components/panel/tasks/section';
 import TaskCard from 'routes/tasks/components/task';
+import { getDayMonthDateString, getModifiedDate } from 'utils/date';
 
 enum SectionType {
   Today = 'Today',
@@ -15,11 +16,10 @@ const generateSectionTitle = (sectionType: string): string => {
   const today = new Date();
   switch (sectionType) {
     case `${SectionType.Today}`:
-      return `${sectionType} (${today.getMonth() + 1}/${today.getDate()})`;
+      return `${sectionType} (${getDayMonthDateString(today)})`;
     case `${SectionType.Tomorrow}`:
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      return `${sectionType} (${tomorrow.getMonth() + 1}/${tomorrow.getDate()})`
+      const tomorrow = getModifiedDate(today, 1);
+      return `${sectionType} (${getDayMonthDateString(tomorrow)})`
     case `${SectionType.Upcoming}`:
     case `${SectionType.Overdue}`:
     default:

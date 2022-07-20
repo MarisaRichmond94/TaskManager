@@ -2,15 +2,14 @@ package com.marisarichmond.taskmanager.models.dtos
 
 import com.marisarichmond.taskmanager.models.Tag
 import org.hibernate.Hibernate
-import java.time.Instant
 import java.util.*
 
 // Response DTOs
 data class TaskDTO(
     val id: UUID,
-    val dueDate: Instant,
-    val createdAt: Instant,
-    val updatedAt: Instant,
+    val dueDate: Long,
+    val createdAt: Long,
+    val updatedAt: Long,
     val isArchived: Boolean,
     val isPinned: Boolean,
     val status: StatusDTO,
@@ -45,7 +44,7 @@ data class TaskDTO(
 data class CreateNewTaskDTO(val id: UUID = UUID.randomUUID())
 
 data class UpdateTaskByIdDTO(
-    val dueDate: Instant? = null,
+    val dueDate: Long? = null,
     val isArchived: Boolean? = null,
     val isPinned: Boolean? = null,
     val objective: String? = null,

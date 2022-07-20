@@ -1,14 +1,23 @@
+import './index.scss';
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useState } from "react";
+import { FC } from "react";
 
 import DatePicker from "react-datepicker";
 
-const TMDatePicker = () => {
-  const [startDate, setStartDate] = useState(new Date());
+interface ITMDatePickerProps {
+  date: Date,
+  showTimeSelect?: boolean,
+  onChange: (date: Date) => void,
+};
 
+const TMDatePicker: FC<ITMDatePickerProps> = ({ date, showTimeSelect = false, onChange }) => {
   return (
-    <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
+    <DatePicker
+      selected={date}
+      onChange={onChange}
+      showTimeSelect={showTimeSelect}
+    />
   );
 };
 

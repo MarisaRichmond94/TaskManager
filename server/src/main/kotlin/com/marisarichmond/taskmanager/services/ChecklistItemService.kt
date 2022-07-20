@@ -51,7 +51,7 @@ class ChecklistItemService(
                             updateOrderIndex(existingChecklistItem, orderIndex)
                             orderIndex
                         } else existingChecklistItem.orderIndex,
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                     )
                 ).toDTO()
             }

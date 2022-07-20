@@ -58,7 +58,7 @@ class TaskService(
                     dueDate = dueDate ?: existingTask.dueDate,
                     isArchived = isArchived ?: existingTask.isArchived,
                     isPinned = isPinned ?: existingTask.isPinned,
-                    updatedAt = Instant.now(),
+                    updatedAt = Instant.now().epochSecond,
                 ).also { taskRepository.save(it) }
             }
         }

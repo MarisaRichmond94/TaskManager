@@ -10,8 +10,8 @@ import javax.persistence.*
 data class TaskTag(
     @Id
     override val id: UUID = UUID.randomUUID(),
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
     @OneToOne
     @JoinColumn(name = "task_id")
     val task: Task,

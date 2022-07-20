@@ -34,7 +34,7 @@ class StatusService(
             statusRepository.getById(id).let { existingStatus ->
                 statusRepository.save(
                     existingStatus.copy(
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                         statusType = if (statusTypeId != null && statusTypeId != existingStatus.statusType.id) {
                             statusTypeService.getById(statusTypeId)
                                 ?: throw EntityNotFoundException(STATUS_TYPE, statusTypeId)

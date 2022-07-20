@@ -44,7 +44,7 @@ class TaskTagService(
             taskTagRepository.getById(id).let { existingTaskTag ->
                 taskTagRepository.save(
                     existingTaskTag.copy(
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                         tag = if (tagId != null && tagId != existingTaskTag.tag.id) {
                             tagService.getById(tagId)
                         } else existingTaskTag.tag,

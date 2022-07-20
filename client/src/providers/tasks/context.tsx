@@ -11,6 +11,7 @@ interface TasksContextType {
   archiveTask: (taskId: string) => void,
   deleteTaskById: (taskId: string) => void,
   updateActiveTask: (task?: Task) => void,
+  updateTaskInTasks: (updatedTask: Task) => void,
 };
 
 const TasksContext = createContext<undefined | TasksContextType>(undefined);

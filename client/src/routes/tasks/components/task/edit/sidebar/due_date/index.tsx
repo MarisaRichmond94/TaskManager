@@ -1,15 +1,19 @@
-import './index.scss';
-import "react-datepicker/dist/react-datepicker.css";
-
-import { ReactElement } from 'react';
-import DatePicker from 'react-datepicker';
+import { FC, ReactElement } from 'react';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers/task';
+import { toServerDatetime, toClientDatetime } from 'utils/date';
 
-const TaskDueDate = (): ReactElement => {
+interface ITaskDueDateProps {
+  dueDate: number,
+  id: string,
+};
+
+const TaskDueDate: FC<ITaskDueDateProps> = ({ dueDate, id }): ReactElement => {
   const { task, updateTask } = useTask();
-  const { dueDate, id } = task;
+
+  const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
 
   return (
     <TMCollapsableSection
@@ -18,9 +22,10 @@ const TaskDueDate = (): ReactElement => {
       initiallyVisible
       sectionTitle='Due Date'
     >
-      <DatePicker
-        selected={new Date(dueDate)}
-        onChange={(date: Date) => updateTask({ dueDate: date.toISOString() })}
+      <TMDatePicker
+        date={toClientDatetime(task.dueDate)}
+        onChange={(date: Date) => updateDueDate(date)}
+        showTimeSelect
       />
     </TMCollapsableSection>
   );

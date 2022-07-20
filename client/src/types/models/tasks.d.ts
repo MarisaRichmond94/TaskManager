@@ -16,15 +16,15 @@ interface ChecklistItem {
   description: string,
   isCompleted: boolean,
   orderIndex: number,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: number,
+  updatedAt: number,
 };
 
 interface Comment {
   id: string,
   text: string,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: number,
+  updatedAt: number,
 };
 
 interface Status {
@@ -51,14 +51,14 @@ interface Task {
   attachments?: Attachment[],
   checklistItems?: ChecklistItem[],
   comments?: Comment[],
-  createdAt: string,
+  createdAt: number,
   description?: string,
-  dueDate: string,
+  dueDate: number,
   isArchived: boolean,
   isPinned: boolean,
   objective: string,
   status?: Status,
   tags?: Tag[],
-  updatedAt: string,
+  updatedAt: number,
   user: User,
 };

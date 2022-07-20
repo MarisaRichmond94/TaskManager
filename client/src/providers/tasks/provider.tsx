@@ -51,6 +51,14 @@ const TasksProvider = (props: object) => {
     }
   };
 
+  const updateTaskInTasks = (updatedTask: Task) => {
+    const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
+    setTasks(updatedTasks);
+    const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
+    setSearchedTasks(updatedSearchedTasks);
+    buildTaskLists(updatedTasks, setTaskMap);
+  };
+
   const updateActiveTask = (task?: Task) => {
     if (activeTask?.id !== task?.id) setActiveTask(task);
   };
@@ -66,6 +74,7 @@ const TasksProvider = (props: object) => {
     archiveTask,
     deleteTaskById,
     updateActiveTask,
+    updateTaskInTasks,
   };
 
   return <TasksContext.Provider value={value} {...props} />;

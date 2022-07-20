@@ -1,3 +1,5 @@
+import { getModifiedDate, toClientDatetime } from 'utils/date';
+
 const buildTaskLists = (
   taskList: Task[],
   setTaskMap: (taskMap: Map<string, Task[]>) => void,
@@ -10,16 +12,13 @@ const buildTaskLists = (
       ['Archived', []],
     ]);
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
     const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const theDayAfterTomorrow = new Date();
-    theDayAfterTomorrow.setDate(theDayAfterTomorrow.getDate() + 1);
+    const yesterday = getModifiedDate(today, -1);
+    const tomorrow = getModifiedDate(today, 1);
+    const theDayAfterTomorrow = getModifiedDate(today, 2);
 
     taskList.forEach(task => {
-      const dueDate = new Date(task.dueDate);
+      const dueDate = toClientDatetime(task.dueDate);
       if (task.isArchived) taskMap.get('Archived').push(task);
       else if (yesterday < dueDate && dueDate < tomorrow) taskMap.get('Today').push(task);
       else if (today < dueDate && dueDate < theDayAfterTomorrow) taskMap.get('Tomorrow').push(task);

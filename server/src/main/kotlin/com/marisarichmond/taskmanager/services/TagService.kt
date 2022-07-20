@@ -52,7 +52,7 @@ class TagService(
                     existingTag.copy(
                         name = name ?: existingTag.name,
                         hexColor = hexColor ?: existingTag.hexColor,
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                     )
                 )
             }

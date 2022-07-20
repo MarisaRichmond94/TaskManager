@@ -8,8 +8,8 @@ import java.util.*
 data class CommentDTO(
     val id: UUID,
     val text: String,
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

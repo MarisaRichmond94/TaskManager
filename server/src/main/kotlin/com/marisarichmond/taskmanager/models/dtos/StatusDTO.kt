@@ -8,8 +8,8 @@ import java.util.*
 data class StatusDTO(
     val id: UUID,
     val name: String,
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

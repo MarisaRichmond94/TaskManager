@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 
 import { TaskProvider } from 'providers/task';
 import { useTasks } from 'providers/tasks';

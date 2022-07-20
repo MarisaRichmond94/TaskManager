@@ -10,9 +10,9 @@ import javax.persistence.*
 data class Task(
     @Id
     override val id: UUID = UUID.randomUUID(),
-    val dueDate: Instant = Instant.now().plus(1, ChronoUnit.DAYS),
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
+    val dueDate: Long = Instant.now().plus(1, ChronoUnit.DAYS).epochSecond,
+    val createdAt: Long = Instant.now().epochSecond,
+    val updatedAt: Long = Instant.now().epochSecond,
     val isArchived: Boolean = false,
     val isPinned: Boolean = false,
     @OneToOne

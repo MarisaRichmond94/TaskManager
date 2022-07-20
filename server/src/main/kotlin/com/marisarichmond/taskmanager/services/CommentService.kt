@@ -44,7 +44,7 @@ class CommentService(
                 commentRepository.save(
                     existingComment.copy(
                         text = text ?: existingComment.text,
-                        updatedAt = Instant.now(),
+                        updatedAt = Instant.now().epochSecond,
                     )
                 ).toDTO()
             }

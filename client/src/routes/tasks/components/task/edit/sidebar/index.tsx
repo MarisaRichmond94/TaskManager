@@ -10,10 +10,10 @@ import TaskTags from 'routes/tasks/components/task/edit/sidebar/tags';
 interface SidebarProps {
   id: string,
   attachments?: Attachment[],
-  createdAt: string,
-  dueDate?: string,
+  createdAt: number,
+  dueDate?: number,
   tags?: Tag[],
-  updatedAt: string,
+  updatedAt: number,
 };
 
 const Sidebar = ({
@@ -25,7 +25,7 @@ const Sidebar = ({
   updatedAt,
 }: SidebarProps): ReactElement => (
   <div className='tm-task-sidebar'>
-    <TaskDueDate />
+    <TaskDueDate id={id} dueDate={dueDate} />
     <TaskTags id={id} tags={tags} />
     <TaskAttachments id={id} attachments={attachments} />
     <TaskDetails id={id} createdAt={createdAt} updatedAt={updatedAt} />

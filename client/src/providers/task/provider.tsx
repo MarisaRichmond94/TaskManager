@@ -3,6 +3,7 @@ import { ReactElement, useState } from 'react';
 import StatusesApi from 'api/statuses';
 import TasksApi from 'api/tasks';
 import TaskContext from 'providers/task/context';
+import { useTasks } from 'providers/tasks';
 
 interface TaskProps {
   children: ReactElement,
@@ -10,6 +11,7 @@ interface TaskProps {
 };
 
 const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
+  const { updateTaskInTasks } = useTasks();
   const [task, setTask] = useState(providedTask);
 
   const updateTask = async(updateTaskDTO: UpdateTaskDTO) => {
@@ -26,6 +28,7 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
     const updatedTask = { ...task };
     updatedTask.status = await StatusesApi.update(statusId, { statusTypeId });
     setTask(updatedTask);
+    updateTaskInTasks(updatedTask);
   };
 
   const value = {
