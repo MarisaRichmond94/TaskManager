@@ -37,7 +37,7 @@ interface HeaderProps {
 };
 
 const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElement => {
-  const { archiveTask, deleteTaskById } = useTasks();
+  const { archiveTaskById, deleteTaskById } = useTasks();
 
   const getStatusIcon = (statusName: string): ReactElement => {
     switch (statusName) {
@@ -55,7 +55,7 @@ const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElemen
       <b className='task-objective'>{objective}</b>
       <div className='action-menu'>
         <TaskActionButton
-          action={() => archiveTask(id)}
+          action={() => archiveTaskById(id)}
           icon={<BsInboxes />}
           isDisabled={isArchived}
         />

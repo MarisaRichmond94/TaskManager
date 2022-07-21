@@ -22,6 +22,7 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
     if (updateTaskDTO.isPinned !== undefined) copy.isPinned = updatedTask.isPinned;
     if (updateTaskDTO.objective) copy.objective = updatedTask.objective;
     setTask(copy);
+    updateTaskInTasks(copy);
   };
 
   const updateStatus = async (statusId: string, statusTypeId: string) => {

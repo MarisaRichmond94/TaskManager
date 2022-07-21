@@ -16,7 +16,7 @@ interface HeaderProps {
 };
 
 const Header = ({ id, isArchived, isPinned, status }: HeaderProps): ReactElement => {
-  const { archiveTask, deleteTaskById, statusTypes, updateActiveTask } = useTasks();
+  const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTask } = useTasks();
   const { updateStatus, updateTask } = useTask();
 
   return (
@@ -32,7 +32,7 @@ const Header = ({ id, isArchived, isPinned, status }: HeaderProps): ReactElement
           icon={isPinned ? <BsBookmarksFill /> : <BsBookmarks />}
         />
         <TaskActionButton
-          action={() => archiveTask(id)}
+          action={() => archiveTaskById(id)}
           icon={<BsInboxes />}
           isDisabled={isArchived}
         />

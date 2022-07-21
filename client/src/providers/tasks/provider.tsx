@@ -30,7 +30,7 @@ const TasksProvider = (props: object) => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
-  const archiveTask = async (taskId: string) => {
+  const archiveTaskById = async (taskId: string) => {
     const taskById = tasks.find(task => task.id === taskId);
     const archivedTask = {...taskById};
     const updatedTask = await TasksApi.update(taskId, { isArchived: true });
@@ -54,8 +54,10 @@ const TasksProvider = (props: object) => {
   const updateTaskInTasks = (updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
-    const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
-    setSearchedTasks(updatedSearchedTasks);
+    if (searchedTasks) {
+      const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
+      setSearchedTasks(updatedSearchedTasks);
+    }
     buildTaskLists(updatedTasks, setTaskMap);
   };
 
@@ -71,7 +73,7 @@ const TasksProvider = (props: object) => {
     tags,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
-    archiveTask,
+    archiveTaskById,
     deleteTaskById,
     updateActiveTask,
     updateTaskInTasks,

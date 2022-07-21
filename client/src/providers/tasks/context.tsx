@@ -8,7 +8,7 @@ interface TasksContextType {
   tags?: Tag[],
   taskMap?: Map<string, Task[]>,
   userTaskDataLoaded: boolean,
-  archiveTask: (taskId: string) => void,
+  archiveTaskById: (taskId: string) => void,
   deleteTaskById: (taskId: string) => void,
   updateActiveTask: (task?: Task) => void,
   updateTaskInTasks: (updatedTask: Task) => void,
