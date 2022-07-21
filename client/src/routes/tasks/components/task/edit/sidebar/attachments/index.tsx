@@ -8,13 +8,12 @@ import { SiJirasoftware } from 'react-icons/si';
 
 import { TMButton } from 'components/tm_button';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import { useTask } from 'providers/task';
 
-interface ITaskAttachments {
-  id: string,
-  attachments?: Attachment[],
-};
+const TaskAttachments: FC = () => {
+  const { task } = useTask();
+  const { attachments, id } = task;
 
-const TaskAttachments: FC<ITaskAttachments> = ({ id, attachments }) => {
   const populateTaskAttachments = (taskAttachments?: Attachment[]): ReactElement[] | ReactElement => {
     if (!taskAttachments.length) return <NoAttachmentsToDisplay />;
 

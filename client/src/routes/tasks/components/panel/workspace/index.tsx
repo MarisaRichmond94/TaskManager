@@ -7,14 +7,15 @@ import { useTasks } from 'providers/tasks';
 import EditTaskCard from '../../task/edit';
 
 const WorkspacePanel = (): ReactElement => {
-  const { activeTask } = useTasks();
+  const { activeTaskId, tasks } = useTasks();
 
-  if (!activeTask) return null;
+  if (!activeTaskId) return null;
+  const activeTask = tasks.find(x => x.id === activeTaskId);
 
   return (
     <div className='tm-panel' id='task-workspace-panel'>
       <TaskProvider task={activeTask}>
-        <EditTaskCard task={activeTask} />
+        <EditTaskCard />
       </TaskProvider>
     </div>
   );

@@ -6,13 +6,11 @@ import { RiPlayListAddFill } from 'react-icons/ri';
 import TMCheckbox from 'components/tm_button/tm_checkbox';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { TMButton } from 'components/tm_button';
+import { useTask } from 'providers/task';
 
-interface ITaskChecklistItems {
-  id: string,
-  checklistItems?: ChecklistItem[],
-};
-
-const TaskChecklistItems: FC<ITaskChecklistItems> = ({ id, checklistItems }) => {
+const TaskChecklistItems: FC = () => {
+  const { task } = useTask();
+  const { checklistItems, id } = task;
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
 

@@ -8,10 +8,10 @@ import { buildSections } from 'routes/tasks/components/panel/tasks/section/build
 import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings';
 
 const TasksPanel = (): ReactElement => {
-  const { activeTask, taskMap } = useTasks();
+  const { activeTaskId, taskMap } = useTasks();
 
   const height = (
-    activeTask
+    activeTaskId
       ? `calc(100% - ${(HEADER_HEIGHT + WORKSPACE_PANEL_HEIGHT)}px)`
       : `calc(100% - ${HEADER_HEIGHT}px)`
   );

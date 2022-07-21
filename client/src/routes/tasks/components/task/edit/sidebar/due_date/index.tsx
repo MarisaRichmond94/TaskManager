@@ -5,13 +5,9 @@ import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers/task';
 import { toServerDatetime, toClientDatetime } from 'utils/date';
 
-interface ITaskDueDate {
-  dueDate: number,
-  id: string,
-};
-
-const TaskDueDate: FC<ITaskDueDate> = ({ dueDate, id }) => {
-  const { updateTask } = useTask();
+const TaskDueDate: FC = () => {
+  const { task, updateTask } = useTask();
+  const { dueDate, id } = task;
 
   const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
 
@@ -23,7 +19,7 @@ const TaskDueDate: FC<ITaskDueDate> = ({ dueDate, id }) => {
       sectionTitle='Due Date'
     >
       <TMDatePicker
-        date={toClientDatetime(dueDate)} // TODO - fix this BS
+        date={toClientDatetime(dueDate)}
         onChange={(date: Date) => updateDueDate(date)}
         showTimeSelect
       />

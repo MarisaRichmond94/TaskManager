@@ -5,15 +5,13 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import { useTask } from 'providers/task';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 
-interface ITaskDetails {
-  id: string,
-  createdAt: number,
-  updatedAt: number,
-};
+const TaskDetails: FC = () => {
+  const { task } = useTask();
+  const { createdAt, id, updatedAt } = task;
 
-const TaskDetails: FC<ITaskDetails> = ({ id, createdAt, updatedAt }) => {
   return (
     <TMCollapsableSection
       classNames={['off-black', 'task-section']}

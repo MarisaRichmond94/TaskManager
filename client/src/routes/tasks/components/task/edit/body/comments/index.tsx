@@ -6,14 +6,12 @@ import { BsCloudUpload, BsEraser, BsTrash } from 'react-icons/bs';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
+import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
-interface ITaskComments {
-  id: string,
-  comments?: Comment[],
-};
-
-const TaskComments: FC<ITaskComments> = ({ id, comments }) => {
+const TaskComments: FC = () => {
+  const { task } = useTask();
+  const { comments, id } = task;
   const [newCommentText, setNewCommentText] = useState('');
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {

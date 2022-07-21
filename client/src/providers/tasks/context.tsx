@@ -1,16 +1,17 @@
 import { createContext } from 'react';
 
 interface TasksContextType {
-  activeTask?: Task,
+  activeTaskId?: string,
   attachmentTypes?: AttachmentType[],
   searchedTasks?: Task[],
   statusTypes?: Status[],
   tags?: Tag[],
+  tasks?: Task[],
   taskMap?: Map<string, Task[]>,
   userTaskDataLoaded: boolean,
   archiveTaskById: (taskId: string) => void,
   deleteTaskById: (taskId: string) => void,
-  updateActiveTask: (task?: Task) => void,
+  updateActiveTaskId: (id?: string) => void,
   updateTaskInTasks: (updatedTask: Task) => void,
 };
 

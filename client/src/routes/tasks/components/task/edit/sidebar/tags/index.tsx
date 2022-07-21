@@ -5,15 +5,13 @@ import { BsTags, BsX } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 
-interface ITaskTags {
-  id: string,
-  tags?: Tag[],
-};
-
-const TaskTags: FC<ITaskTags> = ({ id, tags }) => {
+const TaskTags: FC = () => {
+  const { task } = useTask();
   const { tags: userTags } = useTasks();
+  const { id, tags } = task;
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;

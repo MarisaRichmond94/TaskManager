@@ -13,15 +13,15 @@ import { getDayMonthDateString, toClientDatetime } from 'utils/date';
 interface TaskCardProps { task: Task };
 
 const TaskCard = ({ task }: TaskCardProps): ReactElement => {
-  const { activeTask, updateActiveTask } = useTasks();
+  const { activeTaskId, updateActiveTaskId } = useTasks();
   const {
     checklistItems, comments, description, dueDate, id, isArchived, objective, status, tags,
   } = task;
 
-  const activeClass = activeTask?.id === id ? 'active' : '';
+  const activeClass = activeTaskId === id ? 'active' : '';
 
   return (
-    <div className={['task-card', activeClass].join(' ')} onClick={() => updateActiveTask(task)}>
+    <div className={['task-card', activeClass].join(' ')} onClick={() => updateActiveTaskId(id)}>
       <Header id={id} isArchived={isArchived} objective={objective} status={status} />
       <Body description={description} />
       <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />

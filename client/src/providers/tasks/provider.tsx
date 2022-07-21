@@ -7,7 +7,7 @@ import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 
 const TasksProvider = (props: object) => {
-  const [activeTask, setActiveTask] = useState<undefined | Task>();
+  const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
@@ -46,6 +46,7 @@ const TasksProvider = (props: object) => {
     if (isSuccessfullyDeleted) {
       const updatedTasks = tasks.filter(task => task.id !== taskId);
       setTasks(updatedTasks);
+      if (taskId === activeTaskId) setActiveTaskId(undefined);
       if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
       buildTaskLists(updatedTasks, setTaskMap);
     }
@@ -54,7 +55,6 @@ const TasksProvider = (props: object) => {
   const updateTaskInTasks = (updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
-    if (updatedTask.id === activeTask.id) setActiveTask(updatedTask);
     if (searchedTasks) {
       const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
       setSearchedTasks(updatedSearchedTasks);
@@ -62,21 +62,20 @@ const TasksProvider = (props: object) => {
     buildTaskLists(updatedTasks, setTaskMap);
   };
 
-  const updateActiveTask = (task?: Task) => {
-    if (activeTask?.id !== task?.id) setActiveTask(task);
-  };
+  const updateActiveTaskId = (id?: string) => { if (activeTaskId !== id) setActiveTaskId(id); };
 
   const value = {
-    activeTask,
+    activeTaskId,
     attachmentTypes,
     searchedTasks,
     statusTypes,
     tags,
+    tasks,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
     archiveTaskById,
     deleteTaskById,
-    updateActiveTask,
+    updateActiveTaskId,
     updateTaskInTasks,
   };
 

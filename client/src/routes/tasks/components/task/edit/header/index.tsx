@@ -8,16 +8,10 @@ import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
 
-interface IHeader {
-  id: string,
-  isArchived: boolean,
-  isPinned: boolean,
-  status: Status,
-};
-
-const Header: FC<IHeader> = ({ id, isArchived, isPinned, status }) => {
-  const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTask } = useTasks();
-  const { updateStatus, updateTask } = useTask();
+const Header: FC = () => {
+  const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTaskId } = useTasks();
+  const { task, updateStatus, updateTask } = useTask();
+  const {  id, isArchived, isPinned, status } = task;
 
   return (
     <div className='tm-task-header'>
@@ -41,7 +35,7 @@ const Header: FC<IHeader> = ({ id, isArchived, isPinned, status }) => {
           icon={<BsTrash />}
         />
         <TaskActionButton
-          action={() => updateActiveTask()}
+          action={() => updateActiveTaskId()}
           icon={<BsXLg />}
         />
       </div>
