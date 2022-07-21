@@ -54,6 +54,7 @@ const TasksProvider = (props: object) => {
   const updateTaskInTasks = (updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
+    if (updatedTask.id === activeTask.id) setActiveTask(updatedTask);
     if (searchedTasks) {
       const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
       setSearchedTasks(updatedSearchedTasks);

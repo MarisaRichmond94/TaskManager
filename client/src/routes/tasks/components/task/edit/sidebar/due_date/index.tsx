@@ -11,7 +11,7 @@ interface ITaskDueDate {
 };
 
 const TaskDueDate: FC<ITaskDueDate> = ({ dueDate, id }) => {
-  const { task, updateTask } = useTask();
+  const { updateTask } = useTask();
 
   const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
 
@@ -23,7 +23,7 @@ const TaskDueDate: FC<ITaskDueDate> = ({ dueDate, id }) => {
       sectionTitle='Due Date'
     >
       <TMDatePicker
-        date={toClientDatetime(task.dueDate)} // TODO - fix this BS
+        date={toClientDatetime(dueDate)} // TODO - fix this BS
         onChange={(date: Date) => updateDueDate(date)}
         showTimeSelect
       />
