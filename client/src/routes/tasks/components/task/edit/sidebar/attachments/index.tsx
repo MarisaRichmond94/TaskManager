@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { BsFolderPlus, BsPencilSquare } from 'react-icons/bs';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,12 +9,12 @@ import { SiJirasoftware } from 'react-icons/si';
 import { TMButton } from 'components/tm_button';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 
-interface TaskAttachmentsProps {
+interface ITaskAttachments {
   id: string,
   attachments?: Attachment[],
 };
 
-const TaskAttachments = ({ id, attachments }: TaskAttachmentsProps): ReactElement => {
+const TaskAttachments: FC<ITaskAttachments> = ({ id, attachments }) => {
   const populateTaskAttachments = (taskAttachments?: Attachment[]): ReactElement[] | ReactElement => {
     if (!taskAttachments.length) return <NoAttachmentsToDisplay />;
 
@@ -38,11 +38,11 @@ const TaskAttachments = ({ id, attachments }: TaskAttachmentsProps): ReactElemen
   );
 };
 
-interface AttachmentProps {
+interface IAttachment {
   attachment: Attachment,
 };
 
-const TaskAttachment = ({ attachment }: AttachmentProps): ReactElement => {
+const TaskAttachment: FC<IAttachment> = ({ attachment }) => {
   const { link, name, type } = attachment;
 
   const populateIcon = (attachmentType: AttachmentType): ReactElement => {
@@ -81,7 +81,7 @@ const TaskAttachment = ({ attachment }: AttachmentProps): ReactElement => {
   );
 };
 
-const AddAttachmentButton = (): ReactElement => (
+const AddAttachmentButton: FC = () => (
   <TMButton
     classNames={['grey', 'add-attachment-button']}
     buttonStyle='icon'
@@ -92,7 +92,7 @@ const AddAttachmentButton = (): ReactElement => (
   </TMButton>
 );
 
-const NoAttachmentsToDisplay = (): ReactElement => (
+const NoAttachmentsToDisplay: FC = () => (
   <div className='sub-header-text no-attachments'>
     No links
   </div>

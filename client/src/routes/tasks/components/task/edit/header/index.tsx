@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC } from 'react';
 import { BsBookmarks, BsBookmarksFill, BsInboxes, BsTrash, BsXLg } from 'react-icons/bs';
 
 import TMDropdown from 'components/tm_dropdown';
@@ -8,14 +8,14 @@ import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
 
-interface HeaderProps {
+interface IHeader {
   id: string,
   isArchived: boolean,
   isPinned: boolean,
   status: Status,
 };
 
-const Header = ({ id, isArchived, isPinned, status }: HeaderProps): ReactElement => {
+const Header: FC<IHeader> = ({ id, isArchived, isPinned, status }) => {
   const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTask } = useTasks();
   const { updateStatus, updateTask } = useTask();
 

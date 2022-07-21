@@ -1,12 +1,16 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
 import Body from 'routes/tasks/components/task/edit/body';
 import Header from 'routes/tasks/components/task/edit/header';
 import Sidebar from 'routes/tasks/components/task/edit/sidebar';
 
-const EditTaskCard = ({ task } : { task: Task }): ReactElement => {
+interface IEditTaskCard {
+  task: Task,
+};
+
+const EditTaskCard: FC<IEditTaskCard> = ({ task }) => {
   const { isArchived, isPinned, status } = task;
   const { id, checklistItems, comments, description, objective } = task;
   const { attachments, createdAt, dueDate, tags, updatedAt } = task;

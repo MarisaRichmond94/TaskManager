@@ -1,18 +1,18 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { BsTags, BsX } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { useTasks } from 'providers/tasks';
 
-interface TaskTagsProps {
+interface ITaskTags {
   id: string,
   tags?: Tag[],
 };
 
-const TaskTags = ({ id, tags }: TaskTagsProps): ReactElement => {
+const TaskTags: FC<ITaskTags> = ({ id, tags }) => {
   const { tags: userTags } = useTasks();
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {

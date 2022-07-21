@@ -1,11 +1,11 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
 import TaskChecklistItems from 'routes/tasks/components/task/edit/body/checklist_items';
 import TaskComments from 'routes/tasks/components/task/edit/body/comments';
 
-interface BodyProps {
+interface IBody {
   id: string,
   checklistItems?: ChecklistItem[],
   comments?: Comment[],
@@ -13,7 +13,7 @@ interface BodyProps {
   objective?: string,
 };
 
-const Body = ({ id, checklistItems, comments, description, objective }: BodyProps): ReactElement => {
+const Body: FC<IBody> = ({ id, checklistItems, comments, description, objective }) => {
   return (
     <div className='tm-task-body'>
       <div className='large-header-text task-objective'>

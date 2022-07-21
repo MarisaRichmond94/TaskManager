@@ -1,13 +1,13 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
 import TaskAttachments from 'routes/tasks/components/task/edit/sidebar/attachments';
 import TaskDetails from 'routes/tasks/components/task/edit/sidebar/details';
 import TaskDueDate from 'routes/tasks/components/task/edit/sidebar/due_date';
 import TaskTags from 'routes/tasks/components/task/edit/sidebar/tags';
 
-interface SidebarProps {
+interface ISidebar {
   id: string,
   attachments?: Attachment[],
   createdAt: number,
@@ -16,14 +16,14 @@ interface SidebarProps {
   updatedAt: number,
 };
 
-const Sidebar = ({
+const Sidebar: FC<ISidebar> = ({
   id,
   attachments,
   createdAt,
   dueDate,
   tags,
   updatedAt,
-}: SidebarProps): ReactElement => (
+}) => (
   <div className='tm-task-sidebar'>
     <TaskDueDate id={id} dueDate={dueDate} />
     <TaskTags id={id} tags={tags} />

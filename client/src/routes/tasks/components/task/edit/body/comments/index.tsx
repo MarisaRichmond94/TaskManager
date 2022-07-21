@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { ReactElement, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { BsCloudUpload, BsEraser, BsTrash } from 'react-icons/bs';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
@@ -8,12 +8,12 @@ import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
-interface TaskCommentsProps {
+interface ITaskComments {
   id: string,
   comments?: Comment[],
 };
 
-const TaskComments = ({ id, comments }: TaskCommentsProps): ReactElement => {
+const TaskComments: FC<ITaskComments> = ({ id, comments }) => {
   const [newCommentText, setNewCommentText] = useState('');
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {
@@ -44,11 +44,11 @@ const TaskComments = ({ id, comments }: TaskCommentsProps): ReactElement => {
   );
 };
 
-interface CommentProps {
+interface IComment {
   checklistItem: Comment,
 };
 
-const TaskComment = ({ checklistItem }: CommentProps): ReactElement => {
+const TaskComment: FC<IComment> = ({ checklistItem }) => {
   const { text, updatedAt } = checklistItem;
   const [isInEditMode, setIsInEditMode] = useState(false);
 
@@ -85,12 +85,12 @@ const TaskComment = ({ checklistItem }: CommentProps): ReactElement => {
   );
 };
 
-interface CommentActionButtonProps {
+interface ICommentActionButton {
   icon: ReactElement,
   onClick: () => void,
 };
 
-const CommentActionButton = ({ icon, onClick }: CommentActionButtonProps): ReactElement => (
+const CommentActionButton: FC<ICommentActionButton> = ({ icon, onClick }) => (
   <TMButton
     buttonStyle='icon'
     classNames={['offset-black', 'comment-action-button']}

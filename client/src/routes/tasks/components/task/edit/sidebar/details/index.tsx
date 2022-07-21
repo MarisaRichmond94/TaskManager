@@ -1,19 +1,19 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 
-interface TaskDetailsProps {
+interface ITaskDetails {
   id: string,
   createdAt: number,
   updatedAt: number,
 };
 
-const TaskDetails = ({ id, createdAt, updatedAt }: TaskDetailsProps): ReactElement => {
+const TaskDetails: FC<ITaskDetails> = ({ id, createdAt, updatedAt }) => {
   return (
     <TMCollapsableSection
       classNames={['off-black', 'task-section']}
@@ -29,12 +29,12 @@ const TaskDetails = ({ id, createdAt, updatedAt }: TaskDetailsProps): ReactEleme
   );
 };
 
-interface TaskDetailProps {
+interface ITaskDetail {
   secondsSinceEpoch: number,
   icon: ReactElement,
 };
 
-const TaskDetail = ({ secondsSinceEpoch, icon }: TaskDetailProps): ReactElement => {
+const TaskDetail: FC<ITaskDetail> = ({ secondsSinceEpoch, icon }) => {
   const date = toClientDatetime(secondsSinceEpoch);
   return (
     <div className='sub-header-text task-detail'>

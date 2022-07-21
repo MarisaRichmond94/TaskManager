@@ -1,18 +1,18 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_button/tm_checkbox';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { TMButton } from 'components/tm_button';
 
-interface TaskChecklistItemsProps {
+interface ITaskChecklistItems {
   id: string,
   checklistItems?: ChecklistItem[],
 };
 
-const TaskChecklistItems = ({ id, checklistItems }: TaskChecklistItemsProps): ReactElement => {
+const TaskChecklistItems: FC<ITaskChecklistItems> = ({ id, checklistItems }) => {
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
 
@@ -46,7 +46,7 @@ const TaskChecklistItems = ({ id, checklistItems }: TaskChecklistItemsProps): Re
   );
 };
 
-const AddChecklistItemButton = (): ReactElement => (
+const AddChecklistItemButton: FC = () => (
   <TMButton
     classNames={['grey', 'add-checklist-item-button']}
     buttonStyle='icon'
@@ -57,11 +57,11 @@ const AddChecklistItemButton = (): ReactElement => (
   </TMButton>
 );
 
-interface ChecklistItemProps {
+interface IChecklistItem {
   checklistItem: ChecklistItem,
 };
 
-const TaskChecklistItem = ({ checklistItem }: ChecklistItemProps): ReactElement => {
+const TaskChecklistItem: FC<IChecklistItem> = ({ checklistItem }) => {
   const { id, description, isCompleted } = checklistItem;
 
   return (
@@ -75,7 +75,7 @@ const TaskChecklistItem = ({ checklistItem }: ChecklistItemProps): ReactElement 
   );
 };
 
-const NoChecklistItemsToDisplay = (): ReactElement => (
+const NoChecklistItemsToDisplay: FC = () => (
   <div className='sub-header-text no-checklist-items'>
     No checklist items
   </div>

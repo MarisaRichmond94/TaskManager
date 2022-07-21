@@ -1,16 +1,16 @@
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers/task';
 import { toServerDatetime, toClientDatetime } from 'utils/date';
 
-interface ITaskDueDateProps {
+interface ITaskDueDate {
   dueDate: number,
   id: string,
 };
 
-const TaskDueDate: FC<ITaskDueDateProps> = ({ dueDate, id }): ReactElement => {
+const TaskDueDate: FC<ITaskDueDate> = ({ dueDate, id }) => {
   const { task, updateTask } = useTask();
 
   const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
@@ -23,7 +23,7 @@ const TaskDueDate: FC<ITaskDueDateProps> = ({ dueDate, id }): ReactElement => {
       sectionTitle='Due Date'
     >
       <TMDatePicker
-        date={toClientDatetime(task.dueDate)}
+        date={toClientDatetime(task.dueDate)} // TODO - fix this BS
         onChange={(date: Date) => updateDueDate(date)}
         showTimeSelect
       />
