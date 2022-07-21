@@ -12,18 +12,18 @@ const buildTaskLists = (
       ['Archived', []],
     ]);
 
-    const today = new Date();
-    const yesterday = getModifiedDate(today, -1);
-    const tomorrow = getModifiedDate(today, 1);
-    const theDayAfterTomorrow = getModifiedDate(today, 2);
+    const date = new Date();
+    const tomorrow = getModifiedDate(date, 1).setHours(0,0,0,0).valueOf();
+    const theDayAfterTomorrow = getModifiedDate(date, 2).setHours(0,0,0,0).valueOf();
+    const today = date.valueOf();
 
     taskList.forEach(task => {
-      const dueDate = toClientDatetime(task.dueDate);
+      const dueDate = toClientDatetime(task.dueDate).valueOf();
       if (task.isArchived) taskMap.get('Archived').push(task);
-      else if (yesterday < dueDate && dueDate < tomorrow) taskMap.get('Today').push(task);
-      else if (today < dueDate && dueDate < theDayAfterTomorrow) taskMap.get('Tomorrow').push(task);
-      else if (tomorrow < dueDate) taskMap.get('Upcoming').push(task);
-      else taskMap.get('Overdue').push(task);
+      else if (dueDate < today) taskMap.get('Overdue').push(task);
+      else if (dueDate >= theDayAfterTomorrow) taskMap.get('Upcoming').push(task);
+      else if (dueDate > today && dueDate < tomorrow) taskMap.get('Today').push(task);
+      else taskMap.get('Tomorrow').push(task);
     });
 
     setTaskMap(taskMap);
