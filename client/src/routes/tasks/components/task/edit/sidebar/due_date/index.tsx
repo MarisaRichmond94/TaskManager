@@ -6,8 +6,7 @@ import { useTask } from 'providers/task';
 import { toServerDatetime, toClientDatetime } from 'utils/date';
 
 const TaskDueDate: FC = () => {
-  const { task, updateTask } = useTask();
-  const { dueDate, id } = task;
+  const { dueDate, id, updateTask } = useTask();
 
   const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
 

@@ -10,8 +10,7 @@ import TaskActionButton from 'routes/tasks/components/task/action_button';
 
 const Header: FC = () => {
   const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTaskId } = useTasks();
-  const { task, updateStatus, updateTask } = useTask();
-  const {  id, isArchived, isPinned, status } = task;
+  const {  id, isArchived, isPinned, status, updateStatus, updateTask } = useTask();
 
   return (
     <div className='tm-task-header'>

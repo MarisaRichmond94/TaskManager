@@ -7,8 +7,7 @@ import TaskChecklistItems from 'routes/tasks/components/task/edit/body/checklist
 import TaskComments from 'routes/tasks/components/task/edit/body/comments';
 
 const Body: FC = () => {
-  const { task } = useTask();
-  const { description, objective } = task;
+  const { description, objective } = useTask();
 
   return (
     <div className='tm-task-body'>

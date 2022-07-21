@@ -12,28 +12,25 @@ interface TaskProps {
 
 const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
   const { updateTaskInTasks } = useTasks();
-  const [task, setTask] = useState(providedTask);
 
   const updateTask = async(updateTaskDTO: UpdateTaskDTO) => {
-    const copy = { ...task };
-    const updatedTask = await TasksApi.update(task.id, updateTaskDTO);
+    const copy = { ...providedTask };
+    const updatedTask = await TasksApi.update(copy.id, updateTaskDTO);
     if (updateTaskDTO.description) copy.description = updatedTask.description;
     if (updateTaskDTO.dueDate) copy.dueDate = updatedTask.dueDate;
     if (updateTaskDTO.isPinned !== undefined) copy.isPinned = updatedTask.isPinned;
     if (updateTaskDTO.objective) copy.objective = updatedTask.objective;
-    setTask(copy);
     updateTaskInTasks(copy);
   };
 
   const updateStatus = async (statusId: string, statusTypeId: string) => {
-    const updatedTask = { ...task };
+    const updatedTask = { ...providedTask };
     updatedTask.status = await StatusesApi.update(statusId, { statusTypeId });
-    setTask(updatedTask);
     updateTaskInTasks(updatedTask);
   };
 
   const value = {
-    task,
+    ...providedTask,
     updateStatus,
     updateTask,
   };

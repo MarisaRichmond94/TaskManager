@@ -10,8 +10,7 @@ import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
 const TaskComments: FC = () => {
-  const { task } = useTask();
-  const { comments, id } = task;
+  const { comments, id } = useTask();
   const [newCommentText, setNewCommentText] = useState('');
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {

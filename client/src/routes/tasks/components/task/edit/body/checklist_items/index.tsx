@@ -9,8 +9,7 @@ import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
 
 const TaskChecklistItems: FC = () => {
-  const { task } = useTask();
-  const { checklistItems, id } = task;
+  const { checklistItems, id } =  useTask();
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
 

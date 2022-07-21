@@ -11,8 +11,7 @@ import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
 
 const TaskAttachments: FC = () => {
-  const { task } = useTask();
-  const { attachments, id } = task;
+  const { attachments, id } = useTask();
 
   const populateTaskAttachments = (taskAttachments?: Attachment[]): ReactElement[] | ReactElement => {
     if (!taskAttachments.length) return <NoAttachmentsToDisplay />;

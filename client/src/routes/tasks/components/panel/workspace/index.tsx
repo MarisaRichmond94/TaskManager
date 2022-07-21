@@ -14,7 +14,7 @@ const WorkspacePanel = (): ReactElement => {
 
   return (
     <div className='tm-panel' id='task-workspace-panel'>
-      <TaskProvider task={activeTask}>
+      <TaskProvider task={{...activeTask}}>
         <EditTaskCard />
       </TaskProvider>
     </div>

@@ -9,9 +9,8 @@ import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 
 const TaskTags: FC = () => {
-  const { task } = useTask();
+  const { id, tags } = useTask();
   const { tags: userTags } = useTasks();
-  const { id, tags } = task;
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;

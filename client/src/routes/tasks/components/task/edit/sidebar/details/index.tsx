@@ -9,8 +9,7 @@ import { useTask } from 'providers/task';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 
 const TaskDetails: FC = () => {
-  const { task } = useTask();
-  const { createdAt, id, updatedAt } = task;
+  const { createdAt, id, updatedAt } = useTask();
 
   return (
     <TMCollapsableSection
