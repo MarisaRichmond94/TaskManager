@@ -1,31 +1,66 @@
-import { ReactElement, useState } from 'react';
+import './index.scss';
+
+import { MutableRefObject, ReactElement, useCallback, useEffect, useState } from 'react';
 
 interface TMTextAreaProps {
+  autoFocus?: boolean,
   classNames?: string[],
   id?: string,
+  initialValue?: string,
   managedValue?: string,
   placeholder?: string,
+  reference?: MutableRefObject<any>,
   rowCount?: number,
-  setFormValue?: (input: string) => void,
+  onKeyPressCallback?: (e: object, unmanagedValue: string) => void,
+  updatedManagedValue?: (input: string) => void,
   validateFormValue?: (input: string) => void
 };
 
 const TMTextArea = ({
+  autoFocus = false,
   classNames = [],
   id,
+  initialValue = '',
   managedValue,
   placeholder = 'type here...',
+  reference,
   rowCount,
-  setFormValue,
+  onKeyPressCallback,
+  updatedManagedValue,
   validateFormValue,
 }: TMTextAreaProps): ReactElement => {
-  const [unmanagedValue, setUnmanagedValue] = useState<string>('');
+  const [unmanagedValue, setUnmanagedValue] = useState<string>(initialValue);
+
+  const listener = useCallback(() => {
+    if (reference?.current) reference.current.style.height = `${reference.current.scrollHeight}px`;
+  }, [reference]);
+
+  useEffect(() => {
+    listener();
+    if (autoFocus && reference?.current) {
+      const end = reference.current.value.length;
+      reference.current.setSelectionRange(end, end);
+      reference.current.focus();
+    }
+    document.addEventListener('input', listener);
+    return () => document.removeEventListener('input', listener);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (reference?.current) listener();
+  }, [listener, reference]);
 
   const onChange = (input: string): void => {
-    if (setFormValue) {
-      setFormValue(input);
+    if (updatedManagedValue) {
+      updatedManagedValue(input);
       if (validateFormValue) validateFormValue(input);
     } else setUnmanagedValue(input);
+  };
+
+  const onKeyPress = (e: any): void => {
+    if (e.key === 'Enter') e.preventDefault();
+    if (onKeyPressCallback)  onKeyPressCallback(e, unmanagedValue);
   };
 
   return (
@@ -35,8 +70,10 @@ const TMTextArea = ({
       id={id}
       name={Math.random().toString()} // prevents auto complete in Chrome
       onChange={e => onChange(e.target.value)}
+      onKeyPress={onKeyPress}
       placeholder={placeholder}
-      rows={rowCount | 3}
+      ref={reference}
+      rows={rowCount || 3}
       spellCheck='false'
       value={managedValue || unmanagedValue}
     />

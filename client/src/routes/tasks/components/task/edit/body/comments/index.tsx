@@ -33,7 +33,7 @@ const TaskComments: FC = () => {
           classNames={['task-comment-box']}
           managedValue={newCommentText}
           placeholder='comment...'
-          setFormValue={setNewCommentText}
+          updatedManagedValue={setNewCommentText}
         />
         {populateTaskComments(comments)}
       </div>

@@ -15,12 +15,12 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
 
   const updateTask = async(updateTaskDTO: UpdateTaskDTO) => {
     const copy = { ...providedTask };
-    const updatedTask = await TasksApi.update(copy.id, updateTaskDTO);
-    if (updateTaskDTO.description) copy.description = updatedTask.description;
-    if (updateTaskDTO.dueDate) copy.dueDate = updatedTask.dueDate;
-    if (updateTaskDTO.isPinned !== undefined) copy.isPinned = updatedTask.isPinned;
-    if (updateTaskDTO.objective) copy.objective = updatedTask.objective;
+    if (updateTaskDTO.description) copy.description = updateTaskDTO.description;
+    if (updateTaskDTO.dueDate) copy.dueDate = updateTaskDTO.dueDate;
+    if (updateTaskDTO.isPinned !== undefined) copy.isPinned = updateTaskDTO.isPinned;
+    if (updateTaskDTO.objective) copy.objective = updateTaskDTO.objective;
     updateTaskInTasks(copy);
+    await TasksApi.update(copy.id, updateTaskDTO);
   };
 
   const updateStatus = async (statusId: string, statusTypeId: string) => {

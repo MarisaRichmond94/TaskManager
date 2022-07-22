@@ -1,37 +1,37 @@
 import './index.scss';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 
 import { TMButton } from 'components/tm_button';
 
-export enum InputTypes {
+enum InputTypes {
   search = 'search',
 };
 
-export interface TMInputProps {
+interface ITMInput {
   classNames?: string[],
   clearKey?: string,
   formValue?: string,
-  id: string,
+  id?: string,
+  placeholder?: string,
+  type?: string,
   onChangeCallback?: (input: string) => void,
   onKeyPressCallback?: (e: object) => void,
-  placeholder: string,
-  type?: string,
   validateFormValue?: (input: string) => void
 };
 
-export const TMInput = ({
+const TMInput: FC<ITMInput> = ({
   classNames = [],
   clearKey,
   formValue,
-  id,
+  id = '',
+  placeholder = '',
+  type,
   onChangeCallback,
   onKeyPressCallback,
-  placeholder,
-  type,
   validateFormValue,
-}: TMInputProps) => {
+}) => {
   const [value, setValue] = useState<string>('');
 
   const onChange = (input: string): void => {
@@ -82,3 +82,5 @@ export const TMInput = ({
     </form>
   );
 };
+
+export default TMInput;

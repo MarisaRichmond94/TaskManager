@@ -1,0 +1,26 @@
+@import 'global';
+
+.tm-editable-input {
+  .tm-text-area {
+    &.large-header-text {
+      font-size: $large-header-font-size;
+    }
+
+    &:hover {
+      background-color: $off-white;
+      border-radius: 8px;
+      cursor: text;
+    }
+  }
+
+  .inactive {
+    display: block;
+    padding: $small-padding $medium-padding;
+
+    &:hover {
+      background-color: $off-white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+}

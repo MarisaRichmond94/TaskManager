@@ -2,7 +2,7 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
-import { TMInput } from 'components/tm_input';
+import TMInput from 'components/tm_input';
 import Toolbar from 'routes/tasks/components/header/toolbar';
 
 export interface TasksHeaderProps {
