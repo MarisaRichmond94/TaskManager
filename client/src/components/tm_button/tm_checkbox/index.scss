@@ -5,11 +5,15 @@
   display: flex;
 
   .tm-button {
-    margin-top: 2px;
-    margin-right: $medium-margin;
-  }
+    margin-top:  $small-margin;
+    margin-right: $small-margin;
+  };
+
+  .text-block-container {
+    width: calc(100% - 20px);
+  };
 
   &.disabled {
     .tm-button { color: $disabled-grey; }
-  }
-}
+  };
+};

@@ -1,9 +1,10 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useCallback } from 'react';
 
-import StatusesApi from 'api/statuses';
-import TasksApi from 'api/tasks';
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
+import { checklistItemUpdateHandler } from 'providers/task/utils/checklistItem';
+import { statusUpdateHandler } from 'providers/task/utils/status';
+import { taskUpdateHandler } from 'providers/task/utils/task';
 
 interface TaskProps {
   children: ReactElement,
@@ -13,24 +14,21 @@ interface TaskProps {
 const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
   const { updateTaskInTasks } = useTasks();
 
-  const updateTask = async(updateTaskDTO: UpdateTaskDTO) => {
-    const copy = { ...providedTask };
-    if (updateTaskDTO.description) copy.description = updateTaskDTO.description;
-    if (updateTaskDTO.dueDate) copy.dueDate = updateTaskDTO.dueDate;
-    if (updateTaskDTO.isPinned !== undefined) copy.isPinned = updateTaskDTO.isPinned;
-    if (updateTaskDTO.objective) copy.objective = updateTaskDTO.objective;
-    updateTaskInTasks(copy);
-    await TasksApi.update(copy.id, updateTaskDTO);
-  };
+  const updateTask = useCallback((updateTaskDTO: UpdateTaskDTO) => {
+    taskUpdateHandler({ ...providedTask }, updateTaskDTO, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
 
-  const updateStatus = async (statusId: string, statusTypeId: string) => {
-    const updatedTask = { ...providedTask };
-    updatedTask.status = await StatusesApi.update(statusId, { statusTypeId });
-    updateTaskInTasks(updatedTask);
-  };
+  const updateStatus = useCallback((statusId: string, statusTypeId: string) => {
+    statusUpdateHandler({ ...providedTask }, statusId, statusTypeId, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
+  const updateChecklistItem = useCallback((id: string, updateChecklistItemDTO: UpdateChecklistItemDTO) => {
+    checklistItemUpdateHandler({ ...providedTask }, id, updateChecklistItemDTO, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
 
   const value = {
     ...providedTask,
+    updateChecklistItem,
     updateStatus,
     updateTask,
   };

@@ -4,14 +4,13 @@ import { FC, useRef, useState } from 'react';
 
 import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
-import useResizeOnInputChange from 'hooks/useResizeOnInputChange';
 
 interface ITMEditableInput {
   classNames?: string[],
   currInputValue?: string,
   eventKey?: string,
   id: string,
-  noInputValuePlaceholder: string,
+  noInputValuePlaceholder?: string,
   onUpdateCallback: (nextInputValue: string) => void,
 };
 
@@ -20,7 +19,7 @@ const TMEditableInput: FC<ITMEditableInput> = ({
   currInputValue,
   eventKey = 'Enter',
   id,
-  noInputValuePlaceholder,
+  noInputValuePlaceholder = '',
   onUpdateCallback,
 }) => {
   const editableInputRef = useRef(null);
@@ -28,7 +27,6 @@ const TMEditableInput: FC<ITMEditableInput> = ({
 
   const textareaRef = useRef(null);
   const uniqueInputIdentifier = `auto-resizing-input-${id}`;
-  useResizeOnInputChange(textareaRef, uniqueInputIdentifier);
 
   const [isInEditMode, setIsInEditMode] = useState(false);
 

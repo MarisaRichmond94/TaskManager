@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import BaseApi from 'api/base';
 import TaskManagerApi from 'api/taskManager';
@@ -30,7 +30,7 @@ const TasksProvider = (props: object) => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
-  const archiveTaskById = async (taskId: string) => {
+  const archiveTaskById = useCallback(async (taskId: string) => {
     const taskById = tasks.find(task => task.id === taskId);
     const archivedTask = {...taskById};
     const updatedTask = await TasksApi.update(taskId, { isArchived: true });
@@ -39,9 +39,9 @@ const TasksProvider = (props: object) => {
     setTasks(updatedTasks);
     if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== archivedTask.id));
     buildTaskLists(updatedTasks, setTaskMap);
-  };
+  }, [searchedTasks, tasks]);
 
-  const deleteTaskById = async (taskId: string) => {
+  const deleteTaskById = useCallback(async (taskId: string) => {
     const isSuccessfullyDeleted = await TaskManagerApi.deleteById(taskId);
     if (isSuccessfullyDeleted) {
       const updatedTasks = tasks.filter(task => task.id !== taskId);
@@ -50,9 +50,9 @@ const TasksProvider = (props: object) => {
       if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
       buildTaskLists(updatedTasks, setTaskMap);
     }
-  };
+  }, [activeTaskId, searchedTasks, tasks]);
 
-  const updateTaskInTasks = (updatedTask: Task) => {
+  const updateTaskInTasks = useCallback((updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
     if (searchedTasks) {
@@ -60,7 +60,7 @@ const TasksProvider = (props: object) => {
       setSearchedTasks(updatedSearchedTasks);
     }
     buildTaskLists(updatedTasks, setTaskMap);
-  };
+  }, [searchedTasks, tasks]);
 
   const updateActiveTaskId = (id?: string) => { if (activeTaskId !== id) setActiveTaskId(id); };
 

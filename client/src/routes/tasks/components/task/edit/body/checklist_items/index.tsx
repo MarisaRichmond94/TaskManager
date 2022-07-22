@@ -4,6 +4,7 @@ import { FC, ReactElement } from 'react';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_button/tm_checkbox';
+import TMEditableInput from 'components/tm_input/editable';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
@@ -59,15 +60,25 @@ interface IChecklistItem {
 };
 
 const TaskChecklistItem: FC<IChecklistItem> = ({ checklistItem }) => {
+  const { updateChecklistItem } = useTask();
   const { id, description, isCompleted } = checklistItem;
+
+  const textBlock = (
+    <TMEditableInput
+      classNames={['paragraph-text', 'checklist-item-description']}
+      currInputValue={description}
+      id={`checklist-item-description-${id}`}
+      onUpdateCallback={(description: string) => updateChecklistItem(id, { description })}
+    />
+  )
 
   return (
     <TMCheckbox
       key={`task-checklist-item-${id}`}
       classNames={['task-checklist-item']}
       isActive={isCompleted}
-      text={description}
-      toggleIsActive={() => console.log('add toggle functionality')}
+      textBlock={textBlock}
+      toggleIsActive={() => updateChecklistItem(id, { isCompleted: !isCompleted })}
     />
   );
 };

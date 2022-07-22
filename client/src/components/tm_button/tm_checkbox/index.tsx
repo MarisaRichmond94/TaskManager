@@ -1,6 +1,6 @@
 import './index.scss';
 
-import React from 'react';
+import { ReactElement } from 'react';
 
 import { ButtonStyle, TMButton, Size } from 'components/tm_button';
 import { BsCheck2Square, BsSquare } from 'react-icons/bs';
@@ -9,7 +9,7 @@ interface TMCheckboxProps {
   classNames?: string[],
   isActive: boolean,
   isDisabled?: boolean,
-  text: string,
+  textBlock: string | ReactElement,
   toggleIsActive: () => void,
 };
 
@@ -17,7 +17,7 @@ const TMCheckbox = ({
   classNames = [],
   isActive,
   isDisabled = false,
-  text,
+  textBlock,
   toggleIsActive,
 }: TMCheckboxProps) => {
   if (isDisabled) classNames.push('disabled');
@@ -26,15 +26,15 @@ const TMCheckbox = ({
     <div className={['tm-checkbox', ...classNames].join(' ')}>
       <TMButton
         classNames={['off-black']}
-        onClick={() => toggleIsActive()}
+        onClick={toggleIsActive}
         buttonStyle={ButtonStyle.icon}
         isDisabled={isDisabled}
         size={Size.small}
       >
         {isActive ? <BsCheck2Square /> : <BsSquare />}
       </TMButton>
-      <div className='sub-header-text'>
-        {text}
+      <div className='sub-header-text text-block-container'>
+        {textBlock}
       </div>
     </div>
   );
