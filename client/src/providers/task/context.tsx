@@ -15,6 +15,7 @@ interface TaskContextType {
   tags?: Tag[],
   updatedAt: number,
   updateChecklistItem: (id: string, updateChecklistItemDTO: UpdateChecklistItemDTO) => void,
+  updateComment: (id: string, text: string) => void,
   updateStatus: (statusId: string, statusTypeId: string) => void,
   updateTask: (updateTaskDTO: UpdateTaskDTO) => void,
 };

@@ -1,9 +1,10 @@
 import './index.scss';
 
 import { FC, ReactElement, useState } from 'react';
-import { BsCloudUpload, BsEraser, BsTrash } from 'react-icons/bs';
+import { BsTrash } from 'react-icons/bs';
 
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMEditableInput from 'components/tm_input/editable';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
@@ -16,9 +17,13 @@ const TaskComments: FC = () => {
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {
     if (!taskComments.length) return;
 
-    return taskComments.map((checklistItem, index) => {
-      return <TaskComment key={`task-checklist-item-${index}`} checklistItem={checklistItem} />
+    return taskComments.map((comment, index) => {
+      return <TaskComment key={`task-comment-${index}`} comment={comment} />
     });
+  };
+
+  const onKeyPressCallback = (e: any) => {
+    if (e.key === 'Enter' && newCommentText !== '') console.log('Create new comment');
   };
 
   return (
@@ -33,6 +38,7 @@ const TaskComments: FC = () => {
           classNames={['task-comment-box']}
           managedValue={newCommentText}
           placeholder='comment...'
+          onKeyPressCallback={(e: any) => onKeyPressCallback(e)}
           updatedManagedValue={setNewCommentText}
         />
         {populateTaskComments(comments)}
@@ -42,12 +48,12 @@ const TaskComments: FC = () => {
 };
 
 interface IComment {
-  checklistItem: Comment,
+  comment: Comment,
 };
 
-const TaskComment: FC<IComment> = ({ checklistItem }) => {
-  const { text, updatedAt } = checklistItem;
-  const [isInEditMode, setIsInEditMode] = useState(false);
+const TaskComment: FC<IComment> = ({ comment }) => {
+  const { updateComment } = useTask();
+  const { id, text, updatedAt } = comment;
 
   const getCommentTimestamp = (secondsSinceEpoch: number): string => {
     const date = toClientDatetime(secondsSinceEpoch);
@@ -57,25 +63,16 @@ const TaskComment: FC<IComment> = ({ checklistItem }) => {
   return (
     <div className='task-comment sub-header-text'>
       <div className='comment-text'>
-        {text}
+        <TMEditableInput
+          classNames={['paragraph-text']}
+          currInputValue={text}
+          eventKey='Enter'
+          id={`comment-${id}`}
+          onUpdateCallback={(updatedText: string) => updateComment(id, updatedText)}
+        />
       </div>
       <div className='comment-details'>
         <i>{getCommentTimestamp(updatedAt)}</i>
-        {
-          isInEditMode
-            ? (
-              <CommentActionButton
-                icon={<BsCloudUpload />}
-                onClick={() => console.log('update comment')}
-              />
-            )
-            : (
-              <CommentActionButton
-                icon={<BsEraser />}
-                onClick={() => console.log('edit comment')}
-              />
-            )
-        }
         <CommentActionButton icon={<BsTrash />} onClick={() => console.log('delete comment')} />
       </div>
     </div>

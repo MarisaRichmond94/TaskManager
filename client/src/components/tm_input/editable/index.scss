@@ -2,14 +2,12 @@
 
 .tm-editable-input {
   .tm-text-area {
+    background-color: $off-white;
+    border-radius: 5px;
+    cursor: text;
+
     &.large-header-text {
       font-size: $large-header-font-size;
-    }
-
-    &:hover {
-      background-color: $off-white;
-      border-radius: 5px;
-      cursor: text;
     }
   }
 

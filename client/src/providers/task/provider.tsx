@@ -3,6 +3,7 @@ import { ReactElement, useCallback } from 'react';
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
 import { checklistItemUpdateHandler } from 'providers/task/utils/checklistItem';
+import { commentUpdateHandler } from 'providers/task/utils/comment';
 import { statusUpdateHandler } from 'providers/task/utils/status';
 import { taskUpdateHandler } from 'providers/task/utils/task';
 
@@ -26,9 +27,14 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
     checklistItemUpdateHandler({ ...providedTask }, id, updateChecklistItemDTO, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
+  const updateComment = useCallback((id: string, updatedCommentText: string) => {
+    commentUpdateHandler({ ...providedTask }, id, updatedCommentText, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
   const value = {
     ...providedTask,
     updateChecklistItem,
+    updateComment,
     updateStatus,
     updateTask,
   };
