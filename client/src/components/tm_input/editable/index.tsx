@@ -6,6 +6,7 @@ import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 
 interface ITMEditableInput {
+  autoFocus?: boolean,
   classNames?: string[],
   currInputValue?: string,
   eventKey?: string,
@@ -15,6 +16,7 @@ interface ITMEditableInput {
 };
 
 const TMEditableInput: FC<ITMEditableInput> = ({
+  autoFocus = false,
   classNames = [],
   currInputValue,
   eventKey = 'Enter',
@@ -22,17 +24,24 @@ const TMEditableInput: FC<ITMEditableInput> = ({
   noInputValuePlaceholder = '',
   onUpdateCallback,
 }) => {
+  const [inputValue, setInputValue] = useState<string>(currInputValue);
+
+  const handleOnClickOutside = () => {
+    if(inputValue !== currInputValue) onUpdateCallback(inputValue);
+    setIsInEditMode(false);
+  };
+
   const editableInputRef = useRef(null);
-  useOnClickOutside(editableInputRef, () => setIsInEditMode(false));
+  useOnClickOutside(editableInputRef, () => handleOnClickOutside());
 
   const textareaRef = useRef(null);
   const uniqueInputIdentifier = `auto-resizing-input-${id}`;
 
-  const [isInEditMode, setIsInEditMode] = useState(false);
+  const [isInEditMode, setIsInEditMode] = useState(autoFocus);
 
-  const onKeyPress = (event: any, nextInputValue: string) => {
+  const onKeyPress = (event: any) => {
     if (event.key === eventKey) {
-      onUpdateCallback(nextInputValue);
+      onUpdateCallback(inputValue);
       setIsInEditMode(false);
     }
   };
@@ -50,10 +59,11 @@ const TMEditableInput: FC<ITMEditableInput> = ({
             autoFocus
             classNames={['auto-resizing-textarea', ...classNames]}
             id={uniqueInputIdentifier}
-            initialValue={currInputValue}
+            managedValue={inputValue}
             onKeyPressCallback={onKeyPress}
             reference={textareaRef}
             rowCount={1}
+            updatedManagedValue={(nextInputValue: string) => setInputValue(nextInputValue)}
           />
         )
         : <div className='inactive'>{currInputValue || noInputValuePlaceholder}</div>

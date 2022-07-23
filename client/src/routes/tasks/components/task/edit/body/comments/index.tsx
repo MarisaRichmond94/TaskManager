@@ -11,19 +11,25 @@ import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
 const TaskComments: FC = () => {
-  const { comments, id } = useTask();
-  const [newCommentText, setNewCommentText] = useState('');
+  const { comments, id, createComment } = useTask();
+  const [text, setText] = useState('');
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {
     if (!taskComments.length) return;
 
+    taskComments.sort(
+      (a,b) => (a.updatedAt < b.updatedAt) ? 1 : ((b.updatedAt < a.updatedAt) ? -1 : 0)
+    );
     return taskComments.map((comment, index) => {
       return <TaskComment key={`task-comment-${index}`} comment={comment} />
     });
   };
 
   const onKeyPressCallback = (e: any) => {
-    if (e.key === 'Enter' && newCommentText !== '') console.log('Create new comment');
+    if (e.key === 'Enter' && text !== '') {
+      createComment({ taskId: id, text });
+      setText('');
+    }
   };
 
   return (
@@ -36,10 +42,10 @@ const TaskComments: FC = () => {
       <div className='task-comments-container task-sidebar-collapsable-container'>
         <TMTextArea
           classNames={['task-comment-box', 'sub-header-text']}
-          managedValue={newCommentText}
+          managedValue={text}
           placeholder='comment...'
           onKeyPressCallback={(e: any) => onKeyPressCallback(e)}
-          updatedManagedValue={setNewCommentText}
+          updatedManagedValue={setText}
         />
         {populateTaskComments(comments)}
       </div>
@@ -52,7 +58,7 @@ interface IComment {
 };
 
 const TaskComment: FC<IComment> = ({ comment }) => {
-  const { updateComment } = useTask();
+  const { deleteComment, updateComment } = useTask();
   const { id, text, updatedAt } = comment;
 
   const getCommentTimestamp = (secondsSinceEpoch: number): string => {
@@ -73,7 +79,7 @@ const TaskComment: FC<IComment> = ({ comment }) => {
       </div>
       <div className='comment-details'>
         <i>{getCommentTimestamp(updatedAt)}</i>
-        <CommentActionButton icon={<BsTrash />} onClick={() => console.log('delete comment')} />
+        <CommentActionButton icon={<BsTrash />} onClick={() => deleteComment(id)} />
       </div>
     </div>
   );

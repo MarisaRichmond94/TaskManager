@@ -10,6 +10,9 @@
   padding: $large-padding;
   &.active { background-color: $white; };
   &:last-child { margin-bottom: 0; };
+  &:hover {
+    transform: scale(1.005);
+  };
 
   .task-card-header {
     @include centered-flex-box;
@@ -26,8 +29,8 @@
       @include centered-flex-box;
       margin-left: auto;
       button { padding: $extra-small-padding; };
-    }
-  }
+    };
+  };
 
   .task-card-footer {
     @include centered-flex-box;
@@ -39,5 +42,5 @@
       margin-left: $medium-margin;
       svg { margin-right: $small-margin; };
     };
-  }
+  };
 };

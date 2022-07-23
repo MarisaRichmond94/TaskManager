@@ -1,6 +1,16 @@
 import ChecklistItemsApi from "api/checklistItems";
 import TasksApi from "api/tasks";
 
+const handleCreateChecklistItem = async (
+  taskToUpdate: Task,
+  createChecklistItemDTO: CreateChecklistItemDTO,
+  onUpdateCallback: (updatedTask: Task) => void,
+) => {
+  const newChecklistItem = await ChecklistItemsApi.post(createChecklistItemDTO);
+  taskToUpdate.checklistItems.push(newChecklistItem);
+  onUpdateCallback(taskToUpdate);
+};
+
 const handleUpdateChecklistItem = async (
   taskToUpdate: Task,
   checklistItemId: string,
@@ -27,6 +37,18 @@ const handleUpdateChecklistItem = async (
   }
 };
 
+const handleDeleteChecklistItem = async (
+  taskToUpdate: Task,
+  checklistItemId: string,
+  onUpdateCallback: (updatedTask: Task) => void,
+) => {
+  taskToUpdate.checklistItems = taskToUpdate.checklistItems.filter(x => x.id !== checklistItemId);
+  onUpdateCallback(taskToUpdate);
+  await ChecklistItemsApi.deleteById(checklistItemId);
+};
+
 export {
+  handleCreateChecklistItem,
   handleUpdateChecklistItem,
+  handleDeleteChecklistItem,
 };

@@ -10,17 +10,22 @@
   };
 
   .task-checklist-items-container {
-    padding: $medium-padding 0;
+    padding-top: $medium-padding;
 
     .checklist-item-row {
       align-items: flex-start;
       display: flex;
 
+      &:last-child {
+        .task-checklist-item {
+          margin-bottom: 0;
+        }
+      };
+
       .task-checklist-item {
         margin-bottom: $medium-margin;
         margin-right: $medium-margin;
         width: 100%;
-        &:last-child { margin-bottom: 0; };
       };
 
       .checklist-item-action-menu {

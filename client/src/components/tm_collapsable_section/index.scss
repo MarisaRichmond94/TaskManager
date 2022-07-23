@@ -3,6 +3,10 @@
 .tm-collapsable-section {
   user-select: none;
 
+  &.task-due-date-section {
+    .header { margin-top: 0; };
+  };
+
   .header {
     @include centered-flex-box;
     color: $off-black;
