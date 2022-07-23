@@ -1,6 +1,6 @@
 import StatusesApi from 'api/statuses';
 
-const statusUpdateHandler = async (
+const handleUpdateStatus = async (
   taskToUpdate: Task,
   statusId: string,
   statusTypeId: string,
@@ -10,4 +10,4 @@ const statusUpdateHandler = async (
   onUpdateCallback(taskToUpdate);
 };
 
-export { statusUpdateHandler };
+export { handleUpdateStatus };

@@ -1,13 +1,15 @@
 import ChecklistItemsApi from "api/checklistItems";
 import TasksApi from "api/tasks";
 
-const checklistItemUpdateHandler = async (
+const handleUpdateChecklistItem = async (
   taskToUpdate: Task,
   checklistItemId: string,
   updateChecklistItemDTO: UpdateChecklistItemDTO,
   onUpdateCallback: (updatedTask: Task) => void,
 ) => {
-  const checklistItemToUpdate = { ...taskToUpdate.checklistItems.find(x => x.id === checklistItemId) };
+  const checklistItemToUpdate = {
+    ...taskToUpdate.checklistItems.find(x => x.id === checklistItemId)
+  };
   Object.keys(updateChecklistItemDTO).forEach(key => {
     const value = updateChecklistItemDTO[key];
     if (value !== undefined) checklistItemToUpdate[key] = value;
@@ -25,4 +27,6 @@ const checklistItemUpdateHandler = async (
   }
 };
 
-export { checklistItemUpdateHandler };
+export {
+  handleUpdateChecklistItem,
+};

@@ -1,6 +1,6 @@
 import TasksApi from "api/tasks";
 
-const taskUpdateHandler = async (
+const handleUpdateTask = async (
   taskToUpdate: Task,
   updateTaskDTO: UpdateTaskDTO,
   onUpdateCallback: (updatedTask: Task) => void,
@@ -13,4 +13,4 @@ const taskUpdateHandler = async (
   await TasksApi.update(taskToUpdate.id, updateTaskDTO);
 };
 
-export { taskUpdateHandler };
+export { handleUpdateTask };

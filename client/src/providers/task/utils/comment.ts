@@ -1,6 +1,6 @@
 import CommentsApi from "api/comments";
 
-const commentUpdateHandler = async (
+const handleUpdateComment = async (
   taskToUpdate: Task,
   commentId: string,
   text: string,
@@ -13,4 +13,4 @@ const commentUpdateHandler = async (
   await CommentsApi.update(commentId, { text });
 };
 
-export { commentUpdateHandler };
+export { handleUpdateComment };

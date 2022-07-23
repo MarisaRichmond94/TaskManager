@@ -2,10 +2,10 @@ import { ReactElement, useCallback } from 'react';
 
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
-import { checklistItemUpdateHandler } from 'providers/task/utils/checklistItem';
-import { commentUpdateHandler } from 'providers/task/utils/comment';
-import { statusUpdateHandler } from 'providers/task/utils/status';
-import { taskUpdateHandler } from 'providers/task/utils/task';
+import { handleUpdateChecklistItem } from 'providers/task/utils/checklistItem';
+import { handleUpdateComment } from 'providers/task/utils/comment';
+import { handleUpdateStatus } from 'providers/task/utils/status';
+import { handleUpdateTask } from 'providers/task/utils/task';
 
 interface TaskProps {
   children: ReactElement,
@@ -16,19 +16,19 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
   const { updateTaskInTasks } = useTasks();
 
   const updateTask = useCallback((updateTaskDTO: UpdateTaskDTO) => {
-    taskUpdateHandler({ ...providedTask }, updateTaskDTO, updateTaskInTasks);
+    handleUpdateTask({ ...providedTask }, updateTaskDTO, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
   const updateStatus = useCallback((statusId: string, statusTypeId: string) => {
-    statusUpdateHandler({ ...providedTask }, statusId, statusTypeId, updateTaskInTasks);
+    handleUpdateStatus({ ...providedTask }, statusId, statusTypeId, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
   const updateChecklistItem = useCallback((id: string, updateChecklistItemDTO: UpdateChecklistItemDTO) => {
-    checklistItemUpdateHandler({ ...providedTask }, id, updateChecklistItemDTO, updateTaskInTasks);
+    handleUpdateChecklistItem({ ...providedTask }, id, updateChecklistItemDTO, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
   const updateComment = useCallback((id: string, updatedCommentText: string) => {
-    commentUpdateHandler({ ...providedTask }, id, updatedCommentText, updateTaskInTasks);
+    handleUpdateComment({ ...providedTask }, id, updatedCommentText, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
   const value = {
