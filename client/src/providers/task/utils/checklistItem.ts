@@ -1,4 +1,5 @@
 import ChecklistItemsApi from "api/checklistItems";
+import TasksApi from "api/tasks";
 
 const checklistItemUpdateHandler = async (
   taskToUpdate: Task,
@@ -11,11 +12,17 @@ const checklistItemUpdateHandler = async (
     const value = updateChecklistItemDTO[key];
     if (value !== undefined) checklistItemToUpdate[key] = value;
   });
-  taskToUpdate.checklistItems = taskToUpdate.checklistItems.map(
-    x => x.id === checklistItemId ? checklistItemToUpdate : x
-  );
-  onUpdateCallback(taskToUpdate);
-  await ChecklistItemsApi.update(checklistItemToUpdate.id, updateChecklistItemDTO);
+  if (updateChecklistItemDTO.orderIndex !== undefined) {
+    await ChecklistItemsApi.update(checklistItemToUpdate.id, updateChecklistItemDTO);
+    const updatedTask = await TasksApi.getById(taskToUpdate.id);
+    onUpdateCallback(updatedTask);
+  } else {
+    taskToUpdate.checklistItems = taskToUpdate.checklistItems.map(
+      x => x.id === checklistItemId ? checklistItemToUpdate : x
+    );
+    onUpdateCallback(taskToUpdate);
+    await ChecklistItemsApi.update(checklistItemToUpdate.id, updateChecklistItemDTO);
+  }
 };
 
 export { checklistItemUpdateHandler };

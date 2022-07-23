@@ -35,7 +35,7 @@ const TaskComments: FC = () => {
     >
       <div className='task-comments-container task-sidebar-collapsable-container'>
         <TMTextArea
-          classNames={['task-comment-box']}
+          classNames={['task-comment-box', 'sub-header-text']}
           managedValue={newCommentText}
           placeholder='comment...'
           onKeyPressCallback={(e: any) => onKeyPressCallback(e)}
@@ -64,7 +64,7 @@ const TaskComment: FC<IComment> = ({ comment }) => {
     <div className='task-comment sub-header-text'>
       <div className='comment-text'>
         <TMEditableInput
-          classNames={['paragraph-text']}
+          classNames={['sub-header-text']}
           currInputValue={text}
           eventKey='Enter'
           id={`comment-${id}`}

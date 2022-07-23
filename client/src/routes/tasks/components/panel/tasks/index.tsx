@@ -20,7 +20,7 @@ const TasksPanel = (): ReactElement => {
     taskMap
       ? (
         <div className='tm-panel' id='tasks-panel' style={{ height }}>
-          {buildSections(taskMap)}
+          {buildSections(taskMap, activeTaskId)}
         </div>
       )
       : <TMLoader color='#99B83B' text='categorizing tasks...' />

@@ -22,7 +22,7 @@ const Body: FC = () => {
         }
       />
       <TMEditableInput
-        classNames={['sub-header-text']}
+        classNames={['header-text']}
         currInputValue={description}
         id={`description-${id}`}
         noInputValuePlaceholder='no description'

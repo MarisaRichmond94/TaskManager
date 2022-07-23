@@ -31,6 +31,14 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
         taskManagerService.getTaskDataByUserId(userId).let { ResponseEntity.status(HttpStatus.OK).body(it) }
 
     @ResponseBody
+    @GetMapping("/tasks/{taskId}")
+    fun getTaskById(@RequestHeader("userId") userId: UUID, @PathVariable taskId: UUID): ResponseEntity<TaskDTO> =
+        when (val taskById = taskManagerService.getTaskById(userId, taskId)) {
+            is TaskDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(taskById)
+            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        }
+
+    @ResponseBody
     @PatchMapping("/tasks/{taskId}")
     fun updateTaskById(
         @RequestHeader("userId") userId: UUID,

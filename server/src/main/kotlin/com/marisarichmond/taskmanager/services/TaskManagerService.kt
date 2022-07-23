@@ -76,6 +76,14 @@ class TaskManagerService(
             tags = tagService.getByUserId(userId),
         )
 
+    @Throws(EntityNotFoundException::class)
+    fun getTaskById(userId: UUID, taskId: UUID): TaskDTO? = try {
+        taskService.getById(taskId).populate()
+    } catch (exception: Exception) {
+        logger.error(exception) { "Get task by id \"$taskId\" failed: $exception." }
+        null
+    }
+
     // update functions
     @Throws(EntityNotFoundException::class)
     fun updateTaskById(userId: UUID, taskId: UUID, updateTaskByIdDTO: UpdateTaskByIdDTO): TaskDTO? = try {

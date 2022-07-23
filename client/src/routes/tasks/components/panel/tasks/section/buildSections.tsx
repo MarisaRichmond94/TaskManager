@@ -58,7 +58,7 @@ const getSectionTasks = (taskMap: Map<string, Task[]>, sectionType: SectionType)
   );
 };
 
-const buildSections = (taskMap: Map<string, Task[]>): ReactElement[] => {
+const buildSections = (taskMap: Map<string, Task[]>, activeTaskId?: string): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
     return (
       <TasksSection

@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { FC, ReactElement } from 'react';
+import { BsChevronDoubleDown, BsChevronDoubleUp, BsX } from 'react-icons/bs';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_button/tm_checkbox';
@@ -8,6 +9,7 @@ import TMEditableInput from 'components/tm_input/editable';
 import { TMCollapsableSection } from 'components/tm_collapsable_section';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
+import TaskActionButton from '../../../action_button';
 
 const TaskChecklistItems: FC = () => {
   const { checklistItems, id } =  useTask();
@@ -19,11 +21,15 @@ const TaskChecklistItems: FC = () => {
   ): ReactElement[] | ReactElement => {
     if (!taskChecklistItems.length) return <NoChecklistItemsToDisplay />;
 
+    taskChecklistItems.sort(
+      (a,b) => (a.orderIndex > b.orderIndex) ? 1 : ((b.orderIndex > a.orderIndex) ? -1 : 0)
+    );
     return taskChecklistItems.map((checklistItem, index) => {
       return (
         <TaskChecklistItem
           key={`task-checklist-item-${index}`}
           checklistItem={checklistItem}
+          total={checklistItems.length}
         />
       );
     });
@@ -57,29 +63,48 @@ const AddChecklistItemButton: FC = () => (
 
 interface IChecklistItem {
   checklistItem: ChecklistItem,
+  total: number,
 };
 
-const TaskChecklistItem: FC<IChecklistItem> = ({ checklistItem }) => {
+const TaskChecklistItem: FC<IChecklistItem> = ({ checklistItem, total }) => {
   const { updateChecklistItem } = useTask();
-  const { id, description, isCompleted } = checklistItem;
+  const { id, description, isCompleted, orderIndex } = checklistItem;
 
   const textBlock = (
     <TMEditableInput
-      classNames={['paragraph-text', 'checklist-item-description']}
+      classNames={['sub-header-text', 'checklist-item-description']}
       currInputValue={description}
       id={`checklist-item-description-${id}`}
       onUpdateCallback={(description: string) => updateChecklistItem(id, { description })}
     />
-  )
+  );
 
   return (
-    <TMCheckbox
-      key={`task-checklist-item-${id}`}
-      classNames={['task-checklist-item']}
-      isActive={isCompleted}
-      textBlock={textBlock}
-      toggleIsActive={() => updateChecklistItem(id, { isCompleted: !isCompleted })}
-    />
+    <div className='checklist-item-row'>
+      <TMCheckbox
+        key={`task-checklist-item-${id}`}
+        classNames={['task-checklist-item']}
+        isActive={isCompleted}
+        textBlock={textBlock}
+        toggleIsActive={() => updateChecklistItem(id, { isCompleted: !isCompleted })}
+      />
+      <div className='checklist-item-action-menu'>
+        <TaskActionButton
+          action={() => updateChecklistItem(id, { orderIndex: orderIndex - 1})}
+          icon={<BsChevronDoubleUp />}
+          isDisabled={orderIndex === 0}
+        />
+        <TaskActionButton
+          action={() => updateChecklistItem(id, { orderIndex: orderIndex + 1})}
+          icon={<BsChevronDoubleDown />}
+          isDisabled={orderIndex === (total - 1)}
+        />
+        <TaskActionButton
+          action={() => console.log('delete')}
+          icon={<BsX />}
+        />
+      </div>
+    </div>
   );
 };
 
