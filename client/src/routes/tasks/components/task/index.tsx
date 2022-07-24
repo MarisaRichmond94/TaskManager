@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement, useEffect, useRef } from 'react';
 import {
   BsCalendarDate, BsChatSquareText, BsCardChecklist, BsFlag,
   BsInbox, BsInboxes, BsLightning, BsTags, BsTrash, BsTrophy,
@@ -10,18 +10,30 @@ import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
 import { getDayMonthDateString, toClientDatetime } from 'utils/date';
 
-interface TaskCardProps { task: Task };
+interface ITaskCard {
+  task: Task,
+};
 
-const TaskCard = ({ task }: TaskCardProps): ReactElement => {
+const TaskCard: FC<ITaskCard> = ({ task }) => {
   const { activeTaskId, updateActiveTaskId } = useTasks();
-  const {
-    checklistItems, comments, description, dueDate, id, isArchived, objective, status, tags,
-  } = task;
+  const taskRef = useRef(null);
+  const { id, isArchived, objective, status } = task;
+  const { description } = task;
+  const { checklistItems, comments, dueDate, tags } = task;
+  const isActiveTask = activeTaskId === id;
 
-  const activeClass = activeTaskId === id ? 'active' : '';
+  useEffect(() => {
+    if (isActiveTask && taskRef.current) {
+      taskRef.current.scrollIntoView();
+    }
+  }, [isActiveTask, taskRef]);
 
   return (
-    <div className={['task-card', activeClass].join(' ')} onClick={() => updateActiveTaskId(id)}>
+    <div
+      className={['task-card', isActiveTask ? 'active' : ''].join(' ')}
+      onClick={() => updateActiveTaskId(id)}
+      ref={taskRef}
+    >
       <Header id={id} isArchived={isArchived} objective={objective} status={status} />
       <Body description={description} />
       <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />

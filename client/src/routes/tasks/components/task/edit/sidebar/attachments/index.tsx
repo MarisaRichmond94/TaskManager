@@ -7,7 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiJirasoftware } from 'react-icons/si';
 
 import { TMButton } from 'components/tm_button';
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
 
 const TaskAttachments: FC = () => {

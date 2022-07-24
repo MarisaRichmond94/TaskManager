@@ -1,31 +1,36 @@
 import './index.scss';
 
-import { ReactElement, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
-export interface TMCollapsableSectionProps {
+interface ITMCollapsableSection {
   children: ReactElement,
   classNames?: string[],
   id: string,
-  initiallyVisible?: boolean,
+  initiallyVisible: boolean,
   rightBlock?: ReactElement,
   sectionTitle: string,
   wholeHeaderClickable?: boolean,
   onToggleCallback?: () => void,
 };
 
-export const TMCollapsableSection = ({
+const TMCollapsableSection: FC<ITMCollapsableSection> = ({
   children,
   classNames = [],
   rightBlock,
   id,
-  initiallyVisible = false,
+  initiallyVisible,
   sectionTitle,
-  wholeHeaderClickable = false,
+  wholeHeaderClickable,
   onToggleCallback,
-}: TMCollapsableSectionProps) => {
+}) => {
   const [isVisible, setIsVisible] = useState(initiallyVisible);
-  if (wholeHeaderClickable) classNames.push('clickable-header')
+
+  useEffect(() => {
+    setIsVisible(initiallyVisible);
+  }, [initiallyVisible]);
+
+  if (wholeHeaderClickable) classNames.push('clickable-header');
 
   const onToggle = (updatedIsVisible: boolean): void => {
     setIsVisible(updatedIsVisible);
@@ -52,3 +57,5 @@ export const TMCollapsableSection = ({
     </div>
   );
 };
+
+export default TMCollapsableSection;

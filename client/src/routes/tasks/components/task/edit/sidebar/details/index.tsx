@@ -4,7 +4,7 @@ import { FC, ReactElement } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 

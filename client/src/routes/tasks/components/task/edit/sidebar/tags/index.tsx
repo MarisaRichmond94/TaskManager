@@ -4,7 +4,7 @@ import { FC, ReactElement } from 'react';
 import { BsTags, BsX } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 

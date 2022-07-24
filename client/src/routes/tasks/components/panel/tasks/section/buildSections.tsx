@@ -58,12 +58,13 @@ const getSectionTasks = (taskMap: Map<string, Task[]>, sectionType: SectionType)
   );
 };
 
-const buildSections = (taskMap: Map<string, Task[]>, activeTaskId?: string): ReactElement[] => {
+const buildSections = (taskMap: Map<string, Task[]>, activeTaskId: string): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
+    const hasActiveTask = !!(taskMap.get(sectionType).find(x => x.id === activeTaskId));
     return (
       <TasksSection
         key={`task-section-${sectionType.toLowerCase().split(' ').join('-')}`}
-        initiallyVisible={sectionType === SectionType.Today}
+        initiallyVisible={!!(hasActiveTask || sectionType === SectionType.Today)}
         tasks={getSectionTasks(taskMap, SectionType[sectionType])}
         title={generateSectionTitle(SectionType[sectionType])}
         total={taskMap.get(SectionType[sectionType]).length}

@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import TMEditableInput from 'components/tm_input/editable';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';

@@ -7,9 +7,11 @@ import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
 import { TMButton } from 'components/tm_button';
+import { useTasks } from 'providers/tasks';
 
 const Toolbar: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
+  const { createTask } = useTasks();
 
   const [isAsc, setIsAsc] = useState(false);
 
@@ -41,7 +43,7 @@ const Toolbar: React.FC = (): JSX.Element => {
       <TMButton
         buttonStyle='icon'
         classNames={['task-toolbar-icon']}
-        onClick={() => console.log('create new task')}
+        onClick={createTask}
         size='large'
       >
         <IoMdAdd />

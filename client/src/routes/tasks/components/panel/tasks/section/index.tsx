@@ -1,10 +1,10 @@
 import './index.scss';
 
-import { ReactElement, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 
-interface TasksSectionProps {
+interface ITasksSection {
   initiallyVisible?: boolean,
   tasks: ReactNode,
   title: string,
@@ -12,13 +12,13 @@ interface TasksSectionProps {
   type: string,
 };
 
-const TasksSection = ({
+const TasksSection: FC<ITasksSection> = ({
   initiallyVisible = false,
   tasks,
   title,
   total,
   type,
-}: TasksSectionProps): ReactElement => {
+}) => {
   return (
     <TMCollapsableSection
       classNames={['off-white']}

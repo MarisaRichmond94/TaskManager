@@ -10,6 +10,7 @@ interface TasksContextType {
   taskMap?: Map<string, Task[]>,
   userTaskDataLoaded: boolean,
   archiveTaskById: (taskId: string) => void,
+  createTask: () => void,
   deleteTaskById: (taskId: string) => void,
   updateActiveTaskId: (id?: string) => void,
   updateTaskInTasks: (updatedTask: Task) => void,

@@ -6,7 +6,7 @@ import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_button/tm_checkbox';
 import TMEditableInput from 'components/tm_input/editable';
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import TaskActionButton from '../../../action_button';

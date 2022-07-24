@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { TMCollapsableSection } from 'components/tm_collapsable_section';
+import TMCollapsableSection from 'components/tm_collapsable_section';
 import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers/task';
 import { toServerDatetime, toClientDatetime } from 'utils/date';

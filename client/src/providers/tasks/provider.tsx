@@ -5,6 +5,7 @@ import TaskManagerApi from 'api/taskManager';
 import TasksApi from 'api/tasks';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
+import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
   const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
@@ -30,6 +31,16 @@ const TasksProvider = (props: object) => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
+  const createTask = async () => {
+    const midnight = new Date();
+    midnight.setHours(23, 59, 59, 59);
+    const newTask = await TasksApi.post({ dueDate: toServerDatetime(midnight) });
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+    buildTaskLists(updatedTasks, setTaskMap);
+    setActiveTaskId(newTask.id);
+  };
+
   const archiveTaskById = useCallback(async (taskId: string) => {
     const taskById = tasks.find(task => task.id === taskId);
     const archivedTask = {...taskById};
@@ -41,17 +52,6 @@ const TasksProvider = (props: object) => {
     buildTaskLists(updatedTasks, setTaskMap);
   }, [searchedTasks, tasks]);
 
-  const deleteTaskById = useCallback(async (taskId: string) => {
-    const isSuccessfullyDeleted = await TaskManagerApi.deleteById(taskId);
-    if (isSuccessfullyDeleted) {
-      const updatedTasks = tasks.filter(task => task.id !== taskId);
-      setTasks(updatedTasks);
-      if (taskId === activeTaskId) setActiveTaskId(undefined);
-      if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
-      buildTaskLists(updatedTasks, setTaskMap);
-    }
-  }, [activeTaskId, searchedTasks, tasks]);
-
   const updateTaskInTasks = useCallback((updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
@@ -61,6 +61,15 @@ const TasksProvider = (props: object) => {
     }
     buildTaskLists(updatedTasks, setTaskMap);
   }, [searchedTasks, tasks]);
+
+  const deleteTaskById = useCallback(async (taskId: string) => {
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
+    if (taskId === activeTaskId) setActiveTaskId(undefined);
+    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
+    buildTaskLists(updatedTasks, setTaskMap);
+    await TaskManagerApi.deleteById(taskId);
+  }, [activeTaskId, searchedTasks, tasks]);
 
   const updateActiveTaskId = (id?: string) => { if (activeTaskId !== id) setActiveTaskId(id); };
 
@@ -74,6 +83,7 @@ const TasksProvider = (props: object) => {
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
     archiveTaskById,
+    createTask,
     deleteTaskById,
     updateActiveTaskId,
     updateTaskInTasks,
