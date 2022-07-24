@@ -25,7 +25,8 @@ fun TaskTag.toDTO(): TaskTagDTO =
         TaskTagDTO(
             id = id,
             tagId = tag.id,
-            tagName = tag.name,
+            hexColor = tag.hexColor,
+            name = tag.name,
             createdAt = createdAt,
             updatedAt = updatedAt,
         )

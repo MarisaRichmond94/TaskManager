@@ -12,6 +12,10 @@ import {
   handleUpdateComment,
   handleDeleteComment,
 } from 'providers/task/utils/comment';
+import {
+  handleCreateTaskTag,
+  handleDeleteTaskTag,
+} from 'providers/task/utils/taskTag';
 import { handleUpdateStatus } from 'providers/task/utils/status';
 import { handleUpdateTask } from 'providers/task/utils/task';
 
@@ -59,12 +63,23 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
     handleDeleteComment({ ...providedTask }, commentId, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
+  // Tag functionality
+  const createTaskTag = useCallback((createTaskTagDTO: CreateTaskTagDTO) => {
+    handleCreateTaskTag({ ...providedTask }, createTaskTagDTO, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
+  const deleteTaskTag = useCallback((taskTagId: string) => {
+    handleDeleteTaskTag({ ...providedTask }, taskTagId, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
   const value = {
     ...providedTask,
     createChecklistItem,
     createComment,
+    createTaskTag,
     deleteChecklistItem,
     deleteComment,
+    deleteTaskTag,
     updateChecklistItem,
     updateComment,
     updateStatus,

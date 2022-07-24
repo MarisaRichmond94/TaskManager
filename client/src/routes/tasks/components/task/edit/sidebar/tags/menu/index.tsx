@@ -59,8 +59,10 @@ const AddMenu: FC = () => {
         <TaskTag
           key={`tag-menu-tag-${tag.id}`}
           hexColor={tag.hexColor}
+          id={tag.id}
           isInUse={isInUse}
           name={tag.name}
+          tagId={tag.tagId}
         />
       )
     });

@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.models.dtos
 
-import com.marisarichmond.taskmanager.models.Tag
 import org.hibernate.Hibernate
 import java.util.*
 
@@ -15,7 +14,7 @@ data class TaskDTO(
     val status: StatusDTO,
     val objective: String? = null,
     val description: String? = null,
-    val tags: List<Tag>? = emptyList(),
+    val tags: List<TaskTagDTO>? = emptyList(),
     val checklistItems: List<ChecklistItemDTO> = emptyList(),
     val comments: List<CommentDTO> = emptyList(),
     val attachments: List<AttachmentDTO> = emptyList(),

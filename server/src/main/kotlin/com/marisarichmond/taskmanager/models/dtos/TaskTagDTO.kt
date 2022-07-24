@@ -8,7 +8,8 @@ import java.util.*
 data class TaskTagDTO(
     val id: UUID,
     val tagId: UUID,
-    val tagName: String,
+    val hexColor: String,
+    val name: String,
     val createdAt: Long = Instant.now().epochSecond,
     val updatedAt: Long = Instant.now().epochSecond,
 ) {
@@ -22,7 +23,7 @@ data class TaskTagDTO(
 
     override fun hashCode(): Int = javaClass.hashCode()
 
-    override fun toString(): String = this::class.simpleName + "(id = $id, tagId = $tagId, tagName = $tagName)"
+    override fun toString(): String = this::class.simpleName + "(id = $id, tagId = $tagId, hexColor = $hexColor, name = $name)"
 }
 
 // Request DTOs

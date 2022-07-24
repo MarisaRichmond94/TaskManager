@@ -16,8 +16,9 @@ const TaskTags: FC = () => {
     if (!taskTags.length) return <NoTagsToDisplay />;
 
     return taskTags.map((taskTag: Tag, index: number) => {
-      const { name, hexColor } = taskTag;
-      return <TaskTag key={`task-tag-${index}`} name={name} hexColor={hexColor} />;
+      const { id, hexColor, name, tagId } = taskTag;
+      const key = `task-tag-${index}`;
+      return <TaskTag key={key} id={id} hexColor={hexColor} name={name} tagId={tagId} />;
     });
   };
 

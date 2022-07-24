@@ -46,7 +46,7 @@ class TaskManagerService(
             description = description,
             status = statusService.getByTaskId(id)?.toDTO()
                 ?: throw EntityNotFoundException("Status", id, "task_id"),
-            tags = taskTagService.getByTaskId(id).map { it.tag },
+            tags = taskTagService.getByTaskId(id).map { it.toDTO() },
             checklistItems = checklistItemService.getByTaskId(id).map { it.toDTO() },
             attachments = attachmentService.getByTaskId(id).map { it.toDTO() },
             comments = commentService.getByTaskId(id).map { it.toDTO() },
