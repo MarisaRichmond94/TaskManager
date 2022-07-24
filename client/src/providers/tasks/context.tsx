@@ -11,8 +11,11 @@ interface TasksContextType {
   userTaskDataLoaded: boolean,
   archiveTaskById: (taskId: string) => void,
   createTask: () => void,
+  createTag: (createTagDTO: CreateTagDTO) => void,
+  deleteTag: (tagId: string) => void,
   deleteTaskById: (taskId: string) => void,
   updateActiveTaskId: (id?: string) => void,
+  updateTag: (tagId: string, updateTagDTO: UpdateTagDTO) => void,
   updateTaskInTasks: (updatedTask: Task) => void,
 };
 

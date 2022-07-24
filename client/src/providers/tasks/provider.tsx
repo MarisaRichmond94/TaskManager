@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import BaseApi from 'api/base';
 import TaskManagerApi from 'api/task_manager';
+import TaskManagerTagsApi from 'api/task_manager_tags';
 import TasksApi from 'api/tasks';
+import TagsApi from 'api/tags';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { toServerDatetime } from 'utils/date';
@@ -18,16 +20,16 @@ const TasksProvider = (props: object) => {
 
   const userId = BaseApi.userId;
 
-  useEffect(() => {
-    async function getTaskDataForUserById() {
-      const userTaskData = await TaskManagerApi.get();
-      setAttachmentTypes(userTaskData.attachmentTypes);
-      setStatusTypes(userTaskData.statusTypes);
-      setTasks(userTaskData.tasks);
-      setTags(userTaskData.tags);
-      buildTaskLists(userTaskData.tasks, setTaskMap);
-    };
+  const getTaskDataForUserById = async () => {
+    const userTaskData = await TaskManagerApi.get();
+    setAttachmentTypes(userTaskData.attachmentTypes);
+    setStatusTypes(userTaskData.statusTypes);
+    setTasks(userTaskData.tasks);
+    setTags(userTaskData.tags);
+    buildTaskLists(userTaskData.tasks, setTaskMap);
+  };
 
+  useEffect(() => {
     if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
   }, [userId]);
 
@@ -73,6 +75,23 @@ const TasksProvider = (props: object) => {
 
   const updateActiveTaskId = (id?: string) => { if (activeTaskId !== id) setActiveTaskId(id); };
 
+  // Tag functionality
+  const createTag = async (createTagDTO: CreateTagDTO) => {
+    const newTag = await TagsApi.post(createTagDTO);
+    const updatedTags = [...tags, newTag];
+    setTags(updatedTags);
+  };
+
+  const updateTag = async (tagId: string, updateTagDTO: UpdateTagDTO) => {
+    await TagsApi.update(tagId, updateTagDTO);
+    getTaskDataForUserById();
+  };
+
+  const deleteTag = async (tagIdToDelete: string) => {
+    const isSuccessfullyDeleted = await TaskManagerTagsApi.deleteById(tagIdToDelete);
+    if (isSuccessfullyDeleted) getTaskDataForUserById();
+  };
+
   const value = {
     activeTaskId,
     attachmentTypes,
@@ -84,8 +103,11 @@ const TasksProvider = (props: object) => {
     userTaskDataLoaded: !!(tasks && tags),
     archiveTaskById,
     createTask,
+    createTag,
     deleteTaskById,
+    deleteTag,
     updateActiveTaskId,
+    updateTag,
     updateTaskInTasks,
   };
 

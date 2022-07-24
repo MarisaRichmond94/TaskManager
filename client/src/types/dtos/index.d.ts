@@ -27,8 +27,8 @@ interface UpdateChecklistItemDTO {
 };
 
 interface UpdateTagDTO {
-  hexColor: string?,
-  name: string?,
+  hexColor?: string,
+  name?: string,
 };
 
 interface UpdateTaskDTO {

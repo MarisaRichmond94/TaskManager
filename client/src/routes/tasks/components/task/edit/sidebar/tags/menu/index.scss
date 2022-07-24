@@ -2,13 +2,13 @@
 
 #tag-menu {
   background: $off-white;
-  bottom: 14px;
   border-radius: 10px;
   height: 195px;
   overflow: hidden auto;
   padding: $medium-padding;
   position: absolute;
-  width: 186px;
+  top: -10px;
+  width: 168px;
 
   .tag-menu-header {
     @include centered-flex-box;
@@ -24,7 +24,59 @@
     };
   };
 
-  .tag-menu-body {
+  #manage-menu {
+    .task-tag {
+      padding: $small-padding 0;
 
-  }
+      .tm-button { padding-right: $medium-padding; };
+    };
+
+    .add-button {
+      width: 100%;
+      .add-button-content {
+        @include centered-flex-box;
+        margin: $medium-margin;
+        width: 100%;
+        svg { margin-right: $small-margin; };
+      };
+    };
+
+    #create-tag-input-container {
+      @include centered-flex-box;
+      border-radius: 8px;
+      padding: 3px 0;
+      padding-right: $medium-padding;
+
+      #create-tag-input {
+        background: transparent;
+        position: relative;
+      };
+
+      #color-palette-icon-container {
+        display: flex;
+        margin-left: $small-margin;
+        position: relative;
+      };
+
+      #color-picker-menu {
+        background: $white;
+        border-radius: 8px;
+        bottom: 35px;
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        right: 0;
+        width: 75px;
+
+        .color-swatch {
+          border-radius: 20px;
+          height: 20px;
+          margin: $extra-small-margin;
+          width: 20px;
+
+          &.active { border: 1px solid $off-black; };
+        };
+      };
+    };
+  };
 };

@@ -1,3 +1,5 @@
+import './index.scss';
+
 import { FC } from 'react';
 
 import TMCollapsableSection from 'components/tm_collapsable_section';

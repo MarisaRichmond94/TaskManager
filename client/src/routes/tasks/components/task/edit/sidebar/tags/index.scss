@@ -1,12 +1,16 @@
 @import 'global';
 
 .task-tags-section {
-  .add-tag-button { visibility: hidden; };
-  &:hover { .add-tag-button { visibility: visible; }; }
+  .add-tag-button {
+    visibility: hidden;
+    &.active { visibility: visible; };
+  };
+  &:hover { .add-tag-button { visibility: visible; }; };
 };
 
 .task-tag-container {
   padding: $medium-padding 0;
+  position: relative;
   text-align: center;
 
   .no-tags {
