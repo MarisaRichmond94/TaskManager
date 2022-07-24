@@ -1,0 +1,30 @@
+@import 'global';
+
+#tag-menu {
+  background: $off-white;
+  bottom: 14px;
+  border-radius: 10px;
+  height: 195px;
+  overflow: hidden auto;
+  padding: $medium-padding;
+  position: absolute;
+  width: 186px;
+
+  .tag-menu-header {
+    @include centered-flex-box;
+    margin-bottom: $medium-margin;
+
+    button {
+      justify-content: center;
+      width: 50%;
+
+      &.active {
+        border-bottom-color: $logo-green;
+      };
+    };
+  };
+
+  .tag-menu-body {
+
+  }
+};

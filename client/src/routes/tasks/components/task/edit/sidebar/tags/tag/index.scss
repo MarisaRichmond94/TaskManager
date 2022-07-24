@@ -1,0 +1,13 @@
+@import 'global';
+
+.task-tag {
+  @include centered-flex-box;
+  border-radius: 10px;
+  margin-bottom: $medium-margin;
+  padding: $medium-padding;
+  button { margin-left: auto; };
+
+  &:last-child {
+    margin-bottom: 0;
+  };
+};

@@ -1,16 +1,16 @@
 import './index.scss';
 
 import { FC, ReactElement } from 'react';
-import { BsTags, BsX } from 'react-icons/bs';
+import { BsTags } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
 import TMCollapsableSection from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
-import { useTasks } from 'providers/tasks';
+import TagMenu from 'routes/tasks/components/task/edit/sidebar/tags/menu';
+import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
 
 const TaskTags: FC = () => {
   const { id, tags } = useTask();
-  const { tags: userTags } = useTasks();
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;
@@ -30,26 +30,12 @@ const TaskTags: FC = () => {
       sectionTitle='Tags'
     >
       <div className='task-tag-container task-sidebar-collapsable-container'>
+        <TagMenu />
         {populateTaskTags(tags)}
       </div>
     </TMCollapsableSection>
   );
 };
-
-interface TaskTagProps { name: string, hexColor: string };
-
-const TaskTag = ({ name, hexColor }: TaskTagProps): ReactElement => (
-  <div className='task-tag' style={{ backgroundColor: hexColor }}>
-    <div className='sub-header-text'>{name}</div>
-    <TMButton
-      buttonStyle='icon'
-      size='medium'
-      onClick={() => console.log('delete tag')}
-    >
-      <BsX />
-    </TMButton>
-  </div>
-);
 
 const AddTagButton = (): ReactElement => (
   <TMButton
