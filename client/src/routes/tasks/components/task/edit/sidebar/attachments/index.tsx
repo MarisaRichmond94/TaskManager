@@ -12,7 +12,7 @@ import { useTask } from 'providers/task';
 import AttachmentMenu from 'routes/tasks/components/task/edit/sidebar/attachments/menu';
 
 const TaskAttachments: FC = () => {
-  const { attachments, id } = useTask();
+  const { attachments, id, createAttachment, updateAttachment } = useTask();
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
   const [activeAttachment, setActiveAttachment] = useState<Attachment | undefined>();
 
@@ -40,9 +40,11 @@ const TaskAttachments: FC = () => {
     if (activeAttachment) setActiveAttachment(undefined);
   };
 
-  const onUpdateCallback = (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
-    onCloseCallback()
-    // TODO - call update fn
+  const onUpdateCallback = async (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
+    await activeAttachment
+      ? updateAttachment(activeAttachment.id, updatedAttachment as UpdateAttachmentDTO)
+      : createAttachment(updatedAttachment as CreateAttachmentDTO);
+    onCloseCallback();
   };
 
   return (

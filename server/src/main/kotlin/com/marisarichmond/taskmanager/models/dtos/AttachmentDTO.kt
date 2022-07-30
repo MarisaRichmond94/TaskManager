@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models.dtos
 
+import com.marisarichmond.taskmanager.models.AttachmentType
 import org.hibernate.Hibernate
 import java.time.Instant
 import java.util.*
@@ -8,7 +9,7 @@ import java.util.*
 data class AttachmentDTO(
     val id: UUID,
     val link: String,
-    val type: String,
+    val type: AttachmentType,
     val name: String,
     val createdAt: Long = Instant.now().epochSecond,
     val updatedAt: Long = Instant.now().epochSecond,

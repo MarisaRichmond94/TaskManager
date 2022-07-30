@@ -33,7 +33,7 @@ fun Attachment.toDTO(): AttachmentDTO =
         AttachmentDTO(
             id = id,
             link = link,
-            type = attachmentType.name,
+            type = attachmentType,
             name = name,
             createdAt = createdAt,
             updatedAt = updatedAt,

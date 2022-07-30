@@ -2,6 +2,7 @@ import { ReactElement, useCallback } from 'react';
 
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
+import { handleCreateAttachment, handleUpdateAttachment } from 'providers/task/utils/attachment';
 import {
   handleCreateChecklistItem,
   handleUpdateChecklistItem,
@@ -30,6 +31,15 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
   // Top-level task functionality
   const updateTask = useCallback((updateTaskDTO: UpdateTaskDTO) => {
     handleUpdateTask({ ...providedTask }, updateTaskDTO, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
+  // Attachment functionality
+  const createAttachment = useCallback((createAttachmentDTO: CreateAttachmentDTO) => {
+    handleCreateAttachment({ ...providedTask }, createAttachmentDTO, updateTaskInTasks);
+  }, [providedTask, updateTaskInTasks]);
+
+  const updateAttachment = useCallback((id: string, updateAttachmentDTO: UpdateAttachmentDTO) => {
+    handleUpdateAttachment({ ...providedTask }, id, updateAttachmentDTO, updateTaskInTasks);
   }, [providedTask, updateTaskInTasks]);
 
   // Status functionality
@@ -74,12 +84,14 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
 
   const value = {
     ...providedTask,
+    createAttachment,
     createChecklistItem,
     createComment,
     createTaskTag,
     deleteChecklistItem,
     deleteComment,
     deleteTaskTag,
+    updateAttachment,
     updateChecklistItem,
     updateComment,
     updateStatus,
