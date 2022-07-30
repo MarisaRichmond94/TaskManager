@@ -1,4 +1,11 @@
 // Create DTOs
+interface CreateAttachmentDTO {
+  attachmentTypeId: string,
+  link: string,
+  name?: string,
+  taskId: string,
+};
+
 interface CreateChecklistItemDTO {
   description: string,
   taskId: string,
@@ -20,6 +27,12 @@ interface CreateTaskTagDTO {
 };
 
 // Update DTOs
+interface UpdateAttachmentDTO {
+  attachmentTypeId?: string,
+  link?: string,
+  name?: string,
+};
+
 interface UpdateChecklistItemDTO {
   description?: string,
   isCompleted?: boolean,

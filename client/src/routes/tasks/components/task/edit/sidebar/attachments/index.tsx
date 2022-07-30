@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { BsFolderPlus, BsPencilSquare } from 'react-icons/bs';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,16 +9,40 @@ import { SiJirasoftware } from 'react-icons/si';
 import { TMButton } from 'components/tm_button';
 import TMCollapsableSection from 'components/tm_collapsable_section';
 import { useTask } from 'providers/task';
+import AttachmentMenu from 'routes/tasks/components/task/edit/sidebar/attachments/menu';
 
 const TaskAttachments: FC = () => {
   const { attachments, id } = useTask();
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+  const [activeAttachment, setActiveAttachment] = useState<Attachment | undefined>();
 
   const populateTaskAttachments = (taskAttachments?: Attachment[]): ReactElement[] | ReactElement => {
     if (!taskAttachments.length) return <NoAttachmentsToDisplay />;
 
     return taskAttachments.map((attachment, index) => {
-      return <TaskAttachment key={`task-attachment-${index}`} attachment={attachment} />
+      return (
+        <TaskAttachment
+          key={`task-attachment-${index}`}
+          attachment={attachment}
+          onEditCallback={onEditCallback}
+        />
+      );
     });
+  };
+
+  const onEditCallback = (attachment: Attachment) => {
+    setActiveAttachment(attachment);
+    setShowAttachmentMenu(true);
+  };
+
+  const onCloseCallback = () => {
+    setShowAttachmentMenu(false);
+    if (activeAttachment) setActiveAttachment(undefined);
+  };
+
+  const onUpdateCallback = (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
+    onCloseCallback()
+    // TODO - call update fn
   };
 
   return (
@@ -26,10 +50,30 @@ const TaskAttachments: FC = () => {
       classNames={['off-black', 'task-section', 'task-attachment-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
-      rightBlock={<AddAttachmentButton />}
+      rightBlock={
+        <AddAttachmentButton
+          showAttachmentMenu={showAttachmentMenu}
+          setShowAttachmentMenu={setShowAttachmentMenu}
+        />
+      }
       sectionTitle='Links'
     >
       <div className='task-attachments-container task-sidebar-collapsable-container'>
+        {
+          showAttachmentMenu &&
+          <AttachmentMenu
+            attachment={
+              activeAttachment &&
+              {
+                attachmentTypeId: activeAttachment.type.id,
+                link: activeAttachment.link,
+                name: activeAttachment.name,
+              }
+            }
+            onCancelCallback={onCloseCallback}
+            onUpdateCallback={onUpdateCallback}
+          />
+        }
         {populateTaskAttachments(attachments)}
       </div>
     </TMCollapsableSection>
@@ -38,13 +82,14 @@ const TaskAttachments: FC = () => {
 
 interface IAttachment {
   attachment: Attachment,
+  onEditCallback: (attachment: Attachment) => void,
 };
 
-const TaskAttachment: FC<IAttachment> = ({ attachment }) => {
+const TaskAttachment: FC<IAttachment> = ({ attachment, onEditCallback }) => {
   const { link, name, type } = attachment;
 
-  const populateIcon = (attachmentType: AttachmentType): ReactElement => {
-    switch (attachmentType) {
+  const populateIcon = (attachmentTypeName: AttachmentTypeName): ReactElement => {
+    switch (attachmentTypeName) {
       case 'JIRA':
         return <SiJirasoftware style={{ color: '#2685FF' }} />;
       case 'GitHub':
@@ -58,7 +103,7 @@ const TaskAttachment: FC<IAttachment> = ({ attachment }) => {
   return (
     <div className='task-attachment'>
       <div className='attachment-icon'>
-        {populateIcon(type)}
+        {populateIcon(type.name)}
       </div>
       <div
         className='sub-header-text attachment-name hide-overflow-ellipsis'
@@ -70,7 +115,7 @@ const TaskAttachment: FC<IAttachment> = ({ attachment }) => {
       <TMButton
         classNames={['grey', 'edit-attachment-button']}
         buttonStyle='icon'
-        onClick={() => console.log('open attachment menu')}
+        onClick={() => onEditCallback(attachment)}
         size='small'
       >
         <BsPencilSquare />
@@ -79,12 +124,20 @@ const TaskAttachment: FC<IAttachment> = ({ attachment }) => {
   );
 };
 
-const AddAttachmentButton: FC = () => (
+interface IAddAttachmentButton {
+  showAttachmentMenu: boolean,
+  setShowAttachmentMenu: (showAttachmentMenu: boolean) => void,
+};
+
+const AddAttachmentButton: FC<IAddAttachmentButton> = ({
+  showAttachmentMenu,
+  setShowAttachmentMenu,
+}) => (
   <TMButton
-    classNames={['grey', 'add-attachment-button']}
+    classNames={['grey', 'add-attachment-button', showAttachmentMenu ? 'active' : '']}
     buttonStyle='icon'
     size='medium'
-    onClick={() => console.log('add attachment')}
+    onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}
   >
     <BsFolderPlus/>
   </TMButton>

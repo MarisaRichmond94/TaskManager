@@ -27,7 +27,7 @@ const TMInput: FC<ITMInput> = ({
   formValue,
   id = '',
   placeholder = '',
-  type,
+  type = 'text',
   onChangeCallback,
   onKeyPressCallback,
   validateFormValue,
@@ -63,13 +63,13 @@ const TMInput: FC<ITMInput> = ({
     <form>
       <input
         autoComplete='none'
-        className={['tm-input', ...getClassNames(), ...classNames].join(' ')}
+        className={['tm-input', 'sub-header-text', ...getClassNames(), ...classNames].join(' ')}
         id={id}
         name={Math.random().toString()}
         onChange={e => onChange(e.target.value)}
         onKeyPress={onKeyPress}
         spellCheck='false'
-        type={type || 'text'}
+        type={type}
         placeholder={placeholder}
         value={formValue || value}
       />

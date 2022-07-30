@@ -1,8 +1,16 @@
 @import 'global';
 
 .task-attachment-section {
-  .add-attachment-button { visibility: hidden; };
+  .add-attachment-button {
+    visibility: hidden;
+    &.active {
+      color: $primary-red;
+      visibility: visible;
+    };
+  };
   &:hover { .add-attachment-button { visibility: visible; }; };
+
+  .task-attachments-container { position: relative; };
 };
 
 .task-attachment {
@@ -31,6 +39,7 @@
     visibility: hidden;
     margin-left: auto;
     margin-right: $medium-margin;
+    padding: 0;
     width: 20px;
   };
 

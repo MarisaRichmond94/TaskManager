@@ -9,6 +9,7 @@
   position: absolute;
   top: -10px;
   width: 168px;
+  z-index: 1;
 
   .tag-menu-header {
     @include centered-flex-box;
@@ -17,17 +18,13 @@
     button {
       justify-content: center;
       width: 50%;
-
-      &.active {
-        border-bottom-color: $logo-green;
-      };
+      &.active { border-bottom-color: $logo-green; };
     };
   };
 
   #manage-menu {
     .task-tag {
       padding: $small-padding 0;
-
       .tm-button { padding-right: $medium-padding; };
     };
 
@@ -73,7 +70,6 @@
           height: 20px;
           margin: $extra-small-margin;
           width: 20px;
-
           &.active { border: 1px solid $off-black; };
         };
       };

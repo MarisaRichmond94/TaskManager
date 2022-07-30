@@ -6,6 +6,9 @@ form {
   .tm-input {
     background-color: $white;
     border: none;
+    border-radius: 5px;
+    color: $off-black;
+    outline: none;
     padding: $medium-padding $large-padding;
     width: 100%;
 

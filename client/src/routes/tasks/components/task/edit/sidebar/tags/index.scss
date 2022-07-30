@@ -3,7 +3,10 @@
 .task-tags-section {
   .add-tag-button {
     visibility: hidden;
-    &.active { visibility: visible; };
+    &.active {
+      color: $primary-red;
+      visibility: visible;
+    };
   };
   &:hover { .add-tag-button { visibility: visible; }; };
 };

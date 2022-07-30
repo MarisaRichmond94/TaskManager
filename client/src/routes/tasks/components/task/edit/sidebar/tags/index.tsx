@@ -48,7 +48,7 @@ interface IToggleTagMenuButton {
 
 const ToggleTagMenuButton: FC<IToggleTagMenuButton> = ({ showTagMenu, setShowTagMenu }) => (
   <TMButton
-    classNames={showTagMenu ? ['red', 'active', 'add-tag-button'] : ['grey', 'add-tag-button']}
+    classNames={['grey', 'add-tag-button', showTagMenu ? 'active' : '']}
     buttonStyle='icon'
     size='medium'
     onClick={() => setShowTagMenu(!showTagMenu)}
