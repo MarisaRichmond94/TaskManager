@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { FC, MutableRefObject, ReactElement, useEffect, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 interface ITMCollapsableSection {
@@ -8,6 +8,7 @@ interface ITMCollapsableSection {
   classNames?: string[],
   id: string,
   initiallyVisible: boolean,
+  reference?: MutableRefObject<any>,
   rightBlock?: ReactElement,
   sectionTitle: string,
   wholeHeaderClickable?: boolean,
@@ -17,6 +18,7 @@ interface ITMCollapsableSection {
 const TMCollapsableSection: FC<ITMCollapsableSection> = ({
   children,
   classNames = [],
+  reference,
   rightBlock,
   id,
   initiallyVisible,
@@ -38,7 +40,7 @@ const TMCollapsableSection: FC<ITMCollapsableSection> = ({
   };
 
   return (
-    <div id={id} className={['tm-collapsable-section', ...classNames].join(' ')}>
+    <div id={id} className={['tm-collapsable-section', ...classNames].join(' ')} ref={reference}>
       <div className='header header-text' onClick={wholeHeaderClickable ? () => onToggle(!isVisible) : () => {}}>
         <div className='text-container' onClick={wholeHeaderClickable ? () => {} : () => onToggle(!isVisible)}>
           {

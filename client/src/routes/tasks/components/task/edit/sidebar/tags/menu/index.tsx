@@ -1,11 +1,12 @@
 import './index.scss';
 
-import { FC, useRef, useState } from 'react';
+import { FC, MutableRefObject, useRef, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 
 import { TMButton } from 'components/tm_button';
 import TMTextArea from 'components/tm_text_area';
+import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
@@ -26,8 +27,14 @@ const populateTaskTags = (tags: Tag[], isInUse: boolean, isEditable: boolean = f
   });
 };
 
-const TagMenu: FC = () => {
+interface ITagMenu {
+  onCloseCallback: () => void,
+  reference: MutableRefObject<any>,
+};
+
+const TagMenu: FC<ITagMenu> = ({ onCloseCallback, reference }) => {
   const [isAddMenu, setIsAddMenu] = useState(true);
+  useOnClickOutside(reference, onCloseCallback);
 
   return (
     <div id='tag-menu'>

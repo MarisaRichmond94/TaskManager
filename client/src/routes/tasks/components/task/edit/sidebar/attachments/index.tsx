@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement, useRef, useState } from 'react';
 import { BsFolderPlus, BsPencilSquare } from 'react-icons/bs';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -15,6 +15,7 @@ const TaskAttachments: FC = () => {
   const { attachments, id, createAttachment, updateAttachment } = useTask();
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
   const [activeAttachment, setActiveAttachment] = useState<Attachment | undefined>();
+  const attachmentsRef = useRef(null);
 
   const populateTaskAttachments = (taskAttachments?: Attachment[]): ReactElement[] | ReactElement => {
     if (!taskAttachments.length) return <NoAttachmentsToDisplay />;
@@ -41,7 +42,7 @@ const TaskAttachments: FC = () => {
   };
 
   const onUpdateCallback = async (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
-    await activeAttachment
+    activeAttachment
       ? updateAttachment(activeAttachment.id, updatedAttachment as UpdateAttachmentDTO)
       : createAttachment(updatedAttachment as CreateAttachmentDTO);
     onCloseCallback();
@@ -52,6 +53,8 @@ const TaskAttachments: FC = () => {
       classNames={['off-black', 'task-section', 'task-attachment-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
+      onToggleCallback={() => setShowAttachmentMenu(false)}
+      reference={attachmentsRef}
       rightBlock={
         <AddAttachmentButton
           showAttachmentMenu={showAttachmentMenu}
@@ -72,6 +75,7 @@ const TaskAttachments: FC = () => {
                 name: activeAttachment.name,
               }
             }
+            attachmentsRef={attachmentsRef}
             onCancelCallback={onCloseCallback}
             onUpdateCallback={onUpdateCallback}
           />

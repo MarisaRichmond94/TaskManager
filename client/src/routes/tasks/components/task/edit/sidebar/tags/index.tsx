@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement, useRef, useState } from 'react';
 import { BsTags } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
@@ -12,6 +12,7 @@ import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
 const TaskTags: FC = () => {
   const { id, tags } = useTask();
   const [showTagMenu, setShowTagMenu] = useState(false);
+  const tagsRef = useRef(null);
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;
@@ -28,13 +29,15 @@ const TaskTags: FC = () => {
       classNames={['off-black', 'task-section', 'task-tags-section']}
       id={`task-card-${id}-tags`}
       initiallyVisible
+      onToggleCallback={() => setShowTagMenu(false)}
+      reference={tagsRef}
       rightBlock={
         <ToggleTagMenuButton showTagMenu={showTagMenu} setShowTagMenu={setShowTagMenu} />
       }
       sectionTitle='Tags'
     >
       <div className='task-tag-container task-sidebar-collapsable-container'>
-        {showTagMenu && <TagMenu />}
+        {showTagMenu && <TagMenu onCloseCallback={() => setShowTagMenu(false)} reference={tagsRef} />}
         {populateTaskTags(tags)}
       </div>
     </TMCollapsableSection>

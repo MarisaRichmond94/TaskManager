@@ -1,16 +1,18 @@
 import './index.scss';
 
-import { FC, useState } from 'react';
+import { FC, MutableRefObject, useRef, useState } from 'react';
 
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
 import useDetectKeyPress from 'hooks/useDetectKeyPress';
+import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import { TMButton } from 'components/tm_button';
 
 interface IAttachmentMenu {
   attachment?: UpdateAttachmentDTO,
+  attachmentsRef: MutableRefObject<any>,
   cancelKey?: string,
   submitKey?: string,
   onCancelCallback: () => void,
@@ -19,6 +21,7 @@ interface IAttachmentMenu {
 
 const AttachmentMenu: FC<IAttachmentMenu> = ({
   attachment,
+  attachmentsRef,
   cancelKey = 'Escape',
   submitKey = 'Enter',
   onCancelCallback,
@@ -26,6 +29,7 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
 }) => {
   const { id: taskId } = useTask();
   const { attachmentTypes } = useTasks();
+  useOnClickOutside(attachmentsRef, () => onCancelCallback());
 
   const [type, setType] = useState<AttachmentType | undefined>(
     attachmentTypes.find(x => x.id === attachment?.attachmentTypeId)
