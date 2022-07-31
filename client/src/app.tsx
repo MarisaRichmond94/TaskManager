@@ -7,7 +7,6 @@ import TMSidebar from 'routes/components/sidebar';
 const App: React.FC = (): JSX.Element => {
   const { isExpanded, isLoggedIn } = useApp();
 
-    console.log(`Key pressed: ${event.key}`);
   return isLoggedIn
     ? (
       <>
