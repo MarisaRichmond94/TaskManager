@@ -31,7 +31,7 @@
 
   .filter-options-list {
     background-color: $off-white;
-    border-radius: 0 0 $small-border-radius $small-border-radius;
+    border-radius: $no-border-radius $no-border-radius $small-border-radius $small-border-radius;
     color: $off-black;
     list-style-type: none;
     max-height: 125px;

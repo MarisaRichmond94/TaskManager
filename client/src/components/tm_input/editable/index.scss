@@ -3,13 +3,13 @@
 .tm-editable-input {
   .tm-text-area {
     background-color: $off-white;
-    border-radius: 5px;
+    border-radius: $extra-small-border-radius;
     cursor: text;
 
     &.large-header-text {
       font-size: $large-header-font-size;
-    }
-  }
+    };
+  };
 
   .inactive {
     display: block;
@@ -17,8 +17,8 @@
 
     &:hover {
       background-color: $off-white;
-      border-radius: 5px;
+      border-radius: $extra-small-border-radius;
       cursor: pointer;
-    }
-  }
-}
+    };
+  };
+};

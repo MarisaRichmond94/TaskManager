@@ -1,16 +1,12 @@
 import TasksApi from "api/tasks";
 
 const handleUpdateTask = async (
-  taskToUpdate: Task,
+  taskId: string,
   updateTaskDTO: UpdateTaskDTO,
   onUpdateCallback: (updatedTask: Task) => void,
 ) => {
-  Object.keys(updateTaskDTO).forEach(key => {
-    const value = updateTaskDTO[key];
-    if (value !== undefined) taskToUpdate[key] = value;
-  });
-  onUpdateCallback(taskToUpdate);
-  await TasksApi.update(taskToUpdate.id, updateTaskDTO);
+  const updatedTask = await TasksApi.update(taskId, updateTaskDTO);
+  onUpdateCallback(updatedTask);
 };
 
 export { handleUpdateTask };

@@ -7,7 +7,7 @@
     @include centered-flex-box;
     background-color: $off-white;
     border: none;
-    border-radius: 5px;
+    border-radius: $extra-small-border-radius;
     color: $off-black;
     cursor: pointer;
     padding: $medium-padding;
@@ -25,11 +25,11 @@
 
   .tm-dropdown-menu {
     background-color: $off-white;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: $extra-small-border-radius;
+    border-bottom-right-radius: $extra-small-border-radius;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     max-height: 200px;
-    overflow: hidden auto;
+    overflow: $hide-y-scroll-x;
     position: absolute;
     width: 100%;
     z-index: 1;

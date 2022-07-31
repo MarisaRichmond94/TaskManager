@@ -30,8 +30,8 @@ const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
 
   // Top-level task functionality
   const updateTask = useCallback((updateTaskDTO: UpdateTaskDTO) => {
-    handleUpdateTask({ ...providedTask }, updateTaskDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+    handleUpdateTask(providedTask.id, updateTaskDTO, updateTaskInTasks);
+  }, [providedTask.id, updateTaskInTasks]);
 
   // Attachment functionality
   const createAttachment = useCallback((createAttachmentDTO: CreateAttachmentDTO) => {

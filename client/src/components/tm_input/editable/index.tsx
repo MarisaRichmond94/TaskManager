@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, useRef, useState } from 'react';
+import { FC, useRef, useEffect, useState } from 'react';
 
 import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
@@ -26,8 +26,16 @@ const TMEditableInput: FC<ITMEditableInput> = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>(currInputValue);
 
+  /**
+   * This is necessary because when a component's initial state is set via props, that state will
+   * not update when the props change. In this case, changing tasks was resulting in a stale
+   * inputValue state which was, in turn, updating the new task to have the same description as the
+   * previous task (as the inputValue was stale, causing the equality check to always return true)
+   */
+  useEffect(() => { setInputValue(currInputValue); }, [currInputValue]);
+
   const handleOnClickOutside = () => {
-    if(inputValue !== currInputValue) onUpdateCallback(inputValue);
+    if (inputValue !== currInputValue) onUpdateCallback(inputValue);
     setIsInEditMode(false);
   };
 

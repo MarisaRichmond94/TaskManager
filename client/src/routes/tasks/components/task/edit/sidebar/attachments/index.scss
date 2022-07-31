@@ -1,18 +1,5 @@
 @import 'global';
 
-.task-attachment-section {
-  .add-attachment-button {
-    visibility: hidden;
-    &.active {
-      color: $primary-red;
-      visibility: visible;
-    };
-  };
-  &:hover { .add-attachment-button { visibility: visible; }; };
-
-  .task-attachments-container { position: relative; };
-};
-
 .task-attachment {
   @include centered-flex-box;
   color: $dark-grey;
@@ -20,6 +7,7 @@
   padding-top: $medium-padding;
   text-align: center;
   max-width: 195px;
+  &:first-child { padding-top: 0; };
 
   .attachment-icon {
     display: flex;

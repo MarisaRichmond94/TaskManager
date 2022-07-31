@@ -2,7 +2,7 @@
 
 .edit-task-card {
   background-color: $white;
-  border-radius: 8px;
+  border-radius: $small-border-radius;
   color: $off-black;
   margin-bottom: $large-margin;
   &:last-child { margin-bottom: 0; };
@@ -10,7 +10,7 @@
   .task-content-container {
     display: flex;
     max-height: 345px;
-    overflow: hidden auto;
+    overflow: $hide-y-scroll-x;
   };
 
   .task-section {

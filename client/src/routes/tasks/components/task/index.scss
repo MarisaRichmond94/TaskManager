@@ -2,11 +2,11 @@
 
 .task-card {
   background-color: $off-white;
-  border-radius: 8px;
+  border-radius: $small-border-radius;
   color: $off-black;
   margin-bottom: $large-margin;
-  max-height: 150px;
-  overflow: hidden auto;
+  max-height: $max-task-card-height;
+  overflow: $hide-y-scroll-x;
   padding: $large-padding;
   &.active { background-color: $white; };
   &:last-child { margin-bottom: 0; };

@@ -6,14 +6,14 @@ form {
   .tm-input {
     background-color: $white;
     border: none;
-    border-radius: 5px;
+    border-radius: $extra-small-border-radius;
     color: $off-black;
     outline: none;
     padding: $medium-padding $large-padding;
     width: 100%;
 
     &.tm-search-input {
-      border-radius: 15px;
+      border-radius: $large-border-radius;
       &:focus-visible {
         outline: none;
       }

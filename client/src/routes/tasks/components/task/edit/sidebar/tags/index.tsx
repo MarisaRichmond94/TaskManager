@@ -26,7 +26,7 @@ const TaskTags: FC = () => {
 
   return (
     <TMCollapsableSection
-      classNames={['off-black', 'task-section', 'task-tags-section']}
+      classNames={['off-black', 'task-section', 'task-tags-section', 'task-sidebar-section']}
       id={`task-card-${id}-tags`}
       initiallyVisible
       onToggleCallback={() => setShowTagMenu(false)}
@@ -36,7 +36,7 @@ const TaskTags: FC = () => {
       }
       sectionTitle='Tags'
     >
-      <div className='task-tag-container task-sidebar-collapsable-container'>
+      <div className='sidebar-menu-container task-sidebar-collapsable-container'>
         {showTagMenu && <TagMenu onCloseCallback={() => setShowTagMenu(false)} reference={tagsRef} />}
         {populateTaskTags(tags)}
       </div>
@@ -51,7 +51,7 @@ interface IToggleTagMenuButton {
 
 const ToggleTagMenuButton: FC<IToggleTagMenuButton> = ({ showTagMenu, setShowTagMenu }) => (
   <TMButton
-    classNames={['grey', 'add-tag-button', showTagMenu ? 'active' : '']}
+    classNames={['grey', 'toggle-menu-button', showTagMenu ? 'active' : '']}
     buttonStyle='icon'
     size='medium'
     onClick={() => setShowTagMenu(!showTagMenu)}

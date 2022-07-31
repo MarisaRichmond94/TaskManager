@@ -50,7 +50,7 @@ const TaskAttachments: FC = () => {
 
   return (
     <TMCollapsableSection
-      classNames={['off-black', 'task-section', 'task-attachment-section']}
+      classNames={['off-black', 'task-section', 'task-attachment-section', 'task-sidebar-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
       onToggleCallback={() => setShowAttachmentMenu(false)}
@@ -63,7 +63,7 @@ const TaskAttachments: FC = () => {
       }
       sectionTitle='Links'
     >
-      <div className='task-attachments-container task-sidebar-collapsable-container'>
+      <div className='sidebar-menu-container task-sidebar-collapsable-container'>
         {
           showAttachmentMenu &&
           <AttachmentMenu
@@ -140,7 +140,7 @@ const AddAttachmentButton: FC<IAddAttachmentButton> = ({
   setShowAttachmentMenu,
 }) => (
   <TMButton
-    classNames={['grey', 'add-attachment-button', showAttachmentMenu ? 'active' : '']}
+    classNames={['grey', 'toggle-menu-button', showAttachmentMenu ? 'active' : '']}
     buttonStyle='icon'
     size='medium'
     onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}

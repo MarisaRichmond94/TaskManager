@@ -1,7 +1,7 @@
 @import 'global';
 
 #tasks-panel {
-  overflow: hidden auto;
+  overflow: $hide-y-scroll-x;
   padding: 0;
   padding-right: $medium-padding;
 

@@ -54,7 +54,7 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   if (isSubmitKeyPressed) submit();
 
   return (
-    <div id='attachment-menu'>
+    <div className='sidebar-menu'>
       <TypeSelector type={type} setType={setType} />
       <LinkInput link={link} setLink={setLink} />
       <NameInput name={name} setName={setName} />

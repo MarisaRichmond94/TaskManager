@@ -10,6 +10,7 @@ import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
+import { TAG_COLORS } from 'settings';
 
 const populateTaskTags = (tags: Tag[], isInUse: boolean, isEditable: boolean = false) => {
   return tags.map(tag => {
@@ -37,7 +38,7 @@ const TagMenu: FC<ITagMenu> = ({ onCloseCallback, reference }) => {
   useOnClickOutside(reference, onCloseCallback);
 
   return (
-    <div id='tag-menu'>
+    <div className='sidebar-menu'>
       <Header isAddMenu={isAddMenu} setIsAddMenu={setIsAddMenu} />
       <div id='tag-menu-body'>
         {isAddMenu ? <AddMenu /> : <ManageMenu />}
@@ -178,17 +179,13 @@ interface IColorPicker {
 };
 
 const ColorPicker: FC<IColorPicker> = ({ hexColor, setIsColorPickerShowing, setHexColor}) => {
-  const hexColorOptions = [
-    '#FF9AA2', '#FFB7B2', '#FFDAC1', '#F3F3AB', '#E2F0CB', '#B5EAD7', '#D7E5EC', '#C7CEEA', '#C2A2C2',
-  ];
-
   const handleColorSelect = (selectedColor: string) => {
     setHexColor(selectedColor);
     setIsColorPickerShowing(false);
   };
 
   const populateColorPalette = () => {
-    return hexColorOptions.map(color => {
+    return TAG_COLORS.map(color => {
       return (
         <div
           key={`color-palette-${color}`}

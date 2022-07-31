@@ -66,7 +66,7 @@ const TMTextArea = ({
   return (
     <textarea
       autoComplete='none'
-      className={['tm-form-input', 'tm-text-area', 'sub-header-text', ...classNames].join(' ')}
+      className={['tm-form-input', 'tm-text-area', ...classNames].join(' ')}
       id={id}
       name={Math.random().toString()} // prevents auto complete in Chrome
       onChange={e => onChange(e.target.value)}

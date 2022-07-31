@@ -7,7 +7,7 @@
     input {
       background-color: $off-white;
       border: none;
-      border-radius: 5px;
+      border-radius: $extra-small-border-radius;
       font-family: $paragraph-font-family;
       padding: $medium-padding;
       width: 90%;

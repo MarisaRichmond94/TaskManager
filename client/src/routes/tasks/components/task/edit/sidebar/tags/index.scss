@@ -1,19 +1,7 @@
 @import 'global';
 
-.task-tags-section {
-  .add-tag-button {
-    visibility: hidden;
-    &.active {
-      color: $primary-red;
-      visibility: visible;
-    };
-  };
-  &:hover { .add-tag-button { visibility: visible; }; };
-};
-
-.task-tag-container {
+.sidebar-menu-container {
   padding: $medium-padding 0;
-  position: relative;
   text-align: center;
 
   .no-tags {

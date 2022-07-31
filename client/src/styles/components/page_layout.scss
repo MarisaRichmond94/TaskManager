@@ -3,54 +3,39 @@
 @mixin centered-flex-box {
   align-items: center;
   display: flex;
-}
+};
 
 @mixin hide-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
+};
 
 .hide-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
+};
 
 .page-container {
   box-sizing: border-box;
   display: grid;
   overflow: hidden;
   width: 100%;
-}
+};
 
 .tm-panel {
   padding: $medium-padding 0;
 };
 
-.visible { display: block; }
-.hidden { display: none; }
-.text-center { text-align: center; }
+.visible { display: block; };
+.hidden { display: none; };
+.text-center { text-align: center; };
 
 .vertical-line {
   border-right: 1px solid;
   height: 20px;
-  &.light-grey { border-color: $light-grey; }
-  &.grey { border-color: $grey; }
-  &.dark-grey { border-color: $dark-grey; }
-}
-
-// width classes (px)
-.width-100 { width: 100px; }
-
-// width classes (%)
-.width-100-per { width: 100%; }
-.width-75-per { width: 75%; }
-.width-50-per { width: 50%; }
-.width-25-per { width: 25%; }
-
-// width classes (vw)
-.width-100-vw { width: 100vw; }
-.width-75-vw { width: 75vw; }
-.width-50-vw { width: 50vw; }
-.width-25-vw { width: 25vw; }
+  &.light-grey { border-color: $light-grey; };
+  &.grey { border-color: $grey; };
+  &.dark-grey { border-color: $dark-grey; };
+};

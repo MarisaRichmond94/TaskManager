@@ -29,7 +29,6 @@ class TaskService(
         createNewTaskDTO.run {
             Task(
                 id = id,
-                dueDate = dueDate,
                 user = userService.getUserById(userId) ?: throw EntityNotFoundException(USER, userId),
             ).let(taskRepository::save)
         }

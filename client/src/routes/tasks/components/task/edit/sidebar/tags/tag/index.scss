@@ -2,7 +2,7 @@
 
 .task-tag {
   @include centered-flex-box;
-  border-radius: 10px;
+  border-radius: $medium-border-radius;
   margin-bottom: $medium-margin;
   padding: $medium-padding;
   button { margin-left: auto; };
