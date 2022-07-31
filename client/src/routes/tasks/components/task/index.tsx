@@ -72,7 +72,12 @@ const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElemen
           isDisabled={isArchived}
         />
         <TaskActionButton
-          action={() => deleteTaskById(id)}
+          action={
+            (e: any) => {
+              e.stopPropagation(); // prevents activeTaskId from being updated by top-level onClick
+              deleteTaskById(id);
+            }
+          }
           icon={<BsTrash />}
         />
       </div>

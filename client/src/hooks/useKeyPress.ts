@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useDetectKeyPress(targetKey) {
+function useKeyPress(targetKey) {
   const [keyPressed, setKeyPressed] = useState(false);
 
   function keyDownHandler({ key }) {
@@ -25,4 +25,4 @@ function useDetectKeyPress(targetKey) {
   return keyPressed;
 };
 
-export default useDetectKeyPress;
+export default useKeyPress;

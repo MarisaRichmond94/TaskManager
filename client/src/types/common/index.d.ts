@@ -4,6 +4,13 @@ interface DropdownOption {
   name?: string,
 };
 
+interface KeyStroke {
+  altKey?: boolean,
+  ctrlKey?: boolean,
+  shiftKey?: boolean,
+  key: string,
+};
+
 interface User {
   id: string,
   firstName: string,

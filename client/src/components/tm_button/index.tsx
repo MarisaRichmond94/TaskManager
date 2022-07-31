@@ -8,7 +8,7 @@ export interface TMButtonProps {
   classNames?: string[],
   isDisabled?: boolean,
   size?: `${Size}`,
-  onClick: () => void,
+  onClick: (event: any) => void,
 };
 
 export enum Size {
@@ -49,7 +49,7 @@ export const TMButton = ({
     <button
       className={['tm-button', size, buttonStyle, transparent, ...classNames].join(' ')}
       type='button'
-      onClick={onClick}
+      onClick={(event: any) => onClick(event)}
       disabled={isDisabled}
     >
       {children}

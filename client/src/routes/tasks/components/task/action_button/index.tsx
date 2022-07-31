@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { TMButton } from "components/tm_button";
 
 interface TaskActionButtonProps {
-  action: () => void,
+  action: (event: any) => void,
   icon: ReactElement,
   isDisabled?: boolean,
 };

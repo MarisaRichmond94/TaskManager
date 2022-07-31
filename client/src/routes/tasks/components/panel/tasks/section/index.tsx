@@ -26,6 +26,7 @@ const TasksSection: FC<ITasksSection> = ({
       initiallyVisible={initiallyVisible}
       rightBlock={<p className='task-count'>({total})</p>}
       sectionTitle={title}
+      wholeHeaderClickable
     >
       <div className='tasks-container'>
         {tasks}

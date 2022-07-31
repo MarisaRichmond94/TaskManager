@@ -34,7 +34,7 @@ const Header: FC = () => {
           icon={<BsTrash />}
         />
         <TaskActionButton
-          action={() => updateActiveTaskId()}
+          action={() => updateActiveTaskId(undefined)}
           icon={<BsXLg />}
         />
       </div>

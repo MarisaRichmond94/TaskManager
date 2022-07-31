@@ -65,15 +65,17 @@ const TasksProvider = (props: object) => {
   }, [searchedTasks, tasks]);
 
   const deleteTaskById = useCallback(async (taskId: string) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
-    setTasks(updatedTasks);
     if (taskId === activeTaskId) setActiveTaskId(undefined);
     if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
     await TaskManagerApi.deleteById(taskId);
   }, [activeTaskId, searchedTasks, tasks]);
 
-  const updateActiveTaskId = (id?: string) => { if (activeTaskId !== id) setActiveTaskId(id); };
+  const updateActiveTaskId = (id?: string) => {
+    if (activeTaskId !== id) setActiveTaskId(id);
+  };
 
   // Tag functionality
   const createTag = async (createTagDTO: CreateTagDTO) => {

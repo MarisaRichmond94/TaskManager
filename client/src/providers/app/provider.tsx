@@ -21,7 +21,7 @@ const AppProvider = (props: object) => {
     }, 1000);
   }, []);
 
-  const toggleIsExpanded = () => { setIsExpanded(!isExpanded); };
+  const toggleIsExpanded = () => setIsExpanded(!isExpanded);
 
   const value = {
     isExpanded,

@@ -4,7 +4,7 @@ import { FC, MutableRefObject, useRef, useState } from 'react';
 
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
-import useDetectKeyPress from 'hooks/useDetectKeyPress';
+import useKeyPress from 'hooks/useKeyPress';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
@@ -37,8 +37,8 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   const [link, setLink] = useState(attachment?.link || '');
   const [name, setName] = useState(attachment?.name || '');
 
-  const isCancelKeyPressed = useDetectKeyPress(cancelKey);
-  const isSubmitKeyPressed = useDetectKeyPress(submitKey);
+  const isCancelKeyPressed = useKeyPress(cancelKey);
+  const isSubmitKeyPressed = useKeyPress(submitKey);
 
   const cancel = () => {
     onCancelCallback();
