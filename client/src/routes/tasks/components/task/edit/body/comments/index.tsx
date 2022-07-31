@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMEditableInput from 'components/tm_input/editable';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
@@ -33,7 +33,7 @@ const TaskComments: FC = () => {
   };
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section', 'comments-section']}
       id={`task-card-${id}-comments`}
       initiallyVisible
@@ -49,7 +49,7 @@ const TaskComments: FC = () => {
         />
         {populateTaskComments(comments)}
       </div>
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

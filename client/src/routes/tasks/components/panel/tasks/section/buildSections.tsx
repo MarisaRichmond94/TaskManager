@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 
 import TasksSection from 'routes/tasks/components/panel/tasks/section';
-import TaskCard from 'routes/tasks/components/task';
 import { getDayMonthDateString, getModifiedDate } from 'utils/date';
 
 enum SectionType {
@@ -39,33 +38,14 @@ const getEmptyResponseText = (sectionType: SectionType): string => {
   }
 };
 
-const getSectionTasks = (taskMap: Map<string, Task[]>, sectionType: SectionType): ReactElement => {
-  const sectionTasks = taskMap.get(sectionType);
-  if (!sectionTasks.length) {
-    const emptyResponseText = getEmptyResponseText(sectionType);
-    return (
-      <div className='header-text empty-task-section'>
-        {emptyResponseText}
-      </div>
-    );
-  }
-  sectionTasks.sort((a, b) => (a.dueDate > b.dueDate ? 1 : -1))
-
-  return (
-    <div className='header-text task-section'>
-      {sectionTasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)}
-    </div>
-  );
-};
-
 const buildSections = (taskMap: Map<string, Task[]>, activeTaskId: string): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
-    const hasActiveTask = !!(taskMap.get(sectionType).find(x => x.id === activeTaskId));
     return (
       <TasksSection
         key={`task-section-${sectionType.toLowerCase().split(' ').join('-')}`}
-        initiallyVisible={!!(hasActiveTask || sectionType === SectionType.Today)}
-        tasks={getSectionTasks(taskMap, SectionType[sectionType])}
+        emptyResponseText={getEmptyResponseText(SectionType[sectionType])}
+        initiallyVisible={sectionType === SectionType.Today}
+        tasks={taskMap.get(SectionType[sectionType])}
         title={generateSectionTitle(SectionType[sectionType])}
         total={taskMap.get(SectionType[sectionType]).length}
         type={SectionType[sectionType].toLowerCase()}

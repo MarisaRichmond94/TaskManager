@@ -7,7 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiJirasoftware } from 'react-icons/si';
 
 import { TMButton } from 'components/tm_button';
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers/task';
 import AttachmentMenu from 'routes/tasks/components/task/edit/sidebar/attachments/menu';
 
@@ -49,7 +49,7 @@ const TaskAttachments: FC = () => {
   };
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section', 'task-attachment-section', 'task-sidebar-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
@@ -82,7 +82,7 @@ const TaskAttachments: FC = () => {
         }
         {populateTaskAttachments(attachments)}
       </div>
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

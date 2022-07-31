@@ -4,7 +4,7 @@ import { FC, ReactElement, useRef, useState } from 'react';
 import { BsTags } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers/task';
 import TagMenu from 'routes/tasks/components/task/edit/sidebar/tags/menu';
 import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
@@ -25,7 +25,7 @@ const TaskTags: FC = () => {
   };
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section', 'task-tags-section', 'task-sidebar-section']}
       id={`task-card-${id}-tags`}
       initiallyVisible
@@ -40,7 +40,7 @@ const TaskTags: FC = () => {
         {showTagMenu && <TagMenu onCloseCallback={() => setShowTagMenu(false)} reference={tagsRef} />}
         {populateTaskTags(tags)}
       </div>
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

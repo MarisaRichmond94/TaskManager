@@ -4,7 +4,7 @@ import { FC, ReactElement } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers/task';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 
@@ -12,7 +12,7 @@ const TaskDetails: FC = () => {
   const { createdAt, id, updatedAt } = useTask();
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section']}
       id={`task-card-${id}-details`}
       initiallyVisible
@@ -22,7 +22,7 @@ const TaskDetails: FC = () => {
         <TaskDetail secondsSinceEpoch={createdAt} icon={<MdOutlineAddTask />} />
         <TaskDetail secondsSinceEpoch={updatedAt} icon={<BsPencilSquare />} />
       </div>
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

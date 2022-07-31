@@ -6,7 +6,7 @@ import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_button/tm_checkbox';
 import TMEditableInput from 'components/tm_input/editable';
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import TaskActionButton from '../../../action_button';
@@ -42,7 +42,7 @@ const TaskChecklistItems: FC = () => {
   };
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section', 'checklist-items-section']}
       id={`task-card-${id}-checklist-items`}
       initiallyVisible
@@ -55,7 +55,7 @@ const TaskChecklistItems: FC = () => {
         {populateTaskChecklistItems(checklistItems.sort())}
         {isCreatingNewChecklistItem && <NewChecklistItem onCreateCallback={onCreateCallback} />}
       </div>
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

@@ -2,7 +2,7 @@ import './index.scss';
 
 import { FC } from 'react';
 
-import TMCollapsableSection from 'components/tm_collapsable_section';
+import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers/task';
 import { toServerDatetime, toClientDatetime } from 'utils/date';
@@ -13,7 +13,7 @@ const TaskDueDate: FC = () => {
   const updateDueDate = (date: Date) => updateTask({ dueDate: toServerDatetime(date) });
 
   return (
-    <TMCollapsableSection
+    <TMControlledCollapsableSection
       classNames={['off-black', 'task-section', 'task-due-date-section']}
       id={`task-card-${id}-attachments`}
       initiallyVisible
@@ -24,7 +24,7 @@ const TaskDueDate: FC = () => {
         onChange={(date: Date) => updateDueDate(date)}
         showTimeSelect
       />
-    </TMCollapsableSection>
+    </TMControlledCollapsableSection>
   );
 };
 

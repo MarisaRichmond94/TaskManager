@@ -1,5 +1,3 @@
-import { useCallback, useEffect } from 'react';
-
 import TMLoader from 'components/tm_loader';
 import { useApp } from 'providers/app';
 import TMRouter from 'routes/tm_router';
@@ -9,15 +7,7 @@ import TMSidebar from 'routes/components/sidebar';
 const App: React.FC = (): JSX.Element => {
   const { isExpanded, isLoggedIn } = useApp();
 
-  const handleKeyPress = useCallback((event) => {
     console.log(`Key pressed: ${event.key}`);
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [handleKeyPress]);
-
   return isLoggedIn
     ? (
       <>
