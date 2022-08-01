@@ -34,6 +34,17 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+              - column:
+                  name: avatar
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: google_id
+                  type: varchar
+                  constraints:
+                    nullable: false
+                    unique: true
   - changeSet:
       id: 0001_create_and_populate_user_table_2
       author: marisarichmond
@@ -62,4 +73,12 @@ databaseChangeLog:
               - column:
                   header: email
                   name: email
+                  type: string
+              - column:
+                  header: avatar
+                  name: avatar
+                  type: string
+              - column:
+                  header: google_id
+                  name: google_id
                   type: string

@@ -26,6 +26,15 @@ interface CreateTaskTagDTO {
   tagId: string,
 };
 
+// Read DTOs
+interface findOrCreateUserDTO {
+  email: string,
+  firstName: string,
+  lastName: string,
+  avatar: string,
+  googleId: string,
+};
+
 // Update DTOs
 interface UpdateAttachmentDTO {
   attachmentTypeId?: string,

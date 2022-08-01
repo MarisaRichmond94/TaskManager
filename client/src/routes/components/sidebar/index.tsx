@@ -6,7 +6,6 @@ import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import userProfilePic from 'assets/profile.jpeg'; // TODO - this is a placeholder
 import { TMButton } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_button/tm_toggle';
 import useKeyStroke from 'hooks/useKeyStroke';
@@ -17,7 +16,7 @@ const { SHIFTED_1_KEY, SHIFTED_2_KEY, SHIFTED_3_KEY, TOGGLE_KEY } = HOT_KEYS;
 const { GOALS_ROUTE, NOTES_ROUTE, TASKS_ROUTE } = ROUTES;
 
 const TMSidebar: React.FC = (): JSX.Element => {
-  const { isExpanded, toggleIsExpanded } = useApp();
+  const { isExpanded, user, toggleIsExpanded } = useApp();
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
 
@@ -46,7 +45,8 @@ const TMSidebar: React.FC = (): JSX.Element => {
         <img
           alt='google user profile'
           id='user-profile-pic'
-          src={userProfilePic}
+          src={user?.avatar}
+          referrerPolicy='no-referrer'
         />
         <TMToggleButton
           onClick={() => toggleIsExpanded()}

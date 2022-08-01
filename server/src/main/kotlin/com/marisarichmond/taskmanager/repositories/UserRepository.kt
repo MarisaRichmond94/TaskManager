@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface UserRepository : JpaRepository<User, UUID> {
-    fun findByEmail(email: String): User?
+    fun findByGoogleId(googleId: String): User?
 }

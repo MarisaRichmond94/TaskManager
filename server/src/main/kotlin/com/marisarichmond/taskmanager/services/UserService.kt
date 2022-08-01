@@ -1,10 +1,9 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.controllers.CreateUserRequestBody
 import com.marisarichmond.taskmanager.exceptions.EntityValidationException
 import com.marisarichmond.taskmanager.extensions.unwrap
 import com.marisarichmond.taskmanager.models.User
-import com.marisarichmond.taskmanager.models.validateFields
+import com.marisarichmond.taskmanager.models.dtos.CreateUserRequestBody
 import com.marisarichmond.taskmanager.repositories.UserRepository
 import mu.KotlinLogging
 import org.hibernate.HibernateException
@@ -18,19 +17,21 @@ class UserService(private val userRepository: UserRepository) {
         private val logger = KotlinLogging.logger {}
     }
 
-    // TODO - Delete this once you've added real authentication
-    fun getUsers(): List<User> = userRepository.findAll()
-
     @Throws(HibernateException::class)
     fun getUserById(id: UUID): User? = userRepository.findById(id).unwrap()
 
     @Transactional
-    fun createNewUser(createUserRequestBody: CreateUserRequestBody): User? = try {
-        User(
-            firstName = createUserRequestBody.firstName,
-            lastName = createUserRequestBody.lastName,
-            email = createUserRequestBody.email,
-        ).validateFields().let(userRepository::save)
+    fun findOrCreateUser(createUserRequestBody: CreateUserRequestBody): User? = try {
+        createUserRequestBody.run {
+            val user = userRepository.findByGoogleId(googleId) ?: User(
+                firstName = firstName,
+                lastName = lastName,
+                email = email,
+                avatar = avatar,
+                googleId = googleId,
+            )
+            userRepository.save(user)
+        }
     } catch (exception: Exception) {
         when (exception) {
             is EntityValidationException -> logger.error(exception) { "Validation failed for User entity: $exception." }

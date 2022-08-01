@@ -1,0 +1,6 @@
+{
+  "domain": "richmond-task-manager.us.auth0.com",
+  "clientId": "mrn3b2Q5qnDZljCfYF57HG73eWjxA9BL",
+  "appOrigin": "http://localhost:3000",
+  "apiOrigin": "http://localhost:8080"
+}

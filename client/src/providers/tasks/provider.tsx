@@ -30,7 +30,7 @@ const TasksProvider = (props: object) => {
   };
 
   useEffect(() => {
-    if (userId) setTimeout(() => { getTaskDataForUserById(); }, 1000);
+    if (userId) getTaskDataForUserById();
   }, [userId]);
 
   const createTask = async () => {

@@ -2,8 +2,8 @@ import { createContext } from 'react';
 
 interface AppContextType {
   isExpanded: boolean,
-  isLoggedIn: boolean,
   user?: User,
+  logout: () => void,
   toggleIsExpanded: () => void,
 };
 

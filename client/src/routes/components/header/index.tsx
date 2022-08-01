@@ -1,7 +1,7 @@
 import './index.scss';
 
-import { AiOutlineMenu } from 'react-icons/ai';
 import { BiMessage } from 'react-icons/bi';
+import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/logo_light.png';
@@ -11,7 +11,7 @@ import { ROOT_ROUTE } from 'settings';
 
 const TMHeader: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
-  const { user } = useApp();
+  const { user, logout } = useApp();
 
   const generateMessage = () => {
     const hours = new Date().getHours();
@@ -50,10 +50,10 @@ const TMHeader: React.FC = (): JSX.Element => {
         <TMButton
           classNames={['off-white']}
           buttonStyle='icon'
-          onClick={() => console.log('menu')}
+          onClick={logout}
           size='large'
         >
-          <AiOutlineMenu />
+          <IoLogOutOutline />
         </TMButton>
       </div>
     </div>

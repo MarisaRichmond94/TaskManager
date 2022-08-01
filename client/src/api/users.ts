@@ -5,9 +5,9 @@ class Users extends BaseApi {
     super('users');
   }
 
-  override async get(query?: {}): Promise<any> {
-    const response = await super.get(query);
-    BaseApi.setUserId(response[0].id);
+  override async post(body: any): Promise<any> {
+    const response = await super.post(body);
+    BaseApi.setUserId(response.id);
     return response;
   }
 };

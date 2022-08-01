@@ -1,5 +1,6 @@
 import 'global.scss';
 
+import { Auth0Provider } from "@auth0/auth0-react";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from 'app';
 import { AppProvider } from 'providers/app';
 import reportWebVitals from 'reportWebVitals';
+import authSettings from 'auth_config.json';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,11 +16,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AppProvider>
-        <App />
-      </AppProvider>
-    </BrowserRouter>
+    <Auth0Provider
+      clientId={authSettings.clientId}
+      domain={authSettings.domain}
+      redirectUri={window.location.origin}
+    >
+      <BrowserRouter>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>
 );
 

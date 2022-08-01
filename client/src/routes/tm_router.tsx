@@ -5,7 +5,9 @@ import TasksProvider from 'providers/tasks/provider';
 import GoalsPage from 'routes/goals';
 import NotesPage from 'routes/notes';
 import TasksPage from 'routes/tasks';
-import { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } from 'settings';
+import { ROUTES } from 'settings';
+
+const { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } = ROUTES;
 
 const TMRouter: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -43,6 +45,6 @@ const TMRouter: React.FC = (): JSX.Element => {
       {routing}
     </div>
   );
-}
+};
 
 export default TMRouter;
