@@ -3,7 +3,8 @@ import { getModifiedDate, toClientDatetime } from 'utils/date';
 const buildTaskLists = (
   taskList: Task[],
   setTaskMap: (taskMap: Map<string, Task[]>) => void,
-): any => {
+  shouldUpdate: boolean = true,
+): Map<string, Task[]> => {
   const taskMap = new Map<string, Task[]>([
     ['Today', []],
     ['Tomorrow', []],
@@ -26,7 +27,9 @@ const buildTaskLists = (
     else taskMap.get('Tomorrow').push(task);
   });
 
-  setTaskMap(taskMap);
+  if (shouldUpdate) setTaskMap(taskMap);
+
+  return taskMap
 };
 
 export default buildTaskLists;

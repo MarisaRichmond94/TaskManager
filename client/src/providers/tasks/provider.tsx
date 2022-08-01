@@ -5,8 +5,10 @@ import TaskManagerApi from 'api/task_manager';
 import TaskManagerTagsApi from 'api/task_manager_tags';
 import TasksApi from 'api/tasks';
 import TagsApi from 'api/tags';
+import useInterval from 'hooks/useInterval';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
+import { TASK_MAP_SYNC_INTERVAL } from 'settings';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
@@ -17,6 +19,22 @@ const TasksProvider = (props: object) => {
   const [tags, setTags] = useState<undefined | Tag[]>();
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
   const [taskMap, setTaskMap] = useState<Map<string, Task[]>>();
+
+  /**
+   * Performs a sync on an interval to ensure that the task map stays up to date with task due
+   * dates. If a task becomes overdue, the task map will update to reflect this without having to
+   * reload the page or perform some kind of action that rebuilds the task map.
+   */
+  const syncTaskMap = useCallback(async () => {
+      const nextTaskMap = buildTaskLists(tasks, setTaskMap, false);
+      const currTaskCounts = taskMap && Array.from(taskMap).map(([_, values]) => values.length);
+      const nextTaskCounts = Array.from(nextTaskMap).map(([_, values]) => values.length);
+
+      if (JSON.stringify(currTaskCounts) !== JSON.stringify(nextTaskCounts)) {
+        setTaskMap(nextTaskMap);
+      }
+  }, [taskMap, tasks]);
+  useInterval(syncTaskMap, TASK_MAP_SYNC_INTERVAL);
 
   const userId = BaseApi.userId;
 

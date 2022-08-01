@@ -32,6 +32,9 @@ export const HOT_KEYS = {
 export const HEADER_HEIGHT = 55;
 export const WORKSPACE_PANEL_HEIGHT = 420;
 
+// misc.
+export const TASK_MAP_SYNC_INTERVAL = 60000;
+
 // routes
 export const ROUTES = {
   GOALS_ROUTE: '/goals',
