@@ -3,6 +3,7 @@ import { createContext } from 'react';
 interface TasksContextType {
   activeTaskId?: string,
   attachmentTypes?: AttachmentType[],
+  isShowingArchivedTasks: boolean,
   searchedTasks?: Task[],
   statusTypes?: Status[],
   tags?: Tag[],
@@ -14,6 +15,7 @@ interface TasksContextType {
   createTag: (createTagDTO: CreateTagDTO) => void,
   deleteTag: (tagId: string) => void,
   deleteTaskById: (taskId: string) => void,
+  setIsShowingArchivedTasks: (isShowingArchivedTasks: boolean) => void,
   updateActiveTaskId: (id?: string) => void,
   updateTag: (tagId: string, updateTagDTO: UpdateTagDTO) => void,
   updateTaskInTasks: (updatedTask: Task) => void,

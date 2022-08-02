@@ -1,5 +1,16 @@
 @import '../variables/variables';
 
+.menu-container {
+  position: relative;
+  .menu {
+    border-radius: $medium-border-radius;
+    overflow: $hide-y-scroll-x;
+    padding: $medium-padding;
+    position: absolute;
+    z-index: 1;
+  };
+};
+
 .task-sidebar-section {
   .toggle-menu-button {
     visibility: hidden;
@@ -10,17 +21,10 @@
   };
   &:hover { .toggle-menu-button { visibility: visible; }; };
   .sidebar-menu-container {
-    position: relative;
-
     .sidebar-menu {
       background: $off-white;
-      border-radius: $medium-border-radius;
-      overflow: $hide-y-scroll-x;
-      padding: $medium-padding;
-      position: absolute;
       top: -10px;
       width: 168px;
-      z-index: 1;
     };
   };
 };

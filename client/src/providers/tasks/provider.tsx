@@ -14,6 +14,7 @@ import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
   const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
+  const [isShowingArchivedTasks, setIsShowingArchivedTasks] = useState(false);
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
@@ -116,6 +117,7 @@ const TasksProvider = (props: object) => {
   const value = {
     activeTaskId,
     attachmentTypes,
+    isShowingArchivedTasks,
     searchedTasks,
     statusTypes,
     tags,
@@ -127,6 +129,7 @@ const TasksProvider = (props: object) => {
     createTag,
     deleteTaskById,
     deleteTag,
+    setIsShowingArchivedTasks,
     updateActiveTaskId,
     updateTag,
     updateTaskInTasks,

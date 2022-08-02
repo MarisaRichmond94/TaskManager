@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 import TasksSection from 'routes/tasks/components/panel/tasks/section';
+import { ARCHIVED_TASK_STATUS_NAME } from 'settings';
 import { getDayMonthDateString, getModifiedDate } from 'utils/date';
 
 enum SectionType {
@@ -38,8 +39,9 @@ const getEmptyResponseText = (sectionType: SectionType): string => {
   }
 };
 
-const buildSections = (taskMap: Map<string, Task[]>, activeTaskId: string): ReactElement[] => {
+const buildSections = (taskMap: Map<string, Task[]>, showArchived: boolean): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
+    if (!showArchived && sectionType === ARCHIVED_TASK_STATUS_NAME) return null;
     const sectionTasks = taskMap.get(SectionType[sectionType]);
     return (
       <TasksSection
@@ -55,7 +57,7 @@ const buildSections = (taskMap: Map<string, Task[]>, activeTaskId: string): Reac
         type={SectionType[sectionType].toLowerCase()}
       />
     );
-  });
+  }).filter(x => x !== null);
 };
 
 export { buildSections };

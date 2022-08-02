@@ -3,7 +3,7 @@ import './index.scss';
 import { ReactElement } from 'react';
 
 import { ButtonStyle, TMButton, Size } from 'components/tm_button';
-import { BsCheck2Square, BsSquare } from 'react-icons/bs';
+import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
 interface TMCheckboxProps {
   classNames?: string[],
@@ -31,7 +31,7 @@ const TMCheckbox = ({
         isDisabled={isDisabled}
         size={Size.small}
       >
-        {isActive ? <BsCheck2Square /> : <BsSquare />}
+        {isActive ? <BsCheckSquare /> : <BsSquare />}
       </TMButton>
       <div className='sub-header-text text-block-container'>
         {textBlock}

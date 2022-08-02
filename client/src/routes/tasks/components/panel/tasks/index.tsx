@@ -8,7 +8,7 @@ import { buildSections } from 'routes/tasks/components/panel/tasks/section/build
 import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings';
 
 const TasksPanel = (): ReactElement => {
-  const { activeTaskId, taskMap } = useTasks();
+  const { activeTaskId, isShowingArchivedTasks, taskMap } = useTasks();
 
   const height = (
     activeTaskId
@@ -20,7 +20,7 @@ const TasksPanel = (): ReactElement => {
     taskMap
       ? (
         <div className='tm-panel' id='tasks-panel' style={{ height }}>
-          {buildSections(taskMap, activeTaskId)}
+          {buildSections(taskMap, isShowingArchivedTasks)}
         </div>
       )
       : <TMLoader color='#99B83B' text='categorizing tasks...' />

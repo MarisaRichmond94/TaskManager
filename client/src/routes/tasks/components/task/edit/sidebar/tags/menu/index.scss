@@ -1,69 +1,69 @@
 @import 'global';
 
-.sidebar-menu {
-  height: 195px;
-
-  .tag-menu-header {
-    @include centered-flex-box;
-    margin-bottom: $medium-margin;
-
-    button {
-      justify-content: center;
-      padding: 0;
-      width: 50%;
-      &.active { border-bottom-color: $logo-green; };
-    };
-  };
-
-  #manage-menu {
-    .task-tag {
-      padding: $small-padding 0;
-      .tm-button { padding-right: $medium-padding; };
-    };
-
-    .add-button {
-      width: 100%;
-      .add-button-content {
-        @include centered-flex-box;
-        margin: $medium-margin;
-        width: 100%;
-        svg { margin-right: $small-margin; };
-      };
-    };
-
-    #create-tag-input-container {
+.task-tags-section {
+  .sidebar-menu {
+    .tag-menu-header {
       @include centered-flex-box;
-      border-radius: $small-border-radius;
-      padding: 3px 0;
-      padding-right: $medium-padding;
+      margin-bottom: $medium-margin;
 
-      #create-tag-input {
-        background: transparent;
-        position: relative;
+      button {
+        justify-content: center;
+        padding: 0;
+        width: 50%;
+        &.active { border-bottom-color: $logo-green; };
+      };
+    };
+
+    #manage-menu {
+      .task-tag {
+        padding: $small-padding 0;
+        .tm-button { padding-right: $medium-padding; };
       };
 
-      #color-palette-icon-container {
-        display: flex;
-        margin-left: $small-margin;
-        position: relative;
+      .add-button {
+        width: 100%;
+        .add-button-content {
+          @include centered-flex-box;
+          margin: $medium-margin;
+          width: 100%;
+          svg { margin-right: $small-margin; };
+        };
       };
 
-      #color-picker-menu {
-        background: $white;
+      #create-tag-input-container {
+        @include centered-flex-box;
         border-radius: $small-border-radius;
-        bottom: 35px;
-        display: flex;
-        flex-wrap: wrap;
-        position: absolute;
-        right: 0;
-        width: 75px;
+        padding: 3px 0;
+        padding-right: $medium-padding;
 
-        .color-swatch {
-          border-radius: $extra-large-border-radius;
-          height: 20px;
-          margin: $extra-small-margin;
-          width: 20px;
-          &.active { border: 1px solid $off-black; };
+        #create-tag-input {
+          background: transparent;
+          position: relative;
+        };
+
+        #color-palette-icon-container {
+          display: flex;
+          margin-left: $small-margin;
+          position: relative;
+        };
+
+        #color-picker-menu {
+          background: $white;
+          border-radius: $small-border-radius;
+          bottom: 35px;
+          display: flex;
+          flex-wrap: wrap;
+          position: absolute;
+          right: 0;
+          width: 75px;
+
+          .color-swatch {
+            border-radius: $extra-large-border-radius;
+            height: 20px;
+            margin: $extra-small-margin;
+            width: 20px;
+            &.active { border: 1px solid $off-black; };
+          };
         };
       };
     };

@@ -31,14 +31,15 @@ const populateTaskTags = (tags: Tag[], isInUse: boolean, isEditable: boolean = f
 interface ITagMenu {
   onCloseCallback: () => void,
   reference: MutableRefObject<any>,
+  style: object,
 };
 
-const TagMenu: FC<ITagMenu> = ({ onCloseCallback, reference }) => {
+const TagMenu: FC<ITagMenu> = ({ onCloseCallback, reference, style }) => {
   const [isAddMenu, setIsAddMenu] = useState(true);
   useOnClickOutside(reference, onCloseCallback);
 
   return (
-    <div className='sidebar-menu'>
+    <div className='menu sidebar-menu' style={style}>
       <Header isAddMenu={isAddMenu} setIsAddMenu={setIsAddMenu} />
       <div id='tag-menu-body'>
         {isAddMenu ? <AddMenu /> : <ManageMenu />}

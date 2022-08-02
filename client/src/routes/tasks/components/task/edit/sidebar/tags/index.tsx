@@ -36,8 +36,15 @@ const TaskTags: FC = () => {
       }
       sectionTitle='Tags'
     >
-      <div className='sidebar-menu-container task-sidebar-collapsable-container'>
-        {showTagMenu && <TagMenu onCloseCallback={() => setShowTagMenu(false)} reference={tagsRef} />}
+      <div className='menu-container sidebar-menu-container task-sidebar-collapsable-container'>
+        {
+          showTagMenu &&
+          <TagMenu
+            onCloseCallback={() => setShowTagMenu(false)}
+            reference={tagsRef}
+            style={{ height: `${(tags.length * 60) + 10}px` }}
+          />
+        }
         {populateTaskTags(tags)}
       </div>
     </TMControlledCollapsableSection>
