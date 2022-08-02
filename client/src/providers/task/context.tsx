@@ -8,7 +8,6 @@ interface TaskContextType {
   createdAt: number,
   description?: string,
   dueDate: number,
-  isArchived: boolean,
   isPinned: boolean,
   objective: string,
   status?: Status,

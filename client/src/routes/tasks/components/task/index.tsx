@@ -2,13 +2,16 @@ import './index.scss';
 
 import { FC, ReactElement, useEffect, useRef } from 'react';
 import {
-  BsCalendarDate, BsChatSquareText, BsCardChecklist, BsFlag,
+  BsArchive, BsCalendarDate, BsChatSquareText, BsCardChecklist, BsFlag,
   BsInbox, BsInboxes, BsLightning, BsTags, BsTrash, BsTrophy,
 } from 'react-icons/bs';
 
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
+import { ARCHIVED_TASK_STATUS_NAMES, TASK_STATUS_NAMES } from 'settings';
 import { getDayMonthDateString, toClientDatetime } from 'utils/date';
+
+const { archived, blocked, completed, inProgress, toDo } = TASK_STATUS_NAMES;
 
 interface ITaskCard {
   task: Task,
@@ -17,10 +20,11 @@ interface ITaskCard {
 const TaskCard: FC<ITaskCard> = ({ task }) => {
   const { activeTaskId, updateActiveTaskId } = useTasks();
   const taskRef = useRef(null);
-  const { id, isArchived, objective, status } = task;
+  const { id, objective, status } = task;
   const { description } = task;
   const { checklistItems, comments, dueDate, tags } = task;
   const isActiveTask = activeTaskId === id;
+  const isArchived = ARCHIVED_TASK_STATUS_NAMES.includes(status.name);
 
   useEffect(() => {
     if (isActiveTask && taskRef.current) {
@@ -53,10 +57,11 @@ const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElemen
 
   const getStatusIcon = (statusName: string): ReactElement => {
     switch (statusName) {
-      case 'To Do': return <BsInbox className='to-do' />;
-      case 'In Progress': return <BsLightning className='in-progress' />;
-      case 'Blocked': return <BsFlag className='blocked' />;
-      case 'Complete': return <BsTrophy className='complete' />;
+      case toDo: return <BsInbox className={toDo.toLowerCase().split(' ').join('-')} />;
+      case inProgress: return <BsLightning className={inProgress.toLowerCase().split(' ').join('-')} />;
+      case blocked: return <BsFlag className={blocked.toLowerCase()} />;
+      case completed: return <BsTrophy className={completed.toLowerCase()} />;
+      case archived: return <BsArchive className={archived.toLowerCase()} />;
       default: throw Error(`Invalid status name ${statusName}`);
     }
   };

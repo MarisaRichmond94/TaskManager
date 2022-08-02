@@ -23,7 +23,9 @@ class UserService(private val userRepository: UserRepository) {
     @Transactional
     fun findOrCreateUser(createUserRequestBody: CreateUserRequestBody): User? = try {
         createUserRequestBody.run {
-            val user = userRepository.findByGoogleId(googleId) ?: User(
+            val user = userRepository.findByGoogleId(googleId)?.let {
+                it.copy(avatar = avatar)
+            } ?: User(
                 firstName = firstName,
                 lastName = lastName,
                 email = email,

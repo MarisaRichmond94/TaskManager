@@ -33,6 +33,19 @@ export const HEADER_HEIGHT = 55;
 export const WORKSPACE_PANEL_HEIGHT = 420;
 
 // misc.
+export const ARCHIVED_TASK_STATUS_NAME = 'Archived';
+export const BLOCKED_TASK_STATUS_NAME = 'Blocked';
+export const COMPLETED_TASK_STATUS_NAME = 'Completed';
+export const IN_PROGRESS_TASK_STATUS_NAME = 'In Progress';
+export const TO_DO_TASK_STATUS_NAME = 'To Do';
+export const TASK_STATUS_NAMES = {
+  archived: ARCHIVED_TASK_STATUS_NAME,
+  blocked: BLOCKED_TASK_STATUS_NAME,
+  completed: COMPLETED_TASK_STATUS_NAME,
+  inProgress: IN_PROGRESS_TASK_STATUS_NAME,
+  toDo: TO_DO_TASK_STATUS_NAME,
+};
+export const ARCHIVED_TASK_STATUS_NAMES = [ARCHIVED_TASK_STATUS_NAME, COMPLETED_TASK_STATUS_NAME]
 export const TASK_MAP_SYNC_INTERVAL = 60000;
 
 // routes

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import BaseApi from 'api/base';
+import StatusesApi from 'api/statuses';
 import TaskManagerApi from 'api/task_manager';
 import TaskManagerTagsApi from 'api/task_manager_tags';
 import TasksApi from 'api/tasks';
@@ -62,15 +63,15 @@ const TasksProvider = (props: object) => {
   };
 
   const archiveTaskById = useCallback(async (taskId: string) => {
+    const statusTypeId = statusTypes.find(x => x.name === 'Archived')?.id;
     const taskById = tasks.find(task => task.id === taskId);
     const archivedTask = {...taskById};
-    const updatedTask = await TasksApi.update(taskId, { isArchived: true });
-    archivedTask.isArchived = updatedTask.isArchived;
+    archivedTask.status = await StatusesApi.update(taskById.status.id, { statusTypeId });
     const updatedTasks = tasks.map(task => task.id === archivedTask.id ? archivedTask : task);
     setTasks(updatedTasks);
     if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== archivedTask.id));
     buildTaskLists(updatedTasks, setTaskMap);
-  }, [searchedTasks, tasks]);
+  }, [searchedTasks, statusTypes, tasks]);
 
   const updateTaskInTasks = useCallback((updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);

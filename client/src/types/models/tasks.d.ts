@@ -39,9 +39,10 @@ interface Status {
 
 enum StatusType {
   toDo = 'To Do',
-  complete = 'Complete',
   inProgress = 'In Progress',
   blocked = 'Blocked',
+  completed = 'Completed',
+  archived = 'Archived',
 };
 
 interface Tag {
@@ -60,7 +61,6 @@ interface Task {
   createdAt: number,
   description?: string,
   dueDate: number,
-  isArchived: boolean,
   isPinned: boolean,
   objective: string,
   status?: Status,

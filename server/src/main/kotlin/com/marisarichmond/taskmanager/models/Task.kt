@@ -13,7 +13,6 @@ data class Task(
     val dueDate: Long = Instant.now().plus(1, ChronoUnit.DAYS).epochSecond,
     val createdAt: Long = Instant.now().epochSecond,
     val updatedAt: Long = Instant.now().epochSecond,
-    val isArchived: Boolean = false,
     val isPinned: Boolean = false,
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -26,7 +25,6 @@ data class Task(
         "objective = $objective",
         "dueDate = $dueDate",
         "description = $description",
-        "isArchived = $isArchived",
         "isPinned = $isPinned",
     ).joinToString(", ")
 }

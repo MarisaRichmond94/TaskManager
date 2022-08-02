@@ -21,7 +21,8 @@
     .to-do { color: $primary-blue; };
     .in-progress { color: $primary-yellow; };
     .blocked { color: $primary-red; };
-    .complete { color: $primary-green; };
+    .completed { color: $primary-green; };
+    .archived { color: $grey; };
 
     .task-objective { margin-left: $small-margin; };
 

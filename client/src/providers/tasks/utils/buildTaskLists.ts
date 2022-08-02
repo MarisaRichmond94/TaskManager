@@ -1,3 +1,5 @@
+
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
 import { getModifiedDate, toClientDatetime } from 'utils/date';
 
 const buildTaskLists = (
@@ -20,7 +22,7 @@ const buildTaskLists = (
 
   taskList.forEach(task => {
     const dueDate = toClientDatetime(task.dueDate).valueOf();
-    if (task.isArchived) taskMap.get('Archived').push(task);
+    if (ARCHIVED_TASK_STATUS_NAMES.includes(task.status.name)) taskMap.get('Archived').push(task);
     else if (dueDate < today) taskMap.get('Overdue').push(task);
     else if (dueDate >= theDayAfterTomorrow) taskMap.get('Upcoming').push(task);
     else if (dueDate > today && dueDate < tomorrow) taskMap.get('Today').push(task);

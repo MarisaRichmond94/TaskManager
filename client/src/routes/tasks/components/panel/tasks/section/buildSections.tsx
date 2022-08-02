@@ -40,12 +40,16 @@ const getEmptyResponseText = (sectionType: SectionType): string => {
 
 const buildSections = (taskMap: Map<string, Task[]>, activeTaskId: string): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
+    const sectionTasks = taskMap.get(SectionType[sectionType]);
     return (
       <TasksSection
         key={`task-section-${sectionType.toLowerCase().split(' ').join('-')}`}
         emptyResponseText={getEmptyResponseText(SectionType[sectionType])}
-        initiallyVisible={sectionType === SectionType.Today}
-        tasks={taskMap.get(SectionType[sectionType])}
+        initiallyVisible={
+          (sectionType === SectionType.Today || !!sectionTasks.length) &&
+          sectionType !== SectionType.Archived
+        }
+        tasks={sectionTasks}
         title={generateSectionTitle(SectionType[sectionType])}
         total={taskMap.get(SectionType[sectionType]).length}
         type={SectionType[sectionType].toLowerCase()}

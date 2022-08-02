@@ -24,7 +24,7 @@ const TasksSection: FC<ITasksSection> = ({
   type,
 }) => {
   const { activeTaskId } = useTasks();
-  const [isVisible, setIsVisible] = useState(initiallyVisible || !!tasks.length);
+  const [isVisible, setIsVisible] = useState(initiallyVisible);
 
   useEffect(() => {
     if (tasks?.find(x => x.id === activeTaskId)) setIsVisible(true);

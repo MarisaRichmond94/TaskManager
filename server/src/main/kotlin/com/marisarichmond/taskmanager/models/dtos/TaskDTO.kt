@@ -9,7 +9,6 @@ data class TaskDTO(
     val dueDate: Long,
     val createdAt: Long,
     val updatedAt: Long,
-    val isArchived: Boolean,
     val isPinned: Boolean,
     val status: StatusDTO,
     val objective: String? = null,
@@ -35,7 +34,6 @@ data class TaskDTO(
         "dueDate = $dueDate",
         "description = $description",
         "isPinned = $isPinned",
-        "isArchived = $isArchived",
     ).joinToString(", ")
 }
 
@@ -44,7 +42,6 @@ data class CreateNewTaskDTO(val id: UUID = UUID.randomUUID())
 
 data class UpdateTaskByIdDTO(
     val dueDate: Long? = null,
-    val isArchived: Boolean? = null,
     val isPinned: Boolean? = null,
     val objective: String? = null,
     val description: String? = null,

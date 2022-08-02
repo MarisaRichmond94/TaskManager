@@ -7,10 +7,11 @@ import TMDropdown from 'components/tm_dropdown';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
 
 const Header: FC = () => {
   const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTaskId } = useTasks();
-  const {  id, isArchived, isPinned, status, updateStatus, updateTask } = useTask();
+  const {  id, isPinned, status, updateStatus, updateTask } = useTask();
 
   return (
     <div className='tm-task-header'>
@@ -27,7 +28,7 @@ const Header: FC = () => {
         <TaskActionButton
           action={() => archiveTaskById(id)}
           icon={<BsInboxes />}
-          isDisabled={isArchived}
+          isDisabled={ARCHIVED_TASK_STATUS_NAMES.includes(status.name)}
         />
         <TaskActionButton
           action={() => deleteTaskById(id)}
