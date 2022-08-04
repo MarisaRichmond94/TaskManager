@@ -18,6 +18,7 @@ const useKeyStroke = (
   });
 
   const handleKeyPress = useCallback((event: KeyboardEvent<any>) => {
+    if (event.target instanceof HTMLInputElement) return;
     type keyOfKeyStroke = keyof typeof keyStrokes;
     const isMatchingKeyStroke = keyStrokes.some(
       keyStroke => (Object.entries(keyStroke) as [keyOfKeyStroke, any]).every(
