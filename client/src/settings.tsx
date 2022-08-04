@@ -10,14 +10,14 @@ export const HOT_KEYS = {
   COLLAPSE_ALL_SECTIONS_KEY: 'C', // TODO - should collapse all sections
   FOCUS_DESCRIPTION_KEY: 'D', // TODO - should auto focus the description section of an active task
   EXPAND_ALL_SECTIONS_KEY: 'E', // TODO - should expand aall task sections
-  FOCUS_SEARCH_KEY: 'F', // TODO - should auto focus the search bar
+  FOCUS_SEARCH_KEY: 'F',
   GRAB_SECTION_TASK_KEY: 'G', // TODO - should focus the first task in the active section
   DELETE_TASK_KEY: 'K', // TODO - should delete the active task
   NEW_TASK_KEY: 'N',
   FOCUS_OBJECTIVE_KEY: 'O', // TODO - should auto focus the description of an active task
   PIN_TASK_KEY: 'P', // TODO - should pin the active task
   FOCUS_FILTER_KEY: 'R', // TODO - should auto focus the filter section
-  TOGGLE_SORT_KEY: 'S', // TODO - should toggle the sorting between ASC and DESC
+  TOGGLE_SORT_KEY: 'S',
   TOGGLE_KEY: 'T',
   PRIORITIZE_TASK_KEY: 'V', // TODO - should change the active task's dueDate to end of the current day
   CLOSE_ACTIVE_TASK_KEY: 'X',

@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, MutableRefObject, useRef, useState } from 'react';
+import { FC, MutableRefObject, useState } from 'react';
 
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
