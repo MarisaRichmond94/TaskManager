@@ -1,20 +1,29 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
-import { useTasks } from 'providers/tasks';
+import TMLoader from 'components/tm_loader';
+import { useSearchTasks } from 'providers/search_tasks';
+import TaskCard from 'routes/tasks/components/task';
 
-export interface SearchPanelProps {
-};
+const SearchPanel: FC = () => {
+  const { searchedTasks } = useSearchTasks();
 
-const SearchPanel = ({ }: SearchPanelProps): ReactElement => {
-  const { searchedTasks } = useTasks();
+  if (!searchedTasks) return <TMLoader color='#99B83B' text='searching tasks...' />;
 
-  const results = <div className='empty-search-panel'>No tasks found</div>
+  const emptyResults = (
+    <div className='header-text empty-task-section'>
+      <div className='empty-search-panel'>No tasks found</div>
+    </div>
+  );
 
   return (
     <div className='tm-panel' id='tasks-search-panel'>
-      {results}
+      {
+        !searchedTasks.length
+          ? emptyResults
+          : searchedTasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)
+      }
     </div>
   );
 };

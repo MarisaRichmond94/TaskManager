@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 
 import { TMButton } from 'components/tm_button';
@@ -20,8 +20,9 @@ interface ITMInput {
   onKeyPressCallback?: (e: object) => void,
   validateFormValue?: (input: string) => void
 };
+type Ref = HTMLInputElement;
 
-const TMInput: FC<ITMInput> = ({
+const TMInput = forwardRef<Ref, ITMInput>(({
   classNames = [],
   clearKey,
   formValue,
@@ -31,7 +32,7 @@ const TMInput: FC<ITMInput> = ({
   onChangeCallback,
   onKeyPressCallback,
   validateFormValue,
-}) => {
+}, ref) => {
   const [value, setValue] = useState<string>('');
 
   const onChange = (input: string): void => {
@@ -69,6 +70,7 @@ const TMInput: FC<ITMInput> = ({
         onChange={e => onChange(e.target.value)}
         onKeyPress={onKeyPress}
         spellCheck='false'
+        ref={ref}
         type={type}
         placeholder={placeholder}
         value={formValue || value}
@@ -81,6 +83,6 @@ const TMInput: FC<ITMInput> = ({
       }
     </form>
   );
-};
+});
 
 export default TMInput;

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
 
 import TasksProvider from 'providers/tasks/provider';
 import GoalsPage from 'routes/goals';
@@ -10,10 +10,11 @@ import { ROUTES } from 'settings';
 const { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } = ROUTES;
 
 const TMRouter: React.FC = (): JSX.Element => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    return navigate(ROOT_ROUTE);
+    if (pathname !== ROOT_ROUTE) return navigate(ROOT_ROUTE);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

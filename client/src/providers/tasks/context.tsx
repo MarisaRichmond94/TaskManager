@@ -4,7 +4,6 @@ interface TasksContextType {
   activeTaskId?: string,
   attachmentTypes?: AttachmentType[],
   isShowingArchivedTasks: boolean,
-  searchedTasks?: Task[],
   statusTypes?: Status[],
   tags?: Tag[],
   tasks?: Task[],

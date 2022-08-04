@@ -24,7 +24,6 @@ const TasksProvider = (props: object) => {
   // derived state
   const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
   const [isShowingArchivedTasks, setIsShowingArchivedTasks] = useState(false);
-  const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
   const [taskMap, setTaskMap] = useState<Map<string, Task[]>>();
 
   const { search } = useLocation();
@@ -79,28 +78,22 @@ const TasksProvider = (props: object) => {
     archivedTask.status = await StatusesApi.update(taskById.status.id, { statusTypeId });
     const updatedTasks = tasks.map(task => task.id === archivedTask.id ? archivedTask : task);
     setTasks(updatedTasks);
-    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== archivedTask.id));
     buildTaskLists(updatedTasks, setTaskMap);
-  }, [searchedTasks, statusTypes, tasks]);
+  }, [statusTypes, tasks]);
 
   const updateTaskInTasks = useCallback((updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
     setTasks(updatedTasks);
-    if (searchedTasks) {
-      const updatedSearchedTasks = searchedTasks.map(x => x.id === updatedTask.id ? updatedTask : x);
-      setSearchedTasks(updatedSearchedTasks);
-    }
     buildTaskLists(updatedTasks, setTaskMap);
-  }, [searchedTasks, tasks]);
+  }, [tasks]);
 
   const deleteTaskById = useCallback(async (taskId: string) => {
     if (taskId === activeTaskId) setActiveTaskId(undefined);
-    if (searchedTasks) setSearchedTasks(searchedTasks.filter(task => task.id !== taskId));
     const updatedTasks = tasks.filter(task => task.id !== taskId);
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
     await TaskManagerApi.deleteById(taskId);
-  }, [activeTaskId, searchedTasks, tasks]);
+  }, [activeTaskId, tasks]);
 
   const updateActiveTaskId = (id?: string) => {
     if (activeTaskId !== id) setActiveTaskId(id);
@@ -136,7 +129,6 @@ const TasksProvider = (props: object) => {
       setTasks(sortedTasks);
       buildTaskLists(sortedTasks, setTaskMap);
     }
-    if (searchedTasks) setSearchedTasks(sortTasks(searchedTasks));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAsc]);
 
@@ -144,7 +136,6 @@ const TasksProvider = (props: object) => {
     activeTaskId,
     attachmentTypes,
     isShowingArchivedTasks,
-    searchedTasks,
     statusTypes,
     tags,
     tasks,
