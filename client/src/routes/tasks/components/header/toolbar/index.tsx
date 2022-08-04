@@ -14,7 +14,7 @@ import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTasks } from 'providers/tasks';
 import { HOT_KEYS } from 'settings';
 
-const { NEW_TASK_KEY } = HOT_KEYS;
+const { NEW_TASK_KEY, TOGGLE_SORT_KEY } = HOT_KEYS;
 
 const Toolbar: FC = () => {
   const navigate = useNavigate();
@@ -25,10 +25,17 @@ const Toolbar: FC = () => {
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
       case NEW_TASK_KEY: createTask(); break;
+      case TOGGLE_SORT_KEY: updateSortOrder(!isAsc);
     }
   };
 
-  useKeyStroke([{ shiftKey: true, key: NEW_TASK_KEY }], handleKeyStrokes);
+  useKeyStroke(
+    [
+      { shiftKey: true, key: NEW_TASK_KEY },
+      { shiftKey: true, key: TOGGLE_SORT_KEY },
+    ],
+    handleKeyStrokes,
+  );
 
   const updateSortOrder = (updatedSortOrder: boolean) => {
     setIsAsc(updatedSortOrder);

@@ -43,6 +43,7 @@ const buildSections = (taskMap: Map<string, Task[]>, showArchived: boolean): Rea
   return Object.keys(SectionType).map(sectionType => {
     if (!showArchived && sectionType === ARCHIVED_TASK_STATUS_NAME) return null;
     const sectionTasks = taskMap.get(SectionType[sectionType]);
+
     return (
       <TasksSection
         key={`task-section-${sectionType.toLowerCase().split(' ').join('-')}`}

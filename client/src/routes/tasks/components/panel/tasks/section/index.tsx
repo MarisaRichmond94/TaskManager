@@ -31,8 +31,6 @@ const TasksSection: FC<ITasksSection> = ({
     if (!tasks.length) setIsVisible(false);
   }, [activeTaskId, tasks]);
 
-  tasks?.sort((a, b) => (a.dueDate > b.dueDate ? 1 : -1));
-
   return (
     <TMUncontrolledCollapsableSection
       classNames={['off-white']}

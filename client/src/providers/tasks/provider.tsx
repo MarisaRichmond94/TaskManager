@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import BaseApi from 'api/base';
 import StatusesApi from 'api/statuses';
@@ -7,20 +8,27 @@ import TaskManagerTagsApi from 'api/task_manager_tags';
 import TasksApi from 'api/tasks';
 import TagsApi from 'api/tags';
 import useInterval from 'hooks/useInterval';
+import useQuery from 'hooks/useQuery';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
-  const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
-  const [isShowingArchivedTasks, setIsShowingArchivedTasks] = useState(false);
+  // data from the back-end
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
   const [tags, setTags] = useState<undefined | Tag[]>();
+
+  // derived state
+  const [activeTaskId, setActiveTaskId] = useState<undefined | string>();
+  const [isShowingArchivedTasks, setIsShowingArchivedTasks] = useState(false);
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
   const [taskMap, setTaskMap] = useState<Map<string, Task[]>>();
+
+  const { search } = useLocation();
+  const isAsc = useQuery(search).get('asc') === 'true';
 
   /**
    * Performs a sync on an interval to ensure that the task map stays up to date with task due
@@ -53,6 +61,7 @@ const TasksProvider = (props: object) => {
     if (userId) getTaskDataForUserById();
   }, [userId]);
 
+  // Task functionality
   const createTask = async () => {
     const midnight = new Date();
     midnight.setHours(23, 59, 59, 59);
@@ -113,6 +122,23 @@ const TasksProvider = (props: object) => {
     const isSuccessfullyDeleted = await TaskManagerTagsApi.deleteById(tagIdToDelete);
     if (isSuccessfullyDeleted) getTaskDataForUserById();
   };
+
+  // Sort functionality
+  const sortTasks = useCallback((tasks: Task[]): Task[] =>
+    isAsc
+      ? tasks?.sort((a, b) => (a.dueDate > b.dueDate ? 1 : -1))
+      : tasks?.sort((a, b) => (a.dueDate < b.dueDate ? 1 : -1))
+  , [isAsc]);
+
+  useEffect(() => {
+    if (tasks) {
+      const sortedTasks = sortTasks(tasks);
+      setTasks(sortedTasks);
+      buildTaskLists(sortedTasks, setTaskMap);
+    }
+    if (searchedTasks) setSearchedTasks(sortTasks(searchedTasks));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAsc]);
 
   const value = {
     activeTaskId,
