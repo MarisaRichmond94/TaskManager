@@ -9,8 +9,10 @@
       border: none;
       border-radius: $extra-small-border-radius;
       font-family: $paragraph-font-family;
+      outline: none;
       padding: $medium-padding;
       width: 90%;
-    }
+      &:hover { background-color: $secondary-blue; };
+    };
   };
 };

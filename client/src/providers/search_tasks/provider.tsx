@@ -12,6 +12,7 @@ const SearchTasksProvider = (props: object) => {
   const query = useQuery(search);
   const { tasks, updateActiveTaskId } = useTasks();
 
+  // Search state
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
   const [searchText, setSearchText] = useState(query.get('searchText') || '');
   const [debounceUpdateSearch] = useState(
@@ -23,6 +24,12 @@ const SearchTasksProvider = (props: object) => {
       }
     ),
   );
+  // Filter state
+  const [endDateFilter, setEndDateFilter] = useState<Date | undefined>();
+  const [includeArchived, setIncludeArchived] = useState(false);
+  const [startDateFilter, setStartDateFilter] = useState<Date | undefined>();
+  const [statusFilter, setStatusFilter] = useState<Status | undefined>();
+  const [tagFilters, setTagFilters] = useState([]);
 
   const updateSearchText = useCallback((updatedSearchText: string) => {
     setSearchText(updatedSearchText);
@@ -32,7 +39,10 @@ const SearchTasksProvider = (props: object) => {
 
   const updateSearchTasks = useCallback(() =>
     setSearchedTasks(
-      tasks.filter(x => x.objective.toLowerCase().includes(searchText.toLowerCase()))
+      tasks.filter(x =>
+        x.objective &&
+        x.objective.toLowerCase().includes(searchText.toLowerCase())
+      )
     ),
     [searchText, tasks],
   );
@@ -42,10 +52,39 @@ const SearchTasksProvider = (props: object) => {
   }, [searchText, tasks, updateSearchTasks]);
   useEffect(() => { updateSearchTasks(); }, [searchText, updateSearchTasks]);
 
+  const addTagFilter = useCallback((tagId: string) => {
+    setTagFilters([...tagFilters, tagId])
+  }, [tagFilters]);
+
+  const removeTagFilter = useCallback((tagId: string) => {
+    setTagFilters(tagFilters?.filter(tagFilter => tagFilter !== tagId));
+  }, [tagFilters]);
+
+  const clearFilters = useCallback(() => {
+    setStatusFilter(undefined);
+    setStartDateFilter(undefined);
+    setEndDateFilter(undefined);
+    setTagFilters([]);
+  }, []);
+
   const value = {
+    // search values
     searchedTasks,
     searchText,
     updateSearchText,
+    // filter values
+    endDateFilter,
+    includeArchived,
+    startDateFilter,
+    statusFilter,
+    tagFilters,
+    addTagFilter,
+    clearFilters,
+    removeTagFilter,
+    setEndDateFilter,
+    setIncludeArchived,
+    setStartDateFilter,
+    setStatusFilter,
   };
 
   return <SearchTasksContext.Provider value={value} {...props} />;

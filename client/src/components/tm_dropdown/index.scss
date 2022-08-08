@@ -1,6 +1,7 @@
 @import 'global';
 
 .tm-dropdown {
+  &.tm-input { padding: 0; };
   position: relative;
 
   .tm-dropdown-button {

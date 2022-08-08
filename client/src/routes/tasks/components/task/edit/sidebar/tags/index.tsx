@@ -5,6 +5,7 @@ import { BsTags } from 'react-icons/bs';
 
 import { TMButton } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
+import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import TagMenu from 'routes/tasks/components/task/edit/sidebar/tags/menu';
 import TaskTag from 'routes/tasks/components/task/edit/sidebar/tags/tag';
@@ -13,6 +14,7 @@ const TaskTags: FC = () => {
   const { id, tags } = useTask();
   const [showTagMenu, setShowTagMenu] = useState(false);
   const tagsRef = useRef(null);
+  useOnClickOutside(tagsRef, () => setShowTagMenu(false));
 
   const populateTaskTags = (taskTags?: Tag[]): ReactElement[] | ReactElement => {
     if (!taskTags.length) return <NoTagsToDisplay />;
@@ -36,7 +38,10 @@ const TaskTags: FC = () => {
       }
       sectionTitle='Tags'
     >
-      <div className='menu-container sidebar-menu-container task-sidebar-collapsable-container'>
+      <div
+        className='menu-container sidebar-menu-container task-sidebar-collapsable-container'
+        id='task-tag-menu-container'
+      >
         {
           showTagMenu &&
           <TagMenu

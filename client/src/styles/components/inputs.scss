@@ -1,5 +1,16 @@
 @import '../variables/variables';
 
+.tm-input {
+  background-color: $white;
+  border: none;
+  border-radius: $extra-small-border-radius;
+  color: $off-black;
+  outline: none;
+  padding: $medium-padding $large-padding;
+  width: 100%;
+  &:hover { background-color: $secondary-blue; };
+};
+
 .tm-form-input {
   border: none;
   border-radius: $small-border-radius;
@@ -9,29 +20,14 @@
   padding: 6px 12px;
   width: 100%;
   &.off-white { background-color: $off-white; }
-}
+};
 
 .tm-text-area {
   resize: none;
-}
+};
 
-.searchable-tm-input {
-  border-radius: $large-border-radius;
-  position: relative;
-  width: 100%;
-
-  input {
-    margin: 0;
-    width: 100%;
-  }
-
-  ul { width: 100%; }
-
-  .focused { border-radius: $small-border-radius $small-border-radius 0 0; }
-
+.tm-searchable-dropdown {
   .filter-options-list {
-    background-color: $off-white;
-    border-radius: $no-border-radius $no-border-radius $small-border-radius $small-border-radius;
     color: $off-black;
     list-style-type: none;
     max-height: 125px;
@@ -41,13 +37,5 @@
     width: 100%;
     z-index: 2;
     .best-match { font-weight: bold; }
-  }
-
-  &.white {
-    input, ul { background-color: $white; }
-  }
-
-  &.off-white {
-    input, ul { background-color: $off-white; }
   }
 }

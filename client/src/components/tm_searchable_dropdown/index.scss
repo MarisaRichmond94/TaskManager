@@ -1,0 +1,47 @@
+@import 'global';
+
+.tm-searchable-dropdown {
+  border-radius: $large-border-radius;
+  position: relative;
+  width: 100%;
+
+  form {
+    width: 100% !important;
+
+    input {
+      background-color: $off-white;
+      margin: 0;
+      width: 100%;
+    };
+  };
+
+  .focused {
+    border-radius: $small-border-radius $small-border-radius 0 0;
+  };
+
+  .filtered-search-options {
+    background-color: $off-white;
+    border-radius: 0 0 $small-border-radius $small-border-radius;
+    color: $off-black;
+    list-style-type: none;
+    margin: 0;
+    max-height: 125px;
+    overflow-y: auto;
+    padding: $extra-small-padding 0;
+    position: absolute;
+    width: 100%;
+    .best-match { font-weight: bold; }
+
+    li {
+      padding: $small-padding $large-padding;
+      &:hover { background-color: $secondary-blue; };
+    };
+  };
+
+  .searchable-input-selected-options {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: $medium-margin;
+    div { margin-right: $medium-margin; };
+  };
+};

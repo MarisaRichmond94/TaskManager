@@ -1,8 +1,11 @@
 @import 'global';
 
-.sidebar-menu-container {
+#task-tag-menu-container {
   padding: $medium-padding 0;
-  text-align: center;
+
+  .menu {
+    min-height: 170px;
+  };
 
   .no-tags {
     margin-left: 35px;

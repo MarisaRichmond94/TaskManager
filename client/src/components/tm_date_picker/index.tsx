@@ -5,13 +5,13 @@ import { FC } from "react";
 
 import DatePicker from "react-datepicker";
 
-interface ITMDatePickerProps {
+interface ITMDatePicker {
   date: Date,
   showTimeSelect?: boolean,
   onChange: (date: Date) => void,
 };
 
-const TMDatePicker: FC<ITMDatePickerProps> = ({ date, showTimeSelect = false, onChange }) => {
+const TMDatePicker: FC<ITMDatePicker> = ({ date, showTimeSelect = false, onChange }) => {
   return (
     <DatePicker
       selected={date}

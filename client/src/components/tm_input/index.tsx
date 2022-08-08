@@ -18,6 +18,7 @@ interface ITMInput {
   type?: string,
   onChangeCallback?: (input: string) => void,
   onKeyPressCallback?: (e: object) => void,
+  onFocusCallback?: (e: any) => void,
   validateFormValue?: (input: string) => void
 };
 type Ref = HTMLInputElement;
@@ -31,6 +32,7 @@ const TMInput = forwardRef<Ref, ITMInput>(({
   type = 'text',
   onChangeCallback,
   onKeyPressCallback,
+  onFocusCallback,
   validateFormValue,
 }, ref) => {
   const [value, setValue] = useState<string>('');
@@ -68,11 +70,12 @@ const TMInput = forwardRef<Ref, ITMInput>(({
         id={id}
         name={Math.random().toString()}
         onChange={e => onChange(e.target.value)}
+        onFocus={onFocusCallback}
         onKeyPress={onKeyPress}
+        placeholder={placeholder}
         spellCheck='false'
         ref={ref}
         type={type}
-        placeholder={placeholder}
         value={formValue || value}
       />
       {

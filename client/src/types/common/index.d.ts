@@ -11,6 +11,12 @@ interface KeyStroke {
   key: string,
 };
 
+type SearchableOption = {
+  id: string,
+  searchableValue: string,
+  content: ReactElement | string,
+};
+
 interface User {
   id: string,
   firstName: string,
