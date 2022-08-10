@@ -1,0 +1,13 @@
+@import 'global';
+
+.tm-menu-container {
+  position: relative;
+  .tm-menu {
+    background-color: $white;
+    border-radius: $medium-border-radius;
+    overflow: $hide-y-scroll-x;
+    padding: $medium-padding;
+    position: absolute;
+    z-index: 1;
+  };
+};

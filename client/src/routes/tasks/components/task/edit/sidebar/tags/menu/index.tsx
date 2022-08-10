@@ -191,7 +191,7 @@ const ColorPicker: FC<IColorPicker> = ({ hexColor, setIsColorPickerShowing, setH
         <div
           key={`color-palette-${color}`}
           className={['color-swatch', color === hexColor ? 'active' : ''].join(' ')}
-          style={{ background: color }}
+          style={{ backgroundColor: color }}
           onClick={() => handleColorSelect(color)}
         />
       );

@@ -1,0 +1,12 @@
+@import 'global';
+
+.tag {
+  @include centered-flex-box;
+  border-radius: $medium-border-radius;
+  margin-bottom: $medium-margin;
+  padding: $medium-padding;
+  width: fit-content;
+
+  button { margin-left: auto; };
+  .tm-button { &.icon { padding: 0; }; };
+};

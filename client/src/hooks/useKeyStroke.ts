@@ -18,7 +18,14 @@ const useKeyStroke = (
   });
 
   const handleKeyPress = useCallback((event: KeyboardEvent<any>) => {
-    if (event.target instanceof HTMLInputElement) return;
+    // prevents hotkeys from stopping text input into textareas and inputs
+    if (
+      event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement
+    ) {
+      return;
+    }
+
     type keyOfKeyStroke = keyof typeof keyStrokes;
     const isMatchingKeyStroke = keyStrokes.some(
       keyStroke => (Object.entries(keyStroke) as [keyOfKeyStroke, any]).every(

@@ -1,7 +1,9 @@
 import './index.scss';
 
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+
+import useOnClickOutside from 'hooks/useOnOutsideClick';
 
 interface TMDropdownProps {
   classNames?: string[],
@@ -22,6 +24,9 @@ const TMDropdown = ({
 }: TMDropdownProps): ReactElement => {
   const [isVisible, setIsVisible] = useState(false);
   const activeInputText = selectedOption?.displayName || placeholder;
+
+  const inputRef = useRef(null);
+  useOnClickOutside(inputRef, () => setIsVisible(false));
 
   const handleOptionSelect = (option: DropdownOption) => {
     onOptionSelect(option);
@@ -55,7 +60,7 @@ const TMDropdown = ({
   };
 
   return (
-    <div className={['tm-dropdown', ...classNames].join(' ')}>
+    <div className={['tm-dropdown', ...classNames].join(' ')} ref={inputRef}>
       <button
         className={
           `tm-dropdown-button sub-header-text ${isVisible ? 'menu-visible' : 'menu-hidden'}`

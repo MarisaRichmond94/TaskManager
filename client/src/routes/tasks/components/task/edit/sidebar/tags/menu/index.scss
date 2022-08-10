@@ -37,7 +37,7 @@
         padding-right: $medium-padding;
 
         #create-tag-input {
-          background: transparent;
+          background-color: transparent;
           position: relative;
         };
 
@@ -48,7 +48,7 @@
         };
 
         #color-picker-menu {
-          background: $white;
+          background-color: $white;
           border-radius: $small-border-radius;
           bottom: 35px;
           display: flex;
