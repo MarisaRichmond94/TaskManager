@@ -2,7 +2,6 @@ import { createContext } from 'react';
 
 interface SearchTasksContextType {
   // Search context
-  searchedTasks?: Task[],
   searchText: string,
   updateSearchText: (searchText: string) => void,
   // Filter context
@@ -17,7 +16,10 @@ interface SearchTasksContextType {
   setEndDateFilter: (endDateFilter?: Date) => void,
   setIncludeArchived: (includeArchived: boolean) => void,
   setStartDateFilter: (startDateFilter?: Date) => void,
-  setStatusFilter?: (statusFilter?: Status) => void,
+  setStatusFilter: (statusFilter?: Status) => void,
+  // Both
+  isShowingSearch: boolean,
+  searchedTasks?: Task[],
 };
 
 const SearchTasksContext = createContext<undefined | SearchTasksContextType>(undefined);

@@ -21,12 +21,12 @@ const TaskPage: FC = (): JSX.Element => {
 };
 
 const TaskPageContent: FC = () => {
-  const { searchText } = useSearchTasks();
+  const { isShowingSearch } = useSearchTasks();
 
   return (
     <div id='task-page' className='contents'>
       <Header />
-      {searchText ? <SearchPanel /> : <TasksPanel />}
+      {isShowingSearch ? <SearchPanel /> : <TasksPanel />}
       <WorkspacePanel />
     </div>
   );

@@ -63,7 +63,10 @@ const TaskAttachments: FC = () => {
       }
       sectionTitle='Links'
     >
-      <div className='menu-container sidebar-menu-container task-sidebar-collapsable-container'>
+      <div
+        className='menu-container sidebar-menu-container task-sidebar-collapsable-container'
+        id='task-attachments-container'
+      >
         {
           showAttachmentMenu &&
           <AttachmentMenu

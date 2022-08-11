@@ -20,6 +20,25 @@ const toServerDatetime = (feDatetime: Date | number): number => {
 const toClientDatetime = (beDatetime: number): Date => new Date(beDatetime * 1000);
 
 /**
+ * A function to compare two dates, which will handle conversion.
+ * @param dateToCheck - the date to compare
+ * @param dateToCheckAgainst - the date being compared to
+ * @param isBeforeCheck - whether or not the check is to see if the [dateToCheck] is before the
+ * [dateToCheckAgainst]
+ * @returns a boolean representing whether or not the [dateToCheck] is in the expected position in
+ * respects to the [dateToCheckAgainst]
+ */
+const compareDates = (
+  dateToCheck: Date | number,
+  dateToCheckAgainst: Date | number,
+  isBeforeCheck: boolean = true,
+): boolean => {
+  if (dateToCheck instanceof Date) dateToCheck = toServerDatetime(dateToCheck);
+  if (dateToCheckAgainst instanceof Date) dateToCheckAgainst = toServerDatetime(dateToCheckAgainst);
+  return isBeforeCheck ? dateToCheck < dateToCheckAgainst : dateToCheck >= dateToCheckAgainst;
+};
+
+/**
  * Adds or subtracts days from a JS Date object by a given +/- modifying integer.
  * @param today - the JS Date object to modify
  * @param modifier - a +/- integer to modify the date by (in days)
@@ -29,29 +48,50 @@ const getModifiedDate = (today: Date, modifier: number): Date => {
   const modifiedDate = new Date();
   modifiedDate.setDate(today.getDate() + modifier);
   return modifiedDate;
-}
+};
 
+/**
+ * Formats a JavaScript [Date] into a full date string.
+ * @param date - A JavaScript [Date]
+ * @returns a date in the format MM/DD/YYYY
+ */
 const getFullDateString = (date: Date): string =>
   `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 
+  /**
+   * Formats a JavaScript [Date] into a shortened date string.
+   * @param date - A JavaScript [Date]
+   * @returns a date in the format MM/DD
+   */
 const getDayMonthDateString = (date: Date): string => `${date.getMonth()+1}/${date.getDate()}`;
 
+/**
+ * Gets the timestamp from a JavaScript [Date] object
+ * @param date - A JavaScript [Date]
+ * @returns the timestamp of a day in the format HH:MM (AM/PM)
+ */
 const getTimestampString = (date: Date): string => {
   const standardHours = convertMilitaryToStandardTime(date.getHours());
   return `${standardHours}:${date.getMinutes()} ${date.getHours() > 12 ? 'PM' : 'AM'}`;
 };
 
+/**
+ * Converts hours from military time to standard time
+ * @param militaryHours - A number between 0 and 24 representing the hours
+ * @returns the number of hours using standard time
+ */
 const convertMilitaryToStandardTime = (militaryHours: number): number => {
   return (militaryHours === 0) // it is exactly midnight
     ? 12
     : (militaryHours <= 12) // it is before noon or exactly noon
       ? militaryHours
       : militaryHours - 12; // it is between noon and midnight
-}
+};
 
 export {
   toClientDatetime,
   toServerDatetime,
+  compareDates,
   getDayMonthDateString,
   getFullDateString,
   getModifiedDate,
