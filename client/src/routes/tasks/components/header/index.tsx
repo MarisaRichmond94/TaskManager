@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { createRef, KeyboardEvent, FC } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import TMInput from 'components/tm_input';
 import useKeyStroke from 'hooks/useKeyStroke';
@@ -11,7 +12,11 @@ import { HOT_KEYS } from 'settings';
 const { FOCUS_SEARCH_KEY } = HOT_KEYS;
 
 const Header: FC = () => {
-  const { searchText, updateSearchText } = useSearchTasks();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const searchText = searchParams.get('searchText') || '';
+
+  const { updateSearchText } = useSearchTasks();
   const searchInputRef = createRef<HTMLInputElement>();
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {

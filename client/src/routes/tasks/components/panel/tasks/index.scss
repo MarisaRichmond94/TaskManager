@@ -1,10 +1,6 @@
 @import 'global';
 
 #tasks-panel {
-  overflow: $hide-y-scroll-x;
-  padding: 0;
-  padding-right: $medium-padding;
-
   .task-count { margin: 0; };
 
   .tasks-container {

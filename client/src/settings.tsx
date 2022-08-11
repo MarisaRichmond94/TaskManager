@@ -12,6 +12,7 @@ export const HOT_KEYS = {
   EXPAND_ALL_SECTIONS_KEY: 'E', // TODO - should expand aall task sections
   FOCUS_SEARCH_KEY: 'F',
   GRAB_SECTION_TASK_KEY: 'G', // TODO - should focus the first task in the active section
+  NAVIGATE_HOME: 'H', // TODO - should navigate the user home
   DELETE_TASK_KEY: 'K', // TODO - should delete the active task
   NEW_TASK_KEY: 'N',
   FOCUS_OBJECTIVE_KEY: 'O', // TODO - should auto focus the description of an active task
@@ -20,6 +21,7 @@ export const HOT_KEYS = {
   TOGGLE_SORT_KEY: 'S',
   TOGGLE_KEY: 'T',
   PRIORITIZE_TASK_KEY: 'V', // TODO - should change the active task's dueDate to end of the current day
+  WIPE_ALL_FILTERS: 'W', // TODO - should wipe all search filters, including text, filters, sorting
   CLOSE_ACTIVE_TASK_KEY: 'X',
   GO_TO_PREVIOUS_TASK_KEY: 'ArrowLeft', // TODO - should navigate to the previous task in the tasks list
   GO_TO_NEXT_TASK_KEY: 'ArrowRight', // TODO - should navigate to the next task in the tasks list

@@ -1,11 +1,12 @@
 import './index.scss';
 
-import { FC, KeyboardEvent, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { BsStars } from 'react-icons/bs';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { TMButton } from 'components/tm_button';
 import TMCheckbox from 'components/tm_button/tm_checkbox';
@@ -18,10 +19,13 @@ import { useSearchTasks } from 'providers/search_tasks';
 import { useTasks } from 'providers/tasks';
 import Tag from 'routes/tasks/components/tag';
 import { HOT_KEYS } from 'settings';
+import { FilterAction, FilterType } from 'types/constants';
+import { toClientDatetime } from 'utils/date';
 
 const { NEW_TASK_KEY, TOGGLE_SORT_KEY } = HOT_KEYS;
 
 const Toolbar: FC = () => {
+  const { search } = useLocation();
   const navigate = useNavigate();
   const { createTask } = useTasks();
   const [isAsc, setIsAsc] = useState(false);
@@ -43,7 +47,7 @@ const Toolbar: FC = () => {
 
   const updateSortOrder = (updatedSortOrder: boolean) => {
     setIsAsc(updatedSortOrder);
-    const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams(search);
     searchParams.set('asc', updatedSortOrder.toString());
     navigate({ search: searchParams.toString() });
   };
@@ -52,6 +56,7 @@ const Toolbar: FC = () => {
     <div id='task-header-toolbar'>
       <SortButton isAsc={isAsc} updateSortOrder={updateSortOrder} />
       <FilterMenuButton />
+      <ClearSearchButton />
       <CreateTaskButton />
       <MiscMenuButton />
     </div>
@@ -91,17 +96,25 @@ const FilterMenuButton: FC = () => (
 );
 
 const FilterMenuContent: FC = () => {
-  const { statusTypes, tags } = useTasks();
-  const {
-    clearFilters,
-    endDateFilter, setEndDateFilter,
-    includeArchived, setIncludeArchived,
-    startDateFilter, setStartDateFilter,
-    statusFilter, setStatusFilter,
-    tagFilters, addTagFilter, removeTagFilter,
-  } = useSearchTasks();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const searchFilters = searchParams.get('filters') || '{}';
+  const filters = JSON.parse(searchFilters);
 
-  useEffect(() => { clearFilters(); }, []);
+  const { statusTypes, tags } = useTasks();
+  const { clearUrlFilters, onFilterAction } = useSearchTasks();
+
+  const startDate = filters[FilterType.startDate];
+  const startDateFilter = startDate ? toClientDatetime(Number(startDate)) : undefined
+  const endDate = filters[FilterType.endDate];
+  const endDateFilter = endDate ? toClientDatetime(Number(endDate)) : undefined;
+  const includeArchivedFilter = filters[FilterType.includeArchived];
+  const includeArchived = includeArchivedFilter ? Boolean(includeArchivedFilter) : false;
+  const statusName = filters[FilterType.status];
+  const statusFilter = statusName ? statusTypes?.find(x => x.name === statusName) : undefined;
+  const tagFilters = filters[FilterType.tags] || [];
+
+  // TODO - figure out how to clear on close without introducing the demon bug
 
   const searchableTags = tags
     ?.filter(tag => !tagFilters.includes(tag.id))
@@ -117,7 +130,9 @@ const FilterMenuContent: FC = () => {
               id={id}
               key={id}
               name={name}
-              onAddTagCallback={addTagFilter}
+              onAddTagCallback={
+                (tagId: string) => onFilterAction(FilterAction.update, FilterType.tags, tagId)
+              }
             />
           )
         }
@@ -139,7 +154,9 @@ const FilterMenuContent: FC = () => {
               key={id}
               isInUse
               name={name}
-              onDeleteTagCallback={removeTagFilter}
+              onDeleteTagCallback={
+                (tagId: string) => onFilterAction(FilterAction.remove, FilterType.tags, tagId)
+              }
             />
           )
         }
@@ -149,8 +166,8 @@ const FilterMenuContent: FC = () => {
 
   const onDateFilter = (dates: Date[]) => {
     const [startDate, endDate] = dates;
-    setStartDateFilter(startDate);
-    setEndDateFilter(endDate);
+    if (startDate) onFilterAction(FilterAction.update, FilterType.startDate, startDate);
+    if (endDate) onFilterAction(FilterAction.update, FilterType.endDate, endDate);
   };
 
   return (
@@ -167,8 +184,10 @@ const FilterMenuContent: FC = () => {
         key='filter-menu-status-dropdown'
         classNames={['filter-menu-dropdown']}
         onOptionSelect={
-          (statusType: DropdownOption) => setStatusFilter(
-            statusTypes.find(x => x.id === statusType.id)
+          (statusType: DropdownOption) => onFilterAction(
+            FilterAction.update,
+            FilterType.status,
+            statusTypes.find(x => x.id === statusType.id).name,
           )
         }
         options={statusTypes.map(s => { return { id: s.id, displayName: s.name } })}
@@ -179,15 +198,24 @@ const FilterMenuContent: FC = () => {
         placeholder='Search tags...'
         searchableOptions={searchableTags}
         selectedOptions={selectedTags}
-        onOptionSelectCallback={addTagFilter}
+        onOptionSelectCallback={
+          (tagId: string) => onFilterAction(FilterAction.update, FilterType.tags, tagId)
+        }
       />
       <TMCheckbox
         classNames={['filter-menu-dropdown', 'include-archived-tasks-checkbox']}
         isActive={includeArchived}
         textBlock='include archived tasks'
-        toggleIsActive={() => setIncludeArchived(!includeArchived)}
+        toggleIsActive={
+          () => {
+            const updatedValue = !includeArchived;
+            updatedValue
+              ? onFilterAction(FilterAction.update, FilterType.includeArchived, updatedValue)
+              : onFilterAction(FilterAction.remove, FilterType.includeArchived);
+          }
+        }
       />
-      <ClearFiltersButton clearFilters={clearFilters} />
+      <ClearFiltersButton clearFilters={clearUrlFilters} />
     </div>
   );
 };
@@ -206,6 +234,21 @@ const ClearFiltersButton: FC<IClearFiltersButton> = ({ clearFilters }) => (
     Clear Filters
   </TMButton>
 );
+
+const ClearSearchButton = () => {
+  const navigate = useNavigate();
+
+  return (
+    <TMButton
+      buttonStyle='icon'
+      classNames={['task-toolbar-icon']}
+      onClick={() => navigate({ search: '' })}
+      size='medium'
+    >
+      <BsStars />
+    </TMButton>
+  );
+};
 
 const CreateTaskButton: FC = () => {
   const { createTask } = useTasks();

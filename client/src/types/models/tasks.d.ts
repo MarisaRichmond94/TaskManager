@@ -11,9 +11,9 @@ interface AttachmentType {
 }
 
 enum AttachmentTypeName {
-    jira = "JIRA",
-    google = "Google",
-    github = "GitHub",
+  jira = "JIRA",
+  google = "Google",
+  github = "GitHub",
 };
 
 interface ChecklistItem {

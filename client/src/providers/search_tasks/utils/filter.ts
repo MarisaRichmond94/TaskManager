@@ -1,38 +1,134 @@
+import { NavigateFunction, Search } from "react-router";
 
 import { ARCHIVED_TASK_STATUS_NAME } from "settings";
-import { compareDates } from "utils/date";
+import { FilterType } from 'types/constants';
+import { compareDates, toServerDatetime } from "utils/date";
 
-const bySearchText = (tasksToFilter: Task[], searchText: string): Task[] => {
-  if (searchText === '') return tasksToFilter;
-  const matchText = searchText.toLowerCase();
-  return tasksToFilter.filter(x => x.objective.toLowerCase().includes(matchText));
+
+const clear = (search: Search, navigate: NavigateFunction) => {
+  const searchParams = new URLSearchParams(search);
+  searchParams.delete('filters');
+  navigate({ search: searchParams.toString() });
 };
 
-const byStartDate = (tasksToFilter: Task[], startDateFilter?: Date): Task[] => {
+const setSearchText = (updatedSearchText: string, search: string, navigate: NavigateFunction) => {
+  const searchParams = new URLSearchParams(search);
+    updatedSearchText === ''
+      ? searchParams.delete('searchText')
+      : searchParams.set('searchText', updatedSearchText);
+  navigate({ search: searchParams.toString() });
+};
+
+const update = (
+  filterType: FilterType,
+  filterValue: any,
+  search: string,
+  navigate: NavigateFunction,
+  hasMultiple: boolean = false,
+) => {
+  if (filterValue instanceof Date) filterValue = toServerDatetime(filterValue);
+  const searchParams = new URLSearchParams(search);
+  const searchFilters = searchParams.get('filters') || '{}';
+
+  const filters = JSON.parse(searchFilters);
+  if (hasMultiple) {
+    const multiValuedList = filters[filterType as string] || [];
+    multiValuedList.push(filterValue);
+    filters[filterType as string] = multiValuedList;
+  } else {
+    filters[filterType as string] = filterValue;
+  }
+  searchParams.set('filters', JSON.stringify(filters));
+  navigate({ search: searchParams.toString() });
+};
+
+const remove = (
+  filterType: FilterType,
+  search: string,
+  navigate: NavigateFunction,
+  filterValue?: any,
+) => {
+  const searchParams = new URLSearchParams(search);
+  const searchFilters = searchParams.get('filters') || '{}';
+
+  const filters = JSON.parse(searchFilters);
+  if (filterValue) {
+    const multiValuedList = filters[filterType as string]?.filter(x => x !== filterValue);
+    if (!multiValuedList.length) delete filters[filterType as string];
+    filters[filterType as string] = multiValuedList;
+  } else {
+    delete filters[filterType as string];
+  }
+  !!Object.keys(filters).length
+    ? searchParams.set('filters', JSON.stringify(filters))
+    : searchParams.delete('filters');
+  navigate({ search: searchParams.toString() });
+};
+
+const filter = (tasks: Task[], search: string): Task[] => {
+  let filteredTasks = [...tasks];
+  const searchParams = new URLSearchParams(search);
+  const searchFilters = searchParams.get('filters') || '{}';
+  const filters = JSON.parse(searchFilters);
+
+  filteredTasks = _filterBySearchText(filteredTasks, searchParams.get('searchText') || '');
+
+  const includeArchived = filters[FilterType.includeArchived];
+  filteredTasks = _filterByIncludeArchived(
+    filteredTasks,
+    includeArchived ? Boolean(includeArchived) : false,
+  );
+
+  filteredTasks = _filterByStatus(filteredTasks, filters[FilterType.status]);
+
+  filteredTasks = _filterByTags(filteredTasks, filters[FilterType.tags] || []);
+
+  const startDateFilter = filters[FilterType.startDate];
+  filteredTasks = _filterByStartDate(
+    filteredTasks,
+    startDateFilter ? Number(startDateFilter) : undefined,
+  );
+
+  const endDateFilter = filters[FilterType.endDate];
+  filteredTasks = _filterByEndDate(
+    filteredTasks,
+    endDateFilter ? Number(endDateFilter) : undefined,
+  );
+
+  return filteredTasks;
+};
+
+const _filterBySearchText = (tasksToFilter: Task[], searchText: string): Task[] => {
+  if (searchText === '') return tasksToFilter;
+  const matchText = searchText.toLowerCase();
+  return tasksToFilter.filter(x => x.objective && x.objective.toLowerCase().includes(matchText));
+};
+
+const _filterByStartDate = (tasksToFilter: Task[], startDateFilter?: number): Task[] => {
   return !!startDateFilter
     ? tasksToFilter.filter(x => compareDates(x.dueDate, startDateFilter, false))
     : tasksToFilter;
 };
 
-const byEndDate = (tasksToFilter: Task[], endDateFilter?: Date): Task[] => {
+const _filterByEndDate = (tasksToFilter: Task[], endDateFilter?: number): Task[] => {
   return !!endDateFilter
     ? tasksToFilter.filter(x => compareDates(x.dueDate, endDateFilter))
     : tasksToFilter;
 };
 
-const byIncludeArchived = (tasksToFilter: Task[], includeArchived: boolean): Task[] => {
+const _filterByIncludeArchived = (tasksToFilter: Task[], includeArchived: boolean): Task[] => {
   return includeArchived
     ? tasksToFilter
     : tasksToFilter.filter(task => task.status.name !== ARCHIVED_TASK_STATUS_NAME);
 };
 
-const byStatus = (tasksToFilter: Task[], statusFilter?: Status): Task[] => {
-  return !!statusFilter
-    ? tasksToFilter.filter(task => task.status.name === statusFilter.name)
+const _filterByStatus = (tasksToFilter: Task[], statusNameFilter?: string): Task[] => {
+  return !!statusNameFilter
+    ? tasksToFilter.filter(task => task.status.name === statusNameFilter)
     : tasksToFilter;
 };
 
-const byTags = (tasksToFilter: Task[], tagFilters: string[]): Task[] => {
+const _filterByTags = (tasksToFilter: Task[], tagFilters: string[]): Task[] => {
   if (!tagFilters.length) return tasksToFilter;
   return tasksToFilter.filter(task => {
     const taskTagIds = task.tags.map(tag => tag.tagId);
@@ -40,13 +136,10 @@ const byTags = (tasksToFilter: Task[], tagFilters: string[]): Task[] => {
   });
 };
 
-
-
 export {
-  bySearchText,
-  byStartDate,
-  byEndDate,
-  byIncludeArchived,
-  byStatus,
-  byTags,
+  clear,
+  remove,
+  filter,
+  update,
+  setSearchText,
 };

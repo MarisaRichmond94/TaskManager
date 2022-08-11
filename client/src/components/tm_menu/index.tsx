@@ -9,13 +9,15 @@ interface ITMMenu {
   classNames?: string[],
   id: string,
   menuContent: ReactElement[] | ReactElement,
+  onCloseCallback?: () => void,
 };
 
-const TMMenu: FC<ITMMenu> = ({ children, classNames =  [], id, menuContent }) => {
+const TMMenu: FC<ITMMenu> = ({ children, classNames =  [], id, menuContent, onCloseCallback }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const onClickOutside = () => {
     setShowMenu(false);
+    if (showMenu && !!onCloseCallback) onCloseCallback();
   };
 
   const menuRef = useRef(null);
