@@ -6,7 +6,7 @@ import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { SiJirasoftware } from 'react-icons/si';
 
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers/task';
 import AttachmentMenu from 'routes/tasks/components/task/edit/sidebar/attachments/menu';
@@ -123,9 +123,9 @@ const TaskAttachment: FC<IAttachment> = ({ attachment, onEditCallback }) => {
       </div>
       <TMButton
         classNames={['grey', 'edit-attachment-button']}
-        buttonStyle='icon'
+        buttonStyle={ButtonStyle.icon}
         onClick={() => onEditCallback(attachment)}
-        size='small'
+        size={ButtonSize.small}
       >
         <BsPencilSquare />
       </TMButton>
@@ -144,8 +144,8 @@ const AddAttachmentButton: FC<IAddAttachmentButton> = ({
 }) => (
   <TMButton
     classNames={['grey', 'toggle-menu-button', showAttachmentMenu ? 'active' : '']}
-    buttonStyle='icon'
-    size='medium'
+    buttonStyle={ButtonStyle.icon}
+    size={ButtonSize.medium}
     onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}
   >
     <BsFolderPlus/>

@@ -2,7 +2,7 @@ import './index.scss';
 
 import { ReactElement } from 'react';
 
-import { ButtonStyle, TMButton, Size } from 'components/tm_button';
+import TMButton, { ButtonStyle, ButtonSize } from 'components/tm_button';
 import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
 interface TMCheckboxProps {
@@ -29,7 +29,7 @@ const TMCheckbox = ({
         onClick={toggleIsActive}
         buttonStyle={ButtonStyle.icon}
         isDisabled={isDisabled}
-        size={Size.small}
+        size={ButtonSize.small}
       >
         {isActive ? <BsCheckSquare /> : <BsSquare />}
       </TMButton>

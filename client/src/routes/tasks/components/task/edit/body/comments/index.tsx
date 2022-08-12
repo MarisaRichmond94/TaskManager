@@ -6,7 +6,7 @@ import { BsTrash } from 'react-icons/bs';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMEditableInput from 'components/tm_editable_input';
 import TMTextArea from 'components/tm_text_area';
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
@@ -92,9 +92,9 @@ interface ICommentActionButton {
 
 const CommentActionButton: FC<ICommentActionButton> = ({ icon, onClick }) => (
   <TMButton
-    buttonStyle='icon'
+    buttonStyle={ButtonStyle.icon}
     classNames={['offset-black', 'comment-action-button']}
-    size='medium'
+    size={ButtonSize.medium}
     onClick={onClick}
   >
     {icon}

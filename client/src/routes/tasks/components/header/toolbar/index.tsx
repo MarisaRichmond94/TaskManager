@@ -8,7 +8,7 @@ import { IoMdAdd } from 'react-icons/io';
 import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import TMCheckbox from 'components/tm_checkbox';
 import TMDropdown from 'components/tm_dropdown';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
@@ -72,10 +72,10 @@ interface ISortButton {
 
 const SortButton: FC<ISortButton> = ({ isAsc, updateSortOrder }) => (
   <TMButton
-    buttonStyle='icon'
+    buttonStyle={ButtonStyle.icon}
     classNames={['task-toolbar-icon']}
     onClick={() => updateSortOrder(!isAsc)}
-    size='medium'
+    size={ButtonSize.medium}
   >
     <TMTooltip
       content={<HotKeyTooltip action='Sort tasks by due date' keyStroke={['shift', 's']} />}
@@ -98,10 +98,10 @@ const FilterMenuButton: FC = () => (
       id='filter-menu-tooltip'
     >
       <TMButton
-        buttonStyle='icon'
+        buttonStyle={ButtonStyle.icon}
         classNames={['task-toolbar-icon']}
         onClick={() => {}}
-        size='small'
+        size={ButtonSize.small}
       >
         <FaFilter />
       </TMButton>
@@ -238,9 +238,9 @@ interface IClearFiltersButton {
 
 const ClearFiltersButton: FC<IClearFiltersButton> = ({ clearFilters }) => (
   <TMButton
-    buttonStyle='solid'
+    buttonStyle={ButtonStyle.solid}
     classNames={['clear-filter-button', 'grey']}
-    size='extra-small'
+    size={ButtonSize.extraSmall}
     onClick={clearFilters}
   >
     Clear Filters
@@ -252,10 +252,10 @@ const ClearSearchButton = () => {
 
   return (
     <TMButton
-      buttonStyle='icon'
+      buttonStyle={ButtonStyle.icon}
       classNames={['task-toolbar-icon']}
       onClick={() => navigate({ search: '' })}
-      size='medium'
+      size={ButtonSize.medium}
     >
       <TMTooltip
         content={<HotKeyTooltip action='Clear all filters' keyStroke={['shift', 'w']} />}
@@ -273,10 +273,10 @@ const CreateTaskButton: FC = () => {
 
   return (
     <TMButton
-      buttonStyle='icon'
+      buttonStyle={ButtonStyle.icon}
       classNames={['task-toolbar-icon']}
       onClick={createTask}
-      size='large'
+      size={ButtonSize.large}
     >
       <TMTooltip
         content={<HotKeyTooltip action='Create new task' keyStroke={['shift', 'n']} />}
@@ -307,10 +307,10 @@ const MiscMenuButton: FC = () => {
       }
     >
       <TMButton
-        buttonStyle='icon'
+        buttonStyle={ButtonStyle.icon}
         classNames={['task-toolbar-icon']}
         onClick={() => {}}
-        size='large'
+        size={ButtonSize.large}
       >
         <AiOutlineMenu />
       </TMButton>

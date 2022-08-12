@@ -6,7 +6,7 @@ import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_toggle';
 import useKeyStroke from 'hooks/useKeyStroke';
 import { useApp } from 'providers/app';
@@ -56,25 +56,25 @@ const TMSidebar: React.FC = (): JSX.Element => {
       <div id='tm-bottom-menu'>
         <TMButton
           classNames={['tm-sidebar-icon', path === TASKS_ROUTE ? 'active' : '']}
-          buttonStyle='icon'
+          buttonStyle={ButtonStyle.icon}
           onClick={() => navigate(TASKS_ROUTE)}
-          size='extra-large'
+          size={ButtonSize.extraLarge}
         >
           <FaTasks />
         </TMButton>
         <TMButton
           classNames={['tm-sidebar-icon', path === NOTES_ROUTE ? 'active' : '']}
-          buttonStyle='icon'
+          buttonStyle={ButtonStyle.icon}
           onClick={() => navigate(NOTES_ROUTE)}
-          size='extra-large'
+          size={ButtonSize.extraLarge}
         >
           <GiNotebook />
         </TMButton>
         <TMButton
           classNames={['tm-sidebar-icon', path === GOALS_ROUTE ? 'active' : '']}
-          buttonStyle='icon'
+          buttonStyle={ButtonStyle.icon}
           onClick={() => navigate(GOALS_ROUTE)}
-          size='extra-large'
+          size={ButtonSize.extraLarge}
         >
           <BsTrophyFill />
         </TMButton>

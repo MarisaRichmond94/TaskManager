@@ -3,7 +3,7 @@ import './index.scss';
 import { forwardRef, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 
 enum InputTypes {
   search = 'search',
@@ -80,7 +80,7 @@ const TMInput = forwardRef<Ref, ITMInput>(({
       />
       {
         type === `${InputTypes.search}` &&
-        <TMButton buttonStyle='icon' onClick={() => {}} size='small'>
+        <TMButton buttonStyle={ButtonStyle.icon} onClick={() => {}} size={ButtonSize.small}>
           <ImSearch />
         </TMButton>
       }

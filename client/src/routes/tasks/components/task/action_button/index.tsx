@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { TMButton } from "components/tm_button";
+import TMButton, { ButtonSize, ButtonStyle } from "components/tm_button";
 
 interface TaskActionButtonProps {
   action: (event: any) => void,
@@ -14,11 +14,11 @@ const TaskActionButton = ({
   isDisabled = false,
 }: TaskActionButtonProps): ReactElement => (
   <TMButton
-    buttonStyle='icon'
+    buttonStyle={ButtonStyle.icon}
     classNames={['off-black']}
     isDisabled={isDisabled}
     onClick={action}
-    size='medium'
+    size={ButtonSize.medium}
   >
     {icon}
   </TMButton>

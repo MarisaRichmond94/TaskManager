@@ -8,7 +8,7 @@ import useKeyPress from 'hooks/useKeyPress';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 
 interface IAttachmentMenu {
   attachment?: UpdateAttachmentDTO,
@@ -120,8 +120,8 @@ interface ICancelButton {
 const CancelButton: FC<ICancelButton> = ({ onCancelCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'grey']}
-    buttonStyle='solid'
-    size='small'
+    buttonStyle={ButtonStyle.solid}
+    size={ButtonSize.small}
     onClick={onCancelCallback}
   >
     Cancel
@@ -136,8 +136,8 @@ interface ISubmitButton {
 const SubmitButton: FC<ISubmitButton> = ({ isExistingAttachment, onSubmitCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'blue']}
-    buttonStyle='solid'
-    size='small'
+    buttonStyle={ButtonStyle.solid}
+    size={ButtonSize.small}
     onClick={onSubmitCallback}
   >
     {isExistingAttachment ? 'Update' : 'Create'}

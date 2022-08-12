@@ -5,7 +5,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/logo_light.png';
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useApp } from 'providers/app';
 import { ROOT_ROUTE } from 'settings';
 
@@ -41,17 +41,17 @@ const TMHeader: React.FC = (): JSX.Element => {
         {user && <p className='sub-header-text'>{generateMessage()}</p>}
         <TMButton
           classNames={['off-white']}
-          buttonStyle='icon'
+          buttonStyle={ButtonStyle.icon}
           onClick={() => console.log('message')}
-          size='large'
+          size={ButtonSize.large}
         >
           <BiMessage />
         </TMButton>
         <TMButton
           classNames={['off-white']}
-          buttonStyle='icon'
+          buttonStyle={ButtonStyle.icon}
           onClick={logout}
-          size='large'
+          size={ButtonSize.large}
         >
           <IoLogOutOutline />
         </TMButton>

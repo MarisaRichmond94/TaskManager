@@ -7,7 +7,7 @@ import { RiPlayListAddFill } from 'react-icons/ri';
 import TMCheckbox from 'components/tm_checkbox';
 import TMEditableInput from 'components/tm_editable_input';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import TaskActionButton from 'routes/tasks/components/task/action_button';
 
@@ -66,8 +66,8 @@ interface IAddChecklistItemButton {
 const AddChecklistItemButton: FC<IAddChecklistItemButton> = ({ enterCreateMode }) => (
   <TMButton
     classNames={['grey', 'add-checklist-item-button']}
-    buttonStyle='icon'
-    size='medium'
+    buttonStyle={ButtonStyle.icon}
+    size={ButtonSize.medium}
     onClick={enterCreateMode}
   >
     <RiPlayListAddFill />

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 
-import { TMButton } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 
 interface ITag {
   classNames?: string[],
@@ -30,8 +30,8 @@ const Tag: FC<ITag> = ({
       {name}
     </div>
     <TMButton
-      buttonStyle='icon'
-      size='medium'
+      buttonStyle={ButtonStyle.icon}
+      size={ButtonSize.medium}
       onClick={() => isInUse ? onDeleteTagCallback(id) : onAddTagCallback(id)}
     >
       {isInUse ? <BsX /> : <IoMdAdd />}

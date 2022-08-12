@@ -1,17 +1,17 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 
-export interface TMButtonProps {
-  buttonStyle?: `${ButtonStyle}`,
+interface ITMButton {
+  buttonStyle?: ButtonStyle,
   children: string | ReactElement | ReactElement[],
   classNames?: string[],
   isDisabled?: boolean,
-  size?: `${Size}`,
+  size?: ButtonSize,
   onClick: (event: any) => void,
 };
 
-export enum Size {
+export enum ButtonSize {
   extraSmall = 'extra-small',
   small = 'small',
   medium = 'medium',
@@ -35,14 +35,14 @@ enum TRANSPARENT_STYLES {
   underline = 'underline',
 };
 
-export const TMButton = ({
+const TMButton: FC<ITMButton> = ({
   buttonStyle = ButtonStyle.solid,
   children,
   classNames = [],
   isDisabled = false,
-  size = Size.medium,
+  size = ButtonSize.medium,
   onClick,
-}: TMButtonProps) => {
+}) => {
   const transparent = buttonStyle in TRANSPARENT_STYLES ? 'transparent' : '';
 
   return (
@@ -56,3 +56,5 @@ export const TMButton = ({
     </button>
   );
 };
+
+export default TMButton;

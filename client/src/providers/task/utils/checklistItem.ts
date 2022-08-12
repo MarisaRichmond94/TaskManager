@@ -1,4 +1,4 @@
-import ChecklistItemsApi from "api/checklistItems";
+import ChecklistItemsApi from "api/checklist_items";
 import TasksApi from "api/tasks";
 
 const handleCreateChecklistItem = async (
