@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import SearchTasksContext from 'providers/search/tasks/context';
@@ -10,9 +10,19 @@ const SearchTasksProvider = (props: object) => {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { tasks, updateActiveTaskId } = useTasks();
+  const searchInputRef = createRef<HTMLInputElement>();
+
+  const [isAsc, setIsAsc] = useState(false);
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
 
   useEffect(() => { setSearchedTasks(filter.filter(tasks, search)) }, [search, tasks]);
+
+  const updateSortOrder = (updatedSortOrder: boolean) => {
+    setIsAsc(updatedSortOrder);
+    const searchParams = new URLSearchParams(search);
+    searchParams.set('asc', updatedSortOrder.toString());
+    navigate({ search: searchParams.toString() });
+  };
 
   const updateUrlFilter = useCallback((filterType: FilterType, filterValue: any): void => {
     filter.update(filterType, filterValue, search, navigate, filterType === FilterType.tags);
@@ -51,11 +61,14 @@ const SearchTasksProvider = (props: object) => {
   }, [navigate, search, updateActiveTaskId]);
 
   const value = {
+    isAsc,
     isShowingSearch: !!search.includes('searchText') || !!search.includes('filters'),
+    searchInputRef,
     searchedTasks,
     clearUrlFilters,
     onFilterAction,
     updateSearchText,
+    updateSortOrder,
   };
 
   return <SearchTasksContext.Provider value={value} {...props} />;

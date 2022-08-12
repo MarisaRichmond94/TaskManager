@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { FC, KeyboardEvent, useState } from 'react';
+import { FC } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsStars } from 'react-icons/bs';
 import { FaFilter } from 'react-icons/fa';
@@ -16,43 +16,14 @@ import TMMenu from 'components/tm_menu';
 import TMRangedDatePicker from 'components/tm_date_picker/ranged';
 import TMSearchableDropdown from 'components/tm_searchable_dropdown';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
-import useKeyStroke from 'hooks/useKeyStroke';
 import { useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Tag from 'routes/tasks/tag';
-import { HOT_KEYS } from 'settings';
 import { FilterAction, FilterType } from 'types/constants';
 import { toClientDatetime } from 'utils/date';
 
-const { NEW_TASK_KEY, TOGGLE_SORT_KEY } = HOT_KEYS;
-
 const Toolbar: FC = () => {
-  const { search } = useLocation();
-  const navigate = useNavigate();
-  const { createTask } = useTasks();
-  const [isAsc, setIsAsc] = useState(false);
-
-  const handleKeyStrokes = (event: KeyboardEvent<any>) => {
-    switch (event.key) {
-      case NEW_TASK_KEY: createTask(); break;
-      case TOGGLE_SORT_KEY: updateSortOrder(!isAsc);
-    }
-  };
-
-  useKeyStroke(
-    [
-      { shiftKey: true, key: NEW_TASK_KEY },
-      { shiftKey: true, key: TOGGLE_SORT_KEY },
-    ],
-    handleKeyStrokes,
-  );
-
-  const updateSortOrder = (updatedSortOrder: boolean) => {
-    setIsAsc(updatedSortOrder);
-    const searchParams = new URLSearchParams(search);
-    searchParams.set('asc', updatedSortOrder.toString());
-    navigate({ search: searchParams.toString() });
-  };
+  const { isAsc, updateSortOrder } = useSearchTasks();
 
   return (
     <div id='task-header-toolbar'>

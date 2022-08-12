@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from 'app';
 import { AppProvider } from 'providers/app';
+import { AppHotkeysProvider } from 'providers/hotkeys/app';
 import reportWebVitals from 'reportWebVitals';
 import authSettings from 'auth_config.json';
 
@@ -23,7 +24,9 @@ root.render(
     >
       <BrowserRouter>
         <AppProvider>
-          <App />
+          <AppHotkeysProvider>
+            <App />
+          </AppHotkeysProvider>
         </AppProvider>
       </BrowserRouter>
     </Auth0Provider>
