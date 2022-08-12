@@ -8,5 +8,5 @@
   width: fit-content;
 
   button { margin-left: auto; };
-  .tm-button { &.icon { padding: 0; }; };
+  .tm-button { &.icon { padding: $no-padding; }; };
 };

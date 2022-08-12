@@ -2,7 +2,7 @@
 
 .collapsed-app {
   #tm-header {
-    padding: 0;
+    padding: $no-padding;
     width: $toolbar-width;
     #control-panel-container { display: none; }
   };
@@ -14,7 +14,7 @@
   box-sizing: border-box;
   height: $header-height;
   justify-content: center;
-  padding: 0 $medium-padding;
+  padding: $no-padding $medium-padding;
   transition: width 1s ease;
   width: 100%;
 

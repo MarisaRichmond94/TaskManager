@@ -8,15 +8,15 @@
   width: $toolbar-width;
 
   #tm-top-menu {
-    margin: 0;
-    padding: $medium-padding 0;
+    margin: $no-margin;
+    padding: $medium-padding $no-padding;
 
     #user-profile-pic {
       border-radius: 50%;
       width: 50px;
     }
 
-    .tm-toggle {  margin: $small-margin 0; }
+    .tm-toggle {  margin: $small-margin $no-margin; }
   }
 
   #tm-bottom-menu {

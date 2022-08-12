@@ -1,7 +1,7 @@
 @import 'global';
 
 #task-tag-menu-container {
-  padding: $medium-padding 0;
+  padding: $medium-padding $no-padding;
 
   .menu { min-height: 170px; };
 

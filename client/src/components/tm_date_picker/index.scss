@@ -1,7 +1,7 @@
 @import 'global';
 
 .react-datepicker-wrapper {
-  margin: $extra-small-margin 0;
+  margin: $extra-small-margin $no-margin;
 
   .react-datepicker__input-container {
     input {

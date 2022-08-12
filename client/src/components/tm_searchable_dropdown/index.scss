@@ -10,24 +10,24 @@
 
     input {
       background-color: $off-white;
-      margin: 0;
+      margin: $no-margin;
       width: 100%;
     };
   };
 
   .focused {
-    border-radius: $small-border-radius $small-border-radius 0 0;
+    border-radius: $small-border-radius $small-border-radius $no-border-radius $no-border-radius;
   };
 
   .filtered-search-options {
     background-color: $off-white;
-    border-radius: 0 0 $small-border-radius $small-border-radius;
+    border-radius: $no-border-radius $no-border-radius $small-border-radius $small-border-radius;
     color: $off-black;
     list-style-type: none;
-    margin: 0;
+    margin: $no-margin;
     max-height: 125px;
     overflow-y: auto;
-    padding: $extra-small-padding 0;
+    padding: $extra-small-padding $no-padding;
     position: absolute;
     width: 100%;
     .best-match { font-weight: bold; }

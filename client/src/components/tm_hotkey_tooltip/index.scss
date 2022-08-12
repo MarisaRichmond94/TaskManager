@@ -9,7 +9,7 @@
 
   .keystroke {
     background-color: $off-white;
-    border-radius: 5px;
+    border-radius: $extra-small-border-radius;
     color: $off-black;
     padding: $small-margin $large-padding;
   };

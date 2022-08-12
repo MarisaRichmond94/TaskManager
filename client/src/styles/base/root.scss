@@ -2,7 +2,7 @@
 
 body {
   height: 100vh;
-  margin: 0;
+  margin: $no-margin;
   font-family: $paragraph-font-family;
   font-weight: 100;
   -webkit-font-smoothing: antialiased;
@@ -20,7 +20,7 @@ body {
   .collapsed-app {
     #body-container {
       #content-container {
-        padding: 0;
+        padding: $no-padding;
         width: 0;
         .contents { display: none; }
         .tm-loader-container { display: none; };
@@ -33,7 +33,7 @@ body {
 
     #content-container {
       background-color: $medium-grey;
-      padding: 0;
+      padding: $no-padding;
       transition: width 1s ease;
       width: calc(100% - 60px);
       .contents {

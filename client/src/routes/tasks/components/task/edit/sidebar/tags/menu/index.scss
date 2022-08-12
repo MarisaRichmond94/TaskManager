@@ -8,7 +8,7 @@
 
       button {
         justify-content: center;
-        padding: 0;
+        padding: $no-padding;
         width: 50%;
         &.active { border-bottom-color: $logo-green; };
       };
@@ -16,7 +16,7 @@
 
     #manage-menu {
       .task-tag {
-        padding: $small-padding 0;
+        padding: $small-padding $no-padding;
         .tm-button { padding-right: $medium-padding; };
       };
 
@@ -33,7 +33,7 @@
       #create-tag-input-container {
         @include centered-flex-box;
         border-radius: $small-border-radius;
-        padding: 3px 0;
+        padding: 3px $no-padding;
         padding-right: $medium-padding;
 
         #create-tag-input {

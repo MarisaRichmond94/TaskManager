@@ -54,7 +54,7 @@
       .filter-menu-dropdown {
         @include centered-flex-box;
         cursor: default;
-        button { margin: 0; };
+        button { margin: $no-margin; };
       };
 
       .include-archived-tasks-checkbox {

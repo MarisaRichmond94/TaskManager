@@ -1,8 +1,5 @@
-// width
-$min-mobile-width: 0;
-$min-desktop-width: 850px;
-
 // padding
+$no-padding: 0;
 $extra-small-padding: 2px;
 $small-padding: 5px;
 $medium-padding: 10px;
@@ -10,6 +7,7 @@ $large-padding: 15px;
 $extra-large-padding: 20px;
 
 // margin
+$no-margin: 0;
 $extra-small-margin: 2px;
 $small-margin: 5px;
 $medium-margin: 10px;
@@ -24,7 +22,7 @@ $medium-border-radius: 10px;
 $large-border-radius: 15px;
 $extra-large-border-radius: 20px;
 
-// components
+// components (app-specific)
 $header-height: 60px;
 $max-task-card-height: 150px;
 $task-sidebar-width: 220px;

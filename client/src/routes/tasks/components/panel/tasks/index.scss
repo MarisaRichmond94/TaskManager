@@ -1,7 +1,7 @@
 @import 'global';
 
 #tasks-panel {
-  .task-count { margin: 0; };
+  .task-count { margin: $no-margin; };
 
   .tasks-container {
     color: $white;
@@ -9,7 +9,7 @@
 
     .empty-task-section {
       padding: $medium-padding;
-      padding-top: 0;
+      padding-top: $no-padding;
     };
   };
 };

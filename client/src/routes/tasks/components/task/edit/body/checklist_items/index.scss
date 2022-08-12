@@ -31,7 +31,7 @@
         margin-left: auto;
         margin-top: $small-margin;
         visibility: hidden;
-        button { padding: 0; };
+        button { padding: $no-padding; };
       };
 
       &:hover {
