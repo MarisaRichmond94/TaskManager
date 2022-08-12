@@ -4,12 +4,12 @@ import { FC, ReactElement, useState } from 'react';
 import { BsChevronDoubleDown, BsChevronDoubleUp, BsX } from 'react-icons/bs';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
-import TMCheckbox from 'components/tm_button/tm_checkbox';
-import TMEditableInput from 'components/tm_input/editable';
+import TMCheckbox from 'components/tm_checkbox';
+import TMEditableInput from 'components/tm_editable_input';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';
-import TaskActionButton from '../../../action_button';
+import TaskActionButton from 'routes/tasks/components/task/action_button';
 
 const TaskChecklistItems: FC = () => {
   const [isCreatingNewChecklistItem, setIsCreatingNewChecklistItem] = useState(false);

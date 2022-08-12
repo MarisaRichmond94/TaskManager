@@ -7,7 +7,7 @@ import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TMButton } from 'components/tm_button';
-import { TMToggleButton } from 'components/tm_button/tm_toggle';
+import { TMToggleButton } from 'components/tm_toggle';
 import useKeyStroke from 'hooks/useKeyStroke';
 import { useApp } from 'providers/app';
 import { HOT_KEYS, ROUTES } from 'settings';

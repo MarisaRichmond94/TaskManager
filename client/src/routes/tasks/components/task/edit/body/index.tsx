@@ -2,7 +2,7 @@ import './index.scss';
 
 import { FC } from 'react';
 
-import TMEditableInput from 'components/tm_input/editable';
+import TMEditableInput from 'components/tm_editable_input';
 import { useTask } from 'providers/task';
 import TaskChecklistItems from 'routes/tasks/components/task/edit/body/checklist_items';
 import TaskComments from 'routes/tasks/components/task/edit/body/comments';

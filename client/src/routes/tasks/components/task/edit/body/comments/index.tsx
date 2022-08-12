@@ -4,7 +4,7 @@ import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import TMEditableInput from 'components/tm_input/editable';
+import TMEditableInput from 'components/tm_editable_input';
 import TMTextArea from 'components/tm_text_area';
 import { TMButton } from 'components/tm_button';
 import { useTask } from 'providers/task';

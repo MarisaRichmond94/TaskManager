@@ -1,0 +1,16 @@
+@import 'global';
+
+.hotkey-tooltip-content {
+  @include centered-flex-box;
+
+  .hotkey-tooltip-action { margin-right: $medium-margin; };
+
+  .plus { margin: $small-margin; };
+
+  .keystroke {
+    background-color: $off-white;
+    border-radius: 5px;
+    color: $off-black;
+    padding: $small-margin $large-padding;
+  };
+};

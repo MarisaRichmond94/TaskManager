@@ -9,11 +9,13 @@ import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { TMButton } from 'components/tm_button';
-import TMCheckbox from 'components/tm_button/tm_checkbox';
+import TMCheckbox from 'components/tm_checkbox';
 import TMDropdown from 'components/tm_dropdown';
+import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMMenu from 'components/tm_menu';
 import TMRangedDatePicker from 'components/tm_date_picker/ranged';
 import TMSearchableDropdown from 'components/tm_searchable_dropdown';
+import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import useKeyStroke from 'hooks/useKeyStroke';
 import { useSearchTasks } from 'providers/search_tasks';
 import { useTasks } from 'providers/tasks';
@@ -75,7 +77,13 @@ const SortButton: FC<ISortButton> = ({ isAsc, updateSortOrder }) => (
     onClick={() => updateSortOrder(!isAsc)}
     size='medium'
   >
-    {isAsc ? <RiSortAsc /> : <RiSortDesc />}
+    <TMTooltip
+      content={<HotKeyTooltip action='Sort tasks by due date' keyStroke={['shift', 's']} />}
+      direction={TooltipDirection.bottomLeft}
+      id='sort-tasks-tooltip'
+    >
+      {isAsc ? <RiSortAsc /> : <RiSortDesc />}
+    </TMTooltip>
   </TMButton>
 );
 
@@ -84,14 +92,20 @@ const FilterMenuButton: FC = () => (
     id='task-filter-menu'
     menuContent={<FilterMenuContent />}
   >
-    <TMButton
-      buttonStyle='icon'
-      classNames={['task-toolbar-icon']}
-      onClick={() => {}}
-      size='small'
+    <TMTooltip
+      content={<HotKeyTooltip action='Menu for filtering tasks' keyStroke={['shift', 'r']} />}
+      direction={TooltipDirection.bottomLeft}
+      id='filter-menu-tooltip'
     >
-      <FaFilter />
-    </TMButton>
+      <TMButton
+        buttonStyle='icon'
+        classNames={['task-toolbar-icon']}
+        onClick={() => {}}
+        size='small'
+      >
+        <FaFilter />
+      </TMButton>
+    </TMTooltip>
   </TMMenu>
 );
 
@@ -113,8 +127,6 @@ const FilterMenuContent: FC = () => {
   const statusName = filters[FilterType.status];
   const statusFilter = statusName ? statusTypes?.find(x => x.name === statusName) : undefined;
   const tagFilters = filters[FilterType.tags] || [];
-
-  // TODO - figure out how to clear on close without introducing the demon bug
 
   const searchableTags = tags
     ?.filter(tag => !tagFilters.includes(tag.id))
@@ -245,7 +257,13 @@ const ClearSearchButton = () => {
       onClick={() => navigate({ search: '' })}
       size='medium'
     >
-      <BsStars />
+      <TMTooltip
+        content={<HotKeyTooltip action='Clear all filters' keyStroke={['shift', 'w']} />}
+        direction={TooltipDirection.bottomLeft}
+        id='clear-all-filters-tooltip'
+      >
+        <BsStars />
+      </TMTooltip>
     </TMButton>
   );
 };
@@ -260,7 +278,13 @@ const CreateTaskButton: FC = () => {
       onClick={createTask}
       size='large'
     >
-      <IoMdAdd />
+      <TMTooltip
+        content={<HotKeyTooltip action='Create new task' keyStroke={['shift', 'n']} />}
+        direction={TooltipDirection.bottomLeft}
+        id='create-new-task-tooltip'
+      >
+        <IoMdAdd />
+      </TMTooltip>
     </TMButton>
   );
 };

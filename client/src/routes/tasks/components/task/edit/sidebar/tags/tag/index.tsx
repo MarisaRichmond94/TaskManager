@@ -5,7 +5,7 @@ import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 
 import { TMButton } from 'components/tm_button';
-import TMEditableInput from 'components/tm_input/editable';
+import TMEditableInput from 'components/tm_editable_input';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 
