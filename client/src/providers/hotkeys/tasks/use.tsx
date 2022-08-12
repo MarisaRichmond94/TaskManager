@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 
-import TaskHotkeysContext from 'providers/hotkeys/tasks/context';
+import TasksHotkeysContext from 'providers/hotkeys/tasks/context';
 
-const useTaskHotkeys = () => {
-  const context = useContext(TaskHotkeysContext);
+const useTasksHotkeys = () => {
+  const context = useContext(TasksHotkeysContext);
   if (context === undefined) {
-    throw new Error('useTaskHotkeys should only be used within the TaskHotkeysProvider.');
+    throw new Error('useTasksHotkeys should only be used within the TasksHotkeysProvider.');
   }
   return context;
 }
 
-export default useTaskHotkeys;
+export default useTasksHotkeys;

@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
-interface ITaskHotkeysContext {
+interface ITasksHotkeysContext {
 };
 
-const TaskHotkeysContext = createContext<undefined | ITaskHotkeysContext>(undefined);
+const TasksHotkeysContext = createContext<undefined | ITasksHotkeysContext>(undefined);
 
-export default TaskHotkeysContext;
+export default TasksHotkeysContext;

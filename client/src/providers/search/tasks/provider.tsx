@@ -13,6 +13,7 @@ const SearchTasksProvider = (props: object) => {
   const searchInputRef = createRef<HTMLInputElement>();
 
   const [isAsc, setIsAsc] = useState(false);
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [searchedTasks, setSearchedTasks] = useState<undefined | Task[]>();
 
   useEffect(() => { setSearchedTasks(filter.filter(tasks, search)) }, [search, tasks]);
@@ -62,11 +63,13 @@ const SearchTasksProvider = (props: object) => {
 
   const value = {
     isAsc,
+    isFilterMenuOpen,
     isShowingSearch: !!search.includes('searchText') || !!search.includes('filters'),
     searchInputRef,
     searchedTasks,
     clearUrlFilters,
     onFilterAction,
+    setIsFilterMenuOpen,
     updateSearchText,
     updateSortOrder,
   };

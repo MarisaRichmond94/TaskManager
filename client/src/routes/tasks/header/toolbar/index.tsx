@@ -58,15 +58,15 @@ const SortButton: FC<ISortButton> = ({ isAsc, updateSortOrder }) => (
   </TMButton>
 );
 
-const FilterMenuButton: FC = () => (
-  <TMMenu
-    id='task-filter-menu'
-    menuContent={<FilterMenuContent />}
-  >
-    <TMTooltip
-      content={<HotKeyTooltip action='Menu for filtering tasks' keyStroke={['shift', 'r']} />}
-      direction={TooltipDirection.bottomLeft}
-      id='filter-menu-tooltip'
+const FilterMenuButton: FC = () => {
+  const { isFilterMenuOpen, setIsFilterMenuOpen } = useSearchTasks();
+
+  return (
+    <TMMenu
+      id='task-filter-menu'
+      menuContent={<FilterMenuContent />}
+      showMenu={isFilterMenuOpen}
+      setShowMenu={setIsFilterMenuOpen}
     >
       <TMButton
         buttonStyle={ButtonStyle.icon}
@@ -74,11 +74,17 @@ const FilterMenuButton: FC = () => (
         onClick={() => {}}
         size={ButtonSize.small}
       >
-        <FaFilter />
+        <TMTooltip
+          content={<HotKeyTooltip action='Menu for filtering tasks' keyStroke={['shift', 'r']} />}
+          direction={TooltipDirection.bottomLeft}
+          id='filter-menu-tooltip'
+        >
+          <FaFilter />
+        </TMTooltip>
       </TMButton>
-    </TMTooltip>
-  </TMMenu>
-);
+    </TMMenu>
+  );
+}
 
 const FilterMenuContent: FC = () => {
   const { search } = useLocation();

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { TaskHotkeysProvider } from 'providers/hotkeys/tasks';
+import { TasksHotkeysProvider } from 'providers/hotkeys/tasks';
 import { SearchTasksProvider, useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Header from 'routes/tasks/header';
@@ -16,9 +16,9 @@ const TaskPage: FC = (): JSX.Element => {
   return userTaskDataLoaded
     ? (
       <SearchTasksProvider>
-        <TaskHotkeysProvider>
+        <TasksHotkeysProvider>
           <TaskPageContent />
-        </TaskHotkeysProvider>
+        </TasksHotkeysProvider>
       </SearchTasksProvider>
     )
     : <TMLoader color='#99B83B' text='fetching tasks...' />;

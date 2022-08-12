@@ -21,6 +21,7 @@ interface ITMInput {
   onFocusCallback?: (e: any) => void,
   validateFormValue?: (input: string) => void,
 };
+
 type Ref = HTMLInputElement;
 
 const TMInput = forwardRef<Ref, ITMInput>(({

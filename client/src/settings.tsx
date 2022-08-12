@@ -1,27 +1,27 @@
 // hotkeys
 export const HOT_KEYS = {
   // CONTROL + KEYS
+  COLLAPSE_ALL_SECTIONS_KEY: 'C', // TODO - should collapse all sections
+  EXPAND_ALL_SECTIONS_KEY: 'E', // TODO - should expand aall task sections
   COLLAPSE_SECTION_KEY: 'ArrowLDown', // TODO - should collapse a single task section
   GO_TO_PREVIOUS_SECTION_KEY: 'ArrowLeft', // TODO - should navigate to the previous section
   GO_TO_NEXT_SECTION_KEY: 'ArrowRight', // TODO - should navigate to the next section
   EXPAND_SECTION_KEY: 'ArrowUp', // TODO - should expend a single task section
   // SHIFT + KEYS
-  ARCHIVE_TASK_KEY: 'A', // TODO - should archive the active task
-  COLLAPSE_ALL_SECTIONS_KEY: 'C', // TODO - should collapse all sections
+  ARCHIVE_ACTIVE_TASK_KEY: 'A',
   FOCUS_DESCRIPTION_KEY: 'D', // TODO - should auto focus the description section of an active task
-  EXPAND_ALL_SECTIONS_KEY: 'E', // TODO - should expand aall task sections
   FOCUS_SEARCH_KEY: 'F',
   GRAB_SECTION_TASK_KEY: 'G', // TODO - should focus the first task in the active section
-  NAVIGATE_HOME: 'H', // TODO - should navigate the user home
-  DELETE_TASK_KEY: 'K', // TODO - should delete the active task
+  NAVIGATE_HOME: 'H',
+  DELETE_ACTIVE_TASK_KEY: 'K',
   NEW_TASK_KEY: 'N',
   FOCUS_OBJECTIVE_KEY: 'O', // TODO - should auto focus the description of an active task
-  PIN_TASK_KEY: 'P', // TODO - should pin the active task
-  FOCUS_FILTER_KEY: 'R', // TODO - should auto focus the filter section
+  PIN_ACTIVE_TASK_KEY: 'P',
+  FOCUS_FILTER_KEY: 'R',
   TOGGLE_SORT_KEY: 'S',
   TOGGLE_KEY: 'T',
-  PRIORITIZE_TASK_KEY: 'V', // TODO - should change the active task's dueDate to end of the current day
-  WIPE_ALL_FILTERS: 'W', // TODO - should wipe all search filters, including text, filters, sorting
+  PRIORITIZE_ACTIVE_TASK_KEY: 'V', // TODO - should change the active task's dueDate to end of the current day
+  WIPE_ALL_FILTERS: 'W',
   CLOSE_ACTIVE_TASK_KEY: 'X',
   GO_TO_PREVIOUS_TASK_KEY: 'ArrowLeft', // TODO - should navigate to the previous task in the tasks list
   GO_TO_NEXT_TASK_KEY: 'ArrowRight', // TODO - should navigate to the next task in the tasks list
