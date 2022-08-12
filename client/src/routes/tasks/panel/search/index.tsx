@@ -3,7 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { useSearchTasks } from 'providers/search_tasks';
+import { useSearchTasks } from 'providers/search/tasks';
 import TaskCard from 'routes/tasks/task';
 
 interface ISearchPanel {

@@ -17,7 +17,7 @@ import TMRangedDatePicker from 'components/tm_date_picker/ranged';
 import TMSearchableDropdown from 'components/tm_searchable_dropdown';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import useKeyStroke from 'hooks/useKeyStroke';
-import { useSearchTasks } from 'providers/search_tasks';
+import { useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Tag from 'routes/tasks/tag';
 import { HOT_KEYS } from 'settings';

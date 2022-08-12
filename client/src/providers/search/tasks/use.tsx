@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import SearchTasksContext from 'providers/search_tasks/context';
+import SearchTasksContext from 'providers/search/tasks/context';
 
 const useSearchTasks = () => {
   const context = useContext(SearchTasksContext);

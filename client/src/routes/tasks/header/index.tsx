@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import TMInput from 'components/tm_input';
 import useKeyStroke from 'hooks/useKeyStroke';
-import { useSearchTasks } from 'providers/search_tasks';
+import { useSearchTasks } from 'providers/search/tasks';
 import Toolbar from 'routes/tasks/header/toolbar';
 import { HOT_KEYS } from 'settings';
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { SearchTasksProvider, useSearchTasks } from 'providers/search_tasks';
+import { SearchTasksProvider, useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Header from 'routes/tasks/header';
 import SearchPanel from 'routes/tasks/panel/search';
