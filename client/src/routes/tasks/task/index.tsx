@@ -45,14 +45,14 @@ const TaskCard: FC<ITaskCard> = ({ task }) => {
   );
 };
 
-interface HeaderProps {
+interface IHeader {
   id: string,
   isArchived: boolean,
   objective: string,
   status: Status,
 };
 
-const Header = ({ id, isArchived, objective, status }: HeaderProps): ReactElement => {
+const Header: FC<IHeader> = ({ id, isArchived, objective, status }) => {
   const { archiveTaskById, deleteTaskById } = useTasks();
 
   const getStatusIcon = (statusName: string): ReactElement => {
@@ -96,14 +96,14 @@ const Body = ({ description } : { description: string }): ReactElement => (
   </div>
 );
 
-interface FooterProps {
+interface IFooter {
   checklistItems: ChecklistItem[],
   comments: Comment[],
   dueDate: number,
   tags: Tag[],
 };
 
-const Footer = ({ checklistItems, comments, dueDate, tags } : FooterProps): ReactElement => {
+const Footer: FC<IFooter> = ({ checklistItems, comments, dueDate, tags }) => {
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
   const date = toClientDatetime(dueDate);
@@ -118,12 +118,12 @@ const Footer = ({ checklistItems, comments, dueDate, tags } : FooterProps): Reac
   );
 };
 
-interface FooterStatProps {
+interface IFooterStat {
   icon: ReactElement,
   stat: string,
 };
 
-const FooterStat = ({ icon, stat }: FooterStatProps): ReactElement => (
+const FooterStat: FC<IFooterStat> = ({ icon, stat }) => (
   <div className='footer-stat'>
     {icon}
     {stat}

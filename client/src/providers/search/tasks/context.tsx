@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { FilterAction, FilterType } from 'types/constants';
 
-interface SearchTasksContextType {
+interface ISearchTasksContext {
   isShowingSearch: boolean,
   searchedTasks?: Task[],
   clearUrlFilters: () => void,
@@ -10,6 +10,6 @@ interface SearchTasksContextType {
   updateSearchText: (searchText: string) => void,
 };
 
-const SearchTasksContext = createContext<undefined | SearchTasksContextType>(undefined);
+const SearchTasksContext = createContext<undefined | ISearchTasksContext>(undefined);
 
 export default SearchTasksContext;

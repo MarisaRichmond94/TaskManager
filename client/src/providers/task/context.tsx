@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface TaskContextType {
+interface ITaskContext {
   id: string,
   attachments?: Attachment[],
   checklistItems?: ChecklistItem[],
@@ -27,6 +27,6 @@ interface TaskContextType {
   updateTask: (updateTaskDTO: UpdateTaskDTO) => void,
 };
 
-const TaskContext = createContext<undefined | TaskContextType>(undefined);
+const TaskContext = createContext<undefined | ITaskContext>(undefined);
 
 export default TaskContext;

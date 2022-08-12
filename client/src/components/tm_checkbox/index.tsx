@@ -1,11 +1,11 @@
 import './index.scss';
 
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 
 import TMButton, { ButtonStyle, ButtonSize } from 'components/tm_button';
 import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
-interface TMCheckboxProps {
+interface ITMCheckbox {
   classNames?: string[],
   isActive: boolean,
   isDisabled?: boolean,
@@ -13,13 +13,13 @@ interface TMCheckboxProps {
   toggleIsActive: () => void,
 };
 
-const TMCheckbox = ({
+const TMCheckbox: FC<ITMCheckbox> = ({
   classNames = [],
   isActive,
   isDisabled = false,
   textBlock,
   toggleIsActive,
-}: TMCheckboxProps) => {
+}) => {
   if (isDisabled) classNames.push('disabled');
 
   return (

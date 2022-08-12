@@ -1,8 +1,8 @@
 import './index.scss';
 
-import { MutableRefObject, ReactElement, useCallback, useEffect, useState } from 'react';
+import { FC, MutableRefObject, useCallback, useEffect, useState } from 'react';
 
-interface TMTextAreaProps {
+interface ITMTextArea {
   autoFocus?: boolean,
   classNames?: string[],
   id?: string,
@@ -16,7 +16,7 @@ interface TMTextAreaProps {
   validateFormValue?: (input: string) => void
 };
 
-const TMTextArea = ({
+const TMTextArea: FC<ITMTextArea> = ({
   autoFocus = false,
   classNames = [],
   id,
@@ -28,7 +28,7 @@ const TMTextArea = ({
   onKeyPressCallback,
   updatedManagedValue,
   validateFormValue,
-}: TMTextAreaProps): ReactElement => {
+}) => {
   const [unmanagedValue, setUnmanagedValue] = useState<string>(initialValue);
 
   const listener = useCallback(() => {

@@ -1,18 +1,18 @@
-import { ReactElement } from "react";
+import { FC, ReactElement } from "react";
 
 import TMButton, { ButtonSize, ButtonStyle } from "components/tm_button";
 
-interface TaskActionButtonProps {
+interface ITaskActionButton {
   action: (event: any) => void,
   icon: ReactElement,
   isDisabled?: boolean,
 };
 
-const TaskActionButton = ({
+const TaskActionButton: FC<ITaskActionButton> = ({
   action,
   icon,
   isDisabled = false,
-}: TaskActionButtonProps): ReactElement => (
+}) => (
   <TMButton
     buttonStyle={ButtonStyle.icon}
     classNames={['off-black']}

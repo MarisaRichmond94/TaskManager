@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from 'react';
+import { FC, ReactElement, useCallback } from 'react';
 
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
@@ -20,12 +20,12 @@ import {
 import { handleUpdateStatus } from 'providers/task/utils/status';
 import { handleUpdateTask } from 'providers/task/utils/task';
 
-interface TaskProps {
+interface ITaskProvider {
   children: ReactElement,
   task: Task,
 };
 
-const TaskProvider = ({ children, task: providedTask }: TaskProps) => {
+const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
   const { updateTaskInTasks } = useTasks();
 
   // Top-level task functionality

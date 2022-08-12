@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface TasksContextType {
+interface ITasksContext {
   activeTaskId?: string,
   attachmentTypes?: AttachmentType[],
   isShowingArchivedTasks: boolean,
@@ -20,6 +20,6 @@ interface TasksContextType {
   updateTaskInTasks: (updatedTask: Task) => void,
 };
 
-const TasksContext = createContext<undefined | TasksContextType>(undefined);
+const TasksContext = createContext<undefined | ITasksContext>(undefined);
 
 export default TasksContext;

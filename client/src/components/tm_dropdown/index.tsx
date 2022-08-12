@@ -1,11 +1,11 @@
 import './index.scss';
 
-import { ReactElement, useRef, useState } from 'react';
+import { FC, ReactElement, useRef, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 
-interface TMDropdownProps {
+interface ITMDropdown {
   classNames?: string[],
   isDisabled?: boolean,
   onOptionSelect?: (option: DropdownOption) => void,
@@ -14,14 +14,14 @@ interface TMDropdownProps {
   selectedOption?: DropdownOption,
 };
 
-const TMDropdown = ({
+const TMDropdown: FC<ITMDropdown> = ({
   classNames = [],
   isDisabled = false,
   onOptionSelect,
   options,
   placeholder = 'Select from the dropdown',
   selectedOption,
-}: TMDropdownProps): ReactElement => {
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const activeInputText = selectedOption?.displayName || placeholder;
 
