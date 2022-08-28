@@ -1,11 +1,11 @@
 const CONTROL_KEY_STROKES = {
   sections: {
-    collapseAll: 'C',
-    expandAll: 'E',
-    collapse: 'ArrowDown',
-    goToPrevious: 'ArrowLeft',
-    goToNext: 'ArrowRight',
-    expand: 'ArrowUp',
+    collapseAll: 'C', // TODO
+    expandAll: 'E', // TODO
+    collapse: 'ArrowDown', // TODO
+    goToPrevious: 'ArrowLeft', // TODO
+    goToNext: 'ArrowRight', // TODO
+    expand: 'ArrowUp', // TODO
   },
 };
 
@@ -25,9 +25,9 @@ const SHIFT_KEY_STROKES = {
     focus: 'F',
   },
   section: {
-    grabTask: 'G',
-    previous: 'ArrowUp',
-    next: 'ArrowDown',
+    grabTask: 'G', // TODO
+    previous: 'ArrowUp', // TODO
+    next: 'ArrowDown', // TODO
   },
   task: {
     archive: 'A',

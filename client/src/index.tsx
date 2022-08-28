@@ -11,9 +11,7 @@ import { AppHotkeysProvider } from 'providers/hotkeys/app';
 import reportWebVitals from 'reportWebVitals';
 import authSettings from 'auth_config.json';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
