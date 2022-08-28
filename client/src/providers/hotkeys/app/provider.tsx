@@ -4,16 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import useKeyStroke from 'hooks/useKeyStroke';
 import { useApp } from 'providers/app';
 import AppHotkeysContext from 'providers/hotkeys/app/context';
-import { HOT_KEYS, ROUTES } from 'settings';
+import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
+import { ROUTES } from 'settings/routes';
 
-const {
-  NAVIGATE_HOME,
-  SHIFTED_1_KEY,
-  SHIFTED_2_KEY,
-  SHIFTED_3_KEY,
-  TOGGLE_KEY,
-} = HOT_KEYS;
-const { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } = ROUTES;
+const { app: appKeys } = SHIFT_KEY_STROKES;
 
 interface IAppHotkeysProvider {
   children: ReactElement,
@@ -25,21 +19,21 @@ const AppHotkeysProvider: FC<IAppHotkeysProvider> = ({ children }) => {
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
-      case NAVIGATE_HOME: navigate(ROOT_ROUTE); break;
-      case TOGGLE_KEY: toggleIsExpanded(); break;
-      case SHIFTED_1_KEY: navigate(TASKS_ROUTE); break;
-      case SHIFTED_2_KEY: navigate(NOTES_ROUTE); break;
-      case SHIFTED_3_KEY: navigate(GOALS_ROUTE); break;
+      case appKeys.navigateHome: navigate(ROUTES.rootRoute); break;
+      case appKeys.toggleSidebar: toggleIsExpanded(); break;
+      case appKeys.navigateTasks: navigate(ROUTES.tasksRoute); break;
+      case appKeys.navigateNotes: navigate(ROUTES.notesRoute); break;
+      case appKeys.navigateGoals: navigate(ROUTES.goalsRoute); break;
     }
   };
 
   useKeyStroke(
     [
-      { shiftKey: true, key: NAVIGATE_HOME },
-      { shiftKey: true, key: TOGGLE_KEY },
-      { shiftKey: true, key: SHIFTED_1_KEY },
-      { shiftKey: true, key: SHIFTED_2_KEY },
-      { shiftKey: true, key: SHIFTED_3_KEY },
+      { shiftKey: true, key: appKeys.navigateHome },
+      { shiftKey: true, key: appKeys.toggleSidebar },
+      { shiftKey: true, key: appKeys.navigateTasks },
+      { shiftKey: true, key: appKeys.navigateNotes },
+      { shiftKey: true, key: appKeys.navigateGoals },
     ],
     handleKeyStrokes,
   );

@@ -8,10 +8,10 @@ import {
 
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/task/action_button';
-import { ARCHIVED_TASK_STATUS_NAMES, TASK_STATUS_NAMES } from 'settings';
+import { ARCHIVED_TASK_STATUS_NAMES, STATUS_NAMES } from 'settings/task';
 import { getDayMonthDateString, toClientDatetime } from 'utils/date';
 
-const { archived, blocked, completed, inProgress, toDo } = TASK_STATUS_NAMES;
+const { archived, blocked, completed, inProgress, toDo } = STATUS_NAMES;
 
 interface ITaskCard {
   task: Task,

@@ -8,7 +8,7 @@ import Header from 'routes/tasks/header';
 import SearchPanel from 'routes/tasks/panel/search';
 import TasksPanel from 'routes/tasks/panel/tasks';
 import WorkspacePanel from 'routes/tasks/panel/workspace';
-import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings';
+import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings/layout';
 
 const TaskPage: FC = (): JSX.Element => {
   const { userTaskDataLoaded } = useTasks();

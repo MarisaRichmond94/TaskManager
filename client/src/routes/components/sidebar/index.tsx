@@ -9,9 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
-import { ROUTES } from 'settings';
-
-const { GOALS_ROUTE, NOTES_ROUTE, TASKS_ROUTE } = ROUTES;
+import { ROUTES } from 'settings/routes';
 
 const TMSidebar: React.FC = (): JSX.Element => {
   const { isExpanded, toggleIsExpanded } = useApp();
@@ -23,9 +21,9 @@ const TMSidebar: React.FC = (): JSX.Element => {
         <TMToggleButton onClick={toggleIsExpanded} selected={isExpanded} />
       </div>
       <div id='tm-bottom-menu'>
-        <NavigateToPageButton icon={<FaTasks />} routePath={TASKS_ROUTE} />
-        <NavigateToPageButton icon={<GiNotebook />} routePath={NOTES_ROUTE} />
-        <NavigateToPageButton icon={<BsTrophyFill />} routePath={GOALS_ROUTE} />
+        <NavigateToPageButton icon={<FaTasks />} routePath={ROUTES.tasksRoute} />
+        <NavigateToPageButton icon={<GiNotebook />} routePath={ROUTES.notesRoute} />
+        <NavigateToPageButton icon={<BsTrophyFill />} routePath={ROUTES.goalsRoute} />
       </div>
     </div>
   );

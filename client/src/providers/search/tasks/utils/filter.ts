@@ -1,6 +1,6 @@
 import { NavigateFunction, Search } from "react-router";
 
-import { ARCHIVED_TASK_STATUS_NAME } from "settings";
+import { STATUS_NAMES } from "settings/task";
 import { FilterType } from 'types/constants';
 import { compareDates, toServerDatetime } from "utils/date";
 
@@ -119,7 +119,7 @@ const _filterByEndDate = (tasksToFilter: Task[], endDateFilter?: number): Task[]
 const _filterByIncludeArchived = (tasksToFilter: Task[], includeArchived: boolean): Task[] => {
   return includeArchived
     ? tasksToFilter
-    : tasksToFilter.filter(task => task.status.name !== ARCHIVED_TASK_STATUS_NAME);
+    : tasksToFilter.filter(task => task.status.name !== STATUS_NAMES.archived);
 };
 
 const _filterByStatus = (tasksToFilter: Task[], statusNameFilter?: string): Task[] => {

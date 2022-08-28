@@ -4,13 +4,9 @@ import useKeyStroke from 'hooks/useKeyStroke';
 import TasksHotkeysContext from 'providers/hotkeys/tasks/context';
 import { useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
-import { HOT_KEYS } from 'settings';
+import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 
-const {
-  CLOSE_ACTIVE_TASK_KEY,
-  FOCUS_FILTER_KEY, FOCUS_SEARCH_KEY, TOGGLE_SORT_KEY,
-  NEW_TASK_KEY,
-} = HOT_KEYS;
+const { filter: filterKeys, search: searchKeys, task: taskKeys, tasks: tasksKeys } = SHIFT_KEY_STROKES;
 
 interface ITasksHotkeysProvider {
   children: ReactElement,
@@ -25,21 +21,21 @@ const TasksHotkeysProvider: FC<ITasksHotkeysProvider> = ({ children }) => {
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
-      case CLOSE_ACTIVE_TASK_KEY:
+      case taskKeys.close:
         if (activeTaskId) updateActiveTaskId(undefined);
         break;
-      case FOCUS_FILTER_KEY:
+      case filterKeys.focus:
         event.preventDefault();
         setIsFilterMenuOpen(!isFilterMenuOpen);
         break;
-      case FOCUS_SEARCH_KEY:
+      case searchKeys.focus:
         event.preventDefault();
         searchInputRef?.current?.focus();
         break;
-      case NEW_TASK_KEY:
+      case taskKeys.create:
         createTask();
         break;
-      case TOGGLE_SORT_KEY:
+      case tasksKeys.sort:
         updateSortOrder(!isAsc);
         break;
     }
@@ -47,11 +43,11 @@ const TasksHotkeysProvider: FC<ITasksHotkeysProvider> = ({ children }) => {
 
   useKeyStroke(
     [
-      { shiftKey: true, key: CLOSE_ACTIVE_TASK_KEY },
-      { shiftKey: true, key: FOCUS_FILTER_KEY },
-      { shiftKey: true, key: FOCUS_SEARCH_KEY },
-      { shiftKey: true, key: NEW_TASK_KEY },
-      { shiftKey: true, key: TOGGLE_SORT_KEY },
+      { shiftKey: true, key: taskKeys.close },
+      { shiftKey: true, key: filterKeys.focus },
+      { shiftKey: true, key: searchKeys.focus },
+      { shiftKey: true, key: taskKeys.create },
+      { shiftKey: true, key: tasksKeys.sort },
     ],
     handleKeyStrokes,
   );

@@ -5,33 +5,31 @@ import TasksProvider from 'providers/tasks/provider';
 import GoalsPage from 'routes/goals';
 import NotesPage from 'routes/notes';
 import TasksPage from 'routes/tasks';
-import { ROUTES } from 'settings';
-
-const { GOALS_ROUTE, NOTES_ROUTE, ROOT_ROUTE, TASKS_ROUTE } = ROUTES;
+import { ROUTES } from 'settings/routes';
 
 const TMRouter: React.FC = (): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (pathname !== ROOT_ROUTE) return navigate(ROOT_ROUTE);
+    if (pathname !== ROUTES.rootRoute) return navigate(ROUTES.rootRoute);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const goalRoutes = {
-    path: GOALS_ROUTE,
+    path: ROUTES.goalsRoute,
     element: <GoalsPage />,
     children: [],
   };
 
   const noteRoutes = {
-    path: NOTES_ROUTE,
+    path: ROUTES.notesRoute,
     element: <NotesPage />,
     children: [],
   };
 
   const taskRoutes = {
-    path: TASKS_ROUTE,
+    path: ROUTES.tasksRoute,
     element: (
       <TasksProvider>
         <TasksPage />

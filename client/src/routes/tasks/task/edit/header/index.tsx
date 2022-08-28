@@ -7,7 +7,7 @@ import TMDropdown from 'components/tm_dropdown';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskActionButton from 'routes/tasks/task/action_button';
-import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
 
 const Header: FC = () => {
   const { archiveTaskById, deleteTaskById, statusTypes, updateActiveTaskId } = useTasks();

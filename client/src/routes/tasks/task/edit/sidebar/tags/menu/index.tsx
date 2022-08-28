@@ -10,7 +10,7 @@ import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import TaskTag from 'routes/tasks/task/edit/sidebar/tags/tag';
-import { TAG_COLORS } from 'settings';
+import { TAG_COLORS } from 'settings/task';
 
 const populateTaskTags = (tags: Tag[], isInUse: boolean, isEditable: boolean = false) => {
   return tags.map(tag => {

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import TasksSection from 'routes/tasks/panel/tasks/section';
-import { ARCHIVED_TASK_STATUS_NAME } from 'settings';
+import { STATUS_NAMES } from 'settings/task';
 import { getDayMonthDateString, getModifiedDate } from 'utils/date';
 
 enum SectionType {
@@ -41,7 +41,7 @@ const getEmptyResponseText = (sectionType: SectionType): string => {
 
 const buildSections = (taskMap: Map<string, Task[]>, showArchived: boolean): ReactElement[] => {
   return Object.keys(SectionType).map(sectionType => {
-    if (!showArchived && sectionType === ARCHIVED_TASK_STATUS_NAME) return null;
+    if (!showArchived && sectionType === STATUS_NAMES.archived) return null;
     const sectionTasks = taskMap.get(SectionType[sectionType]);
 
     return (

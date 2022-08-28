@@ -11,7 +11,7 @@ import useInterval from 'hooks/useInterval';
 import useQuery from 'hooks/useQuery';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
-import { TASK_MAP_SYNC_INTERVAL } from 'settings';
+import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {

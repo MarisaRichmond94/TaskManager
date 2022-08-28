@@ -4,13 +4,10 @@ import useKeyStroke from 'hooks/useKeyStroke';
 import TaskHotkeysContext from 'providers/hotkeys/task/context';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
-import { HOT_KEYS } from 'settings';
+import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { toServerDatetime } from 'utils/date';
 
-const {
-  ARCHIVE_ACTIVE_TASK_KEY, DELETE_ACTIVE_TASK_KEY, PIN_ACTIVE_TASK_KEY,
-  PRIORITIZE_ACTIVE_TASK_KEY,
-} = HOT_KEYS;
+const { task: taskKeys } = SHIFT_KEY_STROKES;
 
 interface ITaskHotkeysProvider {
   children: ReactElement,
@@ -22,16 +19,16 @@ const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
-      case ARCHIVE_ACTIVE_TASK_KEY:
+      case taskKeys.archive:
         archiveTaskById(id);
         break;
-      case DELETE_ACTIVE_TASK_KEY:
+      case taskKeys.delete:
         deleteTaskById(id);
         break;
-      case PIN_ACTIVE_TASK_KEY:
+      case taskKeys.pin:
         updateTask({ isPinned: !isPinned });
         break;
-      case PRIORITIZE_ACTIVE_TASK_KEY:
+      case taskKeys.prioritize:
         const date = new Date();
         date.setHours(23, 59, 59, 999);
         updateTask({ dueDate: toServerDatetime(date) });
@@ -41,10 +38,10 @@ const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
 
   useKeyStroke(
     [
-      { shiftKey: true, key: ARCHIVE_ACTIVE_TASK_KEY },
-      { shiftKey: true, key: DELETE_ACTIVE_TASK_KEY },
-      { shiftKey: true, key: PIN_ACTIVE_TASK_KEY },
-      { shiftKey: true, key: PRIORITIZE_ACTIVE_TASK_KEY },
+      { shiftKey: true, key: taskKeys.archive },
+      { shiftKey: true, key: taskKeys.delete },
+      { shiftKey: true, key: taskKeys.pin },
+      { shiftKey: true, key: taskKeys.prioritize },
     ],
     handleKeyStrokes,
   );

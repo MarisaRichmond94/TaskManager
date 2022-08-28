@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from 'assets/logo_light.png';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useApp } from 'providers/app';
-import { ROOT_ROUTE } from 'settings';
+import { ROUTES } from 'settings/routes';
 
 const TMHeader: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const TMHeader: React.FC = (): JSX.Element => {
           alt='task manager logo'
           className='app-logo'
           src={logo}
-          onClick={() => navigate(ROOT_ROUTE)}
+          onClick={() => navigate(ROUTES.rootRoute)}
         />
       </div>
       <div id='control-panel-container'>

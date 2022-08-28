@@ -1,5 +1,5 @@
 
-import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
 import { getModifiedDate, toClientDatetime } from 'utils/date';
 
 const buildTaskLists = (
