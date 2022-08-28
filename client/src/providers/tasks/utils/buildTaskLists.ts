@@ -1,5 +1,6 @@
 
 import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
+import { SectionType } from 'types/constants';
 import { getModifiedDate, toClientDatetime } from 'utils/date';
 
 const buildTaskLists = (
@@ -8,11 +9,11 @@ const buildTaskLists = (
   shouldUpdate: boolean = true,
 ): Map<string, Task[]> => {
   const taskMap = new Map<string, Task[]>([
-    ['Today', []],
-    ['Tomorrow', []],
-    ['Upcoming', []],
-    ['Overdue', []],
-    ['Archived', []],
+    [SectionType.Today, []],
+    [SectionType.Tomorrow, []],
+    [SectionType.Upcoming, []],
+    [SectionType.Overdue, []],
+    [SectionType.Archived, []],
   ]);
 
   const date = new Date();

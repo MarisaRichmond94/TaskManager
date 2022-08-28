@@ -2,15 +2,8 @@ import { ReactElement } from 'react';
 
 import TasksSection from 'routes/tasks/panel/tasks/section';
 import { STATUS_NAMES } from 'settings/task';
+import { SectionType } from 'types/constants';
 import { getDayMonthDateString, getModifiedDate } from 'utils/date';
-
-enum SectionType {
-  Today = 'Today',
-  Tomorrow = 'Tomorrow',
-  Upcoming = 'Upcoming',
-  Overdue = 'Overdue',
-  Archived = 'Archived',
-};
 
 const generateSectionTitle = (sectionType: string): string => {
   const today = new Date();
@@ -48,14 +41,10 @@ const buildSections = (taskMap: Map<string, Task[]>, showArchived: boolean): Rea
       <TasksSection
         key={`task-section-${sectionType.toLowerCase().split(' ').join('-')}`}
         emptyResponseText={getEmptyResponseText(SectionType[sectionType])}
-        initiallyVisible={
-          (sectionType === SectionType.Today || !!sectionTasks.length) &&
-          sectionType !== SectionType.Archived
-        }
         tasks={sectionTasks}
         title={generateSectionTitle(SectionType[sectionType])}
         total={taskMap.get(SectionType[sectionType]).length}
-        type={SectionType[sectionType].toLowerCase()}
+        type={SectionType[sectionType]}
       />
     );
   }).filter(x => x !== null);

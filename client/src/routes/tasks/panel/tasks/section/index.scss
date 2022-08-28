@@ -1,11 +1,20 @@
 @import 'global';
 
-.tasks-container {
-  color: $white;
-  padding-top: $medium-padding;
+.section {
+  .tasks-container {
+    color: $white;
+    padding-top: $medium-padding;
 
-  .empty-task-section {
-    padding: $medium-padding;
-    padding-top: 0;
+    .empty-task-section {
+      padding: $medium-padding;
+      padding-top: 0;
+    };
+  };
+
+  &.active {
+    hr {
+      border: 1px solid $primary-blue;
+      background-color: $primary-blue !important;
+    }
   };
 };

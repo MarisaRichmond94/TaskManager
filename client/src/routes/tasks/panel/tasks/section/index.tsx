@@ -1,15 +1,15 @@
 import './index.scss';
 
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef } from 'react';
 
 import TMUncontrolledCollapsableSection from 'components/tm_collapsable_section/uncontrolled';
 import { SectionHotkeysProvider } from 'providers/hotkeys/task_section';
-import { useTasks } from 'providers/tasks';
+import { useSections } from 'providers/task_sections';
 import TaskCard from 'routes/tasks/task';
+import { SectionType } from 'types/constants';
 
 interface ITasksSection {
   emptyResponseText: string,
-  initiallyVisible?: boolean,
   tasks: Task[],
   title: string,
   total: number,
@@ -18,45 +18,47 @@ interface ITasksSection {
 
 const TasksSection: FC<ITasksSection> = ({
   emptyResponseText,
-  initiallyVisible = false,
   tasks,
   title,
   total,
   type,
 }) => {
-  const { activeTaskId } = useTasks();
-  const [isVisible, setIsVisible] = useState(initiallyVisible);
+  const { activeSection, collapseState, toggleSectionCollapseState } = useSections();
+  const isVisible = collapseState.get(type);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    if (tasks?.find(x => x.id === activeTaskId)) setIsVisible(true);
-    if (!tasks.length) setIsVisible(false);
-  }, [activeTaskId, tasks]);
+    if (activeSection === type && sectionRef.current) sectionRef.current.scrollIntoView();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSection]);
 
   return (
-    <SectionHotkeysProvider>
-      <TMUncontrolledCollapsableSection
-        classNames={['off-white']}
-        id={`${type}-collapsable`}
-        isVisible={isVisible}
-        rightBlock={<p className='task-count'>({total})</p>}
-        sectionTitle={title}
-        setIsVisible={setIsVisible}
-        wholeHeaderClickable
-      >
-        <div className='tasks-container'>
-          <div className='header-text task-section'>
-            {
-              !tasks.length
-                ? (
-                  <div className='header-text empty-task-section'>
-                    {emptyResponseText}
-                  </div>
-                )
-                : tasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)
-            }
+    <SectionHotkeysProvider sectionType={type as SectionType}>
+      <div ref={sectionRef}>
+        <TMUncontrolledCollapsableSection
+          classNames={['section', 'off-white', activeSection === type ? 'active' : '']}
+          id={`${type.toLowerCase()}-collapsable`}
+          isVisible={isVisible}
+          rightBlock={<p className='task-count'>({total})</p>}
+          sectionTitle={title}
+          setIsVisible={() => toggleSectionCollapseState(type)}
+          wholeHeaderClickable
+        >
+          <div className='tasks-container'>
+            <div className='header-text task-section'>
+              {
+                !tasks.length
+                  ? (
+                    <div className='header-text empty-task-section'>
+                      {emptyResponseText}
+                    </div>
+                  )
+                  : tasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)
+              }
+            </div>
           </div>
-        </div>
-      </TMUncontrolledCollapsableSection>
+        </TMUncontrolledCollapsableSection>
+      </div>
     </SectionHotkeysProvider>
   );
 };

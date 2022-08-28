@@ -1,14 +1,3 @@
-const CONTROL_KEY_STROKES = {
-  sections: {
-    collapseAll: 'C', // TODO
-    expandAll: 'E', // TODO
-    collapse: 'ArrowDown', // TODO
-    goToPrevious: 'ArrowLeft', // TODO
-    goToNext: 'ArrowRight', // TODO
-    expand: 'ArrowUp', // TODO
-  },
-};
-
 const SHIFT_KEY_STROKES = {
   app: {
     navigateHome: 'H',
@@ -25,9 +14,16 @@ const SHIFT_KEY_STROKES = {
     focus: 'F',
   },
   section: {
-    grabTask: 'G', // TODO
-    previous: 'ArrowUp', // TODO
-    next: 'ArrowDown', // TODO
+    grabTask: 'G',
+    previous: 'ArrowUp',
+    next: 'ArrowDown',
+  },
+  sections: {
+    collapseAll: 'C',
+    expandAll: 'E',
+    toggleCollapseState: 'B',
+    goToPrevious: '<',
+    goToNext: '>',
   },
   task: {
     archive: 'A',
@@ -43,6 +39,5 @@ const SHIFT_KEY_STROKES = {
 };
 
 export {
-  CONTROL_KEY_STROKES,
   SHIFT_KEY_STROKES,
 };
