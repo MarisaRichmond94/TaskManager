@@ -5,9 +5,11 @@ import TaskHotkeysContext from 'providers/hotkeys/task/context';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
 import { HOT_KEYS } from 'settings';
+import { toServerDatetime } from 'utils/date';
 
 const {
   ARCHIVE_ACTIVE_TASK_KEY, DELETE_ACTIVE_TASK_KEY, PIN_ACTIVE_TASK_KEY,
+  PRIORITIZE_ACTIVE_TASK_KEY,
 } = HOT_KEYS;
 
 interface ITaskHotkeysProvider {
@@ -15,19 +17,24 @@ interface ITaskHotkeysProvider {
 };
 
 const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
-  const { activeTaskId, archiveTaskById, deleteTaskById } = useTasks();
-  const { isPinned, updateTask } = useTask();
+  const { archiveTaskById, deleteTaskById } = useTasks();
+  const { id, isPinned, updateTask } = useTask();
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
       case ARCHIVE_ACTIVE_TASK_KEY:
-        if (activeTaskId) archiveTaskById(activeTaskId);
+        archiveTaskById(id);
         break;
       case DELETE_ACTIVE_TASK_KEY:
-        if (activeTaskId) deleteTaskById(activeTaskId);
+        deleteTaskById(id);
         break;
       case PIN_ACTIVE_TASK_KEY:
-        if (activeTaskId) updateTask({ isPinned: !isPinned });
+        updateTask({ isPinned: !isPinned });
+        break;
+      case PRIORITIZE_ACTIVE_TASK_KEY:
+        const date = new Date();
+        date.setHours(23, 59, 59, 999);
+        updateTask({ dueDate: toServerDatetime(date) });
         break;
     }
   };
@@ -37,6 +44,7 @@ const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
       { shiftKey: true, key: ARCHIVE_ACTIVE_TASK_KEY },
       { shiftKey: true, key: DELETE_ACTIVE_TASK_KEY },
       { shiftKey: true, key: PIN_ACTIVE_TASK_KEY },
+      { shiftKey: true, key: PRIORITIZE_ACTIVE_TASK_KEY },
     ],
     handleKeyStrokes,
   );

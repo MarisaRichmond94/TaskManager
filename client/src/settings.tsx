@@ -9,22 +9,20 @@ export const HOT_KEYS = {
   EXPAND_SECTION_KEY: 'ArrowUp', // TODO - should expend a single task section
   // SHIFT + KEYS
   ARCHIVE_ACTIVE_TASK_KEY: 'A',
-  FOCUS_DESCRIPTION_KEY: 'D', // TODO - should auto focus the description section of an active task
   FOCUS_SEARCH_KEY: 'F',
   GRAB_SECTION_TASK_KEY: 'G', // TODO - should focus the first task in the active section
   NAVIGATE_HOME: 'H',
   DELETE_ACTIVE_TASK_KEY: 'K',
   NEW_TASK_KEY: 'N',
-  FOCUS_OBJECTIVE_KEY: 'O', // TODO - should auto focus the description of an active task
   PIN_ACTIVE_TASK_KEY: 'P',
   FOCUS_FILTER_KEY: 'R',
   TOGGLE_SORT_KEY: 'S',
   TOGGLE_KEY: 'T',
-  PRIORITIZE_ACTIVE_TASK_KEY: 'V', // TODO - should change the active task's dueDate to end of the current day
+  PRIORITIZE_ACTIVE_TASK_KEY: 'V',
   WIPE_ALL_FILTERS: 'W',
   CLOSE_ACTIVE_TASK_KEY: 'X',
-  GO_TO_PREVIOUS_TASK_KEY: 'ArrowLeft', // TODO - should navigate to the previous task in the tasks list
-  GO_TO_NEXT_TASK_KEY: 'ArrowRight', // TODO - should navigate to the next task in the tasks list
+  GO_TO_PREVIOUS_TASK_KEY: 'ArrowUp', // TODO - should navigate to the previous task in the tasks list
+  GO_TO_NEXT_TASK_KEY: 'ArrowDown', // TODO - should navigate to the next task in the tasks list
   SHIFTED_1_KEY: '!',
   SHIFTED_2_KEY: '@',
   SHIFTED_3_KEY: '#',
