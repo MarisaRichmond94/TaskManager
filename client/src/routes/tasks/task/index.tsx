@@ -27,9 +27,7 @@ const TaskCard: FC<ITaskCard> = ({ task }) => {
   const isArchived = ARCHIVED_TASK_STATUS_NAMES.includes(status.name);
 
   useEffect(() => {
-    if (isActiveTask && taskRef.current) {
-      taskRef.current.scrollIntoView();
-    }
+    if (isActiveTask && taskRef.current) taskRef.current.scrollIntoView();
   }, [isActiveTask, taskRef]);
 
   return (

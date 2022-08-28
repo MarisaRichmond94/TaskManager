@@ -1,12 +1,26 @@
-export enum FilterAction {
+enum FilterAction {
   remove = 'remove',
   update = 'update',
 };
 
-export const enum FilterType {
+const enum FilterType {
   endDate = 'endDate',
   includeArchived = 'includeArchived',
   startDate = 'startDate',
   status = 'status',
   tags = 'tags',
+};
+
+enum SectionType {
+  Today = 'Today',
+  Tomorrow = 'Tomorrow',
+  Upcoming = 'Upcoming',
+  Overdue = 'Overdue',
+  Archived = 'Archived',
+};
+
+export {
+  FilterAction,
+  FilterType,
+  SectionType,
 };

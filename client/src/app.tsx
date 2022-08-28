@@ -1,4 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
+import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
 import { useApp } from 'providers/app';
@@ -6,7 +7,7 @@ import TMRouter from 'routes/tm_router';
 import TMHeader from 'routes/components/header';
 import TMSidebar from 'routes/components/sidebar';
 
-const App: React.FC = (): JSX.Element => {
+const App: FC = () => {
   const { isExpanded } = useApp();
   const { isAuthenticated } = useAuth0();
 
