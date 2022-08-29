@@ -16,6 +16,7 @@ interface ITMInput {
   id?: string,
   placeholder?: string,
   type?: string,
+
   onChangeCallback?: (input: string) => void,
   onKeyPressCallback?: (e: object) => void,
   onFocusCallback?: (e: any) => void,
@@ -31,6 +32,7 @@ const TMInput = forwardRef<Ref, ITMInput>(({
   id = '',
   placeholder = '',
   type = 'text',
+
   onChangeCallback,
   onFocusCallback,
   onKeyPressCallback,
@@ -56,10 +58,8 @@ const TMInput = forwardRef<Ref, ITMInput>(({
 
   const getClassNames = (): string[] => {
     switch (type) {
-      case `${InputTypes.search}`:
-        return ['tm-search-input'];
-      default:
-        return [];
+      case `${InputTypes.search}`: return ['tm-search-input'];
+      default: return [];
     }
   };
 

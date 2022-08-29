@@ -8,69 +8,53 @@ class BaseApi {
     this.route = route;
   };
 
+  // static functionality around authorization
   static accessToken: string = undefined;
   static userId: string = undefined;
   static setAccessToken(accessToken: string) { BaseApi.accessToken = accessToken };
   static setUserId(userId: string) { BaseApi.userId = userId; };
 
   async post(body: any) {
-    let response;
-
-    try {
-      response = await axios.post(this.url, body, this.buildConfig());
-    } catch (error) {
-      this.handleError(error, 'POST');
-    }
-
-    return this.handleResponse(response);
+    return this.makeRequest(
+      await axios.post(this.url, body, this.buildConfig()),
+      'POST',
+    );
   };
 
   async get(query = {}) {
-    let response;
-
-    try {
-      response = await axios.get(`${this.url}?${this.buildQueryString(query)}`, this.buildConfig());
-    } catch (error) {
-      this.handleError(error, 'GET');
-    }
-
-    return this.handleResponse(response);
+    return this.makeRequest(
+      await axios.get(`${this.url}?${this.buildQueryString(query)}`, this.buildConfig()),
+      'GET',
+    );
   };
 
   async getById(id: string) {
-    let response;
-
-    try {
-      response = await axios.get(`${this.url}/${id}`, this.buildConfig());
-    } catch (error) {
-      this.handleError(error, 'GET by id');
-    }
-
-    return this.handleResponse(response);
+    return this.makeRequest(
+      await await axios.get(`${this.url}/${id}`, this.buildConfig()),
+      'GET by id',
+    );
   };
 
   async update(id: string, body: any) {
-    let response;
-
-    try {
-      response = await axios.patch(`${this.url}/${id}`, body, this.buildConfig());
-    } catch (error) {
-      this.handleError(error, 'PATCH');
-    }
-
-    return this.handleResponse(response);
+    return this.makeRequest(
+      await axios.patch(`${this.url}/${id}`, body, this.buildConfig()),
+      'PATCH',
+    );
   };
 
   async deleteById(id: string) {
-    let response;
+    return this.makeRequest(
+      await axios.delete(`${this.url}/${id}`, this.buildConfig()),
+      'DELETE by id',
+    );
+  };
 
+  async makeRequest(request: any, method: string) {
     try {
-      response = await axios.delete(`${this.url}/${id}`, this.buildConfig());
+      return this.handleResponse(request);
     } catch (error) {
-      this.handleError(error, 'DELETE by id');
+      this.handleError(error, method);
     }
-
-    return this.handleResponse(response);
   };
 
   buildConfig = () => {

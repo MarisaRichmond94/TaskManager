@@ -1,29 +1,26 @@
 import './index.scss';
 
+import { FC } from 'react';
 import { BiMessage } from 'react-icons/bi';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
-import logo from 'assets/logo_light.png';
+import logo from 'assets/logo/light.png';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 
-const TMHeader: React.FC = (): JSX.Element => {
+const TMHeader: FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useApp();
 
   const generateMessage = () => {
     const hours = new Date().getHours();
     switch (true) {
-      case hours >= 6 && hours < 12:
-        return `Good morning, ${user.firstName}`;
-      case hours >= 12 && hours < 17:
-        return `Good afternoon, ${user.firstName}`;
-      case hours >= 17 && hours < 20:
-        return `Good evening, ${user.firstName}`;
-      default:
-        return `Good night, ${user.firstName}`;
+      case hours >= 6 && hours < 12: return `Good morning, ${user.firstName}`;
+      case hours >= 12 && hours < 17: return `Good afternoon, ${user.firstName}`;
+      case hours >= 17 && hours < 20: return `Good evening, ${user.firstName}`;
+      default: return `Good night, ${user.firstName}`;
     }
   };
 

@@ -12,20 +12,22 @@ export enum TooltipDirection {
 
 interface ITMTooltip {
   children: ReactElement,
-  classNames?: string[],
   content: ReactElement | string,
+  id: string,
+
+  classNames?: string[],
   delay?: number,
   direction?: TooltipDirection,
-  id: string,
 };
 
 const TMTooltip: FC<ITMTooltip> = ({
   children,
-  classNames = [],
   content,
+  id,
+
+  classNames = [],
   delay = 500,
   direction = TooltipDirection.top,
-  id,
 }) => {
   let timeout;
 

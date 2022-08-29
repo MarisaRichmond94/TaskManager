@@ -1,0 +1,15 @@
+@import 'global';
+
+#tasks {
+  .task-count { margin: $no-margin; };
+
+  .tasks-container {
+    color: $white;
+    padding-top: $medium-padding;
+
+    .empty-tasks {
+      padding: $medium-padding;
+      padding-top: $no-padding;
+    };
+  };
+};

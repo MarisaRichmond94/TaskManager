@@ -2,6 +2,15 @@ import {
   KeyboardEvent, ReactNode, useCallback, useEffect, useLayoutEffect, useRef,
 } from 'react';
 
+/**
+ * Listens for a [KeyStroke] in a group of [keyStrokes] and, if a match is detected, will fire off
+ * the given [handleKeyStrokeCallback] method
+ *
+ * @param keyStrokes - a list of [KeyStroke]s to listen for.
+ * @param handleKeyStrokeCallback - a callback to fire off whenever any of the [keyStrokes] are
+ * detected
+ * @param node - (optional) ReactNode to attach listener to as opposed to the global window
+ */
 const useKeyStroke = (
   keyStrokes: KeyStroke[],
   handleKeyStrokeCallback: (event: KeyboardEvent<any>) => void,
@@ -18,13 +27,11 @@ const useKeyStroke = (
   });
 
   const handleKeyPress = useCallback((event: KeyboardEvent<any>) => {
-    // prevents hotkeys from stopping text input into textareas and inputs
+    // prevents hotkeys from listening if the user is typing in a text input or a textarea
     if (
       event.target instanceof HTMLInputElement ||
       event.target instanceof HTMLTextAreaElement
-    ) {
-      return;
-    }
+    ) return;
 
     type keyOfKeyStroke = keyof typeof keyStrokes;
     const isMatchingKeyStroke = keyStrokes.some(
@@ -40,8 +47,7 @@ const useKeyStroke = (
   useEffect(() => {
     const targetNode = node ?? global;
     // @ts-ignore
-    targetNode && targetNode.addEventListener('keydown', handleKeyPress);
-
+    targetNode.addEventListener('keydown', handleKeyPress);
     // @ts-ignore
     return () => targetNode.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress, node]);

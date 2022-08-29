@@ -7,15 +7,19 @@ import DatePicker from "react-datepicker";
 
 interface ITMRangedDatePicker {
   endDate: Date,
-  placeholder?: string,
   startDate: Date,
+
+  placeholder?: string,
+
   onChange: (dates: Date[]) => void,
 };
 
 const TMRangedDatePicker: FC<ITMRangedDatePicker> = ({
   endDate,
-  placeholder = '',
   startDate,
+
+  placeholder = '',
+
   onChange,
 }) => {
   return (

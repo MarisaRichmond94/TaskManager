@@ -11,7 +11,7 @@ import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 
-const TMSidebar: React.FC = (): JSX.Element => {
+const TMSidebar: FC = () => {
   const { isExpanded, toggleIsExpanded } = useApp();
 
   return (
@@ -45,7 +45,7 @@ const UserAvatar = () => {
 interface INavigateToPageButton {
   icon: ReactElement,
   routePath: string,
-}
+};
 
 const NavigateToPageButton: FC<INavigateToPageButton> = ({ icon, routePath }) => {
   const navigate = useNavigate();

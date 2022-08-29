@@ -7,7 +7,9 @@ import DatePicker from "react-datepicker";
 
 interface ITMDatePicker {
   date: Date,
+
   showTimeSelect?: boolean,
+
   onChange: (date: Date) => void,
 };
 

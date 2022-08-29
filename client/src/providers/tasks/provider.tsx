@@ -7,8 +7,7 @@ import TaskManagerApi from 'api/task_manager';
 import TaskManagerTagsApi from 'api/task_manager_tags';
 import TasksApi from 'api/tasks';
 import TagsApi from 'api/tags';
-import useInterval from 'hooks/useInterval';
-import useQuery from 'hooks/useQuery';
+import useActionOnInterval from 'hooks/useActionOnInterval';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
@@ -27,7 +26,7 @@ const TasksProvider = (props: object) => {
   const [taskMap, setTaskMap] = useState<Map<string, Task[]>>();
 
   const { search } = useLocation();
-  const isAsc = useQuery(search).get('asc') === 'true';
+  const isAsc = new URLSearchParams(search).get('asc') === 'true';
 
   /**
    * Performs a sync on an interval to ensure that the task map stays up to date with task due
@@ -43,7 +42,7 @@ const TasksProvider = (props: object) => {
         setTaskMap(nextTaskMap);
       }
   }, [taskMap, tasks]);
-  useInterval(syncTaskMap, TASK_MAP_SYNC_INTERVAL);
+  useActionOnInterval(syncTaskMap, TASK_MAP_SYNC_INTERVAL);
 
   const userId = BaseApi.userId;
 

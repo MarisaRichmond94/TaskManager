@@ -4,18 +4,20 @@ import { FC } from 'react';
 
 export interface ITMToggleButton {
   classNames?: string[],
-  onClick: () => void,
   selected?: boolean,
   selectedText?: string,
   unSelectedText?: String,
+
+  onClick: () => void,
 };
 
 export const TMToggleButton: FC<ITMToggleButton> = ({
   classNames = [],
-  onClick,
   selected = false,
   selectedText = 'ON',
   unSelectedText = 'OFF',
+
+  onClick,
 }) => (
   <div className={['tm-toggle', ...classNames].join(' ')} onClick={() => onClick()}>
     <div className={`tm-toggle-button ${selected ? 'selected' : 'unselected'}`}>

@@ -3,11 +3,13 @@ import './index.scss';
 import { FC, ReactElement } from 'react';
 
 interface ITMButton {
-  buttonStyle?: ButtonStyle,
   children: string | ReactElement | ReactElement[],
+
+  buttonStyle?: ButtonStyle,
   classNames?: string[],
   isDisabled?: boolean,
   size?: ButtonSize,
+
   onClick: (event: any) => void,
 };
 
@@ -36,11 +38,13 @@ enum TRANSPARENT_STYLES {
 };
 
 const TMButton: FC<ITMButton> = ({
-  buttonStyle = ButtonStyle.solid,
   children,
+
+  buttonStyle = ButtonStyle.solid,
   classNames = [],
   isDisabled = false,
   size = ButtonSize.medium,
+
   onClick,
 }) => {
   const transparent = buttonStyle in TRANSPARENT_STYLES ? 'transparent' : '';

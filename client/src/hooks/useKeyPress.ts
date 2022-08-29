@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 
-function useKeyPress(targetKey) {
+type EventKey = { key: string };
+
+/**
+ * A hook used to detect a particular [targetKey] press.
+ *
+ * @param targetKey - The key to track
+ * @returns - a boolean representing whether or not the key is currently being pressed.
+ */
+const useKeyPress = (targetKey: string) => {
   const [keyPressed, setKeyPressed] = useState(false);
 
-  function keyDownHandler({ key }) {
+  const keyDownHandler = ({ key }: EventKey) => {
     if (key === targetKey) setKeyPressed(true);
   };
 
-  function keyUpHandler({ key }) {
+  const keyUpHandler = ({ key }: EventKey) => {
     if (key === targetKey) setKeyPressed(false);
   };
 

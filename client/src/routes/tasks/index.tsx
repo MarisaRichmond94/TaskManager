@@ -5,12 +5,12 @@ import { TasksHotkeysProvider } from 'providers/hotkeys/tasks';
 import { SearchTasksProvider, useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Header from 'routes/tasks/header';
-import SearchPanel from 'routes/tasks/panel/search';
-import TasksPanel from 'routes/tasks/panel/tasks';
-import WorkspacePanel from 'routes/tasks/panel/workspace';
+import SearchResults from 'routes/tasks/search_results';
+import Tasks from 'routes/tasks/tasks';
+import Workspace from 'routes/tasks/workspace';
 import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings/layout';
 
-const TaskPage: FC = (): JSX.Element => {
+const TaskPage: FC = () => {
   const { userTaskDataLoaded } = useTasks();
 
   return userTaskDataLoaded
@@ -33,11 +33,15 @@ const TaskPageContent: FC = () => {
       : `calc(100% - ${HEADER_HEIGHT}px)`
   );
 
+  const content = isShowingSearch
+    ? <SearchResults height={height} />
+    : <Tasks height={height} />
+
   return (
     <div id='task-page' className='contents'>
       <Header />
-      {isShowingSearch ? <SearchPanel height={height} /> : <TasksPanel height={height} />}
-      <WorkspacePanel />
+      {content}
+      <Workspace />
     </div>
   );
 };

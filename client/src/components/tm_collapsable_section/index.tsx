@@ -5,27 +5,31 @@ import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 interface ITMCollapsableSection {
   children: ReactElement,
-  classNames?: string[],
   id: string,
   isVisible: boolean,
+  sectionTitle: string,
+
+  classNames?: string[],
   reference?: MutableRefObject<any>,
   rightBlock?: ReactElement,
-  sectionTitle: string,
-  setIsVisible: (isVisible: boolean) => void,
   wholeHeaderClickable?: boolean,
+
+  setIsVisible: (isVisible: boolean) => void,
   onToggleCallback?: () => void,
 };
 
 const TMCollapsableSection: FC<ITMCollapsableSection> = ({
   children,
-  classNames = [],
-  reference,
-  rightBlock,
   id,
   isVisible,
   sectionTitle,
-  setIsVisible,
+
+  classNames = [],
+  reference,
+  rightBlock,
   wholeHeaderClickable,
+
+  setIsVisible,
   onToggleCallback,
 }) => {
   if (wholeHeaderClickable) classNames.push('clickable-header');

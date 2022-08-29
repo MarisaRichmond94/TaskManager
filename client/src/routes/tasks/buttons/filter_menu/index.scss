@@ -1,0 +1,64 @@
+@import 'global';
+
+#task-header-toolbar {
+  .menu-container {
+    display: flex;
+    .menu {
+      background-color: $off-white;
+      right: 8px;
+      top: 35px;
+    };
+  };
+
+  #task-filter-menu {
+    .tm-menu {
+      border: 2px solid $light-grey;
+      min-height: 335px;
+      right: 0;
+      width: 400px;
+
+      .menu-content { min-height: 335px; };
+
+      hr {
+        border: 1px solid $light-grey;
+      };
+
+      .filter-menu-dropdown {
+        margin-bottom: $medium-margin;
+        .tm-dropdown-menu { height: 95px; };
+      };
+
+      .react-datepicker-wrapper {
+        margin-bottom: $medium-margin;
+        input {
+          color: $off-black;
+          font-family: $sub-header-font-family;
+          font-size: $sub-header-font-size;
+          height: 20px;
+          width: 95%;
+        };
+      };
+
+      .tm-searchable-dropdown {
+        margin-bottom: $medium-margin;
+      };
+
+      .filter-menu-dropdown {
+        @include centered-flex-box;
+        cursor: default;
+        button { margin: $no-margin; };
+      };
+
+      .include-archived-tasks-checkbox {
+        padding-bottom: 40px; // to account for clear filters button always being at the bottom
+      };
+
+      .clear-filter-button {
+        bottom: $medium-margin;
+        left: calc(50% - 60px);
+        margin: auto;
+        position: absolute;
+      };
+    };
+  };
+};

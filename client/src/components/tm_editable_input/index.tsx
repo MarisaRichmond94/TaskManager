@@ -6,22 +6,26 @@ import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 
 interface ITMEditableInput {
+  id: string,
+
   autoFocus?: boolean,
   classNames?: string[],
   currInputValue?: string,
   eventKey?: string,
-  id: string,
   noInputValuePlaceholder?: string,
+
   onUpdateCallback: (nextInputValue: string) => void,
 };
 
 const TMEditableInput: FC<ITMEditableInput> = ({
+  id,
+
   autoFocus = false,
   classNames = [],
   currInputValue,
   eventKey = 'Enter',
-  id,
   noInputValuePlaceholder = '',
+
   onUpdateCallback,
 }) => {
   const [inputValue, setInputValue] = useState<string>(currInputValue);

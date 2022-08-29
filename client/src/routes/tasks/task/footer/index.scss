@@ -1,0 +1,13 @@
+@import 'global';
+
+.task-card-footer {
+  @include centered-flex-box;
+  justify-content: flex-end;
+  margin-top: $medium-margin;
+
+  .footer-stat {
+    @include centered-flex-box;
+    margin-left: $medium-margin;
+    svg { margin-right: $small-margin; };
+  };
+};

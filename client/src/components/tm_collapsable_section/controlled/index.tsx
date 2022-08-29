@@ -4,13 +4,15 @@ import TMCollapsableSection from 'components/tm_collapsable_section';
 
 interface ITMControlledCollapsableSection {
   children: ReactElement,
-  classNames?: string[],
   id: string,
   initiallyVisible: boolean,
+  sectionTitle: string,
+
+  classNames?: string[],
   reference?: MutableRefObject<any>,
   rightBlock?: ReactElement,
-  sectionTitle: string,
   wholeHeaderClickable?: boolean,
+
   onToggleCallback?: () => void,
 };
 

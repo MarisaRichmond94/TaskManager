@@ -1,0 +1,20 @@
+@import 'global';
+
+.task-card-header {
+  @include centered-flex-box;
+  margin-bottom: $medium-margin;
+
+  .to-do { color: $primary-blue; };
+  .in-progress { color: $primary-yellow; };
+  .blocked { color: $primary-red; };
+  .completed { color: $primary-green; };
+  .archived { color: $grey; };
+
+  .task-objective { margin-left: $small-margin; };
+
+  .action-menu {
+    @include centered-flex-box;
+    margin-left: auto;
+    button { padding: $extra-small-padding; };
+  };
+};

@@ -6,18 +6,22 @@ import TMButton, { ButtonStyle, ButtonSize } from 'components/tm_button';
 import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
 interface ITMCheckbox {
-  classNames?: string[],
   isActive: boolean,
-  isDisabled?: boolean,
   textBlock: string | ReactElement,
+
+  classNames?: string[],
+  isDisabled?: boolean,
+
   toggleIsActive: () => void,
 };
 
 const TMCheckbox: FC<ITMCheckbox> = ({
-  classNames = [],
   isActive,
-  isDisabled = false,
   textBlock,
+
+  classNames = [],
+  isDisabled = false,
+
   toggleIsActive,
 }) => {
   if (isDisabled) classNames.push('disabled');

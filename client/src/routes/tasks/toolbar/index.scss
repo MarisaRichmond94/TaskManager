@@ -1,0 +1,11 @@
+@import 'global';
+
+#task-header-toolbar {
+  @include centered-flex-box;
+
+  .task-toolbar-icon {
+    color: $white;
+    padding: $small-padding;
+    &:hover { background-color: $off-white; };
+  };
+};

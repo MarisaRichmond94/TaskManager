@@ -12,6 +12,7 @@ interface ITMSearchableDropdown {
   placeholder?: string,
   searchableOptions?: SearchableOption[],
   selectedOptions?: SearchableOption[],
+
   onOptionSelectCallback: (id: string) => void,
 };
 
@@ -22,6 +23,7 @@ const TMSearchableDropdown: FC<ITMSearchableDropdown> = ({
   placeholder = 'Search...',
   searchableOptions,
   selectedOptions,
+
   onOptionSelectCallback,
 }) => {
   const [filteredSearchOptions, setFilteredSearchOptions] = useState(searchableOptions);

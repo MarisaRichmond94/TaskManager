@@ -8,19 +8,21 @@ import useOnClickOutside from 'hooks/useOnOutsideClick';
 interface ITMDropdown {
   classNames?: string[],
   isDisabled?: boolean,
-  onOptionSelect?: (option: DropdownOption) => void,
   options?: DropdownOption[],
   placeholder?: string,
   selectedOption?: DropdownOption,
+
+  onOptionSelect?: (option: DropdownOption) => void,
 };
 
 const TMDropdown: FC<ITMDropdown> = ({
   classNames = [],
   isDisabled = false,
-  onOptionSelect,
   options,
   placeholder = 'Select from the dropdown',
   selectedOption,
+
+  onOptionSelect,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const activeInputText = selectedOption?.displayName || placeholder;

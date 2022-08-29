@@ -11,9 +11,10 @@ interface ITMTextArea {
   placeholder?: string,
   reference?: MutableRefObject<any>,
   rowCount?: number,
+
   onKeyPressCallback?: (e: object, unmanagedValue: string) => void,
   updatedManagedValue?: (input: string) => void,
-  validateFormValue?: (input: string) => void
+  validateFormValue?: (input: string) => void,
 };
 
 const TMTextArea: FC<ITMTextArea> = ({
@@ -25,31 +26,33 @@ const TMTextArea: FC<ITMTextArea> = ({
   placeholder = 'type here...',
   reference,
   rowCount,
+
   onKeyPressCallback,
   updatedManagedValue,
   validateFormValue,
 }) => {
   const [unmanagedValue, setUnmanagedValue] = useState<string>(initialValue);
 
+  // dynamically adjusts the textarea to fit the text
   const listener = useCallback(() => {
     if (reference?.current) reference.current.style.height = `${reference.current.scrollHeight}px`;
   }, [reference]);
 
   useEffect(() => {
-    listener();
+    // places the cursor at the end of any text within the textarea
     if (autoFocus && reference?.current) {
       const end = reference.current.value.length;
       reference.current.setSelectionRange(end, end);
       reference.current.focus();
     }
+
+    listener();
     document.addEventListener('input', listener);
     return () => document.removeEventListener('input', listener);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (reference?.current) listener();
-  }, [listener, reference]);
+  useEffect(() => { if (reference?.current) listener(); }, [listener, reference]);
 
   const onChange = (input: string): void => {
     if (updatedManagedValue) {

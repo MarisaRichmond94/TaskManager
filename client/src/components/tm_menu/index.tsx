@@ -6,19 +6,23 @@ import useOnClickOutside from 'hooks/useOnOutsideClick';
 
 interface ITMMenu {
   children: ReactElement,
-  classNames?: string[],
   id: string,
   menuContent: ReactElement[] | ReactElement,
+
+  classNames?: string[],
   showMenu?: boolean,
+
   onCloseCallback?: () => void,
   setShowMenu?: (showMenu: boolean) => void,
 };
 
 interface ITMUncontrolledMenu {
   children: ReactElement,
-  classNames?: string[],
   id: string,
   menuContent: ReactElement[] | ReactElement,
+
+  classNames?: string[],
+
   onCloseCallback?: () => void,
 };
 
@@ -32,7 +36,15 @@ const TMMenu: FC<ITMMenu> = ({ setShowMenu, ...props }) => {
   );
 };
 
-const TMUncontrolledMenu: FC<ITMUncontrolledMenu> = ({ children, classNames =  [], id, menuContent, onCloseCallback }) => {
+const TMUncontrolledMenu: FC<ITMUncontrolledMenu> = ({
+  children,
+  id,
+  menuContent,
+
+  classNames = [],
+
+  onCloseCallback,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const onClickOutside = () => {
@@ -58,10 +70,12 @@ const TMUncontrolledMenu: FC<ITMUncontrolledMenu> = ({ children, classNames =  [
 
 const TMControlledMenu: FC<ITMMenu> = ({
   children,
-  classNames =  [],
   id,
   menuContent,
+
+  classNames =  [],
   showMenu,
+
   onCloseCallback,
   setShowMenu,
 }) => {
