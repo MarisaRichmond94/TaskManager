@@ -1,0 +1,94 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "unused-imports",
+    "simple-import-sort"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "camelcase": "error",
+    "consistent-return": "warn",
+    "dot-notation": "warn",
+    "eqeqeq": ["error"],
+    "func-style": ["error", "expression"],
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-unresolved": "off", // because eslint doesn't recognize the base url configured by tslint and I don't care to fix it right now
+    "max-params": ["warn", 5],
+    "no-console": "warn",
+    "no-else-return": ["error", { "allowElseIf": false }],
+    "no-irregular-whitespace": ["error"],
+    "no-lonely-if": "error",
+    "no-undef-init": "warn",
+    "no-unused-expressions": "error",
+    "no-var": "error",
+    "prefer-const": "warn",
+    "prefer-destructuring": "warn",
+    "require-await": "error",
+    "require-yield": "error",
+    // layout and formatting
+    "array-bracket-spacing": ["error", "always"],
+    "arrow-spacing": ["error", {"before": true, "after": true}],
+    "block-spacing": ["error", "always"],
+    "brace-style": ["error", "1tbs", {"allowSingleLine": true}],
+    "comma-dangle": ["error", "always-multiline"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "eol-last": ["error", "always"],
+    "indent": ["error", 2],
+    "key-spacing": ["error", { "afterColon": true, "beforeColon": false }],
+    "max-len": ["error", {
+      "code": 100,
+      "ignoreComments": true
+    }],
+    "max-statements-per-line": ["error", {"max": 1}],
+    "newline-before-return": "error",
+    "no-multiple-empty-lines": ["error", {"max": 1}],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "padded-blocks": ["error", "never"],
+    "padding-line-between-statements": "error",
+    "semi": ["error"],
+    "semi-spacing": ["error", {"before": false, "after": false}],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off", // because we are using a plugin for this
+    "space-before-blocks": ["error", {"functions": "always", "keywords": "always", "classes": "always"}],
+    "space-before-function-paren": ["error", {
+        "anonymous": "always",
+        "named": "always",
+        "asyncArrow": "always"
+    }],
+    "quotes": ["error", "single"],
+    "unused-imports/no-unused-imports": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.tsx", "*.ts"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // scss imports
+              ["(/.*.scss)"],
+              // 3rd party packages w/ react-related packages coming first
+              ["^@?\\w", "^react"],
+              // absolute imports and Relative imports (this is an unfortunate solution)
+              ["^\\."]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

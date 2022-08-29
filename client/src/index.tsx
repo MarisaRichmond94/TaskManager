@@ -18,7 +18,7 @@ root.render(
     <Auth0Provider
       clientId={authSettings.clientId}
       domain={authSettings.domain}
-      redirectUri={window.location.origin}
+      redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URL}
     >
       <BrowserRouter>
         <AppProvider>
