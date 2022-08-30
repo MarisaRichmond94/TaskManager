@@ -1,16 +1,19 @@
-import BaseApi from 'api/base';
+import { makeApiRequest } from 'utils/api';
+import { ApiMethod, ApiRoute } from "types/constants";
 
-class Users extends BaseApi {
-  constructor() {
-    super('users');
-  }
+const ROUTE = ApiRoute.users;
 
-  override async post(body: any): Promise<any> {
-    const response = await super.post(body);
-    BaseApi.setUserId(response.id);
-    return response;
-  }
+const get = async (
+  body: FindOrCreateUserDTO,
+  getAccessTokenSilently: (options?: TokenRequestProps) => Promise<string>,
+  onUpdateCallback?: (user: User) => void,
+): Promise<User> => {
+  const user = await makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.post, body });
+  if (onUpdateCallback) onUpdateCallback(user);
+
+  return user;
 };
 
-const UsersApi = new Users();
-export default UsersApi;
+export {
+  get,
+};

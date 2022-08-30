@@ -1,19 +1,23 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import BaseApi from 'api/base';
-import StatusesApi from 'api/statuses';
-import TaskManagerApi from 'api/task_manager';
-import TaskManagerTagsApi from 'api/task_manager_tags';
-import TasksApi from 'api/tasks';
-import TagsApi from 'api/tags';
+import * as StatusesApi from 'api/statuses';
+import * as TagsApi from 'api/tags';
+import * as TaskManagerTagsApi from 'api/task_manager_tags';
+import * as TaskManagerApi from 'api/task_manager';
+import * as TasksApi from 'api/tasks';
 import useActionOnInterval from 'hooks/useActionOnInterval';
+import { useApp } from 'providers/app';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
+  const { user } = useApp();
+  const { getAccessTokenSilently } = useAuth0();
+
   // data from the back-end
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
@@ -44,26 +48,26 @@ const TasksProvider = (props: object) => {
   }, [taskMap, tasks]);
   useActionOnInterval(syncTaskMap, TASK_MAP_SYNC_INTERVAL);
 
-  const userId = BaseApi.userId;
-
-  const getTaskDataForUserById = async () => {
-    const userTaskData = await TaskManagerApi.get();
+  const getTaskDataForUserById = useCallback(async () => {
+    const userTaskData = await TaskManagerApi.get(getAccessTokenSilently);
     setAttachmentTypes(userTaskData.attachmentTypes);
     setStatusTypes(userTaskData.statusTypes);
     setTasks(userTaskData.tasks);
     setTags(userTaskData.tags);
     buildTaskLists(userTaskData.tasks, setTaskMap);
-  };
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
-    if (userId) getTaskDataForUserById();
-  }, [userId]);
+    if (user?.id) getTaskDataForUserById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   // Task functionality
   const createTask = async () => {
     const midnight = new Date();
     midnight.setHours(23, 59, 59, 59);
-    const newTask = await TasksApi.post({ dueDate: toServerDatetime(midnight) });
+    const body = { dueDate: toServerDatetime(midnight) };
+    const newTask = await TasksApi.create(body, getAccessTokenSilently);
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
@@ -74,11 +78,13 @@ const TasksProvider = (props: object) => {
     const statusTypeId = statusTypes.find(x => x.name === 'Archived')?.id;
     const taskById = tasks.find(task => task.id === taskId);
     const archivedTask = {...taskById};
-    archivedTask.status = await StatusesApi.update(taskById.status.id, { statusTypeId });
+    const id = taskById.status.id;
+    const body = { statusTypeId };
+    archivedTask.status = await StatusesApi.update(id, body, getAccessTokenSilently);
     const updatedTasks = tasks.map(task => task.id === archivedTask.id ? archivedTask : task);
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
-  }, [statusTypes, tasks]);
+  }, [statusTypes, tasks, getAccessTokenSilently]);
 
   const updateTaskInTasks = useCallback((updatedTask: Task) => {
     const updatedTasks = tasks.map(x => x.id === updatedTask.id ? updatedTask : x);
@@ -86,34 +92,34 @@ const TasksProvider = (props: object) => {
     buildTaskLists(updatedTasks, setTaskMap);
   }, [tasks]);
 
-  const deleteTaskById = useCallback(async (taskId: string) => {
-    if (taskId === activeTaskId) setActiveTaskId(undefined);
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
+  const deleteTaskById = useCallback(async (id: string) => {
+    if (id === activeTaskId) setActiveTaskId(undefined);
+    const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
-    await TaskManagerApi.deleteById(taskId);
-  }, [activeTaskId, tasks]);
+    await TaskManagerApi.deleteById(id, getAccessTokenSilently);
+  }, [activeTaskId, tasks, getAccessTokenSilently]);
 
   const updateActiveTaskId = (id?: string) => {
     if (activeTaskId !== id) setActiveTaskId(id);
   };
 
   // Tag functionality
-  const createTag = async (createTagDTO: CreateTagDTO) => {
-    const newTag = await TagsApi.post(createTagDTO);
+  const createTag = useCallback(async (body: CreateTagDTO) => {
+    const newTag = await TagsApi.create(body, getAccessTokenSilently);
     const updatedTags = [...tags, newTag];
     setTags(updatedTags);
-  };
+  }, [getAccessTokenSilently, tags]);
 
-  const updateTag = async (tagId: string, updateTagDTO: UpdateTagDTO) => {
-    await TagsApi.update(tagId, updateTagDTO);
+  const updateTag = useCallback(async (id: string, body: UpdateTagDTO) => {
+    await TagsApi.update(id, body, getAccessTokenSilently);
     getTaskDataForUserById();
-  };
+  }, [getAccessTokenSilently, getTaskDataForUserById]);
 
-  const deleteTag = async (tagIdToDelete: string) => {
-    const isSuccessfullyDeleted = await TaskManagerTagsApi.deleteById(tagIdToDelete);
+  const deleteTag = useCallback(async (id: string) => {
+    const isSuccessfullyDeleted = await TaskManagerTagsApi.deleteById(id, getAccessTokenSilently);
     if (isSuccessfullyDeleted) getTaskDataForUserById();
-  };
+  }, [getAccessTokenSilently, getTaskDataForUserById]);
 
   // Sort functionality
   const sortTasks = useCallback((tasks: Task[]): Task[] =>

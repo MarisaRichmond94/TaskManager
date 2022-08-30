@@ -68,3 +68,10 @@ interface Task {
   updatedAt: number,
   user: User,
 };
+
+interface UserTaskData {
+  attachmentTypes: AttachmentType[],
+  statusTypes: Status[],
+  tasks: Task[],
+  tags: Tag[],
+};

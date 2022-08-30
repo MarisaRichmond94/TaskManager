@@ -1,24 +1,14 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { FC, ReactElement, useCallback } from 'react';
 
+import * as AttachmentsApi from 'api/attachments';
+import * as ChecklistItemsApi from 'api/checklist_items';
+import * as CommentsApi from 'api/comment';
+import * as StatusesApi from 'api/statuses';
+import * as TaskTagsApi from 'api/task_tags';
+import * as TasksApi from 'api/tasks';
 import TaskContext from 'providers/task/context';
 import { useTasks } from 'providers/tasks';
-import { handleCreateAttachment, handleUpdateAttachment } from 'providers/task/utils/attachment';
-import {
-  handleCreateChecklistItem,
-  handleUpdateChecklistItem,
-  handleDeleteChecklistItem,
-} from 'providers/task/utils/checklistItem';
-import {
-  handleCreateComment,
-  handleUpdateComment,
-  handleDeleteComment,
-} from 'providers/task/utils/comment';
-import {
-  handleCreateTaskTag,
-  handleDeleteTaskTag,
-} from 'providers/task/utils/taskTag';
-import { handleUpdateStatus } from 'providers/task/utils/status';
-import { handleUpdateTask } from 'providers/task/utils/task';
 
 interface ITaskProvider {
   children: ReactElement,
@@ -26,61 +16,63 @@ interface ITaskProvider {
 };
 
 const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
+  const { getAccessTokenSilently } = useAuth0();
   const { updateTaskInTasks } = useTasks();
 
   // Top-level task functionality
-  const updateTask = useCallback((updateTaskDTO: UpdateTaskDTO) => {
-    handleUpdateTask(providedTask.id, updateTaskDTO, updateTaskInTasks);
-  }, [providedTask.id, updateTaskInTasks]);
+  const updateTask = useCallback((body: UpdateTaskDTO) => {
+    TasksApi.update(providedTask.id, body, getAccessTokenSilently, updateTaskInTasks);
+  }, [providedTask.id, getAccessTokenSilently, updateTaskInTasks]);
 
   // Attachment functionality
-  const createAttachment = useCallback((createAttachmentDTO: CreateAttachmentDTO) => {
-    handleCreateAttachment({ ...providedTask }, createAttachmentDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const createAttachment = useCallback((body: CreateAttachmentDTO) => {
+    AttachmentsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const updateAttachment = useCallback((id: string, updateAttachmentDTO: UpdateAttachmentDTO) => {
-    handleUpdateAttachment({ ...providedTask }, id, updateAttachmentDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const updateAttachment = useCallback((id: string, body: UpdateAttachmentDTO) => {
+    AttachmentsApi.update(id, body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   // Status functionality
-  const updateStatus = useCallback((statusId: string, statusTypeId: string) => {
-    handleUpdateStatus({ ...providedTask }, statusId, statusTypeId, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const updateStatus = useCallback((id: string, statusTypeId: string) => {
+    const body = { statusTypeId };
+    StatusesApi.update( id, body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   // ChecklistItem functionality
-  const createChecklistItem = useCallback((createChecklistItemDTO: CreateChecklistItemDTO) => {
-    handleCreateChecklistItem({ ...providedTask }, createChecklistItemDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const createChecklistItem = useCallback((body: CreateChecklistItemDTO) => {
+    ChecklistItemsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const updateChecklistItem = useCallback((id: string, updateChecklistItemDTO: UpdateChecklistItemDTO) => {
-    handleUpdateChecklistItem({ ...providedTask }, id, updateChecklistItemDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const updateChecklistItem = useCallback((id: string, body: UpdateChecklistItemDTO) => {
+    ChecklistItemsApi.update(id, body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const deleteChecklistItem = useCallback((checklistItemId: string) => {
-    handleDeleteChecklistItem({ ...providedTask }, checklistItemId, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const deleteChecklistItem = useCallback((id: string) => {
+    ChecklistItemsApi.deleteById(id, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   // Comment functionality
-  const createComment = useCallback((createCommentDTO: CreateCommentDTO) => {
-    handleCreateComment({ ...providedTask }, createCommentDTO, updateTaskInTasks)
-  }, [providedTask, updateTaskInTasks]);
+  const createComment = useCallback((body: CreateCommentDTO) => {
+    CommentsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const updateComment = useCallback((id: string, updatedCommentText: string) => {
-    handleUpdateComment({ ...providedTask }, id, updatedCommentText, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const updateComment = useCallback((id: string, text: string) => {
+    CommentsApi.update(id, text, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const deleteComment = useCallback((commentId: string) => {
-    handleDeleteComment({ ...providedTask }, commentId, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const deleteComment = useCallback((id: string) => {
+    CommentsApi.deleteById(id, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   // Tag functionality
-  const createTaskTag = useCallback((createTaskTagDTO: CreateTaskTagDTO) => {
-    handleCreateTaskTag({ ...providedTask }, createTaskTagDTO, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const createTaskTag = useCallback((body: CreateTaskTagDTO) => {
+    TaskTagsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
-  const deleteTaskTag = useCallback((taskTagId: string) => {
-    handleDeleteTaskTag({ ...providedTask }, taskTagId, updateTaskInTasks);
-  }, [providedTask, updateTaskInTasks]);
+  const deleteTaskTag = useCallback((id: string) => {
+    TaskTagsApi.deleteById(id, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   const value = {
     ...providedTask,

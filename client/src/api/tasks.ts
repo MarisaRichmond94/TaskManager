@@ -1,10 +1,28 @@
-import BaseApi from 'api/base';
+import { makeApiRequest } from 'utils/api';
+import { ApiMethod, ApiRoute } from "types/constants";
 
-class Tasks extends BaseApi {
-  constructor() {
-    super('task_manager/tasks');
-  }
+const ROUTE = ApiRoute.tasks;
+
+const create = async (
+  body: CreateTaskDTO,
+  getAccessTokenSilently: (options?: TokenRequestProps) => Promise<string>,
+): Promise<Task> => {
+  return makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.post, body });
 };
 
-const TasksApi = new Tasks();
-export default TasksApi;
+const update = async (
+  id: string,
+  body: UpdateTaskDTO,
+  getAccessTokenSilently: (options?: TokenRequestProps) => Promise<string>,
+  onUpdateCallback?: (updatedTask: Task) => void,
+): Promise<Task> => {
+  const task = await makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.patch, body, id });
+  if (onUpdateCallback) onUpdateCallback(task);
+
+  return task;
+};
+
+export {
+  create,
+  update,
+};

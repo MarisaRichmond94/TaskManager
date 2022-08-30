@@ -1,11 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from 'react';
 
-import UsersApi from 'api/users';
+import * as UsersApi from 'api/users';
 import AppContext from 'providers/app/context';
 
 const AppProvider = (props: object) => {
-  const { isAuthenticated, isLoading, user: googleUser, loginWithRedirect, logout: auth0Logout } = useAuth0();
+  const {
+    isAuthenticated, isLoading, user: googleUser,
+    getAccessTokenSilently, loginWithRedirect, logout: auth0Logout,
+  } = useAuth0();
   const [isExpanded, setIsExpanded] = useState(true);
   const [user, setUser] = useState<undefined | User>();
 
@@ -17,9 +20,8 @@ const AppProvider = (props: object) => {
   }, [isAuthenticated, isLoading, loginWithRedirect]);
 
   useEffect(() => {
-    async function getUser(findOrCreateUserDTO: findOrCreateUserDTO) {
-      const userResponse = await UsersApi.post(findOrCreateUserDTO);
-      setUser(userResponse);
+    async function getUser(body: FindOrCreateUserDTO) {
+      await UsersApi.get(body, getAccessTokenSilently, setUser);
     };
 
     if (!!googleUser) {
@@ -28,7 +30,7 @@ const AppProvider = (props: object) => {
       } = googleUser;
       getUser({ email, firstName, lastName, avatar, googleId });
     }
-  }, [googleUser]);
+  }, [getAccessTokenSilently, googleUser]);
 
   const logout = () => {
     auth0Logout({ returnTo: window.location.origin });

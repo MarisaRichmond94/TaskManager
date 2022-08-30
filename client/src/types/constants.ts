@@ -1,3 +1,18 @@
+enum ApiMethod { post, get, getById, patch, delete, deleteById };
+
+enum ApiRoute {
+  attachments = 'attachments',
+  checklistItems = 'checklist_items',
+  comments = 'comments',
+  statuses = 'statuses',
+  tags = 'tags',
+  taskManager = 'task_manager',
+  taskManagerTags = 'task_manager/tags',
+  tasks = 'task_manager/tasks',
+  taskTags = 'task_tags',
+  users = 'users',
+};
+
 enum FilterAction {
   remove = 'remove',
   update = 'update',
@@ -20,6 +35,8 @@ enum SectionType {
 };
 
 export {
+  ApiMethod,
+  ApiRoute,
   FilterAction,
   FilterType,
   SectionType,

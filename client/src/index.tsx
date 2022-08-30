@@ -9,16 +9,18 @@ import App from 'app';
 import { AppProvider } from 'providers/app';
 import { AppHotkeysProvider } from 'providers/hotkeys/app';
 import reportWebVitals from 'reportWebVitals';
-import authSettings from 'auth_config.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      clientId={authSettings.clientId}
-      domain={authSettings.domain}
-      redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URL}
+      clientId={process.env.REACT_APP_AUTH_0_CLIENT_ID}
+      domain={process.env.REACT_APP_AUTH_0_DOMAIN}
+      redirectUri={window.location.origin}
+      audience={process.env.REACT_APP_AUTH_0_AUDIENCE}
+      scope='read:current_user'
+      useRefreshTokens={true}
     >
       <BrowserRouter>
         <AppProvider>

@@ -18,9 +18,10 @@ const TaskChecklistItems: FC = () => {
   const total = checklistItems.length;
 
   const populateTaskChecklistItems = (
-    taskChecklistItems?: ChecklistItem[]
+    taskChecklistItems?: ChecklistItem[],
+    isCreatingNewChecklistItem: boolean = false,
   ): ReactElement[] | ReactElement => {
-    if (!taskChecklistItems.length) return <NoChecklistItemsToDisplay />;
+    if (!isCreatingNewChecklistItem && !taskChecklistItems.length) return <NoChecklistItemsToDisplay />;
 
     taskChecklistItems.sort(
       (a,b) => (a.orderIndex > b.orderIndex) ? 1 : ((b.orderIndex > a.orderIndex) ? -1 : 0)
@@ -52,7 +53,7 @@ const TaskChecklistItems: FC = () => {
       sectionTitle={`Checklist (${completed}/${total})`}
     >
       <div className='task-checklist-items-container task-sidebar-collapsable-container'>
-        {populateTaskChecklistItems(checklistItems.sort())}
+        {populateTaskChecklistItems(checklistItems.sort(), isCreatingNewChecklistItem)}
         {isCreatingNewChecklistItem && <NewChecklistItem onCreateCallback={onCreateCallback} />}
       </div>
     </TMControlledCollapsableSection>

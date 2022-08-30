@@ -21,13 +21,17 @@ interface CreateTagDTO {
   name: string,
 };
 
+interface CreateTaskDTO {
+  dueDate: number,
+};
+
 interface CreateTaskTagDTO {
   taskId: string,
   tagId: string,
 };
 
 // Read DTOs
-interface findOrCreateUserDTO {
+interface FindOrCreateUserDTO {
   email: string,
   firstName: string,
   lastName: string,
