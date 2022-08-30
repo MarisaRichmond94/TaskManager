@@ -1,9 +1,16 @@
+auth0:
+  audience: https://taskmanager.com
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/task-manager
     username: postgres
     password: password
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://richmond-task-manager.us.auth0.com/
   # JPA properties
   jpa:
     hibernate:

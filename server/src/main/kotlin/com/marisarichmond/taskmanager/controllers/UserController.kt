@@ -10,7 +10,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/private/users")
 class UserController(private val userService: UserService) {
     @ResponseBody
     @PostMapping

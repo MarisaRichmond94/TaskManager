@@ -11,7 +11,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/checklist_items")
+@RequestMapping("/api/private/checklist_items")
 class ChecklistItemController(private val checklistItemService: ChecklistItemService) {
     @ResponseBody
     @PostMapping

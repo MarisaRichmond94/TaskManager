@@ -12,7 +12,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/task_manager")
+@RequestMapping("/api/private/task_manager")
 class TaskManagerController(private val taskManagerService: TaskManagerService) {
     @ResponseBody
     @PostMapping("/tasks")

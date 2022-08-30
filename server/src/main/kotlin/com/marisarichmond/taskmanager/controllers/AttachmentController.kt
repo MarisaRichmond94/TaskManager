@@ -11,7 +11,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/attachments")
+@RequestMapping("/api/private/attachments")
 class AttachmentController(private val attachmentService: AttachmentService) {
     @ResponseBody
     @PostMapping

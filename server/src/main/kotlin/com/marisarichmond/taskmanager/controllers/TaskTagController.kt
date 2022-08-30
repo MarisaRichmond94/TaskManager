@@ -11,7 +11,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/task_tags")
+@RequestMapping("/api/private/task_tags")
 class TaskTagController(private val taskTagService: TaskTagService) {
     @ResponseBody
     @PostMapping

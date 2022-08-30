@@ -11,7 +11,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("/api/private/tags")
 class TagController(private val tagService: TagService) {
     @ResponseBody
     @PostMapping

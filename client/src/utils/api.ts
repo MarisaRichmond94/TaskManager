@@ -22,7 +22,7 @@ const buildQueryString = (query: { [key: string]: any }): string => {
 };
 
 const buildUrl = (route: ApiRoute, id?: string, query?: { [key: string]: any }): string => {
-  let baseUrl = `${process.env.REACT_APP_BASE_SERVER_URL}/${route}`;
+  let baseUrl = `${process.env.REACT_APP_BASE_SERVER_URL}/api/private/${route}`;
   if (id) baseUrl = `${baseUrl}/${id}`;
   if (query) baseUrl = `${baseUrl}?${buildQueryString(query)}`;
 

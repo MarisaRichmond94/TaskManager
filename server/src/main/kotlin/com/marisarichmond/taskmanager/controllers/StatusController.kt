@@ -10,7 +10,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/statuses")
+@RequestMapping("/api/private/statuses")
 class StatusController(private val statusService: StatusService) {
     @ResponseBody
     @PatchMapping("/{id}")

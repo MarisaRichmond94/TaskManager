@@ -11,7 +11,7 @@ import java.util.*
 
 @CrossOrigin
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/api/private/comments")
 class CommentController(private val commentService: CommentService) {
     @ResponseBody
     @PostMapping
