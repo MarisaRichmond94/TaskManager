@@ -73,7 +73,10 @@ const filter = (tasks: Task[], search: string): Task[] => {
 
   filteredTasks = _filterBySearchText(filteredTasks, searchParams.get('searchText') || '');
 
-  const includeArchived = filters[FilterType.includeArchived];
+  const includeArchived = (
+    filters[FilterType.includeArchived] ||
+    searchParams.get(FilterType.includeArchived)
+  );
   filteredTasks = _filterByIncludeArchived(
     filteredTasks,
     includeArchived ? Boolean(includeArchived) : false,

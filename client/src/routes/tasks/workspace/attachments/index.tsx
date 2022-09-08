@@ -48,8 +48,8 @@ const TaskAttachments: FC = () => {
 
   const onUpdateCallback = async (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
     activeAttachment
-      ? updateAttachment(activeAttachment.id, updatedAttachment as UpdateAttachmentDTO)
-      : createAttachment(updatedAttachment as CreateAttachmentDTO);
+      ? await updateAttachment(activeAttachment.id, updatedAttachment as UpdateAttachmentDTO)
+      : await createAttachment(updatedAttachment as CreateAttachmentDTO);
     onCloseCallback();
   };
 
@@ -122,7 +122,13 @@ const TaskAttachment: FC<IAttachment> = ({ attachment, onEditCallback }) => {
       </div>
       <div
         className='sub-header-text attachment-name hide-overflow-ellipsis'
-        onClick={() => console.log(`Navigate to ${link}`)}
+        onClick={() => {
+          window.open(
+            link.startsWith('https://') ? link : `https://${link}`,
+            '_blank',
+            'noopener,noreferrer',
+          );
+        }}
         title={name}
       >
         <b>{name}</b>

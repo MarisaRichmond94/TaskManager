@@ -5,12 +5,14 @@ import TMButton, { ButtonSize, ButtonStyle } from "components/tm_button";
 interface IActionButton {
   action: (event: any) => void,
   icon: ReactElement,
+
   isDisabled?: boolean,
 };
 
 const ActionButton: FC<IActionButton> = ({
   action,
   icon,
+
   isDisabled = false,
 }) => (
   <TMButton

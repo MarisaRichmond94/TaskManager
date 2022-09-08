@@ -7,7 +7,7 @@ import TMMenu from 'components/tm_menu';
 import { useTasks } from 'providers/tasks';
 
 const MenuButton: FC = () => {
-  const { isShowingArchivedTasks, setIsShowingArchivedTasks } = useTasks();
+  const { isShowingArchivedTasks, updateIsShowingArchivedTasks } = useTasks();
 
   return (
     <TMMenu
@@ -18,7 +18,7 @@ const MenuButton: FC = () => {
             classNames={['task-menu-item']}
             isActive={isShowingArchivedTasks}
             textBlock='show archived'
-            toggleIsActive={() => setIsShowingArchivedTasks(!isShowingArchivedTasks)}
+            toggleIsActive={() => updateIsShowingArchivedTasks(!isShowingArchivedTasks)}
           />
         </div>
       }

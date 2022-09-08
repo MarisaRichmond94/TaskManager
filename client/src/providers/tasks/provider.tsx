@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import * as StatusesApi from 'api/statuses';
 import * as TagsApi from 'api/tags';
@@ -12,6 +12,7 @@ import { useApp } from 'providers/app';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
+import { FilterType } from 'types/constants';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {
@@ -29,6 +30,7 @@ const TasksProvider = (props: object) => {
   const [isShowingArchivedTasks, setIsShowingArchivedTasks] = useState(false);
   const [taskMap, setTaskMap] = useState<Map<string, Task[]>>();
 
+  const navigate = useNavigate();
   const { search } = useLocation();
   const isAsc = new URLSearchParams(search).get('asc') === 'true';
 
@@ -137,6 +139,15 @@ const TasksProvider = (props: object) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAsc]);
 
+  const updateIsShowingArchivedTasks = useCallback((updatedIsShowingArchivedTasks: boolean) => {
+    setIsShowingArchivedTasks(updatedIsShowingArchivedTasks);
+    const searchParams = new URLSearchParams(search);
+    updatedIsShowingArchivedTasks
+      ? searchParams.set(FilterType.includeArchived, updatedIsShowingArchivedTasks.toString())
+      : searchParams.delete(FilterType.includeArchived);
+    navigate({ search: searchParams.toString() });
+  }, [navigate, search]);
+
   const value = {
     activeTaskId,
     attachmentTypes,
@@ -151,8 +162,8 @@ const TasksProvider = (props: object) => {
     createTag,
     deleteTaskById,
     deleteTag,
-    setIsShowingArchivedTasks,
     updateActiveTaskId,
+    updateIsShowingArchivedTasks,
     updateTag,
     updateTaskInTasks,
   };

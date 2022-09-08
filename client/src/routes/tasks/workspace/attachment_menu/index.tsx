@@ -25,7 +25,6 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   attachment,
   attachmentsRef,
   cancelKey = 'Escape',
-  deleteKey = 'Backspace',
   submitKey = 'Enter',
   onCancelCallback,
   onDeleteCallback,
@@ -42,20 +41,20 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   const [name, setName] = useState(attachment?.name || '');
 
   const isCancelKeyPressed = useKeyPress(cancelKey);
-  const isDeleteKeyPressed = useKeyPress(deleteKey);
   const isSubmitKeyPressed = useKeyPress(submitKey);
 
   const cancel = () => { onCancelCallback(); };
   const remove = () => { onDeleteCallback(); };
 
   const submit = () => {
-    const dto = { attachmentTypeId: type?.id, link, name, taskId };
-    if (attachment) delete dto.taskId;
-    onUpdateCallback(dto);
+    const dto = { attachmentTypeId: type?.id, link, name: name || `${type?.name} Link`, taskId };
+    if (type?.id && link) {
+      if (attachment) delete dto.taskId;
+      onUpdateCallback(dto);
+    }
   };
 
   if (isCancelKeyPressed) cancel();
-  if (isDeleteKeyPressed) remove();
   if (isSubmitKeyPressed) submit();
 
   return (
@@ -65,7 +64,11 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
       <NameInput name={name} setName={setName} />
       <div className='action-container'>
         <DeleteButton onDeleteCallback={remove} />
-        <SubmitButton isExistingAttachment={!!attachment} onSubmitCallback={submit} />
+        <SubmitButton
+          isDisabled={!type?.id || !link}
+          isExistingAttachment={!!attachment}
+          onSubmitCallback={submit}
+        />
       </div>
     </div>
   );
@@ -134,13 +137,15 @@ const DeleteButton: FC<IDeleteButton> = ({ onDeleteCallback }) => (
 );
 
 interface ISubmitButton {
+  isDisabled: boolean,
   isExistingAttachment: boolean,
   onSubmitCallback: () => void,
 };
 
-const SubmitButton: FC<ISubmitButton> = ({ isExistingAttachment, onSubmitCallback }) => (
+const SubmitButton: FC<ISubmitButton> = ({ isDisabled, isExistingAttachment, onSubmitCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'blue']}
+    isDisabled={isDisabled}
     buttonStyle={ButtonStyle.solid}
     size={ButtonSize.small}
     onClick={onSubmitCallback}

@@ -14,8 +14,8 @@ interface ITasksContext {
   createTag: (createTagDTO: CreateTagDTO) => void,
   deleteTag: (tagId: string) => void,
   deleteTaskById: (taskId: string) => void,
-  setIsShowingArchivedTasks: (isShowingArchivedTasks: boolean) => void,
   updateActiveTaskId: (id?: string) => void,
+  updateIsShowingArchivedTasks: (isShowingArchivedTasks: boolean) => void,
   updateTag: (tagId: string, updateTagDTO: UpdateTagDTO) => void,
   updateTaskInTasks: (updatedTask: Task) => void,
 };
