@@ -14,8 +14,10 @@ interface IAttachmentMenu {
   attachment?: UpdateAttachmentDTO,
   attachmentsRef: MutableRefObject<any>,
   cancelKey?: string,
+  deleteKey?: string,
   submitKey?: string,
   onCancelCallback: () => void,
+  onDeleteCallback: () => void,
   onUpdateCallback: (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => void,
 };
 
@@ -23,8 +25,10 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   attachment,
   attachmentsRef,
   cancelKey = 'Escape',
+  deleteKey = 'Backspace',
   submitKey = 'Enter',
   onCancelCallback,
+  onDeleteCallback,
   onUpdateCallback,
 }) => {
   const { id: taskId } = useTask();
@@ -38,11 +42,11 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   const [name, setName] = useState(attachment?.name || '');
 
   const isCancelKeyPressed = useKeyPress(cancelKey);
+  const isDeleteKeyPressed = useKeyPress(deleteKey);
   const isSubmitKeyPressed = useKeyPress(submitKey);
 
-  const cancel = () => {
-    onCancelCallback();
-  };
+  const cancel = () => { onCancelCallback(); };
+  const remove = () => { onDeleteCallback(); };
 
   const submit = () => {
     const dto = { attachmentTypeId: type?.id, link, name, taskId };
@@ -51,6 +55,7 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   };
 
   if (isCancelKeyPressed) cancel();
+  if (isDeleteKeyPressed) remove();
   if (isSubmitKeyPressed) submit();
 
   return (
@@ -59,7 +64,7 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
       <LinkInput link={link} setLink={setLink} />
       <NameInput name={name} setName={setName} />
       <div className='action-container'>
-        <CancelButton onCancelCallback={cancel} />
+        <DeleteButton onDeleteCallback={remove} />
         <SubmitButton isExistingAttachment={!!attachment} onSubmitCallback={submit} />
       </div>
     </div>
@@ -113,18 +118,18 @@ const NameInput: FC<INameInput> = ({ name, setName }) => (
   />
 );
 
-interface ICancelButton {
-  onCancelCallback: () => void,
+interface IDeleteButton {
+  onDeleteCallback: () => void,
 };
 
-const CancelButton: FC<ICancelButton> = ({ onCancelCallback }) => (
+const DeleteButton: FC<IDeleteButton> = ({ onDeleteCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'grey']}
     buttonStyle={ButtonStyle.solid}
     size={ButtonSize.small}
-    onClick={onCancelCallback}
+    onClick={onDeleteCallback}
   >
-    Cancel
+    Delete
   </TMButton>
 );
 

@@ -34,7 +34,21 @@ const update = async (
   return attachment;
 };
 
+const deleteById = async (
+  id: string,
+  getAccessTokenSilently: (options?: TokenRequestProps) => Promise<string>,
+  taskToUpdate?: Task,
+  onUpdateCallback?: (updatedTask: Task) => void,
+): Promise<Boolean> => {
+  if (onUpdateCallback) {
+    taskToUpdate.attachments = taskToUpdate.attachments.filter(x => x.id !== id);
+    onUpdateCallback(taskToUpdate);
+  }
+  return makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.deleteById, id });
+};
+
 export {
   create,
+  deleteById,
   update,
 };

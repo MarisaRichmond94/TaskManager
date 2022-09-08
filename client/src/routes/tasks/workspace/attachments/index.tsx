@@ -12,7 +12,7 @@ import { useTask } from 'providers/task';
 import AttachmentMenu from 'routes/tasks/workspace/attachment_menu';
 
 const TaskAttachments: FC = () => {
-  const { attachments, id, createAttachment, updateAttachment } = useTask();
+  const { attachments, id, createAttachment, deleteAttachment, updateAttachment } = useTask();
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
   const [activeAttachment, setActiveAttachment] = useState<Attachment | undefined>();
   const attachmentsRef = useRef(null);
@@ -39,6 +39,11 @@ const TaskAttachments: FC = () => {
   const onCloseCallback = () => {
     setShowAttachmentMenu(false);
     if (activeAttachment) setActiveAttachment(undefined);
+  };
+
+  const onDeleteCallback = () => {
+    if (activeAttachment) deleteAttachment(activeAttachment.id);
+    onCloseCallback();
   };
 
   const onUpdateCallback = async (updatedAttachment: CreateAttachmentDTO | UpdateAttachmentDTO) => {
@@ -80,6 +85,7 @@ const TaskAttachments: FC = () => {
             }
             attachmentsRef={attachmentsRef}
             onCancelCallback={onCloseCallback}
+            onDeleteCallback={onDeleteCallback}
             onUpdateCallback={onUpdateCallback}
           />
         }

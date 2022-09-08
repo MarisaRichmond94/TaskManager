@@ -1,6 +1,8 @@
 @import 'global';
 
 #tasks {
+  margin-bottom: $medium-margin;
+
   .task-count { margin: $no-margin; };
 
   .tasks-container {

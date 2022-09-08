@@ -17,6 +17,7 @@ interface ITaskContext {
   createChecklistItem: (createChecklistItemDTO: CreateChecklistItemDTO) => void,
   createComment: (createCommentDTO: CreateCommentDTO) => void,
   createTaskTag: (createTaskTagDTO: CreateTaskTagDTO) => void,
+  deleteAttachment: (attachmentId: string) => void,
   deleteChecklistItem: (checklistItemIdToDelete: string) => void,
   deleteComment: (commentIdToDelete: string) => void,
   deleteTaskTag: (taskTagIdToDelete: string) => void,

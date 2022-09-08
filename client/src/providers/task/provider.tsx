@@ -33,6 +33,10 @@ const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
     AttachmentsApi.update(id, body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
   }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
+  const deleteAttachment = useCallback((id: string) => {
+    AttachmentsApi.deleteById(id, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  }, [providedTask,  getAccessTokenSilently, updateTaskInTasks])
+
   // Status functionality
   const updateStatus = useCallback((id: string, statusTypeId: string) => {
     const body = { statusTypeId };
@@ -80,6 +84,7 @@ const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
     createChecklistItem,
     createComment,
     createTaskTag,
+    deleteAttachment,
     deleteChecklistItem,
     deleteComment,
     deleteTaskTag,
