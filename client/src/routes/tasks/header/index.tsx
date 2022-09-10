@@ -14,12 +14,15 @@ const Header: FC = () => {
 
   const { searchInputRef, updateSearchText } = useSearchTasks();
 
+  const onKeyPressCallback = (e: any) => { if (e.key === 'Enter') e.preventDefault(); };
+
   return (
     <div id='task-header'>
       <TMInput
         id='tasks-search-bar'
         formValue={searchText}
         onChangeCallback={(updatedSearchText: string) => updateSearchText(updatedSearchText)}
+        onKeyPressCallback={onKeyPressCallback}
         placeholder='search tasks...'
         ref={searchInputRef}
         type='search'
