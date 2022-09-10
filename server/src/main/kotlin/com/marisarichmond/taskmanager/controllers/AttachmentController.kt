@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/attachments")
 class AttachmentController(private val attachmentService: AttachmentService) {

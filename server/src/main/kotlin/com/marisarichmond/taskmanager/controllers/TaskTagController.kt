@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/task_tags")
 class TaskTagController(private val taskTagService: TaskTagService) {

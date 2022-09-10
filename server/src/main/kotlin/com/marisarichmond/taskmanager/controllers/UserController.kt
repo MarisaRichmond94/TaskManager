@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/users")
 class UserController(private val userService: UserService) {
