@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-type EventKey = { key: string };
-
 /**
  * A hook used to detect a particular [targetKey] press.
  *
@@ -11,11 +9,11 @@ type EventKey = { key: string };
 const useKeyPress = (targetKey: string) => {
   const [keyPressed, setKeyPressed] = useState(false);
 
-  const keyDownHandler = ({ key }: EventKey) => {
+  const keyDownHandler = ({ key }: KeyStroke) => {
     if (key === targetKey) setKeyPressed(true);
   };
 
-  const keyUpHandler = ({ key }: EventKey) => {
+  const keyUpHandler = ({ key }: KeyStroke) => {
     if (key === targetKey) setKeyPressed(false);
   };
 

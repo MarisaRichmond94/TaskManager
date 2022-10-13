@@ -1,0 +1,55 @@
+@import 'global.scss';
+
+#hotkey-help-menu {
+  background-color: $off-black;
+
+  .tm-modal-header {
+    background-color: $black;
+
+    b {
+      @include centered-flex-box;
+      color: $off-white;
+      justify-content: center;
+      margin-bottom: $medium-margin;
+    };
+
+    hr {
+      background-color: $primary-blue;
+      height: 2px;
+      margin: 0;
+    };
+  };
+
+  .tm-modal-content-footer {
+    color: $off-white;
+    font-size: 1.2rem;
+    max-height: 78vh;
+
+    .hotkey-help-menu-section {
+      .hotkey-section-header {
+        font-weight: bold;
+        margin-bottom: $medium-margin;
+        text-decoration: underline;
+      };
+
+      .hotkey-reminder {
+        margin-bottom: $extra-large-margin;
+      };
+
+      hr {
+        background-color: $off-white;
+        margin-block-start: $large-margin;
+        margin-block-end: $large-margin;
+      };
+    };
+  };
+};
+
+.plus { margin: $medium-margin; };
+
+.keystroke {
+  background-color: $light-grey;
+  border-radius: $extra-small-border-radius;
+  color: $off-black;
+  padding: $small-margin $large-padding;
+};

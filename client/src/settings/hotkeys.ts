@@ -1,6 +1,7 @@
 const SHIFT_KEY_STROKES = {
   app: {
     navigateHome: 'H',
+    helpMenu: 'M',
     toggleSidebar: 'T',
     navigateTasks: '!',
     navigateNotes: '@',

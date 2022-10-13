@@ -5,8 +5,6 @@ interface DropdownOption {
 };
 
 interface KeyStroke {
-  altKey?: boolean,
-  ctrlKey?: boolean,
   shiftKey?: boolean,
   key: string,
 };
