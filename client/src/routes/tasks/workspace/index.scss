@@ -4,12 +4,13 @@
   background-color: $white;
   border-radius: $small-border-radius;
   color: $off-black;
+  height: 100%;
   margin-bottom: $large-margin;
   &:last-child { margin-bottom: 0; };
 
   .content {
     display: flex;
-    max-height: 345px;
+    max-height: calc(100% - 75px); // 75px accounts for the header + some padding
     overflow: overlay; // similar to auto but makes scrollbar not take up additional space
   };
 
