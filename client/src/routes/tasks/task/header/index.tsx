@@ -1,7 +1,9 @@
 import './index.scss';
 
 import { FC, ReactElement } from 'react';
-import { BsArchive, BsFlag, BsInbox, BsInboxes, BsLightning, BsTrash, BsTrophy } from 'react-icons/bs';
+import {
+  BsArchive, BsBookmarks, BsBookmarksFill, BsFlag, BsInbox, BsInboxes, BsLightning, BsTrash, BsTrophy,
+} from 'react-icons/bs';
 
 import { useTasks } from 'providers/tasks';
 import ActionButton from 'routes/tasks/buttons/action';
@@ -12,11 +14,12 @@ const { archived, blocked, completed, inProgress, toDo } = STATUS_NAMES;
 interface IHeader {
   id: string,
   isArchived: boolean,
+  isPinned: boolean,
   objective: string,
   status: Status,
 };
 
-const Header: FC<IHeader> = ({ id, isArchived, objective, status }) => {
+const Header: FC<IHeader> = ({ id, isArchived, isPinned, objective, status }) => {
   const { archiveTaskById, deleteTaskById } = useTasks();
 
   const getStatusIcon = (statusName: string): ReactElement => {
@@ -32,6 +35,9 @@ const Header: FC<IHeader> = ({ id, isArchived, objective, status }) => {
 
   return (
     <div className={['task-card-header', 'header-text'].join(' ')}>
+      <div className='task-pin'>
+        {isPinned ? <BsBookmarksFill /> : <BsBookmarks />}
+      </div>
       {getStatusIcon(status.name)}
       <b className='task-objective'>{objective}</b>
       <div className='action-menu'>

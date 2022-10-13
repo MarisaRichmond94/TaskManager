@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { FC, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import TMUncontrolledCollapsableSection from 'components/tm_collapsable_section/uncontrolled';
 import { SectionHotkeysProvider } from 'providers/hotkeys/task_section';
@@ -26,6 +27,8 @@ const Section: FC<ISection> = ({
   const { activeSection, collapseState, toggleSectionCollapseState } = useSections();
   const isVisible = collapseState.get(type);
   const sectionRef = useRef(null);
+  const { search } = useLocation();
+  const isAscSorted = !!(new URLSearchParams(search).get('asc'))
 
   // if section is active, scroll section into view
   useEffect(() => {
@@ -40,9 +43,23 @@ const Section: FC<ISection> = ({
       </div>
     );
 
-    return !tasks.length
+    /*
+    Adds additional sort to tasks by priority. This will be applied on top of any additional sort.
+    Whether or not more complicated logic needs to be implemented can be determined after this
+    feature has been used
+    */
+    let prioritySortedTasks = tasks;
+    if (!isAscSorted && prioritySortedTasks.length) {
+      const [pinned, unpinned] = prioritySortedTasks.reduce((result, element) => {
+        result[element.isPinned ? 0 : 1].push(element);
+        return result;
+      }, [[], []]);
+      prioritySortedTasks = [...pinned, ...unpinned];
+    }
+
+    return !prioritySortedTasks.length
       ? emptySectionContent
-      : tasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)
+      : prioritySortedTasks.map(task => <TaskCard task={task} key={`task-${task.id}`} />)
   };
 
   return (

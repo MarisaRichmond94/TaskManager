@@ -15,7 +15,7 @@ interface ITaskCard {
 const TaskCard: FC<ITaskCard> = ({ task }) => {
   const { activeTaskId, updateActiveTaskId } = useTasks();
   const taskRef = useRef(null);
-  const { id, objective, status } = task;
+  const { id, isPinned, objective, status } = task;
   const { description } = task;
   const { checklistItems, comments, dueDate, tags } = task;
   const isActiveTask = activeTaskId === id;
@@ -31,7 +31,7 @@ const TaskCard: FC<ITaskCard> = ({ task }) => {
       onClick={() => updateActiveTaskId(id)}
       ref={taskRef}
     >
-      <Header id={id} isArchived={isArchived} objective={objective} status={status} />
+      <Header id={id} isArchived={isArchived} isPinned={isPinned} objective={objective} status={status} />
       <Body description={description} />
       <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />
     </div>

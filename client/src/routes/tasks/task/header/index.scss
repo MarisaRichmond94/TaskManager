@@ -12,6 +12,11 @@
 
   .task-objective { margin-left: $small-margin; };
 
+  .task-pin {
+    color: $dark-grey;
+    margin-right: $small-margin;
+  }
+
   .action-menu {
     @include centered-flex-box;
     margin-left: auto;
