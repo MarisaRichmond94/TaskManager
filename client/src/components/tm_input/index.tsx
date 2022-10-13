@@ -50,6 +50,7 @@ const TMInput = forwardRef<Ref, ITMInput>(({
   };
 
   const onKeyPress = (e: any): void => {
+    if (e.key === 'Enter') e.preventDefault();
     if (onKeyPressCallback) {
       onKeyPressCallback(e);
       if (clearKey && e.key === clearKey) setValue('');

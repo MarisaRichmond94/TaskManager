@@ -19,12 +19,14 @@
       visibility: visible;
     };
   };
+
   &:hover { .toggle-menu-button { visibility: visible; }; };
+
   .sidebar-menu-container {
     .sidebar-menu {
       background-color: $off-white;
       top: -10px;
-      width: 168px;
+      width: calc(100% - 20px); // 20px is to account for padding
     };
   };
 };

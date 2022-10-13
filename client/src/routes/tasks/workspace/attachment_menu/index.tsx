@@ -25,7 +25,6 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   attachment,
   attachmentsRef,
   cancelKey = 'Escape',
-  submitKey = 'Enter',
   onCancelCallback,
   onDeleteCallback,
   onUpdateCallback,
@@ -41,7 +40,6 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   const [name, setName] = useState(attachment?.name || '');
 
   const isCancelKeyPressed = useKeyPress(cancelKey);
-  const isSubmitKeyPressed = useKeyPress(submitKey);
 
   const cancel = () => { onCancelCallback(); };
   const remove = () => { onDeleteCallback(); };
@@ -55,7 +53,6 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
   };
 
   if (isCancelKeyPressed) cancel();
-  if (isSubmitKeyPressed) submit();
 
   return (
     <div className='menu sidebar-menu'>

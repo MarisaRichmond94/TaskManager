@@ -10,7 +10,7 @@
   .content {
     display: flex;
     max-height: 345px;
-    overflow: $hide-y-scroll-x;
+    overflow: overlay; // similar to auto but makes scrollbar not take up additional space
   };
 
   .task-section {
@@ -24,6 +24,6 @@
       height: 3px;
     };
 
-    .task-tag { button: { padding: $no-padding; }; };
+    .task-tag { button { padding: $no-padding; }; };
   };
 };

@@ -2,6 +2,7 @@
 
 .tm-task-body {
   padding: $large-padding;
+  padding-right: 0; // eliminates double padding in between body and sidebar
   width: calc(100% - 200px);
 
   .task-objective { margin-bottom: $small-margin; };

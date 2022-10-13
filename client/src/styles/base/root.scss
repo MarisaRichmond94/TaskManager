@@ -11,7 +11,8 @@ body {
 
 #root {
   height: 100vh;
-  max-width: 600px !important;
+  min-width: $min-app-width;
+  max-width: $max-app-width;
 
   .tm-loader-container {
     padding-top: 35%;
