@@ -12,19 +12,21 @@ import { useTasks } from 'providers/tasks';
 interface ITaskTag {
   hexColor: string,
   id: string,
-  isEditable?: boolean,
-  isInUse?: boolean,
   name: string,
   tagId: string,
+  autoFocus?: boolean,
+  isEditable?: boolean,
+  isInUse?: boolean,
 };
 
 const TaskTag: FC<ITaskTag> = ({
   hexColor,
   id,
-  isEditable = false,
-  isInUse = true,
   name,
   tagId,
+  autoFocus = false,
+  isEditable = false,
+  isInUse = true,
 }) => {
   const { id: taskId, createTaskTag, deleteTaskTag } = useTask();
   const { deleteTag, updateTag } = useTasks();
@@ -39,7 +41,7 @@ const TaskTag: FC<ITaskTag> = ({
         isEditable
           ? (
             <TMEditableInput
-              autoFocus
+              autoFocus={autoFocus}
               classNames={['editable-tag', 'sub-header-text']}
               currInputValue={name}
               eventKey='Enter'
