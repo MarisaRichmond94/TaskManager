@@ -4,13 +4,12 @@ import { FC, ReactElement } from 'react';
 
 interface ITMButton {
   children: string | ReactElement | ReactElement[],
-
+  onClick: (event: any) => void,
   buttonStyle?: ButtonStyle,
   classNames?: string[],
   isDisabled?: boolean,
   size?: ButtonSize,
-
-  onClick: (event: any) => void,
+  style?: object,
 };
 
 export enum ButtonSize {
@@ -39,13 +38,12 @@ enum TRANSPARENT_STYLES {
 
 const TMButton: FC<ITMButton> = ({
   children,
-
+  onClick,
   buttonStyle = ButtonStyle.solid,
   classNames = [],
   isDisabled = false,
   size = ButtonSize.medium,
-
-  onClick,
+  style = {},
 }) => {
   const transparent = buttonStyle in TRANSPARENT_STYLES ? 'transparent' : '';
 
@@ -55,6 +53,7 @@ const TMButton: FC<ITMButton> = ({
       type='button'
       onClick={(event: any) => onClick(event)}
       disabled={isDisabled}
+      style={style}
     >
       {children}
     </button>

@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { FC, MutableRefObject, useState } from 'react';
+import { BsArrowReturnLeft } from 'react-icons/bs';
 
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
@@ -60,7 +61,8 @@ const AttachmentMenu: FC<IAttachmentMenu> = ({
       <LinkInput link={link} setLink={setLink} />
       <NameInput name={name} setName={setName} />
       <div className='action-container'>
-        <DeleteButton onDeleteCallback={remove} />
+        <CancelButton onCancelCallback={onCancelCallback} />
+        {!!attachment && <DeleteButton onDeleteCallback={remove} />}
         <SubmitButton
           isDisabled={!type?.id || !link}
           isExistingAttachment={!!attachment}
@@ -118,6 +120,22 @@ const NameInput: FC<INameInput> = ({ name, setName }) => (
   />
 );
 
+interface ICancelButton {
+  onCancelCallback: () => void,
+};
+
+const CancelButton: FC<ICancelButton> = ({ onCancelCallback }) => (
+  <TMButton
+    classNames={['attachment-menu-button', 'dark-grey']}
+    buttonStyle={ButtonStyle.icon}
+    size={ButtonSize.small}
+    onClick={onCancelCallback}
+    style={{ margin: '0' }}
+  >
+    <BsArrowReturnLeft />
+  </TMButton>
+);
+
 interface IDeleteButton {
   onDeleteCallback: () => void,
 };
@@ -128,6 +146,7 @@ const DeleteButton: FC<IDeleteButton> = ({ onDeleteCallback }) => (
     buttonStyle={ButtonStyle.solid}
     size={ButtonSize.small}
     onClick={onDeleteCallback}
+    style={{ marginRight: '10px' }}
   >
     Delete
   </TMButton>
@@ -146,8 +165,9 @@ const SubmitButton: FC<ISubmitButton> = ({ isDisabled, isExistingAttachment, onS
     buttonStyle={ButtonStyle.solid}
     size={ButtonSize.small}
     onClick={onSubmitCallback}
+    style={{ marginRight: '0' }}
   >
-    {isExistingAttachment ? 'Update' : 'Create'}
+    {isExistingAttachment ? 'Update' : 'Add'}
   </TMButton>
 );
 
