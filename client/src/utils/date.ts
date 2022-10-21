@@ -55,8 +55,7 @@ const getModifiedDate = (today: Date, modifier: number): Date => {
  * @param date - A JavaScript [Date]
  * @returns a date in the format MM/DD/YYYY
  */
-const getFullDateString = (date: Date): string =>
-  `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+const getFullDateString = (date: Date): string => `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 
   /**
    * Formats a JavaScript [Date] into a shortened date string.

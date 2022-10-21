@@ -1,39 +1,37 @@
 @import 'global.scss';
 
-#tm-sidebar {
+#app-sidebar {
   @include centered-flex-box;
   background-color: $dark-grey;
   flex-direction: column;
   height: calc(100vh - 60px);
   width: $toolbar-width;
 
-  #tm-top-menu {
+  .top-menu {
     margin: $no-margin;
     padding: $medium-padding $no-padding;
 
-    #user-profile-pic {
+    img {
       border-radius: 50%;
       width: 50px;
-    }
+    };
 
     .tm-toggle {  margin: $small-margin $no-margin; }
-  }
+  };
 
-  #tm-bottom-menu {
+  .bottom-menu {
     margin-top: auto;
 
-    .tm-sidebar-icon {
+    .sidebar-menu-button {
       color: $light-grey;
       height: $toolbar-width;
       width: $toolbar-width;
-      &:hover {
-        color: $white;
-      }
+      &:hover { color: $white; };
       &.active {
         background-color: $black !important;
         color: $white;
         user-select: none;
-      }
-    }
-  }
+      };
+    };
+  };
 };

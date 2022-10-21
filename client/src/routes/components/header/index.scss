@@ -1,14 +1,6 @@
 @import 'global.scss';
 
-.collapsed-app {
-  #tm-header {
-    padding: $no-padding;
-    width: $toolbar-width;
-    #control-panel-container { display: none; }
-  };
-};
-
-#tm-header {
+#app-header {
   @include centered-flex-box;
   background-color: $black;
   box-sizing: border-box;
@@ -18,12 +10,12 @@
   transition: width 1s ease;
   width: 100%;
 
-  .app-logo {
+  img {
     height: $header-height - 20px;
     padding-top: 8px;
   };
 
-  #control-panel-container {
+  .control-panel {
     @include centered-flex-box;
     margin-left: auto;
     p { color: $white; }

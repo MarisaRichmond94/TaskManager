@@ -18,18 +18,7 @@ body {
     padding-top: 35%;
   };
 
-  .collapsed-app {
-    #body-container {
-      #content-container {
-        padding: $no-padding;
-        width: 0;
-        .contents { display: none; }
-        .tm-loader-container { display: none; };
-      };
-    };
-  };
-
-  #body-container {
+  #content {
     display: flex;
 
     #content-container {

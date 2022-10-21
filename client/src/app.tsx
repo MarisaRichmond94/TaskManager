@@ -4,26 +4,24 @@ import { FC } from 'react';
 import TMLoader from 'components/tm_loader';
 import { useApp } from 'providers/app';
 import TMRouter from 'routes/tm_router';
-import TMHeader from 'routes/components/header';
+import Header from 'routes/components/header';
 import TMSidebar from 'routes/components/sidebar';
 
 const App: FC = () => {
   const { isExpanded } = useApp();
   const { isAuthenticated } = useAuth0();
 
-  return isAuthenticated
-    ? (
-      <>
-        <div id='page-container' className={isExpanded ? 'expanded-app' : 'collapsed-app'}>
-          <TMHeader />
-          <div id='body-container'>
-            <TMSidebar />
-            <TMRouter />
-          </div>
-        </div>
-      </>
-    )
-    : <TMLoader color='#99B83B' text='authenticating...' />
+  if (!isAuthenticated) return <TMLoader color='#99B83B' text='authenticating...' />;
+
+  return (
+    <div id='page' className={isExpanded ? '' : 'collapsed'}>
+      <Header />
+      <div id='content'>
+        <TMSidebar />
+        <TMRouter />
+      </div>
+    </div>
+  );
 };
 
 export default App;

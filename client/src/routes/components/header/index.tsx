@@ -9,52 +9,61 @@ import logo from 'assets/logo/light.png';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
+import { timedUserGreeting } from 'utils/user';
 
-const TMHeader: FC = () => {
+const Header: FC = () => (
+  <div id='app-header'>
+    <Logo />
+    <div className='control-panel'>
+      <Greeting />
+      <MessageCenterButton />
+      <LogOutButton />
+    </div>
+  </div>
+);
+
+const Logo: FC = () => {
   const navigate = useNavigate();
-  const { user, logout } = useApp();
 
-  const generateMessage = () => {
-    const hours = new Date().getHours();
-    switch (true) {
-      case hours >= 6 && hours < 12: return `Good morning, ${user.firstName}`;
-      case hours >= 12 && hours < 17: return `Good afternoon, ${user.firstName}`;
-      case hours >= 17 && hours < 20: return `Good evening, ${user.firstName}`;
-      default: return `Good night, ${user.firstName}`;
-    }
-  };
+  return <img alt='' src={logo} onClick={() => navigate(ROUTES.rootRoute)} />;
+};
+
+const Greeting: FC = () => {
+  const { user } = useApp();
+
+  if (!user) return;
 
   return (
-    <div id='tm-header'>
-      <div className='title-container'>
-        <img
-          alt='task manager logo'
-          className='app-logo'
-          src={logo}
-          onClick={() => navigate(ROUTES.rootRoute)}
-        />
-      </div>
-      <div id='control-panel-container'>
-        {user && <p className='sub-header-text'>{generateMessage()}</p>}
-        <TMButton
-          classNames={['off-white']}
-          buttonStyle={ButtonStyle.icon}
-          onClick={() => console.log('message')}
-          size={ButtonSize.large}
-        >
-          <BiMessage />
-        </TMButton>
-        <TMButton
-          classNames={['off-white']}
-          buttonStyle={ButtonStyle.icon}
-          onClick={logout}
-          size={ButtonSize.large}
-        >
-          <IoLogOutOutline />
-        </TMButton>
-      </div>
-    </div>
+    <p className='sub-header-text'>
+      {timedUserGreeting(user.firstName)}
+    </p>
   );
 };
 
-export default TMHeader;
+const MessageCenterButton: FC = () => (
+  <TMButton
+    classNames={['off-white']}
+    buttonStyle={ButtonStyle.icon}
+    onClick={() => console.log('message')}
+    size={ButtonSize.large}
+  >
+    <BiMessage />
+  </TMButton>
+);
+
+const LogOutButton: FC = () => {
+  const { logout } = useApp();
+
+  return (
+    <TMButton
+      classNames={['off-white']}
+      buttonStyle={ButtonStyle.icon}
+      onClick={logout}
+      size={ButtonSize.large}
+    >
+      <IoLogOutOutline />
+    </TMButton>
+  );
+};
+
+export default Header;

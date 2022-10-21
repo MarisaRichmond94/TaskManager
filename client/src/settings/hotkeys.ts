@@ -39,6 +39,13 @@ const SHIFT_KEY_STROKES = {
   },
 };
 
+const UNIVERSAL_HOTKEY_SECTIONS = ['app', 'filter', 'search'];
+const HOTKEY_SECTIONS_BY_PATH = {
+  tasks: [...UNIVERSAL_HOTKEY_SECTIONS, 'section', 'sections', 'task', 'tasks'],
+}
+
 export {
+  HOTKEY_SECTIONS_BY_PATH,
   SHIFT_KEY_STROKES,
+  UNIVERSAL_HOTKEY_SECTIONS,
 };

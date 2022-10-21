@@ -17,11 +17,29 @@
   white-space: nowrap;
 };
 
-.page-container {
+#page {
   box-sizing: border-box;
   display: grid;
   overflow: hidden;
   width: 100%;
+
+  &.collapsed {
+    #app-header {
+      padding: $no-padding;
+      width: $toolbar-width;
+      .control-panel { display: none; }
+    };
+
+    #content {
+      #content-container {
+        padding: $no-padding;
+        width: 0;
+        .contents { display: none; }
+        .tm-loader-container { display: none; };
+      };
+    };
+
+  };
 };
 
 .tm-panel {

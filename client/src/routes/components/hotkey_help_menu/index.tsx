@@ -1,18 +1,30 @@
 import './index.scss';
 
 import { FC } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
+import {
+  HOTKEY_SECTIONS_BY_PATH,
+  SHIFT_KEY_STROKES,
+  UNIVERSAL_HOTKEY_SECTIONS,
+} from 'settings/hotkeys';
 
 interface IHotkeyHelpMenu {
   isShowing: boolean,
 };
 
 const HotkeyHelpMenu: FC<IHotkeyHelpMenu> = ({ isShowing }) => {
+  const { pathname: path } = useLocation();
+
   if (!isShowing) return null;
 
   const hotkeyHelpMenuContent = (): JSX.Element[] => {
-    const sections = Object.entries(SHIFT_KEY_STROKES);
+    // filter out sections that aren't relevant to the current page
+    const hotkeySectionsByPath = HOTKEY_SECTIONS_BY_PATH[path.substring(1)] ?? UNIVERSAL_HOTKEY_SECTIONS;
+    const sections = Object.entries(SHIFT_KEY_STROKES).filter(
+      ([hotkeySection, _]) => hotkeySectionsByPath.includes(hotkeySection)
+    );
+
     return sections.map(([hotkeySection, hotkeys], index) =>
       <div className='hotkey-help-menu-section' key={hotkeySection}>
         <div className='hotkey-section-header'>

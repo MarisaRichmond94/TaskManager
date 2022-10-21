@@ -11,36 +11,31 @@ import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 
-const TMSidebar: FC = () => {
-  const { isExpanded, toggleIsExpanded } = useApp();
+const TMSidebar: FC = () => (
+  <div id='app-sidebar'>
+    <TopMenu />
+    <BottomMenu />
+  </div>
+);
+
+const TopMenu: FC = () => {
+  const { isExpanded, user, toggleIsExpanded } = useApp();
 
   return (
-    <div id='tm-sidebar'>
-      <div id='tm-top-menu'>
-        <UserAvatar />
-        <TMToggleButton onClick={toggleIsExpanded} selected={isExpanded} />
-      </div>
-      <div id='tm-bottom-menu'>
-        <NavigateToPageButton icon={<FaTasks />} routePath={ROUTES.tasksRoute} />
-        <NavigateToPageButton icon={<GiNotebook />} routePath={ROUTES.notesRoute} />
-        <NavigateToPageButton icon={<BsTrophyFill />} routePath={ROUTES.goalsRoute} />
-      </div>
+    <div className='top-menu'>
+      <img alt='' src={user?.avatar} referrerPolicy='no-referrer' />
+      <TMToggleButton onClick={toggleIsExpanded} selected={isExpanded} />
     </div>
   );
 };
 
-const UserAvatar = () => {
-  const { user } = useApp();
-
-  return (
-    <img
-      alt='google user profile'
-      id='user-profile-pic'
-      src={user?.avatar}
-      referrerPolicy='no-referrer'
-    />
-  );
-};
+const BottomMenu: FC = () => (
+  <div className='bottom-menu'>
+    <NavigateToPageButton icon={<FaTasks />} routePath={ROUTES.tasksRoute} />
+    <NavigateToPageButton icon={<GiNotebook />} routePath={ROUTES.notesRoute} />
+    <NavigateToPageButton icon={<BsTrophyFill />} routePath={ROUTES.goalsRoute} />
+  </div>
+);
 
 interface INavigateToPageButton {
   icon: ReactElement,
@@ -53,7 +48,7 @@ const NavigateToPageButton: FC<INavigateToPageButton> = ({ icon, routePath }) =>
 
   return (
     <TMButton
-      classNames={['tm-sidebar-icon', path === routePath ? 'active' : '']}
+      classNames={['sidebar-menu-button', path === routePath ? 'active' : '']}
       buttonStyle={ButtonStyle.icon}
       onClick={() => navigate(routePath)}
       size={ButtonSize.extraLarge}
