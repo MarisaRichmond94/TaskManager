@@ -1,23 +1,23 @@
 databaseChangeLog:
   - changeSet:
-      id: 0008_create_task_tags_table
+      id: 0005_create_task_attachments_table
       author: marisarichmond
-      comment: create task_tags table
+      comment: create task_attachments table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: task_tags
+                tableName: task_attachments
       changes:
         - createTable:
-            tableName: task_tags
+            tableName: task_attachments
             columns:
               - column:
                   name: id
                   type: UUID
                   constraints:
                     primaryKey: true
-                    primaryKeyName: task_tag_pkey
+                    primaryKeyName: task_attachment_pkey
               - column:
                   name: created_at
                   type: bigint
@@ -36,9 +36,9 @@ databaseChangeLog:
                     references: tasks(id)
                     nullable: false
               - column:
-                  name: tag_id
+                  name: attachment_id
                   type: UUID
                   constraints:
-                    foreignKeyName: fk_tag_id
-                    references: tags(id)
+                    foreignKeyName: fk_attachment_id
+                    references: attachments(id)
                     nullable: false

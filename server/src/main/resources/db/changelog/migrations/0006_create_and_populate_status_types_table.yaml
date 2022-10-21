@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0003_create_and_populate_status_types_table_1
+      id: 0006_create_and_populate_status_types_table_1
       author: marisarichmond
       comment: create status_types table
       preConditions:
@@ -24,7 +24,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: 0003_create_and_populate_status_types_table_2
+      id: 0006_create_and_populate_status_types_table_2
       author: marisarichmond
       comment: populate status_types table with enums
       changes:

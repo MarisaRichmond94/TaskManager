@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0007_create_and_populate_task_table_1
+      id: 0008_create_and_populate_task_table_1
       author: marisarichmond
       comment: create tags table
       preConditions:
@@ -46,7 +46,7 @@ databaseChangeLog:
                     foreignKeyName: fk_user_id
                     references: users(id)
   - changeSet:
-      id: 0007_create_and_populate_task_table_2
+      id: 0008_create_and_populate_task_table_2
       author: marisarichmond
       comment: populate tags table with mock data
       changes:

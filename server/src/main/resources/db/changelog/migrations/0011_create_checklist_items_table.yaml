@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0010_create_checklist_items_table
+      id: 0011_create_checklist_items_table
       author: marisarichmond
       comment: create checklist_items table
       preConditions:

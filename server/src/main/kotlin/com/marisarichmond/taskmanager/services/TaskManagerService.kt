@@ -17,13 +17,13 @@ import javax.transaction.Transactional
 
 @Service
 class TaskManagerService(
-    private val attachmentService: AttachmentService,
     private val attachmentTypeService: AttachmentTypeService,
     private val checklistItemService: ChecklistItemService,
     private val commentService: CommentService,
     private val statusService: StatusService,
     private val statusTypeService: StatusTypeService,
     private val tagService: TagService,
+    private val taskAttachmentService: TaskAttachmentService,
     private val taskService: TaskService,
     private val taskTagService: TaskTagService,
 ) {
@@ -47,7 +47,7 @@ class TaskManagerService(
                 ?: throw EntityNotFoundException("Status", id, "task_id"),
             tags = taskTagService.getByTaskId(id).map { it.toDTO() },
             checklistItems = checklistItemService.getByTaskId(id).map { it.toDTO() },
-            attachments = attachmentService.getByTaskId(id).map { it.toDTO() },
+            attachments = taskAttachmentService.getByTaskId(id).map { it.attachment.toDTO() },
             comments = commentService.getByTaskId(id).map { it.toDTO() },
         )
     }
@@ -103,7 +103,7 @@ class TaskManagerService(
 
         taskTagService.deleteByTaskId(taskId)
         checklistItemService.deleteByTaskId(taskId)
-        attachmentService.deleteByTaskId(taskId)
+        taskAttachmentService.deleteByTaskId(taskId)
         commentService.deleteByTaskId(taskId)
         statusService.deleteByTaskId(taskId)
         taskService.deleteById(taskId)

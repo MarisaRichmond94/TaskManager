@@ -15,9 +15,6 @@ data class Attachment(
     val createdAt: Long = Instant.now().epochSecond,
     val updatedAt: Long = Instant.now().epochSecond,
     @OneToOne
-    @JoinColumn(name = "task_id")
-    val task: Task,
-    @OneToOne
     @JoinColumn(name = "attachment_type_id")
     val attachmentType: AttachmentType,
 ) : Base(id) {

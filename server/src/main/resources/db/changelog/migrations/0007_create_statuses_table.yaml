@@ -1,33 +1,23 @@
 databaseChangeLog:
   - changeSet:
-      id: 0004_create_attachments_table
+      id: 0007_create_statuses_table
       author: marisarichmond
-      comment: create attachments table
+      comment: create statuses table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: attachments
+                tableName: statuses
       changes:
         - createTable:
-            tableName: attachments
+            tableName: statuses
             columns:
               - column:
                   name: id
                   type: UUID
                   constraints:
                     primaryKey: true
-                    primaryKeyName: attachment_pkey
-              - column:
-                  name: link
-                  type: varchar
-                  constraints:
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar
-                  constraints:
-                    nullable: false
+                    primaryKeyName: status_pkey
               - column:
                   name: created_at
                   type: bigint
@@ -39,9 +29,16 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: attachment_type_id
+                  name: task_id
                   type: UUID
                   constraints:
-                    foreignKeyName: fk_attachment_type_id
-                    references: attachment_types(id)
+                    foreignKeyName: fk_task_id
+                    references: tasks(id)
+                    nullable: false
+              - column:
+                  name: status_type_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_status_type_id
+                    references: status_types(id)
                     nullable: false

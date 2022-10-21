@@ -1,23 +1,23 @@
 databaseChangeLog:
   - changeSet:
-      id: 0006_create_statuses_table
+      id: 0009_create_task_tags_table
       author: marisarichmond
-      comment: create statuses table
+      comment: create task_tags table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: statuses
+                tableName: task_tags
       changes:
         - createTable:
-            tableName: statuses
+            tableName: task_tags
             columns:
               - column:
                   name: id
                   type: UUID
                   constraints:
                     primaryKey: true
-                    primaryKeyName: status_pkey
+                    primaryKeyName: task_tag_pkey
               - column:
                   name: created_at
                   type: bigint
@@ -36,9 +36,9 @@ databaseChangeLog:
                     references: tasks(id)
                     nullable: false
               - column:
-                  name: status_type_id
+                  name: tag_id
                   type: UUID
                   constraints:
-                    foreignKeyName: fk_status_type_id
-                    references: status_types(id)
+                    foreignKeyName: fk_tag_id
+                    references: tags(id)
                     nullable: false

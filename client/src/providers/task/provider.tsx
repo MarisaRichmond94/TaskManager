@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { FC, ReactElement, useCallback } from 'react';
 
-import * as AttachmentsApi from 'api/attachments';
+import * as AttachmentsApi from 'api/task_attachments';
 import * as ChecklistItemsApi from 'api/checklist_items';
 import * as CommentsApi from 'api/comment';
 import * as StatusesApi from 'api/statuses';

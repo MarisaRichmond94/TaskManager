@@ -1,7 +1,7 @@
 import { makeApiRequest } from 'utils/api';
 import { ApiMethod, ApiRoute } from "types/constants";
 
-const ROUTE = ApiRoute.attachments;
+const ROUTE = ApiRoute.taskAttachments;
 
 const create = async (
   body: CreateAttachmentDTO,
@@ -9,13 +9,13 @@ const create = async (
   taskToUpdate?: Task,
   onUpdateCallback?: (updatedTask: Task) => void,
 ): Promise<Attachment> => {
-  const attachment = await makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.post, body });
+  const taskAttachment = await makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.post, body });
   if (onUpdateCallback) {
-    taskToUpdate.attachments.push(attachment);
+    taskToUpdate.attachments.push(taskAttachment);
     onUpdateCallback(taskToUpdate);
   }
 
-  return attachment;
+  return taskAttachment;
 };
 
 const update = async (
@@ -25,13 +25,13 @@ const update = async (
   taskToUpdate?: Task,
   onUpdateCallback?: (updatedTask: Task) => void,
 ): Promise<Attachment> => {
-  const attachment = await makeApiRequest( getAccessTokenSilently, ROUTE, { method: ApiMethod.patch, body, id });
+  const taskAttachment = await makeApiRequest( getAccessTokenSilently, ROUTE, { method: ApiMethod.patch, body, id });
   if (onUpdateCallback) {
-    taskToUpdate.attachments = taskToUpdate.attachments.map(x => x.id === id ? attachment : x);
+    taskToUpdate.attachments = taskToUpdate.attachments.map(x => x.id === id ? taskAttachment : x);
     onUpdateCallback(taskToUpdate);
   }
 
-  return attachment;
+  return taskAttachment;
 };
 
 const deleteById = async (

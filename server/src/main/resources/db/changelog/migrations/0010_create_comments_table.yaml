@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 0009_create_comments_table
+      id: 0010_create_comments_table
       author: marisarichmond
       comment: create comments table
       preConditions:

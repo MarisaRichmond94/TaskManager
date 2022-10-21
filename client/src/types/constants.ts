@@ -1,7 +1,7 @@
 enum ApiMethod { post, get, getById, patch, delete, deleteById };
 
 enum ApiRoute {
-  attachments = 'attachments',
+  taskAttachments = 'task_attachments',
   checklistItems = 'checklist_items',
   comments = 'comments',
   statuses = 'statuses',

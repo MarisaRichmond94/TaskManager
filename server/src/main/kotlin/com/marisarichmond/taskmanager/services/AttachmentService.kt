@@ -1,9 +1,11 @@
 package com.marisarichmond.taskmanager.services
 
+import com.marisarichmond.taskmanager.constants.ExceptionConstants
+import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.models.Attachment
 import com.marisarichmond.taskmanager.models.dtos.AttachmentDTO
-import com.marisarichmond.taskmanager.models.dtos.CreateTaskAttachmentDTO
-import com.marisarichmond.taskmanager.models.dtos.UpdateTaskAttachmentDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateAttachmentDTO
+import com.marisarichmond.taskmanager.models.dtos.UpdateAttachmentDTO
 import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.AttachmentRepository
 import mu.KotlinLogging
@@ -16,33 +18,36 @@ import javax.transaction.Transactional
 class AttachmentService(
     private val attachmentRepository: AttachmentRepository,
     private val attachmentTypeService: AttachmentTypeService,
-    private val taskService: TaskService,
 ) {
     companion object {
         private val logger = KotlinLogging.logger {}
     }
 
     @Transactional
-    fun create(createTaskAttachmentDTO: CreateTaskAttachmentDTO): AttachmentDTO? = try {
-        createTaskAttachmentDTO.run {
+    fun create(createAttachmentDTO: CreateAttachmentDTO): Attachment? = try {
+        createAttachmentDTO.run {
             Attachment(
                 id = id,
                 link = link,
                 name = name,
-                task = taskService.getById(taskId),
                 attachmentType = attachmentTypeService.getById(attachmentTypeId)
-            ).let { attachmentRepository.save(it).toDTO() }
+            ).let { attachmentRepository.save(it) }
         }
     } catch (exception: Exception) {
         logger.error(exception) { "Failed to create Attachment: $exception." }
         null
     }
 
-    fun getByTaskId(taskId: UUID): List<Attachment> = attachmentRepository.findAllByTaskId(taskId)
+    @Throws(EntityNotFoundException::class)
+    fun getById(id: UUID): Attachment = try {
+        attachmentRepository.getById(id)
+    } catch (exception: javax.persistence.EntityNotFoundException) {
+        throw EntityNotFoundException(ExceptionConstants.ATTACHMENT, id)
+    }
 
     @Transactional
-    fun updateById(id: UUID, updateTaskAttachmentDTO: UpdateTaskAttachmentDTO): AttachmentDTO? = try {
-        updateTaskAttachmentDTO.run {
+    fun updateById(id: UUID, updateAttachmentDTO: UpdateAttachmentDTO): AttachmentDTO? = try {
+        updateAttachmentDTO.run {
             attachmentRepository.getById(id).let { existingAttachment ->
                 attachmentRepository.save(
                     existingAttachment.copy(
@@ -69,6 +74,4 @@ class AttachmentService(
         logger.error(exception) { "Failed to delete Attachment: $exception." }
         false
     }
-
-    fun deleteByTaskId(taskId: UUID) = attachmentRepository.deleteAllByTaskId(taskId)
 }
