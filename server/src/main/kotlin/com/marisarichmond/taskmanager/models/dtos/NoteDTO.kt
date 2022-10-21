@@ -3,6 +3,7 @@ package com.marisarichmond.taskmanager.models.dtos
 import org.hibernate.Hibernate
 import java.util.*
 
+// Response DTOs
 data class NoteDTO(
     val id: UUID,
     val title: String,

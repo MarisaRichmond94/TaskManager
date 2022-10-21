@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0014_create_note_tags_table
+      author: marisarichmond
+      comment: create note_tags table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: note_tags
+      changes:
+        - createTable:
+            tableName: note_tags
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: note_tag_pkey
+              - column:
+                  name: created_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: note_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_note_id
+                    references: notes(id)
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_tag_id
+                    references: tags(id)
+                    nullable: false
