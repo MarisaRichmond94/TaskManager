@@ -1,25 +1,30 @@
 databaseChangeLog:
   - changeSet:
-      id: 0012_create_sections_table
+      id: 0013_create_notes_table
       author: marisarichmond
-      comment: create sections table
+      comment: create notes table
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: sections
+                tableName: notes
       changes:
         - createTable:
-            tableName: sections
+            tableName: notes
             columns:
               - column:
                   name: id
                   type: UUID
                   constraints:
                     primaryKey: true
-                    primaryKeyName: section_pkey
+                    primaryKeyName: note_pkey
               - column:
                   name: title
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
                   type: varchar
                   constraints:
                     nullable: false
@@ -32,6 +37,13 @@ databaseChangeLog:
                   name: updated_at
                   type: bigint
                   constraints:
+                    nullable: false
+              - column:
+                  name: section_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_section_id
+                    references: sections(id)
                     nullable: false
               - column:
                   name: user_id
