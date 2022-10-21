@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0015_create_note_attachments_table
+      author: marisarichmond
+      comment: create note_attachments table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: note_attachments
+      changes:
+        - createTable:
+            tableName: note_attachments
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: note_attachment_pkey
+              - column:
+                  name: created_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: note_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_note_id
+                    references: notes(id)
+                    nullable: false
+              - column:
+                  name: attachment_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_attachment_id
+                    references: attachments(id)
+                    nullable: false

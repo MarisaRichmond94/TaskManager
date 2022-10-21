@@ -5,8 +5,8 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "note_tags")
-data class NoteTag(
+@Table(name = "note_attachments")
+data class NoteAttachment(
     @Id
     override val id: UUID = UUID.randomUUID(),
     val createdAt: Long = Instant.now().epochSecond,
@@ -15,6 +15,6 @@ data class NoteTag(
     @JoinColumn(name = "note_id")
     val note: Note,
     @OneToOne
-    @JoinColumn(name = "tag_id")
-    val tag: Tag,
+    @JoinColumn(name = "attachment_id")
+    val attachment: Attachment,
 ) : Base(id)
