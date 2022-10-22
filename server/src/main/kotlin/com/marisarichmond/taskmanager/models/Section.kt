@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.SectionDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -21,3 +22,13 @@ data class Section(
         "title = $title",
     ).joinToString(", ")
 }
+
+fun Section.toDTO(): SectionDTO =
+    this.run {
+        SectionDTO(
+            id = id,
+            title = title,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+        )
+    }

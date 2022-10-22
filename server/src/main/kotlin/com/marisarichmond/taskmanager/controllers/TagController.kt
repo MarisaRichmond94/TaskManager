@@ -15,7 +15,10 @@ import java.util.*
 class TagController(private val tagService: TagService) {
     @ResponseBody
     @PostMapping
-    fun create(@RequestHeader("userId") userId: UUID, @RequestBody createTagDTO: CreateTagDTO): ResponseEntity<Tag?> =
+    fun create(
+        @RequestHeader("userId") userId: UUID,
+        @RequestBody createTagDTO: CreateTagDTO,
+    ): ResponseEntity<Tag?> =
         when (val taskAttachment = tagService.create(userId, createTagDTO)) {
             is Tag -> ResponseEntity.status(HttpStatus.CREATED).body(taskAttachment)
             else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()

@@ -1,6 +1,10 @@
 package com.marisarichmond.taskmanager.services
 
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.createFailed
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.deleteFailed
+import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.updateFailed
 import com.marisarichmond.taskmanager.models.Comment
+import com.marisarichmond.taskmanager.models.Section
 import com.marisarichmond.taskmanager.models.dtos.CommentDTO
 import com.marisarichmond.taskmanager.models.dtos.CreateTaskCommentDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskCommentDTO
@@ -19,7 +23,10 @@ class CommentService(
 ) {
     companion object {
         private val logger = KotlinLogging.logger {}
+        private val entityType = Section::class.simpleName
     }
+
+    fun getByTaskId(taskId: UUID): List<Comment> = commentRepository.findAllByTaskId(taskId)
 
     @Transactional
     fun create(createTaskCommentDTO: CreateTaskCommentDTO): CommentDTO? = try {
@@ -31,11 +38,9 @@ class CommentService(
             ).let { commentRepository.save(it).toDTO() }
         }
     } catch (exception: Exception) {
-        logger.error(exception) { "Failed to create Comment: $exception." }
+        logger.error(exception) { createFailed(exception, entityType) }
         null
     }
-
-    fun getByTaskId(taskId: UUID): List<Comment> = commentRepository.findAllByTaskId(taskId)
 
     @Transactional
     fun updateById(id: UUID, updateTaskCommentDTO: UpdateTaskCommentDTO): CommentDTO? = try {
@@ -50,7 +55,7 @@ class CommentService(
             }
         }
     } catch (exception: Exception) {
-        logger.error(exception) { "Failed to update Comment: $exception." }
+        logger.error(exception) { updateFailed(exception, entityType) }
         null
     }
 
@@ -59,9 +64,16 @@ class CommentService(
         commentRepository.deleteById(id)
         true
     } catch (exception: Exception) {
-        logger.error(exception) { "Failed to delete Comment: $exception." }
+        logger.error(exception) { deleteFailed(exception, entityType) }
         false
     }
 
-    fun deleteByTaskId(taskId: UUID) = commentRepository.deleteAllByTaskId(taskId)
+    @Transactional
+    fun deleteByTaskId(taskId: UUID): Boolean = try {
+        commentRepository.deleteAllByTaskId(taskId)
+        true
+    } catch (exception: Exception) {
+        logger.error(exception) { deleteFailed(exception, entityType) }
+        false
+    }
 }

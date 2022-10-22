@@ -7,4 +7,6 @@ import java.util.*
 
 @Repository
 interface SectionRepository : JpaRepository<Section, UUID> {
+    fun findAllByUserId(userId: UUID): List<Section>
+    fun deleteAllByUserId(userId: UUID)
 }

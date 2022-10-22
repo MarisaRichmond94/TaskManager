@@ -3,7 +3,7 @@ package com.marisarichmond.taskmanager.constants
 public class ExceptionConstants {
     companion object {
         // actions
-        const val CREATE = "create"
+        private const val CREATE = "create"
         const val DELETE = "delete"
         const val UPDATE = "update"
 
@@ -15,5 +15,9 @@ public class ExceptionConstants {
         const val TASK = "Task"
         const val TASK_ATTACHMENT = "Task Attachment"
         const val USER = "User"
+
+        fun createFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $CREATE $entityType: ${exception.message}"
+        fun updateFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $UPDATE $entityType: ${exception.message}"
+        fun deleteFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $DELETE $entityType: ${exception.message}"
     }
 }
