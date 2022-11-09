@@ -12,26 +12,26 @@ import java.util.*
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/tags")
-class TagController(private val tagService: TagService) {
+class TagController(private val tagService: TagService) : BaseController(Tag::class.simpleName) {
     @ResponseBody
     @PostMapping
     fun create(
         @RequestHeader("userId") userId: UUID,
         @RequestBody createTagDTO: CreateTagDTO,
-    ): ResponseEntity<Tag?> =
-        when (val taskAttachment = tagService.create(userId, createTagDTO)) {
-            is Tag -> ResponseEntity.status(HttpStatus.CREATED).body(taskAttachment)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    ): ResponseEntity<Tag> = try {
+        ResponseEntity.status(HttpStatus.CREATED).body(tagService.create(userId, createTagDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.CREATE, exception)
+    }
 
     @ResponseBody
     @PatchMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
         @RequestBody updateTagDTO: UpdateTagDTO,
-    ): ResponseEntity<Tag?> =
-        when (val updatedTaskAttachment = tagService.updateById(id, updateTagDTO)) {
-            is Tag -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTaskAttachment)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    ): ResponseEntity<Tag> = try {
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(tagService.updateById(id, updateTagDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.CREATE, exception)
+    }
 }

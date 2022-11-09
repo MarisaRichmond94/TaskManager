@@ -1,15 +1,15 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.constants.ExceptionConstants
-import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.TASK_ATTACHMENT
+import com.marisarichmond.taskmanager.controllers.Action
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
+import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
+import com.marisarichmond.taskmanager.models.Attachment
 import com.marisarichmond.taskmanager.models.TaskAttachment
 import com.marisarichmond.taskmanager.models.dtos.CreateTaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.TaskAttachmentRepository
-import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
@@ -20,41 +20,29 @@ class TaskAttachmentService(
     private val taskAttachmentRepository: TaskAttachmentRepository,
     private val taskService: TaskService,
 ) {
-    companion object {
-        private val logger = KotlinLogging.logger {}
-    }
-
     @Transactional
-    fun create(createTaskAttachmentDTO: CreateTaskAttachmentDTO): TaskAttachmentDTO? = try {
-        createTaskAttachmentDTO.run {
-            if (attachment === null) return@run null
+    @Throws(UpstreamEntityOperationException::class)
+    fun create(createTaskAttachmentDTO: CreateTaskAttachmentDTO): TaskAttachmentDTO = createTaskAttachmentDTO.run {
+        if (attachment === null) throw UpstreamEntityOperationException(Action.GET, Attachment::class.simpleName)
 
-            TaskAttachment(
-                id = id,
-                task = taskService.getById(taskId),
-                attachment = attachment,
-            ).let { taskAttachmentRepository.save(it).toDTO() }
-        }
-    } catch (exception: Exception) {
-        logger.error(exception) { "Failed to create TaskAttachment: $exception." }
-        null
+        TaskAttachment(
+            id = id,
+            task = taskService.getById(taskId),
+            attachment = attachment,
+        ).let { taskAttachmentRepository.save(it).toDTO() }
     }
 
     @Throws(EntityNotFoundException::class)
-    fun getById(id: UUID): TaskAttachment = try {
-        taskAttachmentRepository.getById(id)
-    } catch (exception: javax.persistence.EntityNotFoundException) {
-        throw EntityNotFoundException(ExceptionConstants.TASK_ATTACHMENT, id)
-    }
+    fun getById(id: UUID): TaskAttachment = taskAttachmentRepository.getById(id)
 
     fun getByAttachmentId(attachmentId: UUID): TaskAttachment =
         taskAttachmentRepository.findAllByAttachmentId(attachmentId).firstOrNull()
-            ?: throw EntityNotFoundException(TASK_ATTACHMENT, attachmentId)
+            ?: throw EntityNotFoundException(TaskAttachment::class.simpleName, attachmentId)
 
     fun getByTaskId(taskId: UUID): List<TaskAttachment> = taskAttachmentRepository.findAllByTaskId(taskId)
 
     @Transactional
-    fun updateById(id: UUID, updateTaskAttachmentDTO: UpdateTaskAttachmentDTO): TaskAttachmentDTO? = try {
+    fun updateById(id: UUID, updateTaskAttachmentDTO: UpdateTaskAttachmentDTO): TaskAttachmentDTO =
         updateTaskAttachmentDTO.run {
             taskAttachmentRepository.getById(id).let { existingTaskAttachment ->
                 taskAttachmentRepository.save(
@@ -62,21 +50,9 @@ class TaskAttachmentService(
                 ).toDTO()
             }
         }
-    } catch (exception: Exception) {
-        logger.error(exception) { "Failed to update TaskAttachment: $exception." }
-        null
-    }
 
     @Transactional
-    fun deleteById(id: UUID): Boolean = try {
-        taskAttachmentRepository.deleteById(id)
-        true
-    } catch (exception: Exception) {
-        logger.error(exception) { "Failed to delete TaskAttachment: $exception." }
-        false
-    }
-
-    fun deleteByAttachmentId(attachmentId: UUID) = taskAttachmentRepository.deleteAllByAttachmentId(attachmentId)
+    fun deleteById(id: UUID) = taskAttachmentRepository.deleteById(id)
 
     fun deleteByTaskId(taskId: UUID) = taskAttachmentRepository.deleteAllByTaskId(taskId)
 }

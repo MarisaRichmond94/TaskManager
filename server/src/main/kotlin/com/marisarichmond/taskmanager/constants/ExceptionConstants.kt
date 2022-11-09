@@ -1,23 +1,23 @@
 package com.marisarichmond.taskmanager.constants
 
+import com.marisarichmond.taskmanager.controllers.Action
+
 public class ExceptionConstants {
     companion object {
-        // actions
-        private const val CREATE = "create"
-        const val DELETE = "delete"
-        const val UPDATE = "update"
+        // custom types
+        private const val ENTITY = "Entity"
+        const val TASK_DATA = "Task Data"
 
-        // types
-        const val ATTACHMENT = "Attachment"
-        const val ATTACHMENT_TYPE = "Attachment Type"
-        const val STATUS_TYPE = "Status Type"
-        const val TAG = "Tag"
-        const val TASK = "Task"
-        const val TASK_ATTACHMENT = "Task Attachment"
-        const val USER = "User"
+        fun createFailed(exception: Throwable, entityType: String? = ENTITY): String =
+            "Failed to ${Action.CREATE.toString().lowercase()} $entityType: ${exception.message}"
 
-        fun createFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $CREATE $entityType: ${exception.message}"
-        fun updateFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $UPDATE $entityType: ${exception.message}"
-        fun deleteFailed(exception: Throwable, entityType: String? = "entity"): String = "Failed to $DELETE $entityType: ${exception.message}"
+        fun getByIdFailed(exception: Throwable, entityType: String? = ENTITY): String =
+            "Failed to ${Action.GET.toString().lowercase()} $entityType by id: ${exception.message}"
+
+        fun updateFailed(exception: Throwable, entityType: String? = ENTITY): String =
+            "Failed to ${Action.UPDATE.toString().lowercase()} $entityType: ${exception.message}"
+
+        fun deleteFailed(exception: Throwable, entityType: String? = ENTITY): String =
+            "Failed to ${Action.DELETE.toString().lowercase()} $entityType: ${exception.message}"
     }
 }

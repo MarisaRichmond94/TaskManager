@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.ATTACHMENT_TYPE
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.models.AttachmentType
 import com.marisarichmond.taskmanager.repositories.AttachmentTypeRepository
@@ -19,7 +18,7 @@ class AttachmentTypeService(private val attachmentTypeRepository: AttachmentType
     fun getById(id: UUID): AttachmentType = try {
         attachmentTypeRepository.getById(id)
     } catch (exception: javax.persistence.EntityNotFoundException) {
-        throw EntityNotFoundException(ATTACHMENT_TYPE, id)
+        throw EntityNotFoundException(AttachmentType::class.simpleName, id)
     }
 
     @Throws(HibernateException::class)

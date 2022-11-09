@@ -11,28 +11,29 @@ import java.util.*
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/users")
-class UserController(private val userService: UserService) {
+class UserController(private val userService: UserService) : BaseController(User::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun findOrCreateUser(@RequestBody createUserRequestBody: CreateUserRequestBody): ResponseEntity<User?> =
-        when (val newUser = userService.findOrCreateUser(createUserRequestBody)) {
-            is User -> ResponseEntity.status(HttpStatus.CREATED).body(newUser)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    fun findOrCreateUser(@RequestBody createUserRequestBody: CreateUserRequestBody): ResponseEntity<User> = try {
+        ResponseEntity.status(HttpStatus.CREATED).body(userService.findOrCreateUser(createUserRequestBody))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.GET, exception)
+    }
 
     @ResponseBody
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable id: UUID): ResponseEntity<User?> =
-        when (val userById = userService.getUserById(id)) {
-            is User -> ResponseEntity.status(HttpStatus.OK).body(userById)
-            else -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        }
+    fun getUserById(@PathVariable id: UUID): ResponseEntity<User> = try {
+        ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.GET, exception)
+    }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteUserById(@PathVariable id: UUID): ResponseEntity<Unit> =
-        when (userService.deleteUserById(id)) {
-            true -> ResponseEntity.status(HttpStatus.ACCEPTED).build()
-            false -> ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-        }
+    fun deleteUserById(@PathVariable id: UUID): ResponseEntity<Unit> = try {
+        userService.deleteUserById(id)
+        ResponseEntity.status(HttpStatus.ACCEPTED).build()
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.DELETE, exception)
+    }
 }

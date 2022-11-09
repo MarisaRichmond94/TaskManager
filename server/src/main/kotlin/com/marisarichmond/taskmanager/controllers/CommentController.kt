@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.controllers
 
+import com.marisarichmond.taskmanager.models.Comment
 import com.marisarichmond.taskmanager.models.dtos.CommentDTO
 import com.marisarichmond.taskmanager.models.dtos.CreateTaskCommentDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskCommentDTO
@@ -12,29 +13,32 @@ import java.util.*
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/comments")
-class CommentController(private val commentService: CommentService) {
+class CommentController(private val commentService: CommentService) : BaseController(Comment::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody createTaskCommentDTO: CreateTaskCommentDTO): ResponseEntity<CommentDTO?> =
-        when (val taskComment = commentService.create(createTaskCommentDTO)) {
-            is CommentDTO -> ResponseEntity.status(HttpStatus.CREATED).body(taskComment)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    fun create(@RequestBody createTaskCommentDTO: CreateTaskCommentDTO): ResponseEntity<CommentDTO> = try {
+        ResponseEntity.status(HttpStatus.CREATED).body(commentService.create(createTaskCommentDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.CREATE, exception)
+    }
 
     @ResponseBody
     @PatchMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
         @RequestBody updateTaskCommentDTO: UpdateTaskCommentDTO,
-    ): ResponseEntity<CommentDTO?> =
-        when (val updatedTaskComment = commentService.updateById(id, updateTaskCommentDTO)) {
-            is CommentDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTaskComment)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    ): ResponseEntity<CommentDTO> = try {
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(commentService.updateById(id, updateTaskCommentDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.UPDATE, exception)
+    }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteById(@PathVariable id: UUID): ResponseEntity<String> =
-        if (commentService.deleteById(id)) ResponseEntity.status(HttpStatus.ACCEPTED).body("Comment successfully deleted.")
-        else ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete Comment with id \"$id\".")
+    fun deleteById(@PathVariable id: UUID): ResponseEntity<String> = try {
+        commentService.deleteById(id)
+        ResponseEntity.status(HttpStatus.ACCEPTED).body("${Comment::class.simpleName} successfully deleted.")
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.DELETE, exception)
+    }
 }

@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.controllers
 
+import com.marisarichmond.taskmanager.models.ChecklistItem
 import com.marisarichmond.taskmanager.models.dtos.ChecklistItemDTO
 import com.marisarichmond.taskmanager.models.dtos.CreateTaskChecklistItemDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskChecklistItemDTO
@@ -12,29 +13,32 @@ import java.util.*
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/checklist_items")
-class ChecklistItemController(private val checklistItemService: ChecklistItemService) {
+class ChecklistItemController(private val checklistItemService: ChecklistItemService) : BaseController(ChecklistItem::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody createTaskChecklistItemDTO: CreateTaskChecklistItemDTO): ResponseEntity<ChecklistItemDTO?> =
-        when (val taskChecklistItem = checklistItemService.create(createTaskChecklistItemDTO)) {
-            is ChecklistItemDTO -> ResponseEntity.status(HttpStatus.CREATED).body(taskChecklistItem)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    fun create(@RequestBody createTaskChecklistItemDTO: CreateTaskChecklistItemDTO): ResponseEntity<ChecklistItemDTO> = try {
+        ResponseEntity.status(HttpStatus.CREATED).body(checklistItemService.create(createTaskChecklistItemDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.CREATE, exception)
+    }
 
     @ResponseBody
     @PatchMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
         @RequestBody updateTaskChecklistItemDTO: UpdateTaskChecklistItemDTO,
-    ): ResponseEntity<ChecklistItemDTO?> =
-        when (val updatedTaskChecklistItem = checklistItemService.updateById(id, updateTaskChecklistItemDTO)) {
-            is ChecklistItemDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTaskChecklistItem)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    ): ResponseEntity<ChecklistItemDTO?> = try {
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(checklistItemService.updateById(id, updateTaskChecklistItemDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.UPDATE, exception)
+    }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteById(@PathVariable id: UUID): ResponseEntity<String> =
-        if (checklistItemService.deleteById(id)) ResponseEntity.status(HttpStatus.ACCEPTED).body("Attachment successfully deleted.")
-        else ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete Attachment with id \"$id\".")
+    fun deleteById(@PathVariable id: UUID): ResponseEntity<String> = try {
+        checklistItemService.deleteById(id)
+        ResponseEntity.status(HttpStatus.ACCEPTED).body("${ChecklistItem::class.simpleName} successfully deleted.")
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.DELETE, exception)
+    }
 }

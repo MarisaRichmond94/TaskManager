@@ -5,7 +5,7 @@ package com.marisarichmond.taskmanager.exceptions
  * [retrievalFieldValue].
  */
 class EntityNotFoundException(
-    type: String,
+    entityType: String? = "Entity",
     retrievalFieldValue: Any,
     retrievalField: String = "id"
-) : RuntimeException("$type by $retrievalField \"$retrievalFieldValue\" not found.")
+) : RuntimeException("$entityType by $retrievalField \"$retrievalFieldValue\" not found.")

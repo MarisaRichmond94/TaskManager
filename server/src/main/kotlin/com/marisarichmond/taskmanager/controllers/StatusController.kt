@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.controllers
 
+import com.marisarichmond.taskmanager.models.Status
 import com.marisarichmond.taskmanager.models.dtos.StatusDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskStatusDTO
 import com.marisarichmond.taskmanager.services.StatusService
@@ -11,15 +12,15 @@ import java.util.*
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/private/statuses")
-class StatusController(private val statusService: StatusService) {
+class StatusController(private val statusService: StatusService) : BaseController(Status::class.simpleName) {
     @ResponseBody
     @PatchMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
         @RequestBody updateTaskStatusDTO: UpdateTaskStatusDTO,
-    ): ResponseEntity<StatusDTO?> =
-        when (val updatedTaskStatus = statusService.updateById(id, updateTaskStatusDTO)) {
-            is StatusDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedTaskStatus)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-        }
+    ): ResponseEntity<StatusDTO> = try {
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(statusService.updateById(id, updateTaskStatusDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.UPDATE, exception)
+    }
 }

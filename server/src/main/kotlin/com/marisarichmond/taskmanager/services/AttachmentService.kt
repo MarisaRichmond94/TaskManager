@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.services
 
-import com.marisarichmond.taskmanager.constants.ExceptionConstants
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.models.Attachment
 import com.marisarichmond.taskmanager.models.dtos.AttachmentDTO
@@ -42,7 +41,7 @@ class AttachmentService(
     fun getById(id: UUID): Attachment = try {
         attachmentRepository.getById(id)
     } catch (exception: javax.persistence.EntityNotFoundException) {
-        throw EntityNotFoundException(ExceptionConstants.ATTACHMENT, id)
+        throw EntityNotFoundException(Attachment::class.simpleName, id)
     }
 
     @Transactional

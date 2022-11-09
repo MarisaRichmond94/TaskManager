@@ -1,6 +1,10 @@
 package com.marisarichmond.taskmanager.controllers
 
-import com.marisarichmond.taskmanager.models.dtos.*
+import com.marisarichmond.taskmanager.models.TaskAttachment
+import com.marisarichmond.taskmanager.models.dtos.AttachmentDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateAttachmentDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateTaskAttachmentDTO
+import com.marisarichmond.taskmanager.models.dtos.UpdateAttachmentDTO
 import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.services.AttachmentService
 import com.marisarichmond.taskmanager.services.TaskAttachmentService
@@ -20,10 +24,10 @@ import java.util.*
 class TaskAttachmentController(
     private val attachmentService: AttachmentService,
     private val taskAttachmentService: TaskAttachmentService,
-) {
+) : BaseController(TaskAttachment::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody createTaskAttachmentDTO: CreateTaskAttachmentDTO): ResponseEntity<AttachmentDTO?> =
+    fun create(@RequestBody createTaskAttachmentDTO: CreateTaskAttachmentDTO): ResponseEntity<AttachmentDTO> = try {
         createTaskAttachmentDTO.run {
             val attachment = attachmentService.create(
                 CreateAttachmentDTO(
@@ -33,24 +37,29 @@ class TaskAttachmentController(
                     attachmentTypeId = attachmentTypeId,
                 )
             )
-            println(attachment)
-
-            when (val taskAttachment = taskAttachmentService.create(createTaskAttachmentDTO.copy(attachment = attachment))) {
-                is TaskAttachmentDTO -> ResponseEntity.status(HttpStatus.CREATED).body(taskAttachment.attachment.toDTO())
-                else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-            }
+            ResponseEntity.status(HttpStatus.CREATED).body(
+                taskAttachmentService.create(
+                    createTaskAttachmentDTO.copy(attachment = attachment)
+                ).attachment.toDTO()
+            )
         }
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.CREATE, exception)
+    }
 
     @ResponseBody
     @PatchMapping("/{attachmentId}")
     fun updateById(
         @PathVariable attachmentId: UUID,
         @RequestBody updateAttachmentDTO: UpdateAttachmentDTO,
-    ): ResponseEntity<AttachmentDTO?> = updateAttachmentDTO.run {
-        when (val updatedAttachment = attachmentService.updateById(attachmentId, updateAttachmentDTO)) {
-            is AttachmentDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAttachment)
-            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+    ): ResponseEntity<AttachmentDTO> = try {
+        updateAttachmentDTO.run {
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                attachmentService.updateById(attachmentId, updateAttachmentDTO)
+            )
         }
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.UPDATE, exception)
     }
 
     @ResponseBody
@@ -61,6 +70,6 @@ class TaskAttachmentController(
         attachmentService.deleteById(attachmentId)
         ResponseEntity.status(HttpStatus.ACCEPTED).body("Task Attachment successfully deleted.")
     } catch (exception: Exception) {
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete Task Attachment with attachmentId \"$attachmentId\".")
+        throw baseControllerException(Action.DELETE, exception)
     }
 }
