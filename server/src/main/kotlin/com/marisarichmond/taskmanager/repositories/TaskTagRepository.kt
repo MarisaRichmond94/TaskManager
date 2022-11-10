@@ -9,8 +9,6 @@ import java.util.*
 interface TaskTagRepository : JpaRepository<TaskTag, UUID> {
     fun findAllByTaskId(taskId: UUID): List<TaskTag>
 
-    fun findAllByTagId(tagId: UUID): List<TaskTag>
-    
     fun deleteAllByTaskId(taskId: UUID)
 
     fun deleteAllByTagId(tagId: UUID)

@@ -7,4 +7,9 @@ import java.util.*
 
 @Repository
 interface NoteTagRepository : JpaRepository<NoteTag, UUID> {
+    fun findAllByNoteId(noteId: UUID): List<NoteTag>
+
+    fun deleteAllByNoteId(noteId: UUID)
+
+    fun deleteAllByTagId(tagId: UUID)
 }

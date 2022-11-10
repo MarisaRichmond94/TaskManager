@@ -23,6 +23,8 @@ data class NoteAttachment(
 fun NoteAttachment.toDTO(): NoteAttachmentDTO = this.run {
     NoteAttachmentDTO(
         id = id,
+        noteId = note.id,
+        attachmentId = attachment.id,
         link = attachment.link,
         name = attachment.name,
         attachmentType = attachment.attachmentType,

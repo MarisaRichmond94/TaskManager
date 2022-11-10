@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.NoteTagDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -18,3 +19,15 @@ data class NoteTag(
     @JoinColumn(name = "tag_id")
     val tag: Tag,
 ) : Base(id)
+
+fun NoteTag.toDTO(): NoteTagDTO = this.run {
+    NoteTagDTO(
+        id = id,
+        noteId = note.id,
+        tagId = tag.id,
+        hexColor = tag.hexColor,
+        name = tag.name,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+    )
+}

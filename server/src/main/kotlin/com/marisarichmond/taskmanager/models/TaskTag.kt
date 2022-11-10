@@ -20,14 +20,13 @@ data class TaskTag(
     val tag: Tag,
 ) : Base(id)
 
-fun TaskTag.toDTO(): TaskTagDTO =
-    this.run {
-        TaskTagDTO(
-            id = id,
-            tagId = tag.id,
-            hexColor = tag.hexColor,
-            name = tag.name,
-            createdAt = createdAt,
-            updatedAt = updatedAt,
-        )
-    }
+fun TaskTag.toDTO(): TaskTagDTO = this.run {
+    TaskTagDTO(
+        id = id,
+        tagId = tag.id,
+        hexColor = tag.hexColor,
+        name = tag.name,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+    )
+}
