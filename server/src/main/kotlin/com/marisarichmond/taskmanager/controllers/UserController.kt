@@ -23,7 +23,7 @@ class UserController(private val userService: UserService) : BaseController(User
     @ResponseBody
     @GetMapping("/{id}")
     fun getUserById(@PathVariable id: UUID): ResponseEntity<User> = try {
-        ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id))
+        ResponseEntity.status(HttpStatus.OK).body(userService.getById(id))
     } catch (exception: Exception) {
         throw baseControllerException(Action.GET, exception)
     }

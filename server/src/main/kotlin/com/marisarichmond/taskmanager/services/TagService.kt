@@ -31,7 +31,7 @@ class TagService(
             id = id,
             name = name,
             hexColor = hexColor,
-            user = userService.getUserById(userId) ?: throw EntityNotFoundException(User::class.simpleName, userId)
+            user = userService.getById(userId) ?: throw EntityNotFoundException(User::class.simpleName, userId)
         ).let(tagRepository::save)
     }
 

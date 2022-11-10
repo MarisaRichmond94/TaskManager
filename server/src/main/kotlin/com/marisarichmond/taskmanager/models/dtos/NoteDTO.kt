@@ -29,7 +29,7 @@ data class NoteDTO(
 }
 
 // Request DTOs
-data class CreateNewNoteDTO(val id: UUID = UUID.randomUUID(), val title: String)
+data class CreateNoteDTO(val id: UUID = UUID.randomUUID(), val title: String, val sectionId: UUID)
 
 data class UpdateNoteByIdDTO(
     val title: String? = null,

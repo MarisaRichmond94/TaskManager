@@ -24,7 +24,7 @@ class TaskService(
     fun create(userId: UUID, createNewTaskDTO: CreateNewTaskDTO): Task = createNewTaskDTO.run {
         Task(
             id = id,
-            user = userService.getUserById(userId)
+            user = userService.getById(userId)
                 ?: throw UpstreamEntityOperationException(Action.GET, User::class.simpleName),
         ).let(taskRepository::save)
     }

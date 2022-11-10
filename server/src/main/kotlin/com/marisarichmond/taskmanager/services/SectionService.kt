@@ -18,6 +18,8 @@ class SectionService(
     private val sectionRepository: SectionRepository,
     private val userService: UserService,
 ) {
+    fun getById(id: UUID): Section = sectionRepository.getById(id)
+
     fun getByUserId(userId: UUID): List<Section> = sectionRepository.findAllByUserId(userId)
 
     @Transactional
@@ -25,7 +27,7 @@ class SectionService(
         Section(
             id = id,
             title = title,
-            user = userService.getUserById(userId) ?: throw EntityNotFoundException(User::class.simpleName, userId),
+            user = userService.getById(userId) ?: throw EntityNotFoundException(User::class.simpleName, userId),
         ).let { sectionRepository.save(it).toDTO() }
     }
 

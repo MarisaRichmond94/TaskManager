@@ -10,7 +10,7 @@ import javax.transaction.Transactional
 
 @Service
 class UserService(private val userRepository: UserRepository) {
-    fun getUserById(id: UUID): User? = userRepository.findById(id).unwrap()
+    fun getById(id: UUID): User? = userRepository.findById(id).unwrap()
 
     @Transactional
     fun findOrCreateUser(createUserRequestBody: CreateUserRequestBody): User = createUserRequestBody.run {
