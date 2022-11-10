@@ -12,6 +12,4 @@ interface TaskAttachmentRepository : JpaRepository<TaskAttachment, UUID> {
     fun findAllByAttachmentId(attachmentId: UUID): List<TaskAttachment>
 
     fun deleteAllByTaskId(taskId: UUID)
-
-    fun deleteAllByAttachmentId(attachmentId: UUID)
 }

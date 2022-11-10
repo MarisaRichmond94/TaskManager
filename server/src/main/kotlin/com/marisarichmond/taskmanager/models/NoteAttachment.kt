@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.NoteAttachmentDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -18,3 +19,14 @@ data class NoteAttachment(
     @JoinColumn(name = "attachment_id")
     val attachment: Attachment,
 ) : Base(id)
+
+fun NoteAttachment.toDTO(): NoteAttachmentDTO = this.run {
+    NoteAttachmentDTO(
+        id = id,
+        link = attachment.link,
+        name = attachment.name,
+        attachmentType = attachment.attachmentType,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+    )
+}
