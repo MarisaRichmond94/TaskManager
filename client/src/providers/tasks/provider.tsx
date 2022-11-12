@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import * as StatusesApi from 'api/statuses';
 import * as TagsApi from 'api/tags';
-import * as TaskManagerTagsApi from 'api/task_manager_tags';
 import * as TaskManagerApi from 'api/task_manager';
 import * as TasksApi from 'api/tasks';
 import useActionOnInterval from 'hooks/useActionOnInterval';
@@ -99,7 +98,7 @@ const TasksProvider = (props: object) => {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
-    await TaskManagerApi.deleteById(id, getAccessTokenSilently);
+    await TasksApi.deleteById(id, getAccessTokenSilently);
   }, [activeTaskId, tasks, getAccessTokenSilently]);
 
   const updateActiveTaskId = (id?: string) => {
@@ -119,7 +118,7 @@ const TasksProvider = (props: object) => {
   }, [getAccessTokenSilently, getTaskDataForUserById]);
 
   const deleteTag = useCallback(async (id: string) => {
-    const isSuccessfullyDeleted = await TaskManagerTagsApi.deleteById(id, getAccessTokenSilently);
+    const isSuccessfullyDeleted = await TagsApi.deleteById(id, getAccessTokenSilently);
     if (isSuccessfullyDeleted) getTaskDataForUserById();
   }, [getAccessTokenSilently, getTaskDataForUserById]);
 

@@ -16,8 +16,12 @@ import java.util.*
 class CommentController(private val commentService: CommentService) : BaseController(Comment::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody createTaskCommentDTO: CreateTaskCommentDTO): ResponseEntity<CommentDTO> = try {
-        ResponseEntity.status(HttpStatus.CREATED).body(commentService.create(createTaskCommentDTO))
+    fun create(
+        @RequestBody createTaskCommentDTO: CreateTaskCommentDTO,
+    ): ResponseEntity<CommentDTO> = try {
+        ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(commentService.create(createTaskCommentDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.CREATE, exception)
     }
@@ -28,16 +32,22 @@ class CommentController(private val commentService: CommentService) : BaseContro
         @PathVariable id: UUID,
         @RequestBody updateTaskCommentDTO: UpdateTaskCommentDTO,
     ): ResponseEntity<CommentDTO> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(commentService.updateById(id, updateTaskCommentDTO))
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(commentService.updateById(id, updateTaskCommentDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.UPDATE, exception)
     }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteById(@PathVariable id: UUID): ResponseEntity<String> = try {
+    fun deleteById(
+        @PathVariable id: UUID,
+    ): ResponseEntity<String> = try {
         commentService.deleteById(id)
-        ResponseEntity.status(HttpStatus.ACCEPTED).body("${Comment::class.simpleName} successfully deleted.")
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body("${Comment::class.simpleName} successfully deleted.")
     } catch (exception: Exception) {
         throw baseControllerException(Action.DELETE, exception)
     }

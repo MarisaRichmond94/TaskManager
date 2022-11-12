@@ -1,15 +1,14 @@
 enum ApiMethod { post, get, getById, patch, delete, deleteById };
 
 enum ApiRoute {
-  taskAttachments = 'task_attachments',
   checklistItems = 'checklist_items',
   comments = 'comments',
   statuses = 'statuses',
   tags = 'tags',
+  taskAttachments = 'task_manager/task/attachments',
   taskManager = 'task_manager',
-  taskManagerTags = 'task_manager/tags',
   tasks = 'task_manager/tasks',
-  taskTags = 'task_tags',
+  taskTags = 'task_manager/task/tags',
   users = 'users',
 };
 

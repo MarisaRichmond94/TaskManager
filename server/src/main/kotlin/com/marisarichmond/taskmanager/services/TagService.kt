@@ -1,6 +1,8 @@
 package com.marisarichmond.taskmanager.services
 
+import com.marisarichmond.taskmanager.controllers.Action
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
+import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessException
 import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.User
 import com.marisarichmond.taskmanager.models.dtos.CreateTagDTO
@@ -14,6 +16,8 @@ import javax.transaction.Transactional
 @Service
 class TagService(
     private val tagRepository: TagRepository,
+    private val noteTagService: NoteTagService,
+    private val taskTagService: TaskTagService,
     private val userService: UserService,
 ) {
     @Throws(EntityNotFoundException::class)
@@ -45,6 +49,25 @@ class TagService(
                     updatedAt = Instant.now().epochSecond,
                 )
             )
+        }
+    }
+
+    @Transactional
+    @Throws(UnauthorizedEntityAccessException::class)
+    fun delete(id: UUID, userId: UUID) {
+        tagRepository.getById(id).run {
+            if (user.id != userId) {
+                throw UnauthorizedEntityAccessException(
+                    userId,
+                    Action.DELETE,
+                    id,
+                    Tag::class.simpleName,
+                )
+            }
+
+            noteTagService.deleteByTagId(id)
+            taskTagService.deleteByTagId(id)
+            tagRepository.deleteById(id)
         }
     }
 

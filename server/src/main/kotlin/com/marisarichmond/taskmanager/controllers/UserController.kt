@@ -14,25 +14,37 @@ import java.util.*
 class UserController(private val userService: UserService) : BaseController(User::class.simpleName) {
     @ResponseBody
     @PostMapping
-    fun findOrCreateUser(@RequestBody createUserRequestBody: CreateUserRequestBody): ResponseEntity<User> = try {
-        ResponseEntity.status(HttpStatus.CREATED).body(userService.findOrCreateUser(createUserRequestBody))
+    fun findOrCreateUser(
+        @RequestBody createUserRequestBody: CreateUserRequestBody,
+    ): ResponseEntity<User> = try {
+        ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(userService.findOrCreateUser(createUserRequestBody))
     } catch (exception: Exception) {
         throw baseControllerException(Action.GET, exception)
     }
 
     @ResponseBody
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable id: UUID): ResponseEntity<User> = try {
-        ResponseEntity.status(HttpStatus.OK).body(userService.getById(id))
+    fun getUserById(
+        @PathVariable id: UUID,
+    ): ResponseEntity<User> = try {
+        ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.getById(id))
     } catch (exception: Exception) {
         throw baseControllerException(Action.GET, exception)
     }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    fun deleteUserById(@PathVariable id: UUID): ResponseEntity<Unit> = try {
+    fun deleteUserById(
+        @PathVariable id: UUID,
+    ): ResponseEntity<String> = try {
         userService.deleteUserById(id)
-        ResponseEntity.status(HttpStatus.ACCEPTED).build()
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body("${User::class.simpleName} successfully deleted")
     } catch (exception: Exception) {
         throw baseControllerException(Action.DELETE, exception)
     }

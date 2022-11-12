@@ -4,8 +4,8 @@ import com.marisarichmond.taskmanager.controllers.Action
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
 import com.marisarichmond.taskmanager.models.Attachment
+import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.models.TaskAttachment
-import com.marisarichmond.taskmanager.models.dtos.CreateTaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskAttachmentDTO
 import com.marisarichmond.taskmanager.models.toDTO
@@ -18,18 +18,21 @@ import javax.transaction.Transactional
 @Service
 class TaskAttachmentService(
     private val taskAttachmentRepository: TaskAttachmentRepository,
-    private val taskService: TaskService,
 ) {
-    @Transactional
     @Throws(UpstreamEntityOperationException::class)
-    fun create(createTaskAttachmentDTO: CreateTaskAttachmentDTO): TaskAttachmentDTO = createTaskAttachmentDTO.run {
+    fun create(
+        id: UUID,
+        attachment: Attachment?,
+        task: Task?,
+    ): TaskAttachment {
         if (attachment === null) throw UpstreamEntityOperationException(Action.GET, Attachment::class.simpleName)
+        if (task === null) throw UpstreamEntityOperationException(Action.GET, Task::class.simpleName)
 
-        TaskAttachment(
+        return TaskAttachment(
             id = id,
-            task = taskService.getById(taskId),
+            task = task,
             attachment = attachment,
-        ).let { taskAttachmentRepository.save(it).toDTO() }
+        ).let { taskAttachmentRepository.save(it) }
     }
 
     @Throws(EntityNotFoundException::class)

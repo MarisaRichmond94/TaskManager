@@ -19,7 +19,9 @@ class TagController(private val tagService: TagService) : BaseController(Tag::cl
         @RequestHeader("userId") userId: UUID,
         @RequestBody createTagDTO: CreateTagDTO,
     ): ResponseEntity<Tag> = try {
-        ResponseEntity.status(HttpStatus.CREATED).body(tagService.create(userId, createTagDTO))
+        ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(tagService.create(userId, createTagDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.CREATE, exception)
     }
@@ -30,8 +32,22 @@ class TagController(private val tagService: TagService) : BaseController(Tag::cl
         @PathVariable id: UUID,
         @RequestBody updateTagDTO: UpdateTagDTO,
     ): ResponseEntity<Tag> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(tagService.updateById(id, updateTagDTO))
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(tagService.updateById(id, updateTagDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.CREATE, exception)
+    }
+
+    @ResponseBody
+    @DeleteMapping("/{id}")
+    fun deleteById(
+        @PathVariable id: UUID,
+        @RequestHeader("userId") userId: UUID,
+    ): ResponseEntity<String> = try {
+        tagService.delete(id, userId)
+        ResponseEntity.status(HttpStatus.ACCEPTED).body("${Tag::class.simpleName} successfully deleted.")
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.DELETE, exception, Tag::class.simpleName)
     }
 }

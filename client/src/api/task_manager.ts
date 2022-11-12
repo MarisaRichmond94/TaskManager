@@ -9,14 +9,6 @@ const get = async (
   return makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.get });
 };
 
-const deleteById = async (
-  id: string,
-  getAccessTokenSilently: (options?: TokenRequestProps) => Promise<string>,
-): Promise<boolean> => {
-  return makeApiRequest(getAccessTokenSilently, ROUTE, { method: ApiMethod.deleteById, id });
-};
-
 export {
-  deleteById,
   get,
 };

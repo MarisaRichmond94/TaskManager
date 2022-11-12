@@ -58,7 +58,7 @@ class NoteManagerService(
                         CreateAttachmentDTO(
                             link = link,
                             attachmentTypeId = attachmentTypeId,
-                            name = name
+                            name = name,
                         )
                     )
                 )
@@ -79,6 +79,10 @@ class NoteManagerService(
     fun updateNoteById(noteId: UUID, updateNoteByIdDTO: UpdateNoteByIdDTO, userId: UUID): NoteDTO =
         noteService.updateById(noteId, updateNoteByIdDTO, userId).populate()
 
+    @Transactional
+    fun updateNoteAttachmentById(attachmentId: UUID, updateAttachmentDTO: UpdateAttachmentDTO): AttachmentDTO =
+        attachmentService.updateById(attachmentId, updateAttachmentDTO)
+
     // delete functionality
     @Transactional
     @Throws(UnauthorizedEntityAccessException::class)
@@ -95,9 +99,10 @@ class NoteManagerService(
     }
 
     @Transactional
+    @Throws(UnauthorizedEntityAccessException::class)
     fun deleteNoteAttachmentById(noteAttachmentId: UUID, userId: UUID) {
         noteAttachmentService.getById(noteAttachmentId).run {
-            if (note.user.id !== userId) {
+            if (note.user.id != userId) {
                 throw UnauthorizedEntityAccessException(
                     userId,
                     Action.DELETE,
@@ -106,14 +111,16 @@ class NoteManagerService(
                 )
             }
 
+            attachmentService.deleteById(attachment.id)
             noteAttachmentService.deleteById(noteAttachmentId)
         }
     }
 
     @Transactional
+    @Throws(UnauthorizedEntityAccessException::class)
     fun deleteNoteTagById(noteTagId: UUID, userId: UUID) {
         noteTagService.getById(noteTagId).run {
-            if (note.user.id !== userId) {
+            if (note.user.id != userId) {
                 throw UnauthorizedEntityAccessException(
                     userId,
                     Action.DELETE,

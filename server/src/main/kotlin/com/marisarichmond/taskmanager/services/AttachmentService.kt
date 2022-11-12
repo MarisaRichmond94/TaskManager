@@ -43,25 +43,19 @@ class AttachmentService(
         throw EntityNotFoundException(Attachment::class.simpleName, id)
     }
 
-    @Transactional
-    fun updateById(id: UUID, updateAttachmentDTO: UpdateAttachmentDTO): AttachmentDTO? = try {
-        updateAttachmentDTO.run {
-            attachmentRepository.getById(id).let { existingAttachment ->
-                attachmentRepository.save(
-                    existingAttachment.copy(
-                        link = link ?: existingAttachment.link,
-                        name = name ?: existingAttachment.name,
-                        updatedAt = Instant.now().epochSecond,
-                        attachmentType = if (attachmentTypeId != null && attachmentTypeId != existingAttachment.attachmentType.id) {
-                            attachmentTypeService.getById(attachmentTypeId)
-                        } else existingAttachment.attachmentType,
-                    )
-                ).toDTO()
-            }
+    fun updateById(id: UUID, updateAttachmentDTO: UpdateAttachmentDTO): AttachmentDTO = updateAttachmentDTO.run {
+        attachmentRepository.getById(id).let { existingAttachment ->
+            attachmentRepository.save(
+                existingAttachment.copy(
+                    link = link ?: existingAttachment.link,
+                    name = name ?: existingAttachment.name,
+                    updatedAt = Instant.now().epochSecond,
+                    attachmentType = if (attachmentTypeId != null && attachmentTypeId != existingAttachment.attachmentType.id) {
+                        attachmentTypeService.getById(attachmentTypeId)
+                    } else existingAttachment.attachmentType,
+                )
+            ).toDTO()
         }
-    } catch (exception: Exception) {
-        logger.error(exception) { "Failed to update Attachment: $exception." }
-        null
     }
 
     @Transactional

@@ -4,19 +4,15 @@ import com.marisarichmond.taskmanager.controllers.Action
 import com.marisarichmond.taskmanager.exceptions.EntityNotFoundException
 import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessException
 import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
-import com.marisarichmond.taskmanager.models.StatusType
-import com.marisarichmond.taskmanager.models.Task
-import com.marisarichmond.taskmanager.models.dtos.CreateTaskDTO
-import com.marisarichmond.taskmanager.models.dtos.TaskDTO
-import com.marisarichmond.taskmanager.models.dtos.TaskDataDTO
-import com.marisarichmond.taskmanager.models.dtos.UpdateTaskByIdDTO
-import com.marisarichmond.taskmanager.models.toDTO
+import com.marisarichmond.taskmanager.models.*
+import com.marisarichmond.taskmanager.models.dtos.*
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.transaction.Transactional
 
 @Service
 class TaskManagerService(
+    private val attachmentService: AttachmentService,
     private val attachmentTypeService: AttachmentTypeService,
     private val checklistItemService: ChecklistItemService,
     private val commentService: CommentService,
@@ -54,13 +50,38 @@ class TaskManagerService(
     // create functions
     @Transactional
     @Throws(UpstreamEntityOperationException::class)
-    fun create(userId: UUID, createTaskDTO: CreateTaskDTO): TaskDTO =
+    fun createTask(userId: UUID, createTaskDTO: CreateTaskDTO): TaskDTO =
         taskService.create(userId, createTaskDTO).let {
             val statusType = statusTypeService.getByName(INITIALIZATION_STATUS_TYPE_NAME)
                 ?: throw UpstreamEntityOperationException(Action.GET, StatusType::class.simpleName)
             statusService.initializeTaskStatus(it, statusType)
             it.populate()
         }
+
+    @Transactional
+    fun createTaskAttachment(createTaskAttachmentDTO: CreateTaskAttachmentDTO): AttachmentDTO =
+        createTaskAttachmentDTO.run {
+            taskAttachmentService.create(
+                id = id,
+                attachment = attachmentService.create(
+                    CreateAttachmentDTO(
+                        link = link,
+                        attachmentTypeId = attachmentTypeId,
+                        name = name,
+                    )
+                ),
+                task = taskService.getById(taskId),
+            )
+        }.attachment.toDTO()
+
+    @Transactional
+    fun createTaskTag(createTaskTagDTO: CreateTaskTagDTO): TaskTagDTO = createTaskTagDTO.run {
+        taskTagService.create(
+            id = id,
+            task = taskService.getById(taskId),
+            tag = tagService.getById(tagId),
+        )
+    }
 
     // get functions
     @Throws(EntityNotFoundException::class)
@@ -77,6 +98,10 @@ class TaskManagerService(
     // update functions
     fun updateTaskById(userId: UUID, taskId: UUID, updateTaskByIdDTO: UpdateTaskByIdDTO): TaskDTO =
         taskService.updateById(userId, taskId, updateTaskByIdDTO).populate()
+
+    @Transactional
+    fun updateTaskAttachmentById(attachmentId: UUID, updateAttachmentDTO: UpdateAttachmentDTO): AttachmentDTO =
+        attachmentService.updateById(attachmentId, updateAttachmentDTO)
 
     // delete functions
     @Transactional
@@ -97,8 +122,37 @@ class TaskManagerService(
     }
 
     @Transactional
-    fun deleteTagById(tagId: UUID, userId: UUID) {
-        taskTagService.deleteByTagId(tagId)
-        tagService.deleteById(tagId)
+    @Throws(UnauthorizedEntityAccessException::class)
+    fun deleteTaskAttachmentById(attachmentId: UUID, userId: UUID) {
+        taskAttachmentService.getByAttachmentId(attachmentId).run {
+            if (task.user.id != userId) {
+                throw UnauthorizedEntityAccessException(
+                    userId,
+                    Action.DELETE,
+                    id,
+                    TaskAttachment::class.simpleName,
+                )
+            }
+
+            taskAttachmentService.deleteById(id)
+            attachmentService.deleteById(attachmentId)
+        }
+    }
+
+    @Transactional
+    @Throws(UnauthorizedEntityAccessException::class)
+    fun deleteTaskTagById(taskTagId: UUID, userId: UUID) {
+        taskTagService.getById(taskTagId).run {
+            if (task.user.id != userId) {
+                throw UnauthorizedEntityAccessException(
+                    userId,
+                    Action.DELETE,
+                    taskTagId,
+                    NoteTag::class.simpleName,
+                )
+            }
+
+            taskTagService.deleteById(taskTagId)
+        }
     }
 }

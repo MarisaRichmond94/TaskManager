@@ -19,7 +19,9 @@ class StatusController(private val statusService: StatusService) : BaseControlle
         @PathVariable id: UUID,
         @RequestBody updateTaskStatusDTO: UpdateTaskStatusDTO,
     ): ResponseEntity<StatusDTO> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(statusService.updateById(id, updateTaskStatusDTO))
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(statusService.updateById(id, updateTaskStatusDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.UPDATE, exception)
     }

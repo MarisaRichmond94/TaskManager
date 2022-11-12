@@ -21,7 +21,6 @@ data class CreateTaskAttachmentDTO(
     val attachmentTypeId: UUID,
     val name: String,
     val taskId: UUID,
-    val attachment: Attachment? = null,
 )
 
 data class UpdateTaskAttachmentDTO(

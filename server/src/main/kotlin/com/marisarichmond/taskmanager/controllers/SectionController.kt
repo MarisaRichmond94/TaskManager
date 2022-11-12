@@ -20,7 +20,9 @@ class SectionController(private val sectionService: SectionService) : BaseContro
         @RequestHeader("userId") userId: UUID,
         @RequestBody createSectionDTO: CreateNewSectionDTO,
     ): ResponseEntity<SectionDTO> = try {
-        ResponseEntity.status(HttpStatus.CREATED).body(sectionService.create(userId, createSectionDTO))
+        ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(sectionService.create(userId, createSectionDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.CREATE, exception)
     }
@@ -31,7 +33,9 @@ class SectionController(private val sectionService: SectionService) : BaseContro
         @PathVariable id: UUID,
         @RequestBody updateSectionDTO: UpdateSectionByIdDTO,
     ): ResponseEntity<SectionDTO> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(sectionService.updateById(id, updateSectionDTO))
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(sectionService.updateById(id, updateSectionDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.UPDATE, exception)
     }

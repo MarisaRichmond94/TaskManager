@@ -89,6 +89,19 @@ class NoteManagerController(private val noteManagerService: NoteManagerService) 
     }
 
     @ResponseBody
+    @PatchMapping("/note/attachments/{attachmentId}")
+    fun updateNoteAttachmentById(
+        @PathVariable attachmentId: UUID,
+        @RequestBody updateAttachmentDTO: UpdateAttachmentDTO,
+    ): ResponseEntity<AttachmentDTO> = try {
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(noteManagerService.updateNoteAttachmentById(attachmentId, updateAttachmentDTO))
+    } catch (exception: Exception) {
+        throw baseControllerException(Action.UPDATE, exception, NoteAttachment::class.simpleName)
+    }
+
+    @ResponseBody
     @DeleteMapping("/{noteId}")
     fun deleteNoteDataByNoteId(
         @PathVariable noteId: UUID,

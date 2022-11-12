@@ -14,12 +14,12 @@ import java.util.*
 @Service
 class NoteTagService(
     private val noteTagRepository: NoteTagRepository,
-    private val noteService: NoteService,
 ) {
     fun getById(id: UUID): NoteTag = noteTagRepository.getById(id)
 
     fun getByNoteId(noteId: UUID): List<NoteTag> = noteTagRepository.findAllByNoteId(noteId)
 
+    @Throws(UpstreamEntityOperationException::class)
     fun create(id: UUID, note: Note?, tag: Tag?): NoteTagDTO {
         if (note === null) throw UpstreamEntityOperationException(Action.GET, Note::class.simpleName)
         if (tag === null) throw UpstreamEntityOperationException(Action.GET, Tag::class.simpleName)
@@ -29,4 +29,6 @@ class NoteTagService(
     fun deleteById(id: UUID) = noteTagRepository.deleteById(id)
 
     fun deleteByNoteId(noteId: UUID) = noteTagRepository.deleteAllByNoteId(noteId)
+
+    fun deleteByTagId(tagId: UUID) = noteTagRepository.deleteAllByTagId(tagId)
 }
