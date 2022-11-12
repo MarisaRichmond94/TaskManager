@@ -22,7 +22,6 @@ class AttachmentService(
         private val logger = KotlinLogging.logger {}
     }
 
-    @Transactional
     fun create(createAttachmentDTO: CreateAttachmentDTO): Attachment? = try {
         createAttachmentDTO.run {
             Attachment(

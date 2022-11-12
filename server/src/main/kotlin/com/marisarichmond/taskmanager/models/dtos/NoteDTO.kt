@@ -7,10 +7,12 @@ import java.util.*
 data class NoteDTO(
     val id: UUID,
     val title: String,
+    val text: String = "",
     val sectionId: UUID,
+    val tags: List<NoteTagDTO>? = emptyList(),
+    val attachments: List<NoteAttachmentDTO> = emptyList(),
     val createdAt: Long,
     val updatedAt: Long,
-    val text: String = "",
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

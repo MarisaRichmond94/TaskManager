@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.models
 
-import com.marisarichmond.taskmanager.models.dtos.NoteDTO
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
@@ -25,15 +24,4 @@ data class Note(
         "id = $id",
         "title = $title",
     ).joinToString(", ")
-}
-
-fun Note.toDTO(): NoteDTO = this.run {
-    NoteDTO(
-        id = id,
-        title = title,
-        text = text,
-        sectionId = section.id,
-        createdAt = createdAt,
-        updatedAt = updatedAt,
-    )
 }

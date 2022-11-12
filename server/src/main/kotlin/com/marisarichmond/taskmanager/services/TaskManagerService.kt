@@ -6,7 +6,7 @@ import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessExcepti
 import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
 import com.marisarichmond.taskmanager.models.StatusType
 import com.marisarichmond.taskmanager.models.Task
-import com.marisarichmond.taskmanager.models.dtos.CreateNewTaskDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateTaskDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskDataDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskByIdDTO
@@ -54,8 +54,8 @@ class TaskManagerService(
     // create functions
     @Transactional
     @Throws(UpstreamEntityOperationException::class)
-    fun create(userId: UUID, createNewTaskDTO: CreateNewTaskDTO): TaskDTO =
-        taskService.create(userId, createNewTaskDTO).let {
+    fun create(userId: UUID, createTaskDTO: CreateTaskDTO): TaskDTO =
+        taskService.create(userId, createTaskDTO).let {
             val statusType = statusTypeService.getByName(INITIALIZATION_STATUS_TYPE_NAME)
                 ?: throw UpstreamEntityOperationException(Action.GET, StatusType::class.simpleName)
             statusService.initializeTaskStatus(it, statusType)
@@ -83,6 +83,7 @@ class TaskManagerService(
     @Throws(UnauthorizedEntityAccessException::class)
     fun deleteTaskDataByTaskId(taskId: UUID, userId: UUID) {
         val taskById = taskService.getById(taskId)
+
         if (taskById.user.id != userId) {
             throw UnauthorizedEntityAccessException(userId, Action.DELETE, taskId, Task::class.simpleName)
         }

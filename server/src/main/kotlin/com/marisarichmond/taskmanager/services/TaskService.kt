@@ -6,7 +6,7 @@ import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessExcepti
 import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
 import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.models.User
-import com.marisarichmond.taskmanager.models.dtos.CreateNewTaskDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateTaskDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskByIdDTO
 import com.marisarichmond.taskmanager.repositories.TaskRepository
 import org.springframework.stereotype.Service
@@ -21,7 +21,7 @@ class TaskService(
 ) {
     @Transactional
     @Throws(UpstreamEntityOperationException::class)
-    fun create(userId: UUID, createNewTaskDTO: CreateNewTaskDTO): Task = createNewTaskDTO.run {
+    fun create(userId: UUID, createTaskDTO: CreateTaskDTO): Task = createTaskDTO.run {
         Task(
             id = id,
             user = userService.getById(userId)

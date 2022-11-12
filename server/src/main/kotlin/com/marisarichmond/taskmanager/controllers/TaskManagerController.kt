@@ -3,7 +3,7 @@ package com.marisarichmond.taskmanager.controllers
 import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.TASK_DATA
 import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.Task
-import com.marisarichmond.taskmanager.models.dtos.CreateNewTaskDTO
+import com.marisarichmond.taskmanager.models.dtos.CreateTaskDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskDTO
 import com.marisarichmond.taskmanager.models.dtos.TaskDataDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateTaskByIdDTO
@@ -21,9 +21,11 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
     @PostMapping("/tasks")
     fun create(
         @RequestHeader("userId") userId: UUID,
-        @RequestBody createNewTaskDTO: CreateNewTaskDTO,
+        @RequestBody createTaskDTO: CreateTaskDTO,
     ): ResponseEntity<TaskDTO> = try {
-        ResponseEntity.status(HttpStatus.CREATED).body(taskManagerService.create(userId, createNewTaskDTO))
+        ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(taskManagerService.create(userId, createTaskDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.CREATE, exception, Task::class.simpleName)
     }
@@ -31,15 +33,22 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
     @ResponseBody
     @GetMapping
     fun getTaskDataByUserId(@RequestHeader("userId") userId: UUID): ResponseEntity<TaskDataDTO> = try {
-        taskManagerService.getTaskDataByUserId(userId).let { ResponseEntity.status(HttpStatus.OK).body(it) }
+        taskManagerService.getTaskDataByUserId(userId).let {
+            ResponseEntity.status(HttpStatus.OK).body(it)
+        }
     } catch (exception: Exception) {
-        throw baseControllerException(Action.GET, exception, TASK_DATA)
+        throw baseControllerException(Action.GET, exception, TaskDataDTO::class.simpleName)
     }
 
     @ResponseBody
     @GetMapping("/tasks/{taskId}")
-    fun getTaskById(@RequestHeader("userId") userId: UUID, @PathVariable taskId: UUID): ResponseEntity<TaskDTO> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskById(userId, taskId))
+    fun getTaskById(
+        @RequestHeader("userId") userId: UUID,
+        @PathVariable taskId: UUID,
+    ): ResponseEntity<TaskDTO> = try {
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(taskManagerService.getTaskById(userId, taskId))
     } catch (exception: Exception) {
         throw baseControllerException(Action.GET, exception, Task::class.simpleName)
     }
@@ -51,16 +60,19 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
         @PathVariable taskId: UUID,
         @RequestBody updateTaskByIdDTO: UpdateTaskByIdDTO,
     ): ResponseEntity<TaskDTO> = try {
-        ResponseEntity.status(HttpStatus.ACCEPTED).body(
-            taskManagerService.updateTaskById(userId, taskId, updateTaskByIdDTO)
-        )
+        ResponseEntity
+            .status(HttpStatus.ACCEPTED)
+            .body(taskManagerService.updateTaskById(userId, taskId, updateTaskByIdDTO))
     } catch (exception: Exception) {
         throw baseControllerException(Action.UPDATE, exception, Task::class.simpleName)
     }
 
     @ResponseBody
     @DeleteMapping("/{taskId}")
-    fun deleteTaskDataByTaskId(@PathVariable taskId: UUID, @RequestHeader("userId") userId: UUID): ResponseEntity<String> = try {
+    fun deleteTaskDataByTaskId(
+        @PathVariable taskId: UUID,
+        @RequestHeader("userId") userId: UUID,
+    ): ResponseEntity<String> = try {
         taskManagerService.deleteTaskDataByTaskId(taskId, userId)
         ResponseEntity.status(HttpStatus.ACCEPTED).body("Task successfully deleted.")
     } catch (exception: Exception) {
@@ -69,7 +81,10 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
 
     @ResponseBody
     @DeleteMapping("/tags/{tagId}")
-    fun deleteTagById(@PathVariable tagId: UUID, @RequestHeader("userId") userId: UUID): ResponseEntity<String> = try {
+    fun deleteTagById(
+        @PathVariable tagId: UUID,
+        @RequestHeader("userId") userId: UUID,
+    ): ResponseEntity<String> = try {
         taskManagerService.deleteTagById(tagId, userId)
         ResponseEntity.status(HttpStatus.ACCEPTED).body("Task successfully deleted.")
     } catch (exception: Exception) {

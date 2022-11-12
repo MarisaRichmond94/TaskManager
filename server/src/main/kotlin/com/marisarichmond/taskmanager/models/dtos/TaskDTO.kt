@@ -38,7 +38,7 @@ data class TaskDTO(
 }
 
 // Request DTOs
-data class CreateNewTaskDTO(val id: UUID = UUID.randomUUID())
+data class CreateTaskDTO(val id: UUID = UUID.randomUUID())
 
 data class UpdateTaskByIdDTO(
     val dueDate: Long? = null,

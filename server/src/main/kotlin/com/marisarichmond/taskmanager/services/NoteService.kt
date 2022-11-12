@@ -6,14 +6,11 @@ import com.marisarichmond.taskmanager.exceptions.UnauthorizedEntityAccessExcepti
 import com.marisarichmond.taskmanager.models.Note
 import com.marisarichmond.taskmanager.models.User
 import com.marisarichmond.taskmanager.models.dtos.CreateNoteDTO
-import com.marisarichmond.taskmanager.models.dtos.NoteDTO
 import com.marisarichmond.taskmanager.models.dtos.UpdateNoteByIdDTO
-import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.NoteRepository
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
-import javax.transaction.Transactional
 
 @Service
 class NoteService(
@@ -23,23 +20,23 @@ class NoteService(
 ) {
     fun getById(id: UUID): Note = noteRepository.getById(id)
 
-    @Transactional
-    fun create(createNoteDTO: CreateNoteDTO, userId: UUID): NoteDTO = createNoteDTO.run {
+    fun getByUserId(userId: UUID): List<Note> = noteRepository.findAllByUserId(userId)
+
+    fun create(createNoteDTO: CreateNoteDTO, userId: UUID): Note = createNoteDTO.run {
         Note(
             id = id,
             title = title,
             section = sectionService.getById(sectionId),
             user = userService.getById(userId) ?: throw EntityNotFoundException(User::class.simpleName, userId),
-        ).let { noteRepository.save(it).toDTO() }
+        ).let { noteRepository.save(it) }
     }
 
-    @Transactional
     @Throws(UnauthorizedEntityAccessException::class)
     fun updateById(
         id: UUID,
         updateNoteByIdDTO: UpdateNoteByIdDTO,
         userId: UUID,
-    ): NoteDTO = updateNoteByIdDTO.run {
+    ): Note = updateNoteByIdDTO.run {
         noteRepository.getById(id).let { existingNote ->
             if (existingNote.user.id != userId) {
                 throw UnauthorizedEntityAccessException(userId, Action.UPDATE, id, Note::class.simpleName)
@@ -54,18 +51,9 @@ class NoteService(
                     } else existingNote.section,
                     updatedAt = Instant.now().epochSecond,
                 )
-            ).toDTO()
+            )
         }
     }
 
-    @Transactional
-    @Throws(UnauthorizedEntityAccessException::class)
-    fun deleteById(id: UUID, userId: UUID) {
-        noteRepository.getById(id).let {
-            if (it.user.id != userId) {
-                throw UnauthorizedEntityAccessException(userId, Action.UPDATE, id, Note::class.simpleName)
-            }
-            noteRepository.deleteById(id)
-        }
-    }
+    fun deleteById(id: UUID) = noteRepository.deleteById(id)
 }

@@ -2,9 +2,9 @@ package com.marisarichmond.taskmanager.services
 
 import com.marisarichmond.taskmanager.controllers.Action
 import com.marisarichmond.taskmanager.exceptions.UpstreamEntityOperationException
+import com.marisarichmond.taskmanager.models.Note
 import com.marisarichmond.taskmanager.models.NoteTag
 import com.marisarichmond.taskmanager.models.Tag
-import com.marisarichmond.taskmanager.models.dtos.CreateNoteTagDTO
 import com.marisarichmond.taskmanager.models.dtos.NoteTagDTO
 import com.marisarichmond.taskmanager.models.toDTO
 import com.marisarichmond.taskmanager.repositories.NoteTagRepository
@@ -20,14 +20,10 @@ class NoteTagService(
 
     fun getByNoteId(noteId: UUID): List<NoteTag> = noteTagRepository.findAllByNoteId(noteId)
 
-    fun create(createNoteTagDTO: CreateNoteTagDTO): NoteTagDTO = createNoteTagDTO.run {
-        if (tag === null) throw UpstreamEntityOperationException(Action.CREATE, Tag::class.simpleName)
-
-        NoteTag(
-            id = id,
-            note = noteService.getById(noteId),
-            tag = tag,
-        ).let { noteTagRepository.save(it).toDTO() }
+    fun create(id: UUID, note: Note?, tag: Tag?): NoteTagDTO {
+        if (note === null) throw UpstreamEntityOperationException(Action.GET, Note::class.simpleName)
+        if (tag === null) throw UpstreamEntityOperationException(Action.GET, Tag::class.simpleName)
+        return NoteTag(id = id, note = note, tag = tag).let { noteTagRepository.save(it).toDTO() }
     }
 
     fun deleteById(id: UUID) = noteTagRepository.deleteById(id)

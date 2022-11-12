@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.models.dtos
 
-import com.marisarichmond.taskmanager.models.Tag
 import org.hibernate.Hibernate
 import java.time.Instant
 import java.util.*
@@ -35,4 +34,8 @@ data class NoteTagDTO(
 }
 
 // Request DTOs
-data class CreateNoteTagDTO(val id: UUID = UUID.randomUUID(), val noteId: UUID, val tag: Tag? = null)
+data class CreateNoteTagDTO(
+    val id: UUID = UUID.randomUUID(),
+    val noteId: UUID,
+    val tagId: UUID,
+)

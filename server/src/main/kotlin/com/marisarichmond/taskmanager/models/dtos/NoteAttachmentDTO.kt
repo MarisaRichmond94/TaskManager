@@ -8,7 +8,6 @@ import java.util.*
 // Response DTOs
 data class NoteAttachmentDTO(
     val id: UUID,
-    val noteId: UUID,
     val attachmentId: UUID,
     val link: String,
     val name: String,
@@ -28,7 +27,6 @@ data class NoteAttachmentDTO(
 
     override fun toString(): String = this::class.simpleName + listOf(
         "id = $id",
-        "noteId = $noteId",
         "attachmentId = $attachmentId",
         "link = $link",
         "name = $name",
@@ -39,6 +37,9 @@ data class NoteAttachmentDTO(
 // Request DTOs
 data class CreateNoteAttachmentDTO(
     val id: UUID = UUID.randomUUID(),
+    val link: String,
+    val attachmentTypeId: UUID,
+    val name: String,
     val noteId: UUID,
     val attachment: Attachment? = null,
 )
