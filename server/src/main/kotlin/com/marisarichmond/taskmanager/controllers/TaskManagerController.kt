@@ -1,6 +1,5 @@
 package com.marisarichmond.taskmanager.controllers
 
-import com.marisarichmond.taskmanager.constants.ExceptionConstants.Companion.TASK_DATA
 import com.marisarichmond.taskmanager.models.Tag
 import com.marisarichmond.taskmanager.models.Task
 import com.marisarichmond.taskmanager.models.dtos.CreateTaskDTO
@@ -76,7 +75,7 @@ class TaskManagerController(private val taskManagerService: TaskManagerService) 
         taskManagerService.deleteTaskDataByTaskId(taskId, userId)
         ResponseEntity.status(HttpStatus.ACCEPTED).body("Task successfully deleted.")
     } catch (exception: Exception) {
-        throw baseControllerException(Action.DELETE, exception, TASK_DATA)
+        throw baseControllerException(Action.DELETE, exception, TaskDataDTO::class.simpleName)
     }
 
     @ResponseBody
