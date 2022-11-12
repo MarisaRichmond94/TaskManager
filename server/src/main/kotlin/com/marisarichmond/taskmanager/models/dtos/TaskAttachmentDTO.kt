@@ -1,27 +1,16 @@
 package com.marisarichmond.taskmanager.models.dtos
 
 import com.marisarichmond.taskmanager.models.Attachment
-import org.hibernate.Hibernate
 import java.time.Instant
 import java.util.*
 
 // Response DTOs
 data class TaskAttachmentDTO(
-    val id: UUID,
+    override val id: UUID,
     val attachment: Attachment,
     val createdAt: Long = Instant.now().epochSecond,
     val updatedAt: Long = Instant.now().epochSecond,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as TaskAttachmentDTO
-
-        return id == other.id
-    }
-
-    override fun hashCode(): Int = javaClass.hashCode()
-
+) : BaseDTO(id) {
     override fun toString(): String = this::class.simpleName + "(id = $id, attachmentId = ${attachment.id})"
 }
 
