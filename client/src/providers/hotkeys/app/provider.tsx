@@ -1,6 +1,7 @@
-import { FC, KeyboardEvent, ReactElement, useState } from 'react';
+import { FC, KeyboardEvent, ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useKeyPress from 'hooks/useKeyPress';
 import useKeyStroke from 'hooks/useKeyStroke';
 import { useApp } from 'providers/app';
 import AppHotkeysContext from 'providers/hotkeys/app/context';
@@ -18,6 +19,12 @@ const AppHotkeysProvider: FC<IAppHotkeysProvider> = ({ children }) => {
   const { toggleIsExpanded } = useApp();
   const navigate = useNavigate();
   const [showHotkeyHelpMenu, setShowHotkeyHelpMenu] = useState(false);
+
+  const isCancelKeyPressed = useKeyPress('Escape');
+
+  useEffect(() => {
+    if (showHotkeyHelpMenu && isCancelKeyPressed) setShowHotkeyHelpMenu(false);
+  }, [isCancelKeyPressed, showHotkeyHelpMenu, setShowHotkeyHelpMenu]);
 
   const handleKeyStrokes = (event: KeyboardEvent<any>) => {
     switch (event.key) {
