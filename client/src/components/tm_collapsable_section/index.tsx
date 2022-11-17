@@ -50,7 +50,7 @@ const TMCollapsableSection: FC<ITMCollapsableSection> = ({
           onClick={wholeHeaderClickable ? () => {} : () => onToggle(!isVisible)}
         >
           {isVisible ? <BsChevronDown /> : <BsChevronUp  />}
-          <div className='title hide-overflow-ellipsis'>{sectionTitle}</div>
+          <div className='hide-overflow-ellipsis'>{sectionTitle}</div>
         </div>
         {rightBlock && <div className='content-float-right'>{rightBlock}</div>}
       </div>

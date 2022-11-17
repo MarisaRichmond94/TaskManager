@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { FC, useEffect, useRef } from 'react';
+import { BsListTask } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 
 import TMUncontrolledCollapsableSection from 'components/tm_collapsable_section/uncontrolled';
@@ -38,7 +39,10 @@ const Section: FC<ISection> = ({
 
   const buildSectionContent = () => {
     const emptySectionContent = (
-      <div className='header-text empty-section'>
+      <div className={['header-text', 'empty-section', 'text-center'].join(' ')}>
+        <div>
+          <BsListTask />
+        </div>
         {emptyResponseText}
       </div>
     );

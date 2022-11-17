@@ -8,6 +8,8 @@
     .empty-section {
       padding: $medium-padding;
       padding-top: 0;
+
+      svg { font-size: $small-title-font-size; };
     };
   };
 
