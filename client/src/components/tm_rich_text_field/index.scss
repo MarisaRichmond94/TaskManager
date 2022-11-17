@@ -1,0 +1,8 @@
+@import 'global';
+
+.tm-rich-text-field {
+  border-radius: $small-border-radius;
+  font-size: $header-font-size;
+  padding: 6px 12px;
+  div > p { margin: 0; };
+};

@@ -5,9 +5,10 @@ import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
-import TMEditableInput from 'components/tm_editable_input';
+import TMEditableField from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
+import { FieldType } from 'types/constants/tm_editable_field';
 
 interface ITaskTag {
   hexColor: string,
@@ -40,12 +41,12 @@ const TaskTag: FC<ITaskTag> = ({
       {
         isEditable
           ? (
-            <TMEditableInput
+            <TMEditableField
               autoFocus={autoFocus}
+              changeBackgroundOnHover={false}
               classNames={['editable-tag', 'sub-header-text']}
-              currInputValue={name}
-              eventKey='Enter'
-              id={`editable-tag-${id}`}
+              fieldType={FieldType.plainText}
+              initialValue={name}
               onUpdateCallback={(name: string) => updateTag(id, { name })}
             />
           )

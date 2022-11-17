@@ -1,9 +1,10 @@
 import './index.scss';
 
 import { FC, useEffect, useRef } from 'react';
+import { Descendant } from 'slate';
 
+import TMRichTextViewer from 'components/tm_rich_text_field/viewer';
 import { useTasks } from 'providers/tasks';
-import Body from 'routes/tasks/task/body';
 import Footer from 'routes/tasks/task/footer';
 import Header from 'routes/tasks/task/header';
 import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
@@ -32,7 +33,15 @@ const TaskCard: FC<ITaskCard> = ({ task }) => {
       ref={taskRef}
     >
       <Header id={id} isArchived={isArchived} isPinned={isPinned} objective={objective} status={status} />
-      <Body description={description} />
+      <TMRichTextViewer
+        classNames={['task-card-body', 'sub-header-text', ]}
+        key={description}
+        value={
+          !!description
+            ? JSON.parse(description) as Descendant[]
+            : undefined
+        }
+      />
       <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />
     </div>
   );

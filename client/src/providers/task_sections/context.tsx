@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SectionType } from 'types/constants';
+import { SectionType } from 'types/constants/tasks';
 
 interface ISectionsContext {
   activeSection: keyof SectionType,

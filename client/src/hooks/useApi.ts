@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { ApiRoute } from 'types/constants';
+import { ApiRoute } from 'types/constants/api';
 import { buildHeaders, buildUrl, makeRequest } from 'utils/api';
 
 const useApi = (route: ApiRoute, options: ApiRequestOptions) => {

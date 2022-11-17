@@ -5,7 +5,7 @@ import SectionHotkeysContext from 'providers/hotkeys/task_section/context';
 import { useSections } from 'providers/task_sections';
 import { useTasks } from 'providers/tasks';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
-import { SectionType } from 'types/constants';
+import { SectionType } from 'types/constants/tasks';
 
 const { section: sectionKeys } = SHIFT_KEY_STROKES;
 

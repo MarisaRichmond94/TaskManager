@@ -11,7 +11,7 @@ import { useApp } from 'providers/app';
 import TasksContext from 'providers/tasks/context';
 import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
-import { FilterType } from 'types/constants';
+import { FilterType } from 'types/constants/search';
 import { toServerDatetime } from 'utils/date';
 
 const TasksProvider = (props: object) => {

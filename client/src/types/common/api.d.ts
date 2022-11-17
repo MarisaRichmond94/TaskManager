@@ -1,4 +1,4 @@
-import { ApiMethod } from 'types/constants';
+import { ApiMethod } from 'types/constants/api';
 
 declare global {
   interface TokenRequestProps {
@@ -18,3 +18,5 @@ declare global {
     userId: string,
   };
 };
+
+export {};

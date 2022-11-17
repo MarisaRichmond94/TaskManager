@@ -5,6 +5,12 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import TMInput from 'components/tm_input';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 
+interface SearchableOption {
+  id: string,
+  searchableValue: string,
+  content: ReactElement | string,
+};
+
 interface ITMSearchableDropdown {
   classNames?: string[],
   clearKey?: string,

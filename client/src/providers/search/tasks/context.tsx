@@ -1,6 +1,6 @@
 import { createContext, RefObject } from 'react';
 
-import { FilterAction, FilterType } from 'types/constants';
+import { FilterAction, FilterType } from 'types/constants/search';
 
 interface ISearchTasksContext {
   isAsc: boolean,

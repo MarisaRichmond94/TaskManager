@@ -1,0 +1,17 @@
+@import 'global';
+
+.tm-rich-text-editor-toolbar {
+  position: relative;
+  border-bottom: 2px solid $off-black;
+  margin-bottom: $medium-margin;
+  & > * { display: inline-block; };
+  & > * + * { margin-left: $medium-margin; };
+
+  span {
+    color: $dark-grey;
+    &.active,
+    &:hover {
+      color: $off-black;
+    };
+  }
+};

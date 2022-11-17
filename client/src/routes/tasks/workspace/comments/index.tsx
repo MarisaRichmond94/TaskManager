@@ -4,10 +4,11 @@ import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import TMEditableInput from 'components/tm_editable_input';
+import TMEditableField from 'components/tm_editable_field';
 import TMTextArea from 'components/tm_text_area';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useTask } from 'providers/task';
+import { FieldType } from 'types/constants/tm_editable_field';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
 const TaskComments: FC = () => {
@@ -69,12 +70,13 @@ const TaskComment: FC<IComment> = ({ comment }) => {
   return (
     <div className='task-comment sub-header-text'>
       <div className='comment-text'>
-        <TMEditableInput
+        <TMEditableField
           classNames={['sub-header-text']}
-          currInputValue={text}
-          eventKey='Enter'
-          id={`comment-${id}`}
-          onUpdateCallback={(updatedText: string) => updateComment(id, updatedText)}
+          fieldType={FieldType.plainText}
+          initialValue={text}
+          onUpdateCallback={(updatedText: string) => {
+            if (text !== '') updateComment(id, updatedText);
+          }}
         />
       </div>
       <div className='comment-details'>

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SearchTasksContext from 'providers/search/tasks/context';
 import * as filter from 'providers/search/tasks/utils/filter';
 import { useTasks } from 'providers/tasks';
-import { FilterAction, FilterType } from 'types/constants';
+import { FilterAction, FilterType } from 'types/constants/search';
 
 const SearchTasksProvider = (props: object) => {
   const navigate = useNavigate();

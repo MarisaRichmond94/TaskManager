@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useState } from 'react';
 
 import SectionsContext from 'providers/task_sections/context';
 import { useTasks } from 'providers/tasks';
-import { SectionType } from 'types/constants';
+import { SectionType } from 'types/constants/tasks';
 import { useCallback } from 'react';
 
 interface ISectionsProvider {

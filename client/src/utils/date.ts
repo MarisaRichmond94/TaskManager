@@ -71,7 +71,8 @@ const getDayMonthDateString = (date: Date): string => `${date.getMonth()+1}/${da
  */
 const getTimestampString = (date: Date): string => {
   const standardHours = convertMilitaryToStandardTime(date.getHours());
-  return `${standardHours}:${date.getMinutes()} ${date.getHours() > 12 ? 'PM' : 'AM'}`;
+  const minutes = date.getMinutes();
+  return `${standardHours}:${minutes < 10 ? '0' : ''}${minutes} ${date.getHours() > 12 ? 'PM' : 'AM'}`;
 };
 
 /**

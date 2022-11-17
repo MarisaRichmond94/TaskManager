@@ -1,15 +1,16 @@
 import './index.scss';
 
-import { FC, ReactElement, useState } from 'react';
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from 'react';
 import { BsChevronDoubleDown, BsChevronDoubleUp, BsX } from 'react-icons/bs';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_checkbox';
-import TMEditableInput from 'components/tm_editable_input';
+import TMEditableField from 'components/tm_editable_field';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import ActionButton from 'routes/tasks/buttons/action';
+import { FieldType } from 'types/constants/tm_editable_field';
 
 const TaskChecklistItems: FC = () => {
   const [isCreatingNewChecklistItem, setIsCreatingNewChecklistItem] = useState(false);
@@ -18,20 +19,25 @@ const TaskChecklistItems: FC = () => {
   const total = checklistItems.length;
 
   const populateTaskChecklistItems = (
-    taskChecklistItems?: ChecklistItem[],
     isCreatingNewChecklistItem: boolean = false,
+    setIsCreatingNewChecklistItem: Dispatch<SetStateAction<boolean>>,
+    taskChecklistItems?: ChecklistItem[],
   ): ReactElement[] | ReactElement => {
-    if (!isCreatingNewChecklistItem && !taskChecklistItems.length) return <NoChecklistItemsToDisplay />;
+    if (!isCreatingNewChecklistItem && !taskChecklistItems.length) {
+      return <NoChecklistItemsToDisplay />;
+    }
 
     taskChecklistItems.sort(
       (a,b) => (a.orderIndex > b.orderIndex) ? 1 : ((b.orderIndex > a.orderIndex) ? -1 : 0)
     );
+
     return taskChecklistItems.map((checklistItem, index) => {
       return (
         <TaskChecklistItem
           key={`task-checklist-item-${index}`}
           checklistItem={checklistItem}
           total={checklistItems.length}
+          setIsCreatingNewChecklistItem={setIsCreatingNewChecklistItem}
         />
       );
     });
@@ -41,6 +47,12 @@ const TaskChecklistItems: FC = () => {
     if (description !== '') createChecklistItem({ taskId: id, description });
     setIsCreatingNewChecklistItem(false);
   };
+
+  const taskChecklistItems = populateTaskChecklistItems(
+    isCreatingNewChecklistItem,
+    setIsCreatingNewChecklistItem,
+    checklistItems.sort(),
+  );
 
   return (
     <TMControlledCollapsableSection
@@ -52,9 +64,12 @@ const TaskChecklistItems: FC = () => {
       }
       sectionTitle={`Checklist (${completed}/${total})`}
     >
-      <div className='task-checklist-items-container task-sidebar-collapsable-container'>
-        {populateTaskChecklistItems(checklistItems.sort(), isCreatingNewChecklistItem)}
-        {isCreatingNewChecklistItem && <NewChecklistItem onCreateCallback={onCreateCallback} />}
+      <div className={['task-checklist-items-container', 'task-sidebar-collapsable-container'].join(' ')}>
+        {taskChecklistItems}
+        {
+          isCreatingNewChecklistItem &&
+          <NewChecklistItem onCreateCallback={onCreateCallback} />
+        }
       </div>
     </TMControlledCollapsableSection>
   );
@@ -81,11 +96,11 @@ interface INewChecklistItem {
 
 const NewChecklistItem: FC<INewChecklistItem> = ({ onCreateCallback }) => {
   const textBlock = (
-    <TMEditableInput
+    <TMEditableField
       autoFocus
       classNames={['sub-header-text', 'checklist-item-description']}
-      currInputValue=''
-      id={`new-checklist-item-description`}
+      fieldType={FieldType.plainText}
+      initialValue=''
       onUpdateCallback={onCreateCallback}
     />
   );
@@ -106,18 +121,28 @@ const NewChecklistItem: FC<INewChecklistItem> = ({ onCreateCallback }) => {
 interface IChecklistItem {
   checklistItem: ChecklistItem,
   total: number,
+  setIsCreatingNewChecklistItem: Dispatch<SetStateAction<boolean>>,
 };
 
-const TaskChecklistItem: FC<IChecklistItem> = ({ checklistItem, total }) => {
+const TaskChecklistItem: FC<IChecklistItem> = ({
+  checklistItem,
+  total,
+  setIsCreatingNewChecklistItem,
+}) => {
   const { updateChecklistItem } = useTask();
   const { id, description, isCompleted, orderIndex } = checklistItem;
 
+  const onUpdateCallback = useCallback((description: string) => {
+    updateChecklistItem(id, { description });
+    setIsCreatingNewChecklistItem(true);
+  }, [id, setIsCreatingNewChecklistItem, updateChecklistItem]);
+
   const textBlock = (
-    <TMEditableInput
+    <TMEditableField
       classNames={['sub-header-text', 'checklist-item-description']}
-      currInputValue={description}
-      id={`checklist-item-description-${id}`}
-      onUpdateCallback={(description: string) => updateChecklistItem(id, { description })}
+      fieldType={FieldType.plainText}
+      initialValue={description}
+      onUpdateCallback={onUpdateCallback}
     />
   );
 
@@ -165,7 +190,7 @@ const ChecklistItemActionMenu: FC<IChecklistItemActionMenu> = ({ id, orderIndex,
 };
 
 const NoChecklistItemsToDisplay: FC = () => (
-  <div className='sub-header-text no-checklist-items'>
+  <div className={['sub-header-text', 'no-checklist-items'].join(' ')}>
     No checklist items
   </div>
 );

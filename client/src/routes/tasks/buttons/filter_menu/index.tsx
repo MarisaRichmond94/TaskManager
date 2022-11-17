@@ -15,7 +15,7 @@ import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useSearchTasks } from 'providers/search/tasks';
 import { useTasks } from 'providers/tasks';
 import Tag from 'routes/tasks/tag';
-import { FilterAction, FilterType } from 'types/constants';
+import { FilterAction, FilterType } from 'types/constants/search';
 import { toClientDatetime } from 'utils/date';
 
 const FilterMenuButton: FC = () => {

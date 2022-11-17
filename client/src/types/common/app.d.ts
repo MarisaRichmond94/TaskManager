@@ -1,24 +1,8 @@
-interface DropdownOption {
-  id: string,
-  displayName: string,
-  name?: string,
+declare global {
+  interface KeyStroke {
+    shiftKey?: boolean,
+    key: string,
+  };
 };
 
-interface KeyStroke {
-  shiftKey?: boolean,
-  key: string,
-};
-
-type SearchableOption = {
-  id: string,
-  searchableValue: string,
-  content: ReactElement | string,
-};
-
-interface User {
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  avatar: string,
-};
+export {};

@@ -2,30 +2,31 @@ import './index.scss';
 
 import { FC } from 'react';
 
-import TMEditableInput from 'components/tm_editable_input';
+import TMEditableField from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
 import TaskChecklistItems from 'routes/tasks/workspace/checklist_items';
 import TaskComments from 'routes/tasks/workspace/comments';
+import { FieldType } from 'types/constants/tm_editable_field';
 
 const Body: FC = () => {
-  const { description, id, objective, updateTask } = useTask();
+  const { description, objective, updateTask } = useTask();
 
   return (
     <div className='tm-task-body'>
-      <TMEditableInput
+      <TMEditableField
         classNames={['large-header-text', 'task-objective']}
-        currInputValue={objective}
-        id={`objective-${id}`}
-        noInputValuePlaceholder='no objective'
+        fieldType={FieldType.plainText}
+        initialValue={objective}
+        placeholder='no objective'
         onUpdateCallback={
           (updatedObjective: string) => updateTask({ objective: updatedObjective })
         }
       />
-      <TMEditableInput
+      <TMEditableField
         classNames={['header-text']}
-        currInputValue={description}
-        id={`description-${id}`}
-        noInputValuePlaceholder='no description'
+        fieldType={FieldType.richText}
+        initialValue={!!description ? JSON.parse(description) : undefined}
+        placeholder='no description'
         onUpdateCallback={
           (updatedDescription: string) => updateTask({ description: updatedDescription })
         }

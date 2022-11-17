@@ -26,11 +26,13 @@ const useKeyStroke = (
     callbackRef.current = handleKeyStrokeCallback;
   });
 
-  const handleKeyPress = useCallback((event: KeyboardEvent<any>) => {
+  const handleKeyPress = useCallback((event: any) => {
     // prevents hotkeys from listening if the user is typing in a text input or a textarea
     if (
       event.target instanceof HTMLInputElement ||
-      event.target instanceof HTMLTextAreaElement
+      event.target instanceof HTMLTextAreaElement ||
+      event.target.getAttribute('data-slate-editor') ||
+      event.target.getAttribute('data-slate-note')
     ) return;
 
     type keyOfKeyStroke = keyof typeof keyStrokes;

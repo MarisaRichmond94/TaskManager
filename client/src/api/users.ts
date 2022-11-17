@@ -1,5 +1,5 @@
 import { makeApiRequest } from 'utils/api';
-import { ApiMethod, ApiRoute } from "types/constants";
+import { ApiMethod, ApiRoute } from 'types/constants/api';
 
 const ROUTE = ApiRoute.users;
 

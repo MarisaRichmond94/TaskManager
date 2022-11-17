@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import Section from 'routes/tasks/section';
 import { STATUS_NAMES } from 'settings/task';
-import { SectionType } from 'types/constants';
+import { SectionType } from 'types/constants/tasks';
 import { getDayMonthDateString, getModifiedDate } from 'utils/date';
 
 const generateSectionTitle = (sectionType: string): string => {
