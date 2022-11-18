@@ -15,7 +15,7 @@ data class Tag(
     val updatedAt: Long = Instant.now().epochSecond,
     @OneToOne
     @JoinColumn(name = "user_id")
-    val user: User
+    val user: User,
 ) : Base(id) {
     override fun toString(): String = this::class.simpleName + "(id = $id, name = $name)"
 }

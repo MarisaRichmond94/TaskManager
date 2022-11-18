@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models.dtos
 
+import com.marisarichmond.taskmanager.models.TaskTemplate
 import java.util.*
 
 // Response DTOs
@@ -27,7 +28,12 @@ data class TaskDTO(
 }
 
 // Request DTOs
-data class CreateTaskDTO(val id: UUID = UUID.randomUUID())
+data class CreateTaskDTO(
+    val id: UUID = UUID.randomUUID(),
+    val objective: String,
+    val link: String? = null,
+    val taskTemplate: TaskTemplate? = null,
+)
 
 data class UpdateTaskByIdDTO(
     val dueDate: Long? = null,
