@@ -10,7 +10,7 @@ const AppProvider = (props: object) => {
     getAccessTokenSilently, loginWithRedirect, logout: auth0Logout,
   } = useAuth0();
   const [isExpanded, setIsExpanded] = useState(true);
-  const [isOverlayActive, setIsOverlayActive] = useState(true);
+  const [isOverlayActive, setIsOverlayActive] = useState(false);
   const [user, setUser] = useState<undefined | User>();
 
   useEffect(() => {
