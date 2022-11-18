@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
 
 import TasksProvider from 'providers/tasks/provider';
@@ -7,7 +7,7 @@ import NotesPage from 'routes/notes';
 import TasksPage from 'routes/tasks';
 import { ROUTES } from 'settings/routes';
 
-const TMRouter: React.FC = (): JSX.Element => {
+const TMRouter: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 

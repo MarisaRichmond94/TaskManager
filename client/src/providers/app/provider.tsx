@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import * as UsersApi from 'api/users';
 import AppContext from 'providers/app/context';
@@ -10,6 +10,7 @@ const AppProvider = (props: object) => {
     getAccessTokenSilently, loginWithRedirect, logout: auth0Logout,
   } = useAuth0();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isOverlayActive, setIsOverlayActive] = useState(true);
   const [user, setUser] = useState<undefined | User>();
 
   useEffect(() => {
@@ -37,13 +38,19 @@ const AppProvider = (props: object) => {
     localStorage.clear();
   };
 
-  const toggleIsExpanded = () => setIsExpanded(!isExpanded);
+  const toggleIsExpanded = useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
+
+  const toggleIsOverlayActive = useCallback(() => {
+    setIsOverlayActive(!isOverlayActive);
+  }, [isOverlayActive]);
 
   const value = {
     isExpanded,
+    isOverlayActive,
     user,
     logout,
     toggleIsExpanded,
+    toggleIsOverlayActive,
   };
 
   return <AppContext.Provider value={value} {...props} />;
