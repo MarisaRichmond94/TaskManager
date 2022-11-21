@@ -21,6 +21,17 @@ body {
   #content {
     display: flex;
 
+    .app-overlay {
+      .overlay-background {
+        left: 60px; // accounts for the width of the sidebar
+        top: 60px; // accounts for the height of the header
+      };
+
+      #content-container {
+        width: 100%;
+      };
+    };
+
     #content-container {
       background-color: $medium-grey;
       padding: $no-padding;

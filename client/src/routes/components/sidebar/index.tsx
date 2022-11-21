@@ -19,12 +19,12 @@ const TMSidebar: FC = () => (
 );
 
 const TopMenu: FC = () => {
-  const { isExpanded, user, toggleIsExpanded } = useApp();
+  const { isExpanded, isOverlayActive, user, toggleIsExpanded } = useApp();
 
   return (
     <div className='top-menu'>
       <img alt='' src={user?.avatar} referrerPolicy='no-referrer' />
-      <TMToggleButton onClick={toggleIsExpanded} selected={isExpanded} />
+      <TMToggleButton disabled={isOverlayActive} onClick={toggleIsExpanded} selected={isExpanded} />
     </div>
   );
 };

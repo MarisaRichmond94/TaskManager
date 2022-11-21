@@ -9,6 +9,11 @@
   padding: $extra-small-padding;
   height: 25px;
   position: relative;
+
+  &.disabled {
+    pointer-events: none;
+    .tm-toggle-button { background-color: $disabled-grey; };
+  };
 };
 
 .tm-toggle-button {
