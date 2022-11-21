@@ -12,7 +12,7 @@ export interface ITMToggleButton {
   onClick: () => void,
 };
 
-export const TMToggleButton: FC<ITMToggleButton> = ({
+const TMToggleButton: FC<ITMToggleButton> = ({
   classNames = [],
   disabled = false,
   selected = false,
@@ -30,3 +30,5 @@ export const TMToggleButton: FC<ITMToggleButton> = ({
     </div>
   </div>
 );
+
+export default TMToggleButton;

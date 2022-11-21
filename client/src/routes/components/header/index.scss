@@ -18,6 +18,8 @@
   .control-panel {
     @include centered-flex-box;
     margin-left: auto;
-    p { color: $white; }
+    p { color: $white; };
+
+    .use-mock-toggle-button { margin-right: $small-margin; };
   };
 };
