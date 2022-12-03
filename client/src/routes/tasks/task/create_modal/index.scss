@@ -1,0 +1,38 @@
+@import 'global';
+
+#create-task-modal {
+  color: $off-black;
+  left: $toolbar-width;
+  opacity: 1;
+  top: 120px;
+  width: calc(100% - 90px);
+
+  .tm-modal-header {
+    padding-bottom: 0;
+    text-align: center;
+    p { margin: $small-margin; };
+  };
+
+  .tm-modal-content {
+    padding-bottom: 0;
+
+    .create-task-input {
+      margin-bottom: $medium-margin;
+    };
+
+    form {
+      width: 100%;
+
+      &:last-of-type {
+        .create-task-input { margin-bottom: 0; };
+      };
+    };
+  };
+
+  .tm-modal-footer {
+    display: flex;
+    justify-content: right;
+
+    button { margin-left: $medium-margin; };
+  };
+};

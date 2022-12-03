@@ -8,5 +8,6 @@ data class TaskDataDTO(
     val attachmentTypes: List<AttachmentType> = emptyList(),
     val statusTypes: List<StatusType> = emptyList(),
     val tasks: List<TaskDTO> = emptyList(),
+    val taskTemplates: List<TaskTemplateDTO> = emptyList(),
     val tags: List<Tag> = emptyList(),
 )

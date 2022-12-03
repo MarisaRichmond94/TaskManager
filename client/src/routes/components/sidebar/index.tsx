@@ -7,7 +7,6 @@ import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
-import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 
@@ -19,12 +18,11 @@ const TMSidebar: FC = () => (
 );
 
 const TopMenu: FC = () => {
-  const { isExpanded, isOverlayActive, user, toggleIsExpanded } = useApp();
+  const { user } = useApp();
 
   return (
     <div className='top-menu'>
       <img alt='' src={user?.avatar} referrerPolicy='no-referrer' />
-      <TMToggleButton disabled={isOverlayActive} onClick={toggleIsExpanded} selected={isExpanded} />
     </div>
   );
 };

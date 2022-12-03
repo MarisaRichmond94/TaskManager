@@ -23,6 +23,9 @@ interface CreateTagDTO {
 
 interface CreateTaskDTO {
   dueDate: number,
+  objective: string,
+  taskTemplate?: TaskTemplate,
+  link?: string,
 };
 
 interface CreateTaskTagDTO {

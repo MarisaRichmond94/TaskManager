@@ -63,16 +63,18 @@ const TMDropdown: FC<ITMDropdown> = ({
 
   return (
     <div className={['tm-dropdown', ...classNames].join(' ')} ref={inputRef}>
-      <button
-        className={
-          `tm-dropdown-button sub-header-text ${isVisible ? 'menu-visible' : 'menu-hidden'}`
-        }
-        disabled={isDisabled}
+      <div
+        className={[
+          'tm-dropdown-button',
+          'sub-header-text',
+          isVisible ? 'menu-visible' : 'menu-hidden',
+          isDisabled ? 'disabled' : '',
+        ].join(' ')}
         onClick={() => setIsVisible(!isVisible)}
       >
         <div title={activeInputText}>{activeInputText}</div>
         {isVisible ? <BsChevronUp /> : <BsChevronDown />}
-      </button>
+      </div>
       <div className={`tm-dropdown-menu ${isVisible ? 'visible' : 'hidden'}`}>
         {populateDropdownOptions()}
       </div>

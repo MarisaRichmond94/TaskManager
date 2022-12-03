@@ -22,6 +22,7 @@ class TaskManagerService(
     private val taskAttachmentService: TaskAttachmentService,
     private val taskService: TaskService,
     private val taskTagService: TaskTagService,
+    private val taskTemplateService: TaskTemplateService,
 ) {
     companion object {
         const val INITIALIZATION_STATUS_TYPE_NAME = "To Do"
@@ -50,13 +51,42 @@ class TaskManagerService(
     // create functions
     @Transactional
     @Throws(UpstreamEntityOperationException::class)
-    fun createTask(userId: UUID, createTaskDTO: CreateTaskDTO): TaskDTO =
-        taskService.create(userId, createTaskDTO).let {
+    fun createTask(userId: UUID, createTaskDTO: CreateTaskDTO) = createTaskDTO.run {
+        val task = taskService.create(userId, createTaskDTO).let {
             val statusType = statusTypeService.getByName(INITIALIZATION_STATUS_TYPE_NAME)
                 ?: throw UpstreamEntityOperationException(Action.GET, StatusType::class.simpleName)
             statusService.initializeTaskStatus(it, statusType)
-            it.populate()
+            it
         }
+
+        if (taskTemplate !== null) {
+            createChecklistItemsByTemplateType(task, taskTemplate)
+            if (link !== null) createTaskAttachmentByTemplateType(task, taskTemplate, link)
+        }
+
+        task.populate()
+    }
+
+    fun createChecklistItemsByTemplateType(task: Task, taskTemplate: TaskTemplate) = taskTemplate.run {
+        TemplateType.values().firstOrNull { it.type == type }?.defaultObjectives?.let { descriptions ->
+            descriptions.forEach { description ->
+                checklistItemService.create(CreateTaskChecklistItemDTO(description = description, taskId = task.id))
+            }
+        }
+    }
+
+    @Throws(UpstreamEntityOperationException::class)
+    fun createTaskAttachmentByTemplateType(task: Task, taskTemplate: TaskTemplate, link: String) = taskTemplate.run {
+        TemplateType.values().firstOrNull { it.type == type }?.attachmentName?.let {
+            attachmentService.create(
+                CreateAttachmentDTO(
+                    link = link,
+                    name = it,
+                    attachmentTypeId = attachmentType.id,
+                )
+            ).let { attachment -> taskAttachmentService.create(UUID.randomUUID(), attachment, task) }
+        } ?: throw UpstreamEntityOperationException(Action.CREATE, Attachment::class.simpleName)
+    }
 
     @Transactional
     fun createTaskAttachment(createTaskAttachmentDTO: CreateTaskAttachmentDTO): AttachmentDTO =
@@ -89,6 +119,7 @@ class TaskManagerService(
         attachmentTypes = attachmentTypeService.get(),
         statusTypes = statusTypeService.get(),
         tasks = taskService.getByUserId(userId).map { it.populate() },
+        taskTemplates = taskTemplateService.getAll(),
         tags = tagService.getByUserId(userId),
     )
 

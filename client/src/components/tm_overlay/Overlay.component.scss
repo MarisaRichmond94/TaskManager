@@ -1,21 +1,11 @@
 @import 'global';
 
 .tm-overlay {
-  height: 100%;
-  width: 100%;
-
-  .overlay-background {
-    background-color: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    height: 100%;
-    max-width: 740px;
-    position: fixed;
-    width: 100%;
-    z-index: 10;
-  };
-
-  .overlay-container {
-    height: 100%;
-    width: 100%;
-  }
+  background-color: rgba(0, 0, 0, 0.65);
+  height: calc(100% - 60px);
+  left: $toolbar-width;
+  position: absolute;
+  top: $header-height;
+  width: calc(100% - 60px);
+  z-index: 1;
 };

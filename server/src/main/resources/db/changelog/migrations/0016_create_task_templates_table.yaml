@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0016_create_task_templates_table_1
+      author: marisarichmond
+      comment: create task_templates table
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: task_templates
+      changes:
+        - createTable:
+            tableName: task_templates
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: task_template_pkey
+              - column:
+                  name: type
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: attachment_type_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_attachment_type_id
+                    references: attachment_types(id)
+                    nullable: false
+  - changeSet:
+      id: 0016_create_task_templates_table_2
+      author: marisarichmond
+      comment: populate task_templates table with enums
+      changes:
+        - loadData:
+            file: data/TaskTemplates.csv
+            encoding: UTF-8
+            quotChar: '"'
+            separator: ;
+            tableName: task_templates
+            relativeToChangelogFile: true
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: uuid
+              - column:
+                  header: type
+                  name: type
+                  type: string
+              - column:
+                  header: attachment_type_id
+                  name: attachment_type_id
+                  type: uuid
