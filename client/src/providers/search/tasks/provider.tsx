@@ -18,12 +18,12 @@ const SearchTasksProvider = (props: object) => {
 
   useEffect(() => { setSearchedTasks(filter.filter(tasks, search)) }, [search, tasks]);
 
-  const updateSortOrder = (updatedSortOrder: boolean) => {
+  const updateSortOrder = useCallback((updatedSortOrder: boolean) => {
     setIsAsc(updatedSortOrder);
     const searchParams = new URLSearchParams(search);
     searchParams.set('asc', updatedSortOrder.toString());
     navigate({ search: searchParams.toString() });
-  };
+  }, [navigate, search]);
 
   const updateUrlFilter = useCallback((filterType: FilterType, filterValue: any): void => {
     filter.update(filterType, filterValue, search, navigate, filterType === FilterType.tags);
@@ -54,7 +54,7 @@ const SearchTasksProvider = (props: object) => {
     }
   }, [updateUrlFilter, removeUrlFilter]);
 
-  const clearUrlFilters = () => { filter.clear(search, navigate); };
+  const clearUrlFilters = useCallback(() => { filter.clear(search, navigate); }, [navigate, search]);
 
   const updateSearchText = useCallback((updatedSearchText: string) => {
     filter.setSearchText(updatedSearchText, search, navigate);

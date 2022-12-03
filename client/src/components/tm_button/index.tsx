@@ -5,8 +5,10 @@ import { FC, ReactElement } from 'react';
 interface ITMButton {
   children: string | ReactElement | ReactElement[],
   onClick: (event: any) => void,
+
   buttonStyle?: ButtonStyle,
   classNames?: string[],
+  id?: string,
   isDisabled?: boolean,
   size?: ButtonSize,
   style?: object,
@@ -41,6 +43,7 @@ const TMButton: FC<ITMButton> = ({
   onClick,
   buttonStyle = ButtonStyle.solid,
   classNames = [],
+  id,
   isDisabled = false,
   size = ButtonSize.medium,
   style = {},
@@ -50,10 +53,11 @@ const TMButton: FC<ITMButton> = ({
   return (
     <button
       className={['tm-button', size, buttonStyle, transparent, ...classNames].join(' ')}
-      type='button'
-      onClick={(event: any) => onClick(event)}
       disabled={isDisabled}
+      id={id ?? null}
+      onClick={(event: any) => onClick(event)}
       style={style}
+      type='button'
     >
       {children}
     </button>

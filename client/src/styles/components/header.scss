@@ -1,0 +1,14 @@
+.divider {
+  background-color: $off-black;
+  border: none;
+  height: 2px;
+  margin: auto;
+
+  &.primary-blue {
+    background-color: $primary-blue;
+  };
+
+  &.secondary-blue {
+    background-color: $secondary-blue;
+  };
+};

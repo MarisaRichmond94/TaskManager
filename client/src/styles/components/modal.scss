@@ -11,25 +11,25 @@
   opacity: 0.95;
   position: absolute;
   top: $header-height + 10px;
-  z-index: 1;
+  z-index: 2;
 
   .tm-modal-header {
     border-radius: $medium-border-radius $medium-border-radius 0 0;
-    padding: $extra-large-padding;
+    padding: $large-padding;
   };
 
   .tm-modal-content {
-    padding: $extra-large-padding;
+    padding: $large-padding;
   };
 
   .tm-modal-content-footer {
     border-radius:  0 0 $medium-border-radius $medium-border-radius;
     overflow: overlay;
-    padding: $extra-large-padding;
+    padding: $large-padding;
   };
 
   .tm-modal-footer {
     border-radius:  0 0 $medium-border-radius $medium-border-radius;
-    padding: $extra-large-padding;
+    padding: $large-padding;
   };
 };

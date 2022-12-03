@@ -22,6 +22,7 @@ const TasksProvider = (props: object) => {
   const [attachmentTypes, setAttachmentTypes] = useState<undefined | AttachmentType[]>();
   const [statusTypes, setStatusTypes] = useState<undefined | Status[]>();
   const [tasks, setTasks] = useState<undefined | Task[]>();
+  const [taskTemplates, setTaskTemplates] = useState<undefined | TaskTemplate[]>();
   const [tags, setTags] = useState<undefined | Tag[]>();
 
   // derived state
@@ -54,6 +55,7 @@ const TasksProvider = (props: object) => {
     setAttachmentTypes(userTaskData.attachmentTypes);
     setStatusTypes(userTaskData.statusTypes);
     setTasks(userTaskData.tasks);
+    setTaskTemplates(userTaskData.taskTemplates);
     setTags(userTaskData.tags);
     buildTaskLists(userTaskData.tasks, setTaskMap);
   }, [getAccessTokenSilently]);
@@ -64,16 +66,16 @@ const TasksProvider = (props: object) => {
   }, [user?.id]);
 
   // Task functionality
-  const createTask = async () => {
+  const createTask = useCallback(async (body: CreateTaskDTO) => {
     const midnight = new Date();
     midnight.setHours(23, 59, 59, 59);
-    const body = { dueDate: toServerDatetime(midnight) };
-    const newTask = await TasksApi.create(body, getAccessTokenSilently);
+    const updatedBody = { ...body, dueDate: toServerDatetime(midnight) };
+    const newTask = await TasksApi.create(updatedBody, getAccessTokenSilently);
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     buildTaskLists(updatedTasks, setTaskMap);
     setActiveTaskId(newTask.id);
-  };
+  }, [tasks, getAccessTokenSilently]);
 
   const archiveTaskById = useCallback(async (taskId: string) => {
     const statusTypeId = statusTypes.find(x => x.name === 'Archived')?.id;
@@ -154,6 +156,7 @@ const TasksProvider = (props: object) => {
     statusTypes,
     tags,
     tasks,
+    taskTemplates,
     taskMap,
     userTaskDataLoaded: !!(tasks && tags),
     archiveTaskById,

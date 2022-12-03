@@ -1,0 +1,8 @@
+@import 'global';
+
+#create-task-button {
+  z-index: 2;
+  #create-task-icon {
+    &.active { color: $logo-green; };
+  };
+};

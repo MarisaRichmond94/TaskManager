@@ -40,12 +40,12 @@
   };
 
   &.off-white {
-    .header { color: $off-white; }
-    .divider { background-color: $off-white; }
+    .header { color: $off-white; };
+    .divider { background-color: $off-white; };
   };
 
   &.off-black {
     .header { color: $off-black; }
-    .divider { background-color: $off-black; }
+    .divider { background-color: $off-black; };
   };
 };

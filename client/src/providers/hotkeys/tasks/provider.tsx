@@ -33,7 +33,7 @@ const TasksHotkeysProvider: FC<ITasksHotkeysProvider> = ({ children }) => {
         searchInputRef?.current?.focus();
         break;
       case taskKeys.create:
-        createTask();
+        createTask({ dueDate: 0, objective: 'Change me' });
         break;
       case tasksKeys.sort:
         updateSortOrder(!isAsc);

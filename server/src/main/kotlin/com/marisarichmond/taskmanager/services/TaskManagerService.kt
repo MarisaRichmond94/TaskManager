@@ -22,6 +22,7 @@ class TaskManagerService(
     private val taskAttachmentService: TaskAttachmentService,
     private val taskService: TaskService,
     private val taskTagService: TaskTagService,
+    private val taskTemplateService: TaskTemplateService,
 ) {
     companion object {
         const val INITIALIZATION_STATUS_TYPE_NAME = "To Do"
@@ -67,7 +68,7 @@ class TaskManagerService(
     }
 
     fun createChecklistItemsByTemplateType(task: Task, taskTemplate: TaskTemplate) = taskTemplate.run {
-        TemplateType.values().firstOrNull { it.type === type }?.defaultObjectives?.let { descriptions ->
+        TemplateType.values().firstOrNull { it.type == type }?.defaultObjectives?.let { descriptions ->
             descriptions.forEach { description ->
                 checklistItemService.create(CreateTaskChecklistItemDTO(description = description, taskId = task.id))
             }
@@ -76,7 +77,7 @@ class TaskManagerService(
 
     @Throws(UpstreamEntityOperationException::class)
     fun createTaskAttachmentByTemplateType(task: Task, taskTemplate: TaskTemplate, link: String) = taskTemplate.run {
-        TemplateType.values().firstOrNull { it.type === type }?.attachmentName?.let {
+        TemplateType.values().firstOrNull { it.type == type }?.attachmentName?.let {
             attachmentService.create(
                 CreateAttachmentDTO(
                     link = link,
@@ -118,6 +119,7 @@ class TaskManagerService(
         attachmentTypes = attachmentTypeService.get(),
         statusTypes = statusTypeService.get(),
         tasks = taskService.getByUserId(userId).map { it.populate() },
+        taskTemplates = taskTemplateService.getAll(),
         tags = tagService.getByUserId(userId),
     )
 

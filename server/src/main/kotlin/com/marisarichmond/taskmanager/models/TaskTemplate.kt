@@ -1,5 +1,6 @@
 package com.marisarichmond.taskmanager.models
 
+import com.marisarichmond.taskmanager.models.dtos.TaskTemplateDTO
 import java.util.*
 import javax.persistence.*
 
@@ -66,3 +67,12 @@ enum class TemplateType(
         )
     ),
 }
+
+fun TaskTemplate.toDTO(): TaskTemplateDTO =
+    this.run {
+        TaskTemplateDTO(
+            id = id,
+            type = type,
+            attachmentType = attachmentType,
+        )
+    }
