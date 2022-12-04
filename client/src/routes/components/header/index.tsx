@@ -1,7 +1,6 @@
 import './index.scss';
 
 import { FC } from 'react';
-import { BiMessage } from 'react-icons/bi';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ const Header: FC = () => (
     <Logo />
     <div className='control-panel'>
       <Greeting />
-      <MessageCenterButton />
       <LogOutButton />
     </div>
   </div>
@@ -39,17 +37,6 @@ const Greeting: FC = () => {
     </p>
   );
 };
-
-const MessageCenterButton: FC = () => (
-  <TMButton
-    classNames={['off-white']}
-    buttonStyle={ButtonStyle.icon}
-    onClick={() => console.log('message')}
-    size={ButtonSize.large}
-  >
-    <BiMessage />
-  </TMButton>
-);
 
 const LogOutButton: FC = () => {
   const { logout } = useApp();
