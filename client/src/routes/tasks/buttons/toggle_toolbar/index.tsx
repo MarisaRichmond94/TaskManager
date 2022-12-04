@@ -20,9 +20,9 @@ const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToo
       size={ButtonSize.small}
     >
       <TMTooltip
-        content='Show archived tasks'
+        content='Show/hide toolbar menu'
         direction={TooltipDirection.bottomLeft}
-        id='toggle-archived-tasks-tooltip'
+        id='show-hide-toolbar-menu-tooltip'
       >
         <BsChevronDoubleLeft
           className={[showToolbar ? 'show-toolbar' : 'hide-toolbar'].join(' ')}
