@@ -3,10 +3,36 @@
 #task-header {
   display: flex;
   margin-bottom: $medium-margin;
+
   form {
     margin-right: $medium-margin;
-    width: 85%;
+    width: -webkit-fill-available;
   };
 
   #toolbar-menu { .tm-menu { right: 8px;  }; };
+};
+
+#task-header-toolbar {
+  display: contents;
+
+  #tool-container {
+    @include centered-flex-box;
+    &.toolbar-visible {
+      visibility: visible;
+      width: fit-content;
+      transition: width 500ms ease;
+    };
+
+    &.toolbar-hidden {
+      visibility: hidden;
+      width: 0;
+      transition: width 500ms ease;
+    };
+  };
+
+  .task-toolbar-icon {
+    color: $white;
+    padding: $small-padding;
+    &:hover { background-color: $off-white; };
+  };
 };

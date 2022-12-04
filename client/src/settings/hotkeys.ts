@@ -35,6 +35,7 @@ const SHIFT_KEY_STROKES = {
     prioritize: 'V',
   },
   tasks: {
+    downloadReport: 'D', // TODO - complete this as part of future feature
     sort: 'S',
   },
 };

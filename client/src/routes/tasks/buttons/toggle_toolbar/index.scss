@@ -1,0 +1,11 @@
+@import 'global';
+
+#toggle-toobar-button {
+  transform: rotate(0deg);
+  transition: transform 500ms ease-in-out;
+
+  &.show-toolbar {
+    transform: rotate(180deg);
+    transition: transform 500ms ease-in-out;
+  };
+};

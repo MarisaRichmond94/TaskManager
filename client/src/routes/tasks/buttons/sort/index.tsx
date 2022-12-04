@@ -4,27 +4,27 @@ import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
+import { useSearchTasks } from 'providers/search/tasks';
 
-interface ISortButton {
-  isAsc: boolean,
-  updateSortOrder: (sortOrder: boolean) => void,
-};
+const SortButton: FC = () => {
+  const { isAsc, updateSortOrder } = useSearchTasks();
 
-const SortButton: FC<ISortButton> = ({ isAsc, updateSortOrder }) => (
-  <TMButton
-    buttonStyle={ButtonStyle.icon}
-    classNames={['task-toolbar-icon']}
-    onClick={() => updateSortOrder(!isAsc)}
-    size={ButtonSize.medium}
-  >
-    <TMTooltip
-      content={<HotKeyTooltip action='Sort tasks by due date' keyStroke={['shift', 's']} />}
-      direction={TooltipDirection.bottomLeft}
-      id='sort-tasks-tooltip'
+  return (
+    <TMButton
+      buttonStyle={ButtonStyle.icon}
+      classNames={['task-toolbar-icon']}
+      onClick={() => updateSortOrder(!isAsc)}
+      size={ButtonSize.medium}
     >
-      {isAsc ? <RiSortAsc /> : <RiSortDesc />}
-    </TMTooltip>
-  </TMButton>
-);
+      <TMTooltip
+        content={<HotKeyTooltip action='Sort tasks by due date' keyStroke={['shift', 's']} />}
+        direction={TooltipDirection.bottomLeft}
+        id='sort-tasks-tooltip'
+      >
+        {isAsc ? <RiSortAsc /> : <RiSortDesc />}
+      </TMTooltip>
+    </TMButton>
+  );
+};
 
 export default SortButton;
