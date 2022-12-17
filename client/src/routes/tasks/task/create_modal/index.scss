@@ -2,10 +2,10 @@
 
 #create-task-modal {
   color: $off-black;
-  left: $toolbar-width;
+  left: $toolbar-width + 20px;
   opacity: 1;
   top: 120px;
-  width: calc(100% - 90px);
+  max-width: calc($max-app-width - 100px);
 
   .tm-modal-header {
     padding-bottom: 0;

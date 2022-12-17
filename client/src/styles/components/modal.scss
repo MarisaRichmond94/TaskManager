@@ -3,11 +3,11 @@
 .tm-modal {
   background-color: $off-white;
   border-radius: $medium-border-radius;
-  left: 0;
-  right: 0;
-  margin-left: auto;
+  left: 20px;
+  right: 20px;
+  margin-left: 0;
   margin-right: auto;
-  max-width: calc(100% - 40px);
+  max-width: calc($max-app-width - 40px);
   opacity: 0.95;
   position: absolute;
   top: $header-height + 10px;
