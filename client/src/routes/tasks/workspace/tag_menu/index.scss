@@ -33,6 +33,7 @@
       #create-tag-input-container {
         @include centered-flex-box;
         border-radius: $small-border-radius;
+        height: 40px;
         padding: 3px $no-padding;
         padding-right: $medium-padding;
 
