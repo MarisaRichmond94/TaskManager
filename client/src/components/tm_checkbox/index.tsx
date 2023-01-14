@@ -2,7 +2,7 @@ import './index.scss';
 
 import { FC, ReactElement } from 'react';
 
-import TMButton, { ButtonStyle, ButtonSize } from 'components/tm_button';
+import TMButton, { ButtonType, ButtonSize } from 'components/tm_button';
 import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
 interface ITMCheckbox {
@@ -31,9 +31,9 @@ const TMCheckbox: FC<ITMCheckbox> = ({
       <TMButton
         classNames={['off-black']}
         onClick={toggleIsActive}
-        buttonStyle={ButtonStyle.icon}
         isDisabled={isDisabled}
         size={ButtonSize.small}
+        type={ButtonType.icon}
       >
         {isActive ? <BsCheckSquare /> : <BsSquare />}
       </TMButton>

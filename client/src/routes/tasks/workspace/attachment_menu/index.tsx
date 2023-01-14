@@ -9,7 +9,7 @@ import useKeyPress from 'hooks/useKeyPress';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 
 interface IAttachmentMenu {
   attachment?: UpdateAttachmentDTO,
@@ -127,7 +127,7 @@ interface ICancelButton {
 const CancelButton: FC<ICancelButton> = ({ onCancelCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'dark-grey']}
-    buttonStyle={ButtonStyle.icon}
+    type={ButtonType.icon}
     size={ButtonSize.small}
     onClick={onCancelCallback}
     style={{ margin: '0' }}
@@ -143,7 +143,7 @@ interface IDeleteButton {
 const DeleteButton: FC<IDeleteButton> = ({ onDeleteCallback }) => (
   <TMButton
     classNames={['attachment-menu-button', 'grey']}
-    buttonStyle={ButtonStyle.solid}
+    type={ButtonType.solid}
     size={ButtonSize.small}
     onClick={onDeleteCallback}
     style={{ marginRight: '10px' }}
@@ -162,7 +162,7 @@ const SubmitButton: FC<ISubmitButton> = ({ isDisabled, isExistingAttachment, onS
   <TMButton
     classNames={['attachment-menu-button', 'blue']}
     isDisabled={isDisabled}
-    buttonStyle={ButtonStyle.solid}
+    type={ButtonType.solid}
     size={ButtonSize.small}
     onClick={onSubmitCallback}
     style={{ marginRight: '0' }}

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useSearchTasks } from 'providers/search/tasks';
@@ -11,7 +11,7 @@ const SortButton: FC = () => {
 
   return (
     <TMButton
-      buttonStyle={ButtonStyle.icon}
+      type={ButtonType.icon}
       classNames={['task-toolbar-icon']}
       onClick={() => updateSortOrder(!isAsc)}
       size={ButtonSize.medium}

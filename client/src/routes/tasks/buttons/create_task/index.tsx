@@ -3,7 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 
@@ -14,11 +14,11 @@ interface ICreateTaskButton {
 
 const CreateTaskButton: FC<ICreateTaskButton> = ({ isModalOpen, setIsModalOpen }) => (
   <TMButton
-    buttonStyle={ButtonStyle.icon}
     classNames={['task-toolbar-icon']}
     id='create-task-button'
     onClick={() => setIsModalOpen(!isModalOpen)}
     size={ButtonSize.large}
+    type={ButtonType.icon}
   >
     <TMTooltip
       content={<HotKeyTooltip action='Create new task' keyStroke={['shift', 'n']} />}

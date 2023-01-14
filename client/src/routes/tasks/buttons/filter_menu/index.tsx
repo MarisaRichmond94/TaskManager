@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMCheckbox from 'components/tm_checkbox';
 import TMDropdown from 'components/tm_dropdown';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
@@ -29,7 +29,7 @@ const FilterMenuButton: FC = () => {
       setShowMenu={setIsFilterMenuOpen}
     >
       <TMButton
-        buttonStyle={ButtonStyle.icon}
+        type={ButtonType.icon}
         classNames={['task-toolbar-icon']}
         onClick={() => {}}
         size={ButtonSize.small}
@@ -175,7 +175,7 @@ interface IClearFiltersButton {
 
 const ClearFiltersButton: FC<IClearFiltersButton> = ({ clearFilters }) => (
   <TMButton
-    buttonStyle={ButtonStyle.solid}
+    type={ButtonType.solid}
     classNames={['clear-filter-button', 'grey']}
     size={ButtonSize.extraSmall}
     onClick={clearFilters}

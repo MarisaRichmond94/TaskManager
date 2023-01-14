@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ImFolder, ImFolderOpen } from 'react-icons/im';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useTasks } from 'providers/tasks';
 
@@ -10,7 +10,7 @@ const ToggleArchivedButton: FC = () => {
 
   return (
     <TMButton
-      buttonStyle={ButtonStyle.icon}
+      type={ButtonType.icon}
       classNames={['task-toolbar-icon']}
       onClick={() => updateIsShowingArchivedTasks(!isShowingArchivedTasks)}
       size={ButtonSize.small}

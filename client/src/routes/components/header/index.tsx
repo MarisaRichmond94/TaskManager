@@ -5,7 +5,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/logo/light.png';
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 import { timedUserGreeting } from 'utils/user';
@@ -44,9 +44,9 @@ const LogOutButton: FC = () => {
   return (
     <TMButton
       classNames={['off-white']}
-      buttonStyle={ButtonStyle.icon}
       onClick={logout}
       size={ButtonSize.large}
+      type={ButtonType.icon}
     >
       <IoLogOutOutline />
     </TMButton>

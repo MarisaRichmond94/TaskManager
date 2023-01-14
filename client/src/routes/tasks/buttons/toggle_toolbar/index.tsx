@@ -3,7 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 import { BsChevronDoubleLeft } from 'react-icons/bs';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 
 interface IToggleToolbarButton {
@@ -13,7 +13,7 @@ interface IToggleToolbarButton {
 
 const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToolbar }) => (
   <TMButton
-    buttonStyle={ButtonStyle.icon}
+    type={ButtonType.icon}
     classNames={['task-toolbar-icon']}
     onClick={() => setShowToolbar(!showToolbar)}
     size={ButtonSize.small}

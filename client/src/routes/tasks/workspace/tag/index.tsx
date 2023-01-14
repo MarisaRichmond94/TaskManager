@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMEditableField from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
@@ -57,7 +57,7 @@ const TaskTag: FC<ITaskTag> = ({
           )
       }
       <TMButton
-        buttonStyle={ButtonStyle.icon}
+        type={ButtonType.icon}
         size={ButtonSize.medium}
         onClick={isInUse ? handleDelete : addTagToTask}
       >

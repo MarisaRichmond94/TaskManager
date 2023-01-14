@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 
-import TMButton, { ButtonSize, ButtonStyle } from "components/tm_button";
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';;
 
 interface IActionButton {
   action: (event: any) => void,
@@ -16,11 +16,11 @@ const ActionButton: FC<IActionButton> = ({
   isDisabled = false,
 }) => (
   <TMButton
-    buttonStyle={ButtonStyle.icon}
     classNames={['off-black']}
     isDisabled={isDisabled}
     onClick={action}
     size={ButtonSize.medium}
+    type={ButtonType.icon}
   >
     {icon}
   </TMButton>

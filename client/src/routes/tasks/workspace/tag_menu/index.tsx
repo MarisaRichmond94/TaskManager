@@ -4,7 +4,7 @@ import { FC, MutableRefObject, useRef, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
@@ -56,7 +56,7 @@ interface IHeader {
 const Header: FC<IHeader> = ({ isAddMenu, setIsAddMenu }) => (
   <div className='tag-menu-header'>
     <TMButton
-      buttonStyle={ButtonStyle.underline}
+      type={ButtonType.underline}
       classNames={[isAddMenu ? 'active' : '']}
       size={ButtonSize.medium}
       onClick={() => setIsAddMenu(true)}
@@ -64,7 +64,7 @@ const Header: FC<IHeader> = ({ isAddMenu, setIsAddMenu }) => (
       Add
     </TMButton>
     <TMButton
-      buttonStyle={ButtonStyle.underline}
+      type={ButtonType.underline}
       classNames={[isAddMenu ? '' : 'active']}
       size={ButtonSize.medium}
       onClick={() => setIsAddMenu(false)}
@@ -159,7 +159,7 @@ const AddTagButton: FC = () => {
       )
       : (
         <TMButton
-          buttonStyle={ButtonStyle.icon}
+          type={ButtonType.icon}
           classNames={['add-button']}
           size={ButtonSize.medium}
           onClick={() => setIsInAddMode(true)}

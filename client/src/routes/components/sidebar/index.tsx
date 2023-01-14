@@ -6,7 +6,7 @@ import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
@@ -49,9 +49,9 @@ const NavigateToPageButton: FC<INavigateToPageButton> = ({ icon, routePath }) =>
   return (
     <TMButton
       classNames={['sidebar-menu-button', path === routePath ? 'active' : '']}
-      buttonStyle={ButtonStyle.icon}
       onClick={() => navigate(routePath)}
       size={ButtonSize.extraLarge}
+      type={ButtonType.icon}
     >
       {icon}
     </TMButton>

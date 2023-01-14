@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, ReactElement, useRef, useState } from 'react';
 import { BsTags } from 'react-icons/bs';
 
-import TMButton, { ButtonSize, ButtonStyle } from 'components/tm_button';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
@@ -64,7 +64,7 @@ interface IToggleTagMenuButton {
 const ToggleTagMenuButton: FC<IToggleTagMenuButton> = ({ showTagMenu, setShowTagMenu }) => (
   <TMButton
     classNames={['grey', 'toggle-menu-button', showTagMenu ? 'active' : '']}
-    buttonStyle={ButtonStyle.icon}
+    type={ButtonType.icon}
     size={ButtonSize.medium}
     onClick={() => setShowTagMenu(!showTagMenu)}
   >
