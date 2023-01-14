@@ -18,6 +18,7 @@ interface ITMTooltip {
   classNames?: string[],
   delay?: number,
   direction?: TooltipDirection,
+  duration?: number,
 };
 
 const TMTooltip: FC<ITMTooltip> = ({
@@ -28,18 +29,22 @@ const TMTooltip: FC<ITMTooltip> = ({
   classNames = [],
   delay = 500,
   direction = TooltipDirection.top,
+  duration = 2000,
 }) => {
-  let timeout;
+  let showTimeout;
+  let hideTimeout;
 
-  const [isActive, setIsActive] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const showTooltip = () => {
-    timeout = setTimeout(() => { setIsActive(true); }, delay);
+    showTimeout = setTimeout(() => { setIsVisible(true); }, delay);
+    hideTimeout = setTimeout(() => { setIsVisible(false); }, delay + duration);
   };
 
   const hideTooltip = () => {
-    clearInterval(timeout);
-    setIsActive(false);
+    clearInterval(showTimeout);
+    clearInterval(hideTimeout);
+    setIsVisible(false);
   };
 
   return (
@@ -50,12 +55,9 @@ const TMTooltip: FC<ITMTooltip> = ({
       id={id}
     >
       {children}
-      {
-        isActive &&
-        <div className={['tooltip-content', direction].join(' ')}>
-          {content}
-        </div>
-      }
+      <div className={['tooltip-content', isVisible ? 'show' : 'hide', direction].join(' ')}>
+        {content}
+      </div>
     </div>
   );
 };
