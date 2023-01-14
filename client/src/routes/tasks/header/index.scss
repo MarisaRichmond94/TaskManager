@@ -14,19 +14,20 @@
 
 #task-header-toolbar {
   display: contents;
+  overflow: hidden;
 
   #tool-container {
     @include centered-flex-box;
     &.toolbar-visible {
-      visibility: visible;
-      width: fit-content;
       transition: width 500ms ease;
+      visibility: visible;
+      width: 175px; // This needs to stay hard-coded for the smooth transition to work
     };
 
     &.toolbar-hidden {
+      transition: width 500ms ease, visibility 200ms ease;
       visibility: hidden;
       width: 0;
-      transition: width 500ms ease;
     };
   };
 

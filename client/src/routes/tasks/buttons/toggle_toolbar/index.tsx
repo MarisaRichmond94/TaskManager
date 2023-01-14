@@ -11,26 +11,24 @@ interface IToggleToolbarButton {
   setShowToolbar: (showToolbar: boolean) => void,
 };
 
-const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToolbar }) => {
-  return (
-    <TMButton
-      buttonStyle={ButtonStyle.icon}
-      classNames={['task-toolbar-icon']}
-      onClick={() => setShowToolbar(!showToolbar)}
-      size={ButtonSize.small}
+const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToolbar }) => (
+  <TMButton
+    buttonStyle={ButtonStyle.icon}
+    classNames={['task-toolbar-icon']}
+    onClick={() => setShowToolbar(!showToolbar)}
+    size={ButtonSize.small}
+  >
+    <TMTooltip
+      content={showToolbar ? 'Hide menu' : 'Show menu'}
+      direction={TooltipDirection.bottomLeft}
+      id='show-hide-toolbar-menu-tooltip'
     >
-      <TMTooltip
-        content='Show/hide toolbar menu'
-        direction={TooltipDirection.bottomLeft}
-        id='show-hide-toolbar-menu-tooltip'
-      >
-        <BsChevronDoubleLeft
-          className={[showToolbar ? 'show-toolbar' : 'hide-toolbar'].join(' ')}
-          id='toggle-toobar-button'
-        />
-      </TMTooltip>
-    </TMButton>
-  );
-};
+      <BsChevronDoubleLeft
+        className={[showToolbar ? 'show-toolbar' : 'hide-toolbar'].join(' ')}
+        id='toggle-toobar-button'
+      />
+    </TMTooltip>
+  </TMButton>
+);
 
 export default ToggleToolbarButton;
