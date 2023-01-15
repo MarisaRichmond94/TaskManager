@@ -9,7 +9,7 @@ import TMCheckbox from 'components/tm_checkbox';
 import TMDropdown from 'components/tm_dropdown';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMMenu from 'components/tm_menu';
-import TMRangedDatePicker from 'components/tm_date_picker/ranged';
+import { TMRangedDatePicker } from 'components/tm_date_picker';
 import TMSearchableDropdown from 'components/tm_searchable_dropdown';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useSearchTasks } from 'providers/search/tasks';

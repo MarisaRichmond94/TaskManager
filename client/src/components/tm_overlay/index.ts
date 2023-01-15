@@ -1,1 +1,1 @@
-export * from './Overlay.component';
+export * from './overlay';

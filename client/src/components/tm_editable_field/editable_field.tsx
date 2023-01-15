@@ -1,4 +1,4 @@
-import './index.scss';
+import './editable_field.scss';
 
 import { FC, KeyboardEvent, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { Descendant } from 'slate';
@@ -7,7 +7,8 @@ import TMPlainTextField from 'components/tm_plain_text_field';
 import TMRichTextField from 'components/tm_rich_text_field';
 import TMRichTextViewer from 'components/tm_rich_text_field/viewer';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
-import { FieldType } from 'types/constants/tm_editable_field';
+
+import { FieldType } from './types';
 
 const DEFAULT_INITIAL_VALUE = {
   [FieldType.richText]: undefined,

@@ -1,4 +1,4 @@
-import './Overlay.component.scss';
+import './overlay.scss';
 
 import { FC } from 'react';
 

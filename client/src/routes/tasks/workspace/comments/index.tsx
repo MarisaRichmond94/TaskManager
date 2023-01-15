@@ -4,11 +4,10 @@ import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import TMEditableField from 'components/tm_editable_field';
+import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMTextArea from 'components/tm_text_area';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useTask } from 'providers/task';
-import { FieldType } from 'types/constants/tm_editable_field';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
 const TaskComments: FC = () => {

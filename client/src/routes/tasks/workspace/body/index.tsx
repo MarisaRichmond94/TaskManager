@@ -2,11 +2,10 @@ import './index.scss';
 
 import { FC } from 'react';
 
-import TMEditableField from 'components/tm_editable_field';
+import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
 import TaskChecklistItems from 'routes/tasks/workspace/checklist_items';
 import TaskComments from 'routes/tasks/workspace/comments';
-import { FieldType } from 'types/constants/tm_editable_field';
 
 const Body: FC = () => {
   const { description, objective, updateTask } = useTask();

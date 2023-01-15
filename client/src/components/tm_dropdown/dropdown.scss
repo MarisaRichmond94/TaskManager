@@ -45,7 +45,7 @@
       padding: $medium-padding;
       text-decoration: none;
       &:hover { background-color: $secondary-blue; };
-    }
+    };
   };
 
   &.white {
@@ -54,5 +54,5 @@
       &:hover { background-color: $secondary-blue; };
     };
     .tm-dropdown-menu { background-color: $white; };
-  }
+  };
 };

@@ -1,37 +1,32 @@
-import '../index.scss';
+import './date_picker.scss';
 import "react-datepicker/dist/react-datepicker.css";
 
 import { FC } from "react";
-
 import DatePicker from "react-datepicker";
 
 interface ITMRangedDatePicker {
   endDate: Date,
+  onChange: (dates: Date[]) => void,
   startDate: Date,
 
   placeholder?: string,
-
-  onChange: (dates: Date[]) => void,
 };
 
 const TMRangedDatePicker: FC<ITMRangedDatePicker> = ({
   endDate,
+  onChange,
   startDate,
 
   placeholder = '',
-
-  onChange,
-}) => {
-  return (
-    <DatePicker
-      selected={startDate}
-      onChange={onChange}
-      startDate={startDate}
-      endDate={endDate}
-      placeholderText={placeholder}
-      selectsRange
-    />
-  );
-};
+}) => (
+  <DatePicker
+    selected={startDate}
+    onChange={onChange}
+    startDate={startDate}
+    endDate={endDate}
+    placeholderText={placeholder}
+    selectsRange
+  />
+);
 
 export default TMRangedDatePicker;
