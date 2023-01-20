@@ -1,12 +1,12 @@
 import './index.scss';
 
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, ReactElement } from 'react';
 import { BsTrophyFill } from 'react-icons/bs';
 import { FaTasks } from 'react-icons/fa';
 import { GiNotebook } from 'react-icons/gi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_toggle';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
@@ -47,14 +47,14 @@ const NavigateToPageButton: FC<INavigateToPageButton> = ({ icon, routePath }) =>
   const { pathname: path } = useLocation();
 
   return (
-    <TMButton
+    <RichButton
       classNames={['sidebar-menu-button', path === routePath ? 'active' : '']}
       onClick={() => navigate(routePath)}
-      size={ButtonSize.extraLarge}
-      type={ButtonType.icon}
+      size={RichButtonSize.ExtraLarge}
+      type={RichButtonType.Icon}
     >
       {icon}
-    </TMButton>
+    </RichButton>
   );
 };
 

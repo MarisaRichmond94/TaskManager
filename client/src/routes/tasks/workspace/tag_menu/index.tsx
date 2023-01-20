@@ -1,10 +1,10 @@
 import './index.scss';
 
+import { RichButton, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, MutableRefObject, useRef, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTextArea from 'components/tm_text_area';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
@@ -55,22 +55,20 @@ interface IHeader {
 
 const Header: FC<IHeader> = ({ isAddMenu, setIsAddMenu }) => (
   <div className='tag-menu-header'>
-    <TMButton
-      type={ButtonType.underline}
+    <RichButton
       classNames={[isAddMenu ? 'active' : '']}
-      size={ButtonSize.medium}
       onClick={() => setIsAddMenu(true)}
+      type={RichButtonType.Underline}
     >
       Add
-    </TMButton>
-    <TMButton
-      type={ButtonType.underline}
+    </RichButton>
+    <RichButton
       classNames={[isAddMenu ? '' : 'active']}
-      size={ButtonSize.medium}
       onClick={() => setIsAddMenu(false)}
+      type={RichButtonType.Underline}
     >
       Manage
-    </TMButton>
+    </RichButton>
   </div>
 );
 
@@ -158,17 +156,16 @@ const AddTagButton: FC = () => {
         </div>
       )
       : (
-        <TMButton
-          type={ButtonType.icon}
+        <RichButton
           classNames={['add-button']}
-          size={ButtonSize.medium}
           onClick={() => setIsInAddMode(true)}
+          type={RichButtonType.Icon}
         >
           <div className='add-button-content sub-header-text'>
             <IoMdAdd />
             Add Tag
           </div>
-        </TMButton>
+        </RichButton>
       )
   );
 };

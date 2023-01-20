@@ -1,6 +1,5 @@
-import { FC, ReactElement } from "react";
-
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';;
+import { RichButton, RichButtonColor, RichButtonType } from '@MarisaRichmond94/rich_ui';
+import { FC, ReactElement } from 'react';
 
 interface IActionButton {
   action: (event: any) => void,
@@ -15,15 +14,14 @@ const ActionButton: FC<IActionButton> = ({
 
   isDisabled = false,
 }) => (
-  <TMButton
-    classNames={['off-black']}
+  <RichButton
+    color={RichButtonColor.OffBlack}
     isDisabled={isDisabled}
     onClick={action}
-    size={ButtonSize.medium}
-    type={ButtonType.icon}
+    type={RichButtonType.Icon}
   >
     {icon}
-  </TMButton>
+  </RichButton>
 );
 
 export default ActionButton

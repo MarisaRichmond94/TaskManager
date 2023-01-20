@@ -1,10 +1,10 @@
 import './index.scss';
 
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMCheckbox from 'components/tm_checkbox';
 import TMDropdown from 'components/tm_dropdown';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
@@ -28,11 +28,11 @@ const FilterMenuButton: FC = () => {
       showMenu={isFilterMenuOpen}
       setShowMenu={setIsFilterMenuOpen}
     >
-      <TMButton
-        type={ButtonType.icon}
+      <RichButton
         classNames={['task-toolbar-icon']}
         onClick={() => {}}
-        size={ButtonSize.small}
+        size={RichButtonSize.Small}
+        type={RichButtonType.Icon}
       >
         <TMTooltip
           content={<HotKeyTooltip action='Menu for filtering tasks' keyStroke={['shift', 'r']} />}
@@ -41,7 +41,7 @@ const FilterMenuButton: FC = () => {
         >
           <FaFilter />
         </TMTooltip>
-      </TMButton>
+      </RichButton>
     </TMMenu>
   );
 }
@@ -174,14 +174,13 @@ interface IClearFiltersButton {
 };
 
 const ClearFiltersButton: FC<IClearFiltersButton> = ({ clearFilters }) => (
-  <TMButton
-    type={ButtonType.solid}
-    classNames={['clear-filter-button', 'grey']}
-    size={ButtonSize.extraSmall}
+  <RichButton
+    classNames={['clear-filter-button']}
     onClick={clearFilters}
+    size={RichButtonSize.ExtraSmall}
   >
     Clear Filters
-  </TMButton>
+  </RichButton>
 );
 
 export default FilterMenuButton;

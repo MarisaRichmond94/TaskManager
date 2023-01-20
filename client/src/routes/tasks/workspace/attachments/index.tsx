@@ -1,12 +1,12 @@
 import './index.scss';
 
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, ReactElement, useRef, useState } from 'react';
 import { BsFolderPlus, BsPencilSquare } from 'react-icons/bs';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { SiJirasoftware } from 'react-icons/si';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers/task';
 import AttachmentMenu from 'routes/tasks/workspace/attachment_menu';
@@ -133,14 +133,14 @@ const TaskAttachment: FC<IAttachment> = ({ attachment, onEditCallback }) => {
       >
         <b>{name}</b>
       </div>
-      <TMButton
-        classNames={['grey', 'edit-attachment-button']}
-        type={ButtonType.icon}
+      <RichButton
+        classNames={['edit-attachment-button']}
         onClick={() => onEditCallback(attachment)}
-        size={ButtonSize.small}
+        size={RichButtonSize.Small}
+        type={RichButtonType.Icon}
       >
         <BsPencilSquare />
-      </TMButton>
+      </RichButton>
     </div>
   );
 };
@@ -154,14 +154,13 @@ const AddAttachmentButton: FC<IAddAttachmentButton> = ({
   showAttachmentMenu,
   setShowAttachmentMenu,
 }) => (
-  <TMButton
-    classNames={['grey', 'toggle-menu-button', showAttachmentMenu ? 'active' : '']}
-    type={ButtonType.icon}
-    size={ButtonSize.medium}
+  <RichButton
+    classNames={['toggle-menu-button', showAttachmentMenu ? 'active' : '']}
     onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}
+    type={RichButtonType.Icon}
   >
     <BsFolderPlus/>
-  </TMButton>
+  </RichButton>
 );
 
 const NoAttachmentsToDisplay: FC = () => (

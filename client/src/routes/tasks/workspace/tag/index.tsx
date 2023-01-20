@@ -1,10 +1,10 @@
 import './index.scss';
 
+import { RichButton, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
@@ -55,13 +55,12 @@ const TaskTag: FC<ITaskTag> = ({
             </div>
           )
       }
-      <TMButton
-        type={ButtonType.icon}
-        size={ButtonSize.medium}
+      <RichButton
         onClick={isInUse ? handleDelete : addTagToTask}
+        type={RichButtonType.Icon}
       >
         {isInUse ? <BsX /> : <IoMdAdd />}
-      </TMButton>
+      </RichButton>
     </div>
   );
 };

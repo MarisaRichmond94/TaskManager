@@ -1,9 +1,9 @@
 import './index.scss';
 
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { BsChevronDoubleLeft } from 'react-icons/bs';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 
 interface IToggleToolbarButton {
@@ -12,11 +12,11 @@ interface IToggleToolbarButton {
 };
 
 const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToolbar }) => (
-  <TMButton
-    type={ButtonType.icon}
+  <RichButton
     classNames={['task-toolbar-icon']}
     onClick={() => setShowToolbar(!showToolbar)}
-    size={ButtonSize.small}
+    size={RichButtonSize.Small}
+    type={RichButtonType.Icon}
   >
     <TMTooltip
       content={showToolbar ? 'Hide menu' : 'Show menu'}
@@ -28,7 +28,7 @@ const ToggleToolbarButton: FC<IToggleToolbarButton> = ({ showToolbar, setShowToo
         id='toggle-toobar-button'
       />
     </TMTooltip>
-  </TMButton>
+  </RichButton>
 );
 
 export default ToggleToolbarButton;

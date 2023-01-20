@@ -1,7 +1,7 @@
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { ImFolder, ImFolderOpen } from 'react-icons/im';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useTasks } from 'providers/tasks';
 
@@ -9,11 +9,11 @@ const ToggleArchivedButton: FC = () => {
   const { isShowingArchivedTasks, updateIsShowingArchivedTasks } = useTasks();
 
   return (
-    <TMButton
-      type={ButtonType.icon}
+    <RichButton
       classNames={['task-toolbar-icon']}
       onClick={() => updateIsShowingArchivedTasks(!isShowingArchivedTasks)}
-      size={ButtonSize.small}
+      size={RichButtonSize.Small}
+      type={RichButtonType.Icon}
     >
       <TMTooltip
         content='Show archived tasks'
@@ -22,8 +22,8 @@ const ToggleArchivedButton: FC = () => {
       >
         {isShowingArchivedTasks ? <ImFolderOpen /> : <ImFolder />}
       </TMTooltip>
-    </TMButton>
-  )
+    </RichButton>
+  );
 };
 
 export default ToggleArchivedButton;

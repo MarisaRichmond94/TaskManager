@@ -1,5 +1,6 @@
 import 'global.scss';
 
+import '@MarisaRichmond94/rich_ui/dist/cjs/index.css';
 import { Auth0Provider } from "@auth0/auth0-react";
 import React from 'react';
 import ReactDOM from 'react-dom/client';

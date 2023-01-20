@@ -1,9 +1,9 @@
 import './index.scss';
 
+import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 
-import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 
@@ -13,12 +13,12 @@ interface ICreateTaskButton {
 };
 
 const CreateTaskButton: FC<ICreateTaskButton> = ({ isModalOpen, setIsModalOpen }) => (
-  <TMButton
+  <RichButton
     classNames={['task-toolbar-icon']}
     id='create-task-button'
     onClick={() => setIsModalOpen(!isModalOpen)}
-    size={ButtonSize.large}
-    type={ButtonType.icon}
+    size={RichButtonSize.Large}
+    type={RichButtonType.Icon}
   >
     <TMTooltip
       content={<HotKeyTooltip action='Create new task' keyStroke={['shift', 'n']} />}
@@ -27,7 +27,7 @@ const CreateTaskButton: FC<ICreateTaskButton> = ({ isModalOpen, setIsModalOpen }
     >
       <IoMdAdd className={isModalOpen ? 'active' : ''} id='create-task-icon' />
     </TMTooltip>
-  </TMButton>
+  </RichButton>
 );
 
 export default CreateTaskButton;
