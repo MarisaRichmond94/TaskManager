@@ -1,11 +1,11 @@
 import './index.scss';
 
-import { RichButton, RichButtonColor, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/logo/light.png';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useApp } from 'providers/app';
 import { ROUTES } from 'settings/routes';
 import { timedUserGreeting } from 'utils/user';
@@ -42,14 +42,14 @@ const LogOutButton: FC = () => {
   const { logout } = useApp();
 
   return (
-    <RichButton
-      color={RichButtonColor.OffWhite}
+    <TMButton
+      classNames={['off-white']}
       onClick={logout}
-      size={RichButtonSize.Large}
-      type={RichButtonType.Icon}
+      size={ButtonSize.large}
+      type={ButtonType.icon}
     >
       <IoLogOutOutline />
-    </RichButton>
+    </TMButton>
   );
 };
 

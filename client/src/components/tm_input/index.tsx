@@ -1,8 +1,9 @@
 import './index.scss';
 
-import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { forwardRef, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
+
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 
 enum InputTypes {
   search = 'search',
@@ -81,9 +82,9 @@ const TMInput = forwardRef<Ref, ITMInput>(({
       />
       {
         type === `${InputTypes.search}` &&
-        <RichButton onClick={() => {}} size={RichButtonSize.Small} type={RichButtonType.Icon}>
+        <TMButton onClick={() => {}} size={ButtonSize.small} type={ButtonType.icon}>
           <ImSearch />
-        </RichButton>
+        </TMButton>
       }
     </form>
   );

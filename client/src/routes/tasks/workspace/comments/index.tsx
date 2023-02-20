@@ -1,12 +1,12 @@
 import './index.scss';
 
-import { RichButton, RichButtonColor, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, ReactElement, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMTextArea from 'components/tm_text_area';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
 
@@ -92,14 +92,14 @@ interface ICommentActionButton {
 };
 
 const CommentActionButton: FC<ICommentActionButton> = ({ icon, onClick }) => (
-  <RichButton
-    classNames={['comment-action-button']}
-    color={RichButtonColor.OffBlack}
+  <TMButton
+    type={ButtonType.icon}
+    classNames={['offset-black', 'comment-action-button']}
+    size={ButtonSize.medium}
     onClick={onClick}
-    type={RichButtonType.Icon}
   >
     {icon}
-  </RichButton>
+  </TMButton>
 );
 
 export default TaskComments;

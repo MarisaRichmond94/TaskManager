@@ -1,9 +1,9 @@
 import './index.scss';
 
-import { RichButton, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, ReactElement, useRef, useState } from 'react';
 import { BsTags } from 'react-icons/bs';
 
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
@@ -62,13 +62,14 @@ interface IToggleTagMenuButton {
 };
 
 const ToggleTagMenuButton: FC<IToggleTagMenuButton> = ({ showTagMenu, setShowTagMenu }) => (
-  <RichButton
-    classNames={['toggle-menu-button', showTagMenu ? 'active' : '']}
+  <TMButton
+    classNames={['grey', 'toggle-menu-button', showTagMenu ? 'active' : '']}
+    type={ButtonType.icon}
+    size={ButtonSize.medium}
     onClick={() => setShowTagMenu(!showTagMenu)}
-    type={RichButtonType.Icon}
   >
     <BsTags />
-  </RichButton>
+  </TMButton>
 );
 
 const NoTagsToDisplay = (): ReactElement => (

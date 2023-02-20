@@ -1,8 +1,8 @@
 import './index.scss';
 
-import { RichButton, RichButtonColor, RichButtonSize } from '@MarisaRichmond94/rich_ui';
 import { FC, useCallback, useState } from 'react';
 
+import TMButton, { ButtonSize } from 'components/tm_button';
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
 import { useTasks } from 'providers/tasks';
@@ -81,20 +81,17 @@ const CreateTaskModal: FC<ICreateTaskModal> = ({ onCancelCallback }) => {
         />
       </div>
       <div className='tm-modal-footer'>
-        <RichButton
-          onClick={onCancelCallback}
-          size={RichButtonSize.Small}
-        >
+        <TMButton classNames={['grey']} onClick={onCancelCallback} size={ButtonSize.small}>
           Cancel
-        </RichButton>
-        <RichButton
-          color={RichButtonColor.SecondaryBlue}
+        </TMButton>
+        <TMButton
+          classNames={['blue']}
           isDisabled={!isCreateEnabled}
           onClick={createTaskCallback}
-          size={RichButtonSize.Small}
+          size={ButtonSize.small}
         >
           Create Task
-        </RichButton>
+        </TMButton>
       </div>
     </div>
   );

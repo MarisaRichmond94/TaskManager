@@ -1,9 +1,10 @@
 import './index.scss';
 
-import { RichButton, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC } from 'react';
 import { BsX } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
+
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 
 interface ITag {
   classNames?: string[],
@@ -28,12 +29,13 @@ const Tag: FC<ITag> = ({
     <div className='sub-header-text'>
       {name}
     </div>
-    <RichButton
+    <TMButton
+      type={ButtonType.icon}
+      size={ButtonSize.medium}
       onClick={() => isInUse ? onDeleteTagCallback(id) : onAddTagCallback(id)}
-      type={RichButtonType.Icon}
     >
       {isInUse ? <BsX /> : <IoMdAdd />}
-    </RichButton>
+    </TMButton>
   </div>
 );
 

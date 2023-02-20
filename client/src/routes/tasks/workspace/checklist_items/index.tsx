@@ -1,6 +1,5 @@
 import './index.scss';
 
-import { RichButton, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from 'react';
 import { BsChevronDoubleDown, BsChevronDoubleUp, BsX } from 'react-icons/bs';
 import { RiPlayListAddFill } from 'react-icons/ri';
@@ -8,6 +7,7 @@ import { RiPlayListAddFill } from 'react-icons/ri';
 import TMCheckbox from 'components/tm_checkbox';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import ActionButton from 'routes/tasks/buttons/action';
 
@@ -79,13 +79,14 @@ interface IAddChecklistItemButton {
 };
 
 const AddChecklistItemButton: FC<IAddChecklistItemButton> = ({ enterCreateMode }) => (
-  <RichButton
-    classNames={['add-checklist-item-button']}
+  <TMButton
+    classNames={['grey', 'add-checklist-item-button']}
+    type={ButtonType.icon}
+    size={ButtonSize.medium}
     onClick={enterCreateMode}
-    type={RichButtonType.Icon}
   >
     <RiPlayListAddFill />
-  </RichButton>
+  </TMButton>
 );
 
 interface INewChecklistItem {

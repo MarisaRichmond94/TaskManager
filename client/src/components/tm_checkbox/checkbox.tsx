@@ -1,8 +1,8 @@
 import './checkbox.scss';
 
-import { RichButton, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, ReactElement } from 'react';
 
+import TMButton, { ButtonType, ButtonSize } from 'components/tm_button';
 import { BsCheckSquare, BsSquare } from 'react-icons/bs';
 
 interface ITMCheckbox {
@@ -23,15 +23,15 @@ const TMCheckbox: FC<ITMCheckbox> = ({
   isDisabled = false,
 }) => (
   <div className={['tm-checkbox', isDisabled ? 'disabled' : '', ...classNames].join(' ')}>
-    <RichButton
+    <TMButton
       classNames={['off-black']}
       onClick={toggleIsActive}
       isDisabled={isDisabled}
-      size={RichButtonSize.Small}
-      type={RichButtonType.Icon}
+      size={ButtonSize.small}
+      type={ButtonType.icon}
     >
       {isActive ? <BsCheckSquare /> : <BsSquare />}
-    </RichButton>
+    </TMButton>
     <div className='sub-header-text text-block-container'>
       {textBlock}
     </div>

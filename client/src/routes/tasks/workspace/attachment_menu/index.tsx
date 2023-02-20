@@ -1,6 +1,5 @@
 import './index.scss';
 
-import { RichButton, RichButtonColor, RichButtonSize, RichButtonType } from '@MarisaRichmond94/rich_ui';
 import { FC, MutableRefObject, useState } from 'react';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 
@@ -10,6 +9,7 @@ import useKeyPress from 'hooks/useKeyPress';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
 import { useTask } from 'providers/task';
 import { useTasks } from 'providers/tasks';
+import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 
 interface IAttachmentMenu {
   attachment?: UpdateAttachmentDTO,
@@ -125,16 +125,15 @@ interface ICancelButton {
 };
 
 const CancelButton: FC<ICancelButton> = ({ onCancelCallback }) => (
-  <RichButton
-    classNames={['attachment-menu-button']}
-    color={RichButtonColor.DarkGrey}
-    size={RichButtonSize.Small}
-    style={{ margin: '0' }}
-    type={RichButtonType.Icon}
+  <TMButton
+    classNames={['attachment-menu-button', 'dark-grey']}
+    type={ButtonType.icon}
+    size={ButtonSize.small}
     onClick={onCancelCallback}
+    style={{ margin: '0' }}
   >
     <BsArrowReturnLeft />
-  </RichButton>
+  </TMButton>
 );
 
 interface IDeleteButton {
@@ -142,14 +141,15 @@ interface IDeleteButton {
 };
 
 const DeleteButton: FC<IDeleteButton> = ({ onDeleteCallback }) => (
-  <RichButton
-    classNames={['attachment-menu-button']}
+  <TMButton
+    classNames={['attachment-menu-button', 'grey']}
+    type={ButtonType.solid}
+    size={ButtonSize.small}
     onClick={onDeleteCallback}
-    size={RichButtonSize.Small}
     style={{ marginRight: '10px' }}
   >
     Delete
-  </RichButton>
+  </TMButton>
 );
 
 interface ISubmitButton {
@@ -159,16 +159,16 @@ interface ISubmitButton {
 };
 
 const SubmitButton: FC<ISubmitButton> = ({ isDisabled, isExistingAttachment, onSubmitCallback }) => (
-  <RichButton
-    classNames={['attachment-menu-button']}
-    color={RichButtonColor.SecondaryBlue}
+  <TMButton
+    classNames={['attachment-menu-button', 'blue']}
     isDisabled={isDisabled}
+    type={ButtonType.solid}
+    size={ButtonSize.small}
     onClick={onSubmitCallback}
-    size={RichButtonSize.Small}
     style={{ marginRight: '0' }}
   >
     {isExistingAttachment ? 'Update' : 'Add'}
-  </RichButton>
+  </TMButton>
 );
 
 export default AttachmentMenu;
