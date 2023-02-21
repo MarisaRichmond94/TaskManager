@@ -4,7 +4,7 @@ import { FC, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import TMInput from 'components/tm_input';
-import TMOverlay from 'components/tm_overlay/overlay';
+import TMOverlay from 'components/tm_overlay/Overlay.component';
 import { useSearchTasks } from 'providers/search/tasks';
 import ClearSearchButton from 'routes/tasks/buttons/clear_search';
 import CreateTaskButton from 'routes/tasks/buttons/create_task';

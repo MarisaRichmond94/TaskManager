@@ -4,8 +4,9 @@
   background-color: rgba(0, 0, 0, 0.65);
   height: calc(100% - 60px); // full page height - header height
   left: $toolbar-width;
+  max-width: 740px;
   position: absolute;
   top: $header-height;
-  width: calc(800px - 60px); // max app width - toolbar width
+  width: calc(100% - 60px); // max app width - toolbar width
   z-index: 1;
 };
