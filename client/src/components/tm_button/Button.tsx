@@ -1,10 +1,10 @@
-import './button.scss';
+import './Button.scss';
 
 import { FC, PropsWithChildren } from 'react';
 
-import { ButtonSize, ButtonType, TransparentTypes } from './types';
+import { ButtonSize, ButtonType, TransparentTypes } from './Button.types';
 
-interface ITMButton extends PropsWithChildren {
+interface TMButtonProps extends PropsWithChildren {
   onClick: (event: any) => void,
 
   classNames?: string[],
@@ -15,7 +15,7 @@ interface ITMButton extends PropsWithChildren {
   type?: ButtonType,
 };
 
-const TMButton: FC<ITMButton> = ({
+const TMButton: FC<TMButtonProps> = ({
   children,
   onClick,
 

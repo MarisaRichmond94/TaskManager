@@ -1,5 +1,5 @@
-import TMButton from './button';
-import { ButtonSize, ButtonType } from './types';
+import TMButton from './Button';
+import { ButtonSize, ButtonType } from './Button.types';
 
 export default TMButton;
 export { ButtonSize, ButtonType };

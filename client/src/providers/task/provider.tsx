@@ -1,5 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { FC, ReactElement, useCallback } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { FC, ReactElement, useCallback, useState } from 'react';
 
 import * as ChecklistItemsApi from 'api/checklist_items';
 import * as CommentsApi from 'api/comment';
@@ -18,6 +18,8 @@ interface ITaskProvider {
 const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
   const { getAccessTokenSilently } = useAuth0();
   const { updateTaskInTasks } = useTasks();
+
+  const [newCommentId, setNewCommentId] = useState<undefined | string>();
 
   // Top-level task functionality
   const updateTask = useCallback((body: UpdateTaskDTO) => {
@@ -57,8 +59,9 @@ const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
   }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   // Comment functionality
-  const createComment = useCallback((body: CreateCommentDTO) => {
-    CommentsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+  const createComment = useCallback(async (body: CreateCommentDTO) => {
+    const newTask = await CommentsApi.create(body, getAccessTokenSilently, { ...providedTask }, updateTaskInTasks);
+    setNewCommentId(newTask.id);
   }, [providedTask, getAccessTokenSilently, updateTaskInTasks]);
 
   const updateComment = useCallback((id: string, text: string) => {
@@ -80,6 +83,7 @@ const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
 
   const value = {
     ...providedTask,
+    newCommentId,
     createAttachment,
     createChecklistItem,
     createComment,
