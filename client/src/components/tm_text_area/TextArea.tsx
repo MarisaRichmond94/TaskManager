@@ -1,8 +1,8 @@
-import './index.scss';
+import './TextArea.scss';
 
 import { FC, MutableRefObject, useCallback, useEffect, useState } from 'react';
 
-interface ITMTextArea {
+interface TMTextAreaProps {
   autoFocus?: boolean,
   classNames?: string[],
   id?: string,
@@ -13,25 +13,25 @@ interface ITMTextArea {
   rowCount?: number,
 
   onKeyPressCallback?: (e: object, unmanagedValue: string) => void,
-  updatedManagedValue?: (input: string) => void,
+  updateManagedValue?: (input: string) => void,
   validateFormValue?: (input: string) => void,
 };
 
-const TMTextArea: FC<ITMTextArea> = ({
+const TMTextArea: FC<TMTextAreaProps> = ({
   autoFocus = false,
   classNames = [],
   id,
-  initialValue = '',
+  initialValue,
   managedValue,
   placeholder = 'type here...',
   reference,
   rowCount,
 
   onKeyPressCallback,
-  updatedManagedValue,
+  updateManagedValue,
   validateFormValue,
 }) => {
-  const [unmanagedValue, setUnmanagedValue] = useState<string>(initialValue);
+  const [unmanagedValue, setUnmanagedValue] = useState<string | undefined>(initialValue);
 
   // dynamically adjusts the textarea to fit the text
   const listener = useCallback(() => {
@@ -48,22 +48,25 @@ const TMTextArea: FC<ITMTextArea> = ({
 
     listener();
     document.addEventListener('input', listener);
+
     return () => document.removeEventListener('input', listener);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => { if (reference?.current) listener(); }, [listener, reference]);
 
+  if (managedValue && initialValue) {
+    throw new Error('TMTextArea received both managed and unmanaged props.');
+  }
+
   const onChange = (input: string): void => {
-    if (updatedManagedValue) {
-      updatedManagedValue(input);
-      if (validateFormValue) validateFormValue(input);
-    } else setUnmanagedValue(input);
+    !!updateManagedValue ? updateManagedValue(input) : setUnmanagedValue(input);
+    if (validateFormValue) validateFormValue(input);
   };
 
   const onKeyPress = (e: any): void => {
     if (e.key === 'Enter') e.preventDefault();
-    if (onKeyPressCallback)  onKeyPressCallback(e, unmanagedValue);
+    if (onKeyPressCallback) onKeyPressCallback(e, unmanagedValue);
   };
 
   return (
@@ -78,7 +81,7 @@ const TMTextArea: FC<ITMTextArea> = ({
       ref={reference}
       rows={rowCount || 3}
       spellCheck='false'
-      value={managedValue || unmanagedValue}
+      value={managedValue ?? unmanagedValue}
     />
   );
 };

@@ -1,6 +1,6 @@
-import './index.scss';
+import './CommentsSection.scss';
 
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
@@ -9,10 +9,22 @@ import TMTextArea from 'components/tm_text_area';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useTask } from 'providers/task';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
+import usePrevious from 'hooks/usePrevious';
 
-const TaskComments: FC = () => {
+const CommentSection: FC = () => {
+  const COMMENT_CONTAINER_ID = 'comments-container';
   const { comments, id, createComment } = useTask();
   const [text, setText] = useState('');
+
+  const commentCount = comments?.length;
+  const prevCommentCount = usePrevious(commentCount) ?? 0;
+
+  useEffect(() => {
+    if (prevCommentCount < commentCount) {
+      const element = document.getElementById(COMMENT_CONTAINER_ID);
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [prevCommentCount, commentCount]);
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {
     if (!taskComments.length) return;
@@ -20,8 +32,10 @@ const TaskComments: FC = () => {
     taskComments.sort(
       (a,b) => (a.updatedAt < b.updatedAt) ? 1 : ((b.updatedAt < a.updatedAt) ? -1 : 0)
     );
+
     return taskComments.map((comment, index) => {
-      return <TaskComment key={`task-comment-${index}`} comment={comment} />
+      const key = `comment-${index}`;
+      return <Comment key={key} comment={comment} id={key} />
     });
   };
 
@@ -42,10 +56,11 @@ const TaskComments: FC = () => {
       <div className='task-comments-container task-sidebar-collapsable-container'>
         <TMTextArea
           classNames={['task-comment-box', 'sub-header-text']}
+          id={COMMENT_CONTAINER_ID}
           managedValue={text}
           placeholder='comment...'
           onKeyPressCallback={(e: any) => onKeyPressCallback(e)}
-          updatedManagedValue={setText}
+          updateManagedValue={setText}
         />
         {populateTaskComments(comments)}
       </div>
@@ -53,11 +68,12 @@ const TaskComments: FC = () => {
   );
 };
 
-interface IComment {
+interface CommentProps {
   comment: Comment,
+  id: string,
 };
 
-const TaskComment: FC<IComment> = ({ comment }) => {
+const Comment: FC<CommentProps> = ({ comment, id: derivedId }) => {
   const { deleteComment, updateComment } = useTask();
   const { id, text, updatedAt } = comment;
 
@@ -67,7 +83,7 @@ const TaskComment: FC<IComment> = ({ comment }) => {
   };
 
   return (
-    <div className='task-comment sub-header-text'>
+    <div className='task-comment sub-header-text' id={derivedId}>
       <div className='comment-text'>
         <TMEditableField
           classNames={['sub-header-text']}
@@ -86,12 +102,12 @@ const TaskComment: FC<IComment> = ({ comment }) => {
   );
 };
 
-interface ICommentActionButton {
+interface CommentActionButtonProps {
   icon: ReactElement,
   onClick: () => void,
 };
 
-const CommentActionButton: FC<ICommentActionButton> = ({ icon, onClick }) => (
+const CommentActionButton: FC<CommentActionButtonProps> = ({ icon, onClick }) => (
   <TMButton
     type={ButtonType.icon}
     classNames={['offset-black', 'comment-action-button']}
@@ -102,4 +118,4 @@ const CommentActionButton: FC<ICommentActionButton> = ({ icon, onClick }) => (
   </TMButton>
 );
 
-export default TaskComments;
+export default CommentSection;

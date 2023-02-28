@@ -140,7 +140,7 @@ const AddTagButton: FC = () => {
             reference={inputRef}
             rowCount={1}
             onKeyPressCallback={onKeyPressCallback}
-            updatedManagedValue={(updatedName: string) => setName(updatedName)}
+            updateManagedValue={(updatedName: string) => setName(updatedName)}
           />
           <div id='color-palette-icon-container'>
             <IoColorPaletteOutline
