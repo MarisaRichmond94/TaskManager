@@ -1,4 +1,4 @@
-import './Button.styling.scss';
+import './Button.scss';
 
 import { FC, PropsWithChildren } from 'react';
 
