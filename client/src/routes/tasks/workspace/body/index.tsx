@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import { useTask } from 'providers/task';
-import TaskChecklistItems from 'routes/tasks/workspace/checklist_items';
+import ChecklistItems from 'routes/tasks/workspace/ChecklistItems';
 import CommentSection from 'routes/tasks/workspace/CommentsSection';
 
 const Body: FC = () => {
@@ -30,7 +30,7 @@ const Body: FC = () => {
           (updatedDescription: string) => updateTask({ description: updatedDescription })
         }
       />
-      <TaskChecklistItems />
+      <ChecklistItems />
       <CommentSection />
     </div>
   );

@@ -28,6 +28,9 @@ const update = async (
   const checklistItemToUpdate = {
     ...taskToUpdate.checklistItems.find(x => x.id === id)
   };
+  // optimistically update timestamp for immediate front-end updates; accuracy isn't important
+  checklistItemToUpdate.updatedAt = Date.now();
+
   Object.keys(body).forEach(key => {
     const value = body[key];
     if (value !== undefined) checklistItemToUpdate[key] = value;
