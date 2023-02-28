@@ -1,6 +1,6 @@
 import './CommentsSection.scss';
 
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
@@ -12,19 +12,8 @@ import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/d
 import usePrevious from 'hooks/usePrevious';
 
 const CommentSection: FC = () => {
-  const COMMENT_CONTAINER_ID = 'comments-container';
   const { comments, id, createComment } = useTask();
   const [text, setText] = useState('');
-
-  const commentCount = comments?.length;
-  const prevCommentCount = usePrevious(commentCount) ?? 0;
-
-  useEffect(() => {
-    if (prevCommentCount < commentCount) {
-      const element = document.getElementById(COMMENT_CONTAINER_ID);
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [prevCommentCount, commentCount]);
 
   const populateTaskComments = (taskComments?: Comment[]): ReactElement[] | ReactElement => {
     if (!taskComments.length) return;
@@ -56,7 +45,6 @@ const CommentSection: FC = () => {
       <div className='task-comments-container task-sidebar-collapsable-container'>
         <TMTextArea
           classNames={['task-comment-box', 'sub-header-text']}
-          id={COMMENT_CONTAINER_ID}
           managedValue={text}
           placeholder='comment...'
           onKeyPressCallback={(e: any) => onKeyPressCallback(e)}
@@ -74,8 +62,19 @@ interface CommentProps {
 };
 
 const Comment: FC<CommentProps> = ({ comment, id: derivedId }) => {
-  const { deleteComment, updateComment } = useTask();
+  const { newCommentId, deleteComment, updateComment } = useTask();
+  const commentRef = useRef(null);
+  const prevNewCommentId = usePrevious(newCommentId);
   const { id, text, updatedAt } = comment;
+
+  useEffect(() => {
+    if (prevNewCommentId !== newCommentId && newCommentId === id) {
+      commentRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [id, newCommentId, prevNewCommentId]);
 
   const getCommentTimestamp = (secondsSinceEpoch: number): string => {
     const date = toClientDatetime(secondsSinceEpoch);
@@ -83,7 +82,7 @@ const Comment: FC<CommentProps> = ({ comment, id: derivedId }) => {
   };
 
   return (
-    <div className='task-comment sub-header-text' id={derivedId}>
+    <div className='task-comment sub-header-text' id={derivedId} ref={commentRef}>
       <div className='comment-text'>
         <TMEditableField
           classNames={['sub-header-text']}

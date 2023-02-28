@@ -13,6 +13,7 @@ interface ITaskContext {
   status?: Status,
   tags?: Tag[],
   updatedAt: number,
+  newCommentId?: string,
   createAttachment: (createAttachmentDTO: CreateAttachmentDTO) => void,
   createChecklistItem: (createChecklistItemDTO: CreateChecklistItemDTO) => void,
   createComment: (createCommentDTO: CreateCommentDTO) => void,
