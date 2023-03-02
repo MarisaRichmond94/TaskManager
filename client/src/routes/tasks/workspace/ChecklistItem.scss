@@ -1,0 +1,38 @@
+@import 'global';
+
+.checklist-item-row {
+  align-items: flex-start;
+  display: flex;
+
+  &.hovered {
+    background-color: $off-white;
+    border-color: $grey;
+    border-radius: $medium-border-radius;
+    border-style: dashed;
+    opacity: 0.5;
+  };
+
+  &:last-child {
+    .task-checklist-item {
+      margin-bottom: 0;
+    }
+  };
+
+  .task-checklist-item {
+    margin-bottom: $medium-margin;
+    margin-right: $medium-margin;
+    width: 100%;
+  };
+
+  .checklist-item-action-menu {
+    @include centered-flex-box;
+    margin-left: auto;
+    margin-top: $small-margin;
+    visibility: hidden;
+    button { padding: $no-padding; };
+  };
+
+  &:hover {
+    .checklist-item-action-menu { visibility: visible; }
+  }
+};

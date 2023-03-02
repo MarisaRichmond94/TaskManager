@@ -1,6 +1,8 @@
 import './ChecklistItems.scss';
 
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+	import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RiPlayListAddFill } from 'react-icons/ri';
 
 import TMCheckbox from 'components/tm_checkbox';
@@ -12,7 +14,7 @@ import { populateTaskChecklistItems } from 'routes/tasks/workspace/ChecklistItem
 
 const ChecklistItems: FC = () => {
   const [isCreatingNewChecklistItem, setIsCreatingNewChecklistItem] = useState(false);
-  const { checklistItems, id, createChecklistItem } =  useTask();
+  const { checklistItems, id, createChecklistItem, updateChecklistItem } =  useTask();
   const completed = checklistItems.filter(x => x.isCompleted).length;
   const total = checklistItems.length;
 
@@ -21,9 +23,15 @@ const ChecklistItems: FC = () => {
     setIsCreatingNewChecklistItem(false);
   };
 
+  const moveChecklistItem = useCallback((dragIndex: number, hoverIndex: number) => {
+    const checklistItem = checklistItems.find(item => item.orderIndex === dragIndex);
+    if (checklistItem) updateChecklistItem(checklistItem.id, { orderIndex: hoverIndex });
+  }, [checklistItems, updateChecklistItem]);
+
   const taskChecklistItems = populateTaskChecklistItems({
     isCreatingNewChecklistItem,
     setIsCreatingNewChecklistItem,
+    moveChecklistItem,
     checklistItems,
   });
 
@@ -37,8 +45,12 @@ const ChecklistItems: FC = () => {
       }
       sectionTitle={`Checklist (${completed}/${total})`}
     >
-      <div className={['task-checklist-items-container', 'task-sidebar-collapsable-container'].join(' ')}>
-        {taskChecklistItems}
+      <div className={
+        ['task-checklist-items-container', 'task-sidebar-collapsable-container'].join(' ')
+      }>
+        <DndProvider backend={HTML5Backend}>
+          {taskChecklistItems}
+        </DndProvider>
         {
           isCreatingNewChecklistItem &&
           <NewChecklistItem onCreateCallback={onCreateCallback} />
