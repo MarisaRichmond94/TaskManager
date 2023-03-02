@@ -33,15 +33,14 @@ const TaskCard: FC<ITaskCard> = ({ task }) => {
       ref={taskRef}
     >
       <Header id={id} isArchived={isArchived} isPinned={isPinned} objective={objective} status={status} />
-      <TMRichTextViewer
-        classNames={['task-card-body', 'sub-header-text', ]}
-        key={description}
-        value={
-          !!description
-            ? JSON.parse(description) as Descendant[]
-            : undefined
-        }
-      />
+      {
+        !!description &&
+        <TMRichTextViewer
+          classNames={['task-card-body', 'sub-header-text', ]}
+          key={description}
+          value={JSON.parse(description) as Descendant[]}
+        />
+      }
       <Footer checklistItems={checklistItems} comments={comments} dueDate={dueDate} tags={tags} />
     </div>
   );

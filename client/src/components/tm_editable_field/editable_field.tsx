@@ -135,6 +135,7 @@ const TMEditableField: FC<ITMEditableField> = ({
   const viewMode = (): ReactElement => {
     switch (fieldType) {
       case FieldType.richText:
+        if (!value) return <div className='rich-text-placeholder'>{placeholder}</div>;
         return <TMRichTextViewer value={value as Descendant[] | undefined} />;
       case FieldType.plainText:
         return (
