@@ -2,7 +2,7 @@ import { forwardRef, PropsWithChildren, Ref, useCallback } from 'react';
 import { useSlate } from 'slate-react';
 
 import { isBlockActive, isMarkActive, toggleBlock, toggleMark } from 'components/tm_rich_text_field/utils';
-import { RichTextAlignmentTypes } from 'types/constants/tm_rich_text_field';
+import { RichTextAlignmentTypes } from 'enums';
 
 const Button = forwardRef(
   (

@@ -1,5 +1,5 @@
 import { makeApiRequest } from 'utils';
-import { ApiMethod, ApiRoute } from 'types/constants/api';
+import { ApiMethod, ApiRoute } from 'enums';
 
 const ROUTE = ApiRoute.taskManager;
 

@@ -1,4 +1,4 @@
-import { RichTextElementType } from 'types/constants/tm_rich_text_field';
+import { RichTextElementType } from 'enums';
 
 const Element = ({ attributes, children, element }) => {
   const style = { textAlign: element.align };

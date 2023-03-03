@@ -1,4 +1,4 @@
-import { ApiMethod } from 'types/constants/api';
+import { ApiMethod } from 'enums';
 
 declare global {
   interface TokenRequestProps {

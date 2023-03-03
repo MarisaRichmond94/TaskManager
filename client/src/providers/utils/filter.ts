@@ -1,7 +1,7 @@
 import { NavigateFunction, Search } from 'react-router';
 
 import { STATUS_NAMES } from 'settings/task';
-import { FilterType } from 'types/constants/search';
+import { FilterType } from 'enums';
 import { compareDates, toServerDatetime } from 'utils';
 
 

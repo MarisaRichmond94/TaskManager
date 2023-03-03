@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { ApiMethod, ApiRoute } from 'types/constants/api';
+import { ApiMethod, ApiRoute } from 'enums';
 
 interface Headers { headers: ApiHeaders };
 

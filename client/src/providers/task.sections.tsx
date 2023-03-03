@@ -1,7 +1,7 @@
 import { createContext, FC, ReactElement, useContext, useEffect, useState } from 'react';
 
 import { useTasks } from 'providers';
-import { SectionType } from 'types/constants/tasks';
+import { SectionType } from 'enums';
 import { useCallback } from 'react';
 
 interface SectionsContextProps {

@@ -7,7 +7,7 @@ import { useActionOnInterval } from 'hooks';
 import { useApp } from 'providers';
 import buildTaskLists from 'providers/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
-import { FilterType } from 'types/constants/search';
+import { FilterType } from 'enums';
 import { toServerDatetime } from 'utils';
 
 interface TasksContextProps {

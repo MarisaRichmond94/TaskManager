@@ -14,7 +14,7 @@ import TMSearchableDropdown from 'components/tm_searchable_dropdown';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useSearchTasks, useTasks } from 'providers';
 import Tag from 'routes/tasks/tag';
-import { FilterAction, FilterType } from 'types/constants/search';
+import { FilterAction, FilterType } from 'enums';
 import { toClientDatetime } from 'utils';
 
 const FilterMenuButton: FC = () => {

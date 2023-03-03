@@ -2,7 +2,7 @@ import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'reac
 
 import { useKeyStroke } from 'hooks';
 import { useSections, useTasks } from 'providers';
-import { SectionType } from 'types/constants/tasks';
+import { SectionType } from 'enums';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { useCallback } from 'react';
 

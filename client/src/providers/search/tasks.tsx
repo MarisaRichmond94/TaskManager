@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import * as filter from 'providers/utils/filter';
 import { useTasks } from 'providers';
-import { FilterAction, FilterType } from 'types/constants/search';
+import { FilterAction, FilterType } from 'enums';
 
 interface SearchTasksContextProps {
   isAsc: boolean,

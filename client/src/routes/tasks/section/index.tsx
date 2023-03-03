@@ -8,7 +8,7 @@ import TMUncontrolledCollapsableSection from 'components/tm_collapsable_section/
 import { SectionHotkeysProvider } from 'providers';
 import { useSections } from 'providers';
 import TaskCard from 'routes/tasks/task';
-import { SectionType } from 'types/constants/tasks';
+import { SectionType } from 'enums';
 
 interface ISection {
   emptyResponseText: string,

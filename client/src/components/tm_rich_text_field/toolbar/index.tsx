@@ -14,7 +14,7 @@ import { FaAlignCenter, FaAlignJustify, FaAlignLeft, FaAlignRight } from 'react-
 import { RiNumber1, RiNumber2 } from 'react-icons/ri';
 
 import { BlockButton, MarkButton } from 'components/tm_rich_text_field/toolbar/button';
-import { RichTextButtonType } from 'types/constants/tm_rich_text_field';
+import { RichTextButtonType } from 'enums';
 
 const Toolbar = forwardRef(
   (

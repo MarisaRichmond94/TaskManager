@@ -1,6 +1,6 @@
 import { Editor, Transforms, Element as SlateElement } from 'slate';
 
-import { RichTextAlignmentTypes, RichTextListType } from 'types/constants/tm_rich_text_field';
+import { RichTextAlignmentTypes, RichTextListType } from 'enums';
 
 const isBlockActive = (editor: Editor, format, blockType = 'type') => {
   const { selection } = editor;
