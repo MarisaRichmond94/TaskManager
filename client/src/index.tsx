@@ -6,8 +6,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from 'app';
-import { AppProvider } from 'providers/app';
-import { AppHotkeysProvider } from 'providers/hotkeys/app';
+import { AppProvider, AppHotkeysProvider } from 'providers';
 import reportWebVitals from 'reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

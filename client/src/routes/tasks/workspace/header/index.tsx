@@ -6,8 +6,7 @@ import { BsBookmarks, BsBookmarksFill, BsInboxes, BsTrash, BsXLg } from 'react-i
 import TMDropdown from 'components/tm_dropdown';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
-import { useTask } from 'providers/task';
-import { useTasks } from 'providers/tasks';
+import { useTask, useTasks } from 'providers';
 import ActionButton from 'routes/tasks/buttons/action';
 import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
 

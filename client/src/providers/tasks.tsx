@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import * as StatusesApi from 'api/statuses';
@@ -7,12 +7,34 @@ import * as TagsApi from 'api/tags';
 import * as TaskManagerApi from 'api/task_manager';
 import * as TasksApi from 'api/tasks';
 import useActionOnInterval from 'hooks/useActionOnInterval';
-import { useApp } from 'providers/app';
-import TasksContext from 'providers/tasks/context';
-import buildTaskLists from 'providers/tasks/utils/buildTaskLists';
+import { useApp } from 'providers';
+import buildTaskLists from 'providers/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
 import { FilterType } from 'types/constants/search';
 import { toServerDatetime } from 'utils/date';
+
+interface TasksContextProps {
+  activeTaskId?: string,
+  attachmentTypes?: AttachmentType[],
+  isShowingArchivedTasks: boolean,
+  statusTypes?: Status[],
+  tags?: Tag[],
+  tasks?: Task[],
+  taskTemplates?: TaskTemplate[],
+  taskMap?: Map<string, Task[]>,
+  userTaskDataLoaded: boolean,
+  archiveTaskById: (taskId: string) => void,
+  createTask: (body: CreateTaskDTO) => void,
+  createTag: (createTagDTO: CreateTagDTO) => void,
+  deleteTag: (tagId: string) => void,
+  deleteTaskById: (taskId: string) => void,
+  updateActiveTaskId: (id?: string) => void,
+  updateIsShowingArchivedTasks: (isShowingArchivedTasks: boolean) => void,
+  updateTag: (tagId: string, updateTagDTO: UpdateTagDTO) => void,
+  updateTaskInTasks: (updatedTask: Task) => void,
+};
+
+const TasksContext = createContext<undefined | TasksContextProps>(undefined);
 
 const TasksProvider = (props: object) => {
   const { user } = useApp();
@@ -173,4 +195,15 @@ const TasksProvider = (props: object) => {
   return <TasksContext.Provider value={value} {...props} />;
 };
 
-export default TasksProvider;
+const useTasks = () => {
+  const context = useContext(TasksContext);
+  if (context === undefined) {
+    throw new Error('useTasks should only be used within the TasksProvider.');
+  }
+  return context;
+};
+
+export {
+  TasksProvider,
+  useTasks,
+};

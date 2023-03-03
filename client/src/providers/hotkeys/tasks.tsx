@@ -1,12 +1,15 @@
-import { FC, KeyboardEvent, ReactElement } from 'react';
+import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
 import useKeyStroke from 'hooks/useKeyStroke';
-import TasksHotkeysContext from 'providers/hotkeys/tasks/context';
-import { useSearchTasks } from 'providers/search/tasks';
-import { useTasks } from 'providers/tasks';
+import { useSearchTasks, useTasks } from 'providers';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 
 const { filter: filterKeys, search: searchKeys, task: taskKeys, tasks: tasksKeys } = SHIFT_KEY_STROKES;
+
+interface TasksHotkeysContextProps {
+};
+
+const TasksHotkeysContext = createContext<undefined | TasksHotkeysContextProps>(undefined);
 
 interface ITasksHotkeysProvider {
   children: ReactElement,
@@ -61,4 +64,15 @@ const TasksHotkeysProvider: FC<ITasksHotkeysProvider> = ({ children }) => {
   );
 };
 
-export default TasksHotkeysProvider;
+const useTasksHotkeys = () => {
+  const context = useContext(TasksHotkeysContext);
+  if (context === undefined) {
+    throw new Error('useTasksHotkeys should only be used within the TasksHotkeysProvider.');
+  }
+  return context;
+}
+
+export {
+  TasksHotkeysProvider,
+  useTasksHotkeys,
+};

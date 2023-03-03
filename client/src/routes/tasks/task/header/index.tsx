@@ -5,7 +5,7 @@ import {
   BsArchive, BsBookmarks, BsBookmarksFill, BsFlag, BsInbox, BsInboxes, BsLightning, BsTrash, BsTrophy,
 } from 'react-icons/bs';
 
-import { useTasks } from 'providers/tasks';
+import { useTasks } from 'providers';
 import ActionButton from 'routes/tasks/buttons/action';
 import { STATUS_NAMES } from 'settings/task';
 

@@ -3,7 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
-import { useTask } from 'providers/task';
+import { useTask } from 'providers';
 import ChecklistItems from 'routes/tasks/workspace/ChecklistItems';
 import CommentSection from 'routes/tasks/workspace/CommentsSection';
 

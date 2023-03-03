@@ -1,21 +1,28 @@
-import { FC, KeyboardEvent, ReactElement, useEffect, useState } from 'react';
+import {
+  createContext, FC, KeyboardEvent, ReactElement,
+  useContext, useEffect, useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useKeyPress from 'hooks/useKeyPress';
 import useKeyStroke from 'hooks/useKeyStroke';
-import { useApp } from 'providers/app';
-import AppHotkeysContext from 'providers/hotkeys/app/context';
+import { useApp } from 'providers';
 import HotkeyHelpMenu from 'routes/components/hotkey_help_menu';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { ROUTES } from 'settings/routes';
 
 const { app: appKeys } = SHIFT_KEY_STROKES;
 
-interface IAppHotkeysProvider {
+interface AppHotkeysContextProps {
+};
+
+const AppHotkeysContext = createContext<undefined | AppHotkeysContextProps>(undefined);
+
+interface AppHotkeysProviderProps {
   children: ReactElement,
 };
 
-const AppHotkeysProvider: FC<IAppHotkeysProvider> = ({ children }) => {
+const AppHotkeysProvider: FC<AppHotkeysProviderProps> = ({ children }) => {
   const { toggleIsExpanded } = useApp();
   const navigate = useNavigate();
   const [showHotkeyHelpMenu, setShowHotkeyHelpMenu] = useState(false);
@@ -59,4 +66,15 @@ const AppHotkeysProvider: FC<IAppHotkeysProvider> = ({ children }) => {
   );
 };
 
-export default AppHotkeysProvider;
+const useAppHotkeys = () => {
+  const context = useContext(AppHotkeysContext);
+  if (context === undefined) {
+    throw new Error('useAppHotkeys should only be used within the AppHotkeysProvider.');
+  }
+  return context;
+};
+
+export {
+  AppHotkeysProvider,
+  useAppHotkeys,
+};

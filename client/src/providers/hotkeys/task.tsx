@@ -1,19 +1,22 @@
-import { FC, KeyboardEvent, ReactElement } from 'react';
+import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
 import useKeyStroke from 'hooks/useKeyStroke';
-import TaskHotkeysContext from 'providers/hotkeys/task/context';
-import { useTask } from 'providers/task';
-import { useTasks } from 'providers/tasks';
+import { useTask, useTasks } from 'providers';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { toServerDatetime } from 'utils/date';
 
 const { task: taskKeys } = SHIFT_KEY_STROKES;
 
-interface ITaskHotkeysProvider {
+interface TaskHotkeysContextProps {
+};
+
+const TaskHotkeysContext = createContext<undefined | TaskHotkeysContextProps>(undefined);
+
+interface TaskHotkeysProviderProps {
   children: ReactElement,
 };
 
-const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
+const TaskHotkeysProvider: FC<TaskHotkeysProviderProps> = ({ children }) => {
   const { archiveTaskById, deleteTaskById } = useTasks();
   const { id, isPinned, updateTask } = useTask();
 
@@ -55,4 +58,15 @@ const TaskHotkeysProvider: FC<ITaskHotkeysProvider> = ({ children }) => {
   );
 };
 
-export default TaskHotkeysProvider;
+const useTaskHotkeys = () => {
+  const context = useContext(TaskHotkeysContext);
+  if (context === undefined) {
+    throw new Error('useTaskHotkeys should only be used within the TaskHotkeysProvider.');
+  }
+  return context;
+}
+
+export {
+  TaskHotkeysProvider,
+  useTaskHotkeys,
+};

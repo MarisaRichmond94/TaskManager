@@ -2,9 +2,7 @@ import './index.scss';
 
 import { FC } from 'react';
 
-import { TaskProvider } from 'providers/task';
-import { TaskHotkeysProvider } from 'providers/hotkeys/task';
-import { useTasks } from 'providers/tasks';
+import { TaskHotkeysProvider, TaskProvider, useTasks } from 'providers';
 
 import Body from 'routes/tasks/workspace/body';
 import Header from 'routes/tasks/workspace/header';

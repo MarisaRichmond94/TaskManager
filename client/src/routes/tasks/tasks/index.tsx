@@ -3,9 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { SectionsHotkeysProvider } from 'providers/hotkeys/task_sections';
-import { SectionsProvider } from 'providers/task_sections';
-import { useTasks } from 'providers/tasks';
+import { SectionsHotkeysProvider, SectionsProvider, useTasks } from 'providers';
 import { buildSections } from 'routes/tasks/section/buildSections';
 
 interface ITasks {

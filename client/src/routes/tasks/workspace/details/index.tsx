@@ -5,7 +5,7 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdOutlineAddTask } from 'react-icons/md';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import { useTask } from 'providers/task';
+import { useTask } from 'providers';
 import { getFullDateString, toClientDatetime } from 'utils/date';
 
 const TaskDetails: FC = () => {

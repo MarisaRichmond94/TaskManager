@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import TMInput from 'components/tm_input';
 import TMOverlay from 'components/tm_overlay/Overlay.component';
-import { useSearchTasks } from 'providers/search/tasks';
+import { useSearchTasks } from 'providers';
 import ClearSearchButton from 'routes/tasks/buttons/clear_search';
 import CreateTaskButton from 'routes/tasks/buttons/create_task';
 import DownloadReportButton from 'routes/tasks/buttons/download_report';

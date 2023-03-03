@@ -3,7 +3,7 @@ import { ImFolder, ImFolderOpen } from 'react-icons/im';
 
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
-import { useTasks } from 'providers/tasks';
+import { useTasks } from 'providers';
 
 const ToggleArchivedButton: FC = () => {
   const { isShowingArchivedTasks, updateIsShowingArchivedTasks } = useTasks();

@@ -1,9 +1,10 @@
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { TasksHotkeysProvider } from 'providers/hotkeys/tasks';
-import { SearchTasksProvider, useSearchTasks } from 'providers/search/tasks';
-import { useTasks } from 'providers/tasks';
+import {
+  SearchTasksProvider, TasksHotkeysProvider,
+  useSearchTasks, useTasks,
+} from 'providers';
 import Header from 'routes/tasks/header';
 import SearchResults from 'routes/tasks/search_results';
 import Tasks from 'routes/tasks/tasks';

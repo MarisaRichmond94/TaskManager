@@ -8,7 +8,7 @@ import { SiJirasoftware } from 'react-icons/si';
 
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
-import { useTask } from 'providers/task';
+import { useTask } from 'providers';
 import AttachmentMenu from 'routes/tasks/workspace/attachment_menu';
 
 const TaskAttachments: FC = () => {

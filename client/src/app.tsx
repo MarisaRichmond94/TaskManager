@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
-import { useApp } from 'providers/app';
+import { useApp } from 'providers';
 import TMRouter from 'routes/tm_router';
 import Header from 'routes/components/header';
 import TMSidebar from 'routes/components/sidebar';

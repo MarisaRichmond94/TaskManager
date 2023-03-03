@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
 
-import TasksProvider from 'providers/tasks/provider';
+import { TasksProvider } from 'providers';
 import GoalsPage from 'routes/goals';
 import NotesPage from 'routes/notes';
 import TasksPage from 'routes/tasks';

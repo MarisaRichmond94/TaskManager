@@ -1,20 +1,23 @@
-import { FC, KeyboardEvent, ReactElement } from 'react';
+import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
 import useKeyStroke from 'hooks/useKeyStroke';
-import SectionsHotkeysContext from 'providers/hotkeys/task_sections/context';
-import { useSections } from 'providers/task_sections';
-import { useTasks } from 'providers/tasks';
+import { useSections, useTasks } from 'providers';
 import { SectionType } from 'types/constants/tasks';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { useCallback } from 'react';
 
 const { sections: sectionKeys } = SHIFT_KEY_STROKES;
 
-interface ISectionsHotkeysProvider {
+interface SectionsHotkeysContextProps {
+};
+
+const SectionsHotkeysContext = createContext<undefined | SectionsHotkeysContextProps>(undefined);
+
+interface SectionsHotkeysProviderProps {
   children: ReactElement,
 };
 
-const SectionsHotkeysProvider: FC<ISectionsHotkeysProvider> = ({ children }) => {
+const SectionsHotkeysProvider: FC<SectionsHotkeysProviderProps> = ({ children }) => {
   // state derived from external props
   const {
     activeSection,
@@ -71,4 +74,16 @@ const SectionsHotkeysProvider: FC<ISectionsHotkeysProvider> = ({ children }) => 
   );
 };
 
-export default SectionsHotkeysProvider;
+const useSectionsHotkeys = () => {
+  const context = useContext(SectionsHotkeysContext);
+  if (context === undefined) {
+    throw new Error('useSectionsHotkeys should only be used within the SectionsHotkeysProvider.');
+  }
+  return context;
+}
+
+export {
+  SectionsHotkeysContext,
+  SectionsHotkeysProvider,
+  useSectionsHotkeys,
+};

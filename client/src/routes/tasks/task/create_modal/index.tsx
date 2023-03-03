@@ -5,7 +5,7 @@ import { FC, useCallback, useState } from 'react';
 import TMButton, { ButtonSize } from 'components/tm_button';
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
-import { useTasks } from 'providers/tasks';
+import { useTasks } from 'providers';
 
 type OptionalString = string | undefined;
 type OptionalTaskTemplate = TaskTemplate | undefined;

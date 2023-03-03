@@ -1,20 +1,23 @@
-import { FC, KeyboardEvent, ReactElement } from 'react';
+import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
 import useKeyStroke from 'hooks/useKeyStroke';
-import SectionHotkeysContext from 'providers/hotkeys/task_section/context';
-import { useSections } from 'providers/task_sections';
-import { useTasks } from 'providers/tasks';
+import { useSections, useTasks } from 'providers';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { SectionType } from 'types/constants/tasks';
 
 const { section: sectionKeys } = SHIFT_KEY_STROKES;
 
-interface ISectionHotkeysProvider {
+interface SectionHotKeysContextProps {
+};
+
+const SectionHotKeysContext = createContext<undefined | SectionHotKeysContextProps>(undefined);
+
+interface SectionHotkeysProviderProps {
   children: ReactElement,
   sectionType: SectionType,
 };
 
-const SectionHotkeysProvider: FC<ISectionHotkeysProvider> = ({ children, sectionType }) => {
+const SectionHotkeysProvider: FC<SectionHotkeysProviderProps> = ({ children, sectionType }) => {
   const { activeSection } = useSections();
   const { activeTaskId, taskMap, updateActiveTaskId } = useTasks();
   const sectionTasks = taskMap.get(SectionType[sectionType]);
@@ -61,10 +64,21 @@ const SectionHotkeysProvider: FC<ISectionHotkeysProvider> = ({ children, section
   const value = {};
 
   return (
-    <SectionHotkeysContext.Provider value={value}>
+    <SectionHotKeysContext.Provider value={value}>
       {children}
-    </SectionHotkeysContext.Provider>
+    </SectionHotKeysContext.Provider>
   );
 };
 
-export default SectionHotkeysProvider;
+const useSectionHotkeys = () => {
+  const context = useContext(SectionHotKeysContext);
+  if (context === undefined) {
+    throw new Error('useSectionHotkeys should only be used within the SectionHotkeysProvider.');
+  }
+  return context;
+}
+
+export {
+  SectionHotkeysProvider,
+  useSectionHotkeys,
+};

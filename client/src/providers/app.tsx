@@ -1,8 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import * as UsersApi from 'api/users';
-import AppContext from 'providers/app/context';
+
+interface AppContextProps {
+  isExpanded: boolean,
+  user?: User,
+  logout: () => void,
+  toggleIsExpanded: () => void,
+};
+
+const AppContext = createContext<undefined | AppContextProps>(undefined);
 
 const AppProvider = (props: object) => {
   const {
@@ -49,4 +57,15 @@ const AppProvider = (props: object) => {
   return <AppContext.Provider value={value} {...props} />;
 };
 
-export default AppProvider;
+const useApp = () => {
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error('useApp should only be used within the AppProvider.');
+  }
+  return context;
+}
+
+export {
+  AppProvider,
+  useApp,
+};

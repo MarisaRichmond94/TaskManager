@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { FC, ReactElement, useCallback, useState } from 'react';
+import { createContext, FC, ReactElement, useCallback, useContext, useState } from 'react';
 
 import * as ChecklistItemsApi from 'api/checklist_items';
 import * as CommentsApi from 'api/comment';
@@ -7,15 +7,45 @@ import * as StatusesApi from 'api/statuses';
 import * as TaskAttachmentsApi from 'api/task_attachments';
 import * as TaskTagsApi from 'api/task_tags';
 import * as TasksApi from 'api/tasks';
-import TaskContext from 'providers/task/context';
-import { useTasks } from 'providers/tasks';
+import { useTasks } from 'providers';
 
-interface ITaskProvider {
+interface TaskContextProps {
+  id: string,
+  attachments?: Attachment[],
+  checklistItems?: ChecklistItem[],
+  comments?: Comment[],
+  createdAt: number,
+  description?: string,
+  dueDate: number,
+  isPinned: boolean,
+  objective: string,
+  status?: Status,
+  tags?: Tag[],
+  updatedAt: number,
+  newCommentId?: string,
+  createAttachment: (createAttachmentDTO: CreateAttachmentDTO) => void,
+  createChecklistItem: (createChecklistItemDTO: CreateChecklistItemDTO) => void,
+  createComment: (createCommentDTO: CreateCommentDTO) => void,
+  createTaskTag: (createTaskTagDTO: CreateTaskTagDTO) => void,
+  deleteAttachment: (attachmentId: string) => void,
+  deleteChecklistItem: (checklistItemIdToDelete: string) => void,
+  deleteComment: (commentIdToDelete: string) => void,
+  deleteTaskTag: (taskTagIdToDelete: string) => void,
+  updateAttachment: (id: string, updateAttachmentDTO: UpdateAttachmentDTO) => void,
+  updateChecklistItem: (id: string, updateChecklistItemDTO: UpdateChecklistItemDTO) => void,
+  updateComment: (id: string, text: string) => void,
+  updateStatus: (statusId: string, statusTypeId: string) => void,
+  updateTask: (updateTaskDTO: UpdateTaskDTO) => void,
+};
+
+const TaskContext = createContext<undefined | TaskContextProps>(undefined);
+
+interface TaskProviderProps {
   children: ReactElement,
   task: Task,
 };
 
-const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
+const TaskProvider: FC<TaskProviderProps> = ({ children, task: providedTask }) => {
   const { getAccessTokenSilently } = useAuth0();
   const { updateTaskInTasks } = useTasks();
 
@@ -106,4 +136,15 @@ const TaskProvider: FC<ITaskProvider> = ({ children, task: providedTask }) => {
   );
 };
 
-export default TaskProvider;
+const useTask = () => {
+  const context = useContext(TaskContext);
+  if (context === undefined) {
+    throw new Error('useTask should only be used within the TaskProvider.');
+  }
+  return context;
+};
+
+export {
+  TaskProvider,
+  useTask,
+};

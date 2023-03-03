@@ -4,7 +4,7 @@ import { RiSortAsc, RiSortDesc } from 'react-icons/ri';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
-import { useSearchTasks } from 'providers/search/tasks';
+import { useSearchTasks } from 'providers';
 
 const SortButton: FC = () => {
   const { isAsc, updateSortOrder } = useSearchTasks();

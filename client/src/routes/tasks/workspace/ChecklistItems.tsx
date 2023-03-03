@@ -9,7 +9,7 @@ import TMCheckbox from 'components/tm_checkbox';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
-import { useTask } from 'providers/task';
+import { useTask } from 'providers';
 import { populateTaskChecklistItems } from 'routes/tasks/workspace/ChecklistItems.effects';
 
 const ChecklistItems: FC = () => {

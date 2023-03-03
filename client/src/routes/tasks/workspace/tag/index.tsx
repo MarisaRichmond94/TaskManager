@@ -6,8 +6,7 @@ import { IoMdAdd } from 'react-icons/io';
 
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
-import { useTask } from 'providers/task';
-import { useTasks } from 'providers/tasks';
+import { useTask, useTasks } from 'providers';
 
 interface ITaskTag {
   hexColor: string,

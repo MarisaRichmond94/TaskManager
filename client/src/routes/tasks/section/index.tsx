@@ -5,8 +5,8 @@ import { BsListTask } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 
 import TMUncontrolledCollapsableSection from 'components/tm_collapsable_section/uncontrolled';
-import { SectionHotkeysProvider } from 'providers/hotkeys/task_section';
-import { useSections } from 'providers/task_sections';
+import { SectionHotkeysProvider } from 'providers';
+import { useSections } from 'providers';
 import TaskCard from 'routes/tasks/task';
 import { SectionType } from 'types/constants/tasks';
 

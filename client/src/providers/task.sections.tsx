@@ -1,15 +1,24 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { createContext, FC, ReactElement, useContext, useEffect, useState } from 'react';
 
-import SectionsContext from 'providers/task_sections/context';
-import { useTasks } from 'providers/tasks';
+import { useTasks } from 'providers';
 import { SectionType } from 'types/constants/tasks';
 import { useCallback } from 'react';
 
-interface ISectionsProvider {
+interface SectionsContextProps {
+  activeSection: keyof SectionType,
+  collapseState: Map<string, boolean>,
+  setActiveSection: (activeSection: keyof SectionType) => void,
+  setCollapseState: (collapseState: Map<string, boolean>) => void,
+  toggleSectionCollapseState: (sectionType: string) => void,
+};
+
+const SectionsContext = createContext<undefined | SectionsContextProps>(undefined);
+
+interface SectionsProviderProps {
   children: ReactElement,
 };
 
-const SectionsProvider: FC<ISectionsProvider> = ({ children }) => {
+const SectionsProvider: FC<SectionsProviderProps> = ({ children }) => {
   const { activeTaskId, isShowingArchivedTasks, taskMap } = useTasks();
   const orderedSections = isShowingArchivedTasks
     ? Object.keys(SectionType)
@@ -95,4 +104,15 @@ const SectionsProvider: FC<ISectionsProvider> = ({ children }) => {
   );
 };
 
-export default SectionsProvider;
+const useSections = () => {
+  const context = useContext(SectionsContext);
+  if (context === undefined) {
+    throw new Error('useSections should only be used within the SectionsProvider.');
+  }
+  return context;
+}
+
+export {
+  SectionsProvider,
+  useSections,
+};

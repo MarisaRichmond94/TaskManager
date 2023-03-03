@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { TMToggleButton } from 'components/tm_toggle';
-import { useApp } from 'providers/app';
+import { useApp } from 'providers';
 import { ROUTES } from 'settings/routes';
 
 const TMSidebar: FC = () => (

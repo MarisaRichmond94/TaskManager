@@ -7,8 +7,7 @@ import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
 import useKeyPress from 'hooks/useKeyPress';
 import useOnClickOutside from 'hooks/useOnOutsideClick';
-import { useTask } from 'providers/task';
-import { useTasks } from 'providers/tasks';
+import { useTask, useTasks } from 'providers';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 
 interface IAttachmentMenu {

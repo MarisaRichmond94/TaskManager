@@ -1,10 +1,24 @@
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { createContext, createRef, RefObject, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import SearchTasksContext from 'providers/search/tasks/context';
-import * as filter from 'providers/search/tasks/utils/filter';
-import { useTasks } from 'providers/tasks';
+import * as filter from 'providers/utils/filter';
+import { useTasks } from 'providers';
 import { FilterAction, FilterType } from 'types/constants/search';
+
+interface SearchTasksContextProps {
+  isAsc: boolean,
+  isFilterMenuOpen: boolean,
+  isShowingSearch: boolean,
+  searchInputRef: RefObject<HTMLInputElement>,
+  searchedTasks?: Task[],
+  clearUrlFilters: () => void,
+  onFilterAction: (actionType: FilterAction, filterType: FilterType, filterValue?: any) => void,
+  setIsFilterMenuOpen: (isFilterMenuOpen: boolean) => void,
+  updateSearchText: (searchText: string) => void,
+  updateSortOrder: (updatedSortOrder: boolean) => void,
+};
+
+const SearchTasksContext = createContext<undefined | SearchTasksContextProps>(undefined);
 
 const SearchTasksProvider = (props: object) => {
   const navigate = useNavigate();
@@ -77,4 +91,15 @@ const SearchTasksProvider = (props: object) => {
   return <SearchTasksContext.Provider value={value} {...props} />;
 };
 
-export default SearchTasksProvider;
+const useSearchTasks = () => {
+  const context = useContext(SearchTasksContext);
+  if (context === undefined) {
+    throw new Error('useSearchTasks should only be used within the SearchTasksProvider.');
+  }
+  return context;
+}
+
+export {
+  SearchTasksProvider,
+  useSearchTasks,
+};
