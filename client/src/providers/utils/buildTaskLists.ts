@@ -1,5 +1,5 @@
 
-import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
 import { SectionType } from 'enums';
 import { getModifiedDate, toClientDatetime } from 'utils';
 

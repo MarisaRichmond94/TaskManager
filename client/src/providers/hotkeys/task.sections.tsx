@@ -3,7 +3,7 @@ import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'reac
 import { useKeyStroke } from 'hooks';
 import { useSections, useTasks } from 'providers';
 import { SectionType } from 'enums';
-import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
+import { SHIFT_KEY_STROKES } from 'settings';
 import { useCallback } from 'react';
 
 const { sections: sectionKeys } = SHIFT_KEY_STROKES;

@@ -7,7 +7,7 @@ import {
 
 import { useTasks } from 'providers';
 import ActionButton from 'routes/tasks/buttons/action';
-import { STATUS_NAMES } from 'settings/task';
+import { STATUS_NAMES } from 'settings';
 
 const { archived, blocked, completed, inProgress, toDo } = STATUS_NAMES;
 

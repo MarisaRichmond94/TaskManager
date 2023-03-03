@@ -2,7 +2,7 @@ import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'reac
 
 import { useKeyStroke } from 'hooks';
 import { useTask, useTasks } from 'providers';
-import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
+import { SHIFT_KEY_STROKES } from 'settings';
 import { toServerDatetime } from 'utils';
 
 const { task: taskKeys } = SHIFT_KEY_STROKES;

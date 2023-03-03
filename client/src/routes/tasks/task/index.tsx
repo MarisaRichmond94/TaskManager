@@ -7,7 +7,7 @@ import TMRichTextViewer from 'components/tm_rich_text_field/viewer';
 import { useTasks } from 'providers';
 import Footer from 'routes/tasks/task/footer';
 import Header from 'routes/tasks/task/header';
-import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
 
 interface ITaskCard {
   task: Task,

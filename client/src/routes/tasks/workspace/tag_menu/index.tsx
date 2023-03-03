@@ -9,7 +9,7 @@ import TMTextArea from 'components/tm_text_area';
 import { useOnClickOutside } from 'hooks';
 import { useTask, useTasks } from 'providers';
 import TaskTag from 'routes/tasks/workspace/tag';
-import { TAG_COLORS } from 'settings/task';
+import { TAG_COLORS } from 'settings';
 
 const populateTaskTags = (tags: Tag[], isInUse: boolean, isEditable: boolean = false) => {
   return tags.map(tag => {

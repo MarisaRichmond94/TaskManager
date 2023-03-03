@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useKeyPress, useKeyStroke } from 'hooks';
 import { useApp } from 'providers';
 import HotkeyHelpMenu from 'routes/components/hotkey_help_menu';
-import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
-import { ROUTES } from 'settings/routes';
+import { SHIFT_KEY_STROKES, ROUTES } from 'settings';
 
 const { app: appKeys } = SHIFT_KEY_STROKES;
 

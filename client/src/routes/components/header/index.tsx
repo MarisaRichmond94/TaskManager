@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from 'assets/logo/light.png';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useApp } from 'providers';
-import { ROUTES } from 'settings/routes';
+import { ROUTES } from 'settings';
 import { timedUserGreeting } from 'utils';
 
 const Header: FC = () => (

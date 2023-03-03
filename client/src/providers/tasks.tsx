@@ -6,7 +6,7 @@ import { StatusesApi, TagsApi, TaskManagerApi, TasksApi } from 'api';
 import { useActionOnInterval } from 'hooks';
 import { useApp } from 'providers';
 import buildTaskLists from 'providers/utils/buildTaskLists';
-import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
+import { TASK_MAP_SYNC_INTERVAL } from 'settings';
 import { FilterType } from 'enums';
 import { toServerDatetime } from 'utils';
 

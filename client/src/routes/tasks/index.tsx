@@ -9,7 +9,7 @@ import Header from 'routes/tasks/header';
 import SearchResults from 'routes/tasks/search_results';
 import Tasks from 'routes/tasks/tasks';
 import Workspace from 'routes/tasks/workspace';
-import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings/layout';
+import { HEADER_HEIGHT, WORKSPACE_PANEL_HEIGHT } from 'settings';
 
 const TaskPage: FC = () => {
   const { userTaskDataLoaded } = useTasks();

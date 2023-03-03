@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import Section from 'routes/tasks/section';
-import { STATUS_NAMES } from 'settings/task';
+import { STATUS_NAMES } from 'settings';
 import { SectionType } from 'enums';
 import { getDayMonthDateString, getModifiedDate } from 'utils';
 

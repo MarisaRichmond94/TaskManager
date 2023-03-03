@@ -8,7 +8,7 @@ import HotKeyTooltip from 'components/tm_hotkey_tooltip';
 import TMTooltip, { TooltipDirection } from 'components/tm_tooltip';
 import { useTask, useTasks } from 'providers';
 import ActionButton from 'routes/tasks/buttons/action';
-import { ARCHIVED_TASK_STATUS_NAMES } from 'settings/task';
+import { ARCHIVED_TASK_STATUS_NAMES } from 'settings';
 
 const Header: FC = () => {
   const { statusTypes, archiveTaskById, deleteTaskById, updateActiveTaskId } = useTasks();

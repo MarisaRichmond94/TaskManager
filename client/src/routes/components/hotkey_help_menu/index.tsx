@@ -7,7 +7,7 @@ import {
   HOTKEY_SECTIONS_BY_PATH,
   SHIFT_KEY_STROKES,
   UNIVERSAL_HOTKEY_SECTIONS,
-} from 'settings/hotkeys';
+} from 'settings';
 
 interface IHotkeyHelpMenu {
   isShowing: boolean,

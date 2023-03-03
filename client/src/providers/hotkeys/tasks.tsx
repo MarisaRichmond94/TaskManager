@@ -2,7 +2,7 @@ import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'reac
 
 import { useKeyStroke } from 'hooks';
 import { useSearchTasks, useTasks } from 'providers';
-import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
+import { SHIFT_KEY_STROKES } from 'settings';
 
 const { filter: filterKeys, search: searchKeys, task: taskKeys, tasks: tasksKeys } = SHIFT_KEY_STROKES;
 
