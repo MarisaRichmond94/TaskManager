@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { ApiRoute } from 'types/constants/api';
-import { buildHeaders, buildUrl, makeRequest } from 'utils/api';
+import { buildHeaders, buildUrl, makeRequest } from 'utils';
 
 const useApi = (route: ApiRoute, options: ApiRequestOptions) => {
   const { getAccessTokenSilently } = useAuth0();

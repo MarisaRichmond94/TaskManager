@@ -8,7 +8,7 @@ import logo from 'assets/logo/light.png';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useApp } from 'providers';
 import { ROUTES } from 'settings/routes';
-import { timedUserGreeting } from 'utils/user';
+import { timedUserGreeting } from 'utils';
 
 const Header: FC = () => (
   <div id='app-header'>

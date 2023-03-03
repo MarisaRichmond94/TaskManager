@@ -8,7 +8,7 @@ import { useApp } from 'providers';
 import buildTaskLists from 'providers/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';
 import { FilterType } from 'types/constants/search';
-import { toServerDatetime } from 'utils/date';
+import { toServerDatetime } from 'utils';
 
 interface TasksContextProps {
   activeTaskId?: string,

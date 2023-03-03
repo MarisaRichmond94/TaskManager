@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, ReactElement } from 'react';
 import { BsCalendarDate, BsChatSquareText, BsCardChecklist, BsTags } from 'react-icons/bs';
 
-import { getDayMonthDateString, toClientDatetime } from 'utils/date';
+import { getDayMonthDateString, toClientDatetime } from 'utils';
 
 
 interface IFooter {

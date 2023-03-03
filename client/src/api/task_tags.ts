@@ -1,4 +1,4 @@
-import { makeApiRequest } from 'utils/api';
+import { makeApiRequest } from 'utils';
 import { ApiMethod, ApiRoute } from 'types/constants/api';
 
 const ROUTE = ApiRoute.taskTags;

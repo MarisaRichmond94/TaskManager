@@ -2,7 +2,7 @@ import { NavigateFunction, Search } from 'react-router';
 
 import { STATUS_NAMES } from 'settings/task';
 import { FilterType } from 'types/constants/search';
-import { compareDates, toServerDatetime } from 'utils/date';
+import { compareDates, toServerDatetime } from 'utils';
 
 
 const clear = (search: Search, navigate: NavigateFunction) => {

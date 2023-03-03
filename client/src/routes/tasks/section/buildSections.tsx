@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import Section from 'routes/tasks/section';
 import { STATUS_NAMES } from 'settings/task';
 import { SectionType } from 'types/constants/tasks';
-import { getDayMonthDateString, getModifiedDate } from 'utils/date';
+import { getDayMonthDateString, getModifiedDate } from 'utils';
 
 const generateSectionTitle = (sectionType: string): string => {
   const today = new Date();

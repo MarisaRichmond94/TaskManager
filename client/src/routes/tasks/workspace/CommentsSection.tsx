@@ -9,7 +9,7 @@ import TMTextArea from 'components/tm_text_area';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { usePrevious } from 'hooks';
 import { useTask } from 'providers';
-import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
+import { getFullDateString, getTimestampString, toClientDatetime } from 'utils';
 
 const CommentSection: FC = () => {
   const { comments, id, createComment } = useTask();

@@ -5,7 +5,7 @@ import { FC } from 'react';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMDatePicker from 'components/tm_date_picker';
 import { useTask } from 'providers';
-import { toServerDatetime, toClientDatetime } from 'utils/date';
+import { toServerDatetime, toClientDatetime } from 'utils';
 
 const TaskDueDate: FC = () => {
   const { dueDate, id, updateTask } = useTask();

@@ -6,7 +6,7 @@ import { MdOutlineAddTask } from 'react-icons/md';
 
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import { useTask } from 'providers';
-import { getFullDateString, toClientDatetime } from 'utils/date';
+import { getFullDateString, toClientDatetime } from 'utils';
 
 const TaskDetails: FC = () => {
   const { createdAt, id, updatedAt } = useTask();
