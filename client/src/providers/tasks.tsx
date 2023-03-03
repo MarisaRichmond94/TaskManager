@@ -2,10 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import * as StatusesApi from 'api/statuses';
-import * as TagsApi from 'api/tags';
-import * as TaskManagerApi from 'api/task_manager';
-import * as TasksApi from 'api/tasks';
+import { StatusesApi, TagsApi, TaskManagerApi, TasksApi } from 'api';
 import { useActionOnInterval } from 'hooks';
 import { useApp } from 'providers';
 import buildTaskLists from 'providers/utils/buildTaskLists';

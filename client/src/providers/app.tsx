@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import * as UsersApi from 'api/users';
+import { UsersApi } from 'api';
 
 interface AppContextProps {
   isExpanded: boolean,

@@ -1,12 +1,14 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { createContext, FC, ReactElement, useCallback, useContext, useState } from 'react';
 
-import * as ChecklistItemsApi from 'api/checklist_items';
-import * as CommentsApi from 'api/comment';
-import * as StatusesApi from 'api/statuses';
-import * as TaskAttachmentsApi from 'api/task_attachments';
-import * as TaskTagsApi from 'api/task_tags';
-import * as TasksApi from 'api/tasks';
+import {
+  ChecklistItemsApi,
+  CommentsApi,
+  StatusesApi,
+  TaskAttachmentsApi,
+  TaskTagsApi,
+  TasksApi,
+} from 'api';
 import { useTasks } from 'providers';
 
 interface TaskContextProps {
