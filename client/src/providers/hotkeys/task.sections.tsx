@@ -1,6 +1,6 @@
 import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
-import useKeyStroke from 'hooks/useKeyStroke';
+import { useKeyStroke } from 'hooks';
 import { useSections, useTasks } from 'providers';
 import { SectionType } from 'types/constants/tasks';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';

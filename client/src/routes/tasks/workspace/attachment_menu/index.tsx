@@ -5,8 +5,7 @@ import { BsArrowReturnLeft } from 'react-icons/bs';
 
 import TMDropdown from 'components/tm_dropdown';
 import TMInput from 'components/tm_input';
-import useKeyPress from 'hooks/useKeyPress';
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useKeyPress, useOnClickOutside } from 'hooks';
 import { useTask, useTasks } from 'providers';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 

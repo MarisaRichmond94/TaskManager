@@ -2,7 +2,7 @@ import './index.scss';
 
 import { cloneElement, FC, ReactElement, useRef, useState } from 'react';
 
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useOnClickOutside } from 'hooks';
 
 interface ITMMenu {
   children: ReactElement,

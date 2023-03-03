@@ -55,4 +55,4 @@ const useKeyStroke = (
   }, [handleKeyPress, node]);
 };
 
-export default useKeyStroke;
+export { useKeyStroke };

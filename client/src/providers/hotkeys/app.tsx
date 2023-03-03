@@ -4,8 +4,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useKeyPress from 'hooks/useKeyPress';
-import useKeyStroke from 'hooks/useKeyStroke';
+import { useKeyPress, useKeyStroke } from 'hooks';
 import { useApp } from 'providers';
 import HotkeyHelpMenu from 'routes/components/hotkey_help_menu';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';

@@ -6,7 +6,7 @@ import { IoColorPaletteOutline } from 'react-icons/io5';
 
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import TMTextArea from 'components/tm_text_area';
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import { useTask, useTasks } from 'providers';
 import TaskTag from 'routes/tasks/workspace/tag';
 import { TAG_COLORS } from 'settings/task';

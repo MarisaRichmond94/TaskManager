@@ -6,7 +6,7 @@ import * as StatusesApi from 'api/statuses';
 import * as TagsApi from 'api/tags';
 import * as TaskManagerApi from 'api/task_manager';
 import * as TasksApi from 'api/tasks';
-import useActionOnInterval from 'hooks/useActionOnInterval';
+import { useActionOnInterval } from 'hooks';
 import { useApp } from 'providers';
 import buildTaskLists from 'providers/utils/buildTaskLists';
 import { TASK_MAP_SYNC_INTERVAL } from 'settings/task';

@@ -37,4 +37,4 @@ const useApi = (route: ApiRoute, options: ApiRequestOptions) => {
   };
 };
 
-export default useApi;
+export { useApi };

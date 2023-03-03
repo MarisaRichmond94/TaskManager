@@ -6,7 +6,7 @@ import { Descendant } from 'slate';
 import TMPlainTextField from 'components/tm_plain_text_field';
 import TMRichTextField from 'components/tm_rich_text_field';
 import TMRichTextViewer from 'components/tm_rich_text_field/viewer';
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useOnClickOutside } from 'hooks';
 
 import { FieldType } from './types';
 

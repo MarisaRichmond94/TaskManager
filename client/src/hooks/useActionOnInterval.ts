@@ -24,4 +24,4 @@ const useActionOnInterval = (callback: () => void, delay: number) => {
   return delayRef;
 };
 
-export default useActionOnInterval;
+export { useActionOnInterval };

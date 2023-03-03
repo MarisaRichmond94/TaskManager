@@ -3,7 +3,7 @@ import './dropdown.scss';
 import { FC, ReactElement, useRef, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useOnClickOutside } from 'hooks';
 
 interface ITMDropdown {
   classNames?: string[],

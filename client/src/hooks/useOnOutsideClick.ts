@@ -37,4 +37,4 @@ const useOnClickOutside = (
   );
 };
 
-export default useOnClickOutside;
+export { useOnClickOutside };

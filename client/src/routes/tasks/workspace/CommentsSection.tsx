@@ -7,9 +7,9 @@ import TMControlledCollapsableSection from 'components/tm_collapsable_section/co
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMTextArea from 'components/tm_text_area';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
+import { usePrevious } from 'hooks';
 import { useTask } from 'providers';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils/date';
-import usePrevious from 'hooks/usePrevious';
 
 const CommentSection: FC = () => {
   const { comments, id, createComment } = useTask();

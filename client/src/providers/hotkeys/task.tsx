@@ -1,6 +1,6 @@
 import { createContext, FC, KeyboardEvent, ReactElement, useContext } from 'react';
 
-import useKeyStroke from 'hooks/useKeyStroke';
+import { useKeyStroke } from 'hooks';
 import { useTask, useTasks } from 'providers';
 import { SHIFT_KEY_STROKES } from 'settings/hotkeys';
 import { toServerDatetime } from 'utils/date';

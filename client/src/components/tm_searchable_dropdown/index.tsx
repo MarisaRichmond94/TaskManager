@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 
 import TMInput from 'components/tm_input';
-import useOnClickOutside from 'hooks/useOnOutsideClick';
+import { useOnClickOutside } from 'hooks';
 
 interface SearchableOption {
   id: string,
