@@ -10,7 +10,7 @@ import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import TMControlledCollapsableSection from 'components/tm_collapsable_section/controlled';
 import TMButton, { ButtonSize, ButtonType } from 'components/tm_button';
 import { useTask } from 'providers';
-import { populateTaskChecklistItems } from 'routes/tasks/workspace/ChecklistItems.effects';
+import { populateTaskChecklistItems } from 'routes/tasks';
 
 const ChecklistItems: FC = () => {
   const [isCreatingNewChecklistItem, setIsCreatingNewChecklistItem] = useState(false);

@@ -6,7 +6,7 @@ import { BsChevronDoubleDown, BsChevronDoubleUp, BsX } from 'react-icons/bs';
 import TMCheckbox from 'components/tm_checkbox';
 import TMEditableField, { FieldType } from 'components/tm_editable_field';
 import { useTask } from 'providers';
-import ActionButton from 'routes/tasks/buttons/action';
+import { ActionButton } from 'routes/tasks';
 import { useDrag, useDrop, XYCoord } from 'react-dnd';
 
 const ItemTypes = { CHECKLIST_ITEM: 'checklistItem' };

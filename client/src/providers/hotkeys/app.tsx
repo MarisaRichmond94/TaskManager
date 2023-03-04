@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useKeyPress, useKeyStroke } from 'hooks';
 import { useApp } from 'providers';
-import HotkeyHelpMenu from 'routes/components/hotkey_help_menu';
+import { HotkeyMenu } from 'routes/components';
 import { SHIFT_KEY_STROKES, ROUTES } from 'settings';
 
 const { app: appKeys } = SHIFT_KEY_STROKES;
@@ -58,7 +58,7 @@ const AppHotkeysProvider: FC<AppHotkeysProviderProps> = ({ children }) => {
 
   return (
     <AppHotkeysContext.Provider value={value}>
-      <HotkeyHelpMenu isShowing={showHotkeyHelpMenu} />
+      <HotkeyMenu isShowing={showHotkeyHelpMenu} />
       {children}
     </AppHotkeysContext.Provider>
   );

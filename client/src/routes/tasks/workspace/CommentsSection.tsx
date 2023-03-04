@@ -11,7 +11,7 @@ import { usePrevious } from 'hooks';
 import { useTask } from 'providers';
 import { getFullDateString, getTimestampString, toClientDatetime } from 'utils';
 
-const CommentSection: FC = () => {
+const CommentsSection: FC = () => {
   const { comments, id, createComment } = useTask();
   const [text, setText] = useState('');
 
@@ -117,4 +117,4 @@ const CommentActionButton: FC<CommentActionButtonProps> = ({ icon, onClick }) =>
   </TMButton>
 );
 
-export default CommentSection;
+export default CommentsSection;

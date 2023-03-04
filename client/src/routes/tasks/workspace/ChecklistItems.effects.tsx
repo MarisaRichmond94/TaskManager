@@ -1,6 +1,6 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react';
 
-import ChecklistItem from 'routes/tasks/workspace/ChecklistItem';
+import { ChecklistItem } from 'routes/tasks';
 
 interface Args {
   isCreatingNewChecklistItem: boolean,

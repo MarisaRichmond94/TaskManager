@@ -3,9 +3,8 @@ import { FC } from 'react';
 
 import TMLoader from 'components/tm_loader';
 import { useApp } from 'providers';
-import TMRouter from 'routes/tm_router';
-import Header from 'routes/components/header';
-import TMSidebar from 'routes/components/sidebar';
+import { Header, Sidebar } from 'routes/components';
+import Router from 'routes/Router';
 
 const App: FC = () => {
   const { isExpanded } = useApp();
@@ -17,8 +16,8 @@ const App: FC = () => {
     <div id='page' className={isExpanded ? '' : 'collapsed'}>
       <Header />
       <div id='content'>
-        <TMSidebar />
-        <TMRouter />
+        <Sidebar />
+        <Router />
       </div>
     </div>
   );
