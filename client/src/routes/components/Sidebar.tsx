@@ -37,12 +37,12 @@ const BottomMenu: FC = () => (
   </div>
 );
 
-interface INavigateToPageButton {
+interface NavigateToPageButtonProps {
   icon: ReactElement,
   routePath: string,
 };
 
-const NavigateToPageButton: FC<INavigateToPageButton> = ({ icon, routePath }) => {
+const NavigateToPageButton: FC<NavigateToPageButtonProps> = ({ icon, routePath }) => {
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
 

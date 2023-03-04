@@ -11,11 +11,11 @@ interface TasksHotkeysContextProps {
 
 const TasksHotkeysContext = createContext<undefined | TasksHotkeysContextProps>(undefined);
 
-interface ITasksHotkeysProvider {
+interface TasksHotkeysProviderProps {
   children: ReactElement,
 };
 
-const TasksHotkeysProvider: FC<ITasksHotkeysProvider> = ({ children }) => {
+const TasksHotkeysProvider: FC<TasksHotkeysProviderProps> = ({ children }) => {
   const { activeTaskId, createTask, updateActiveTaskId } = useTasks();
   const {
     isAsc, isFilterMenuOpen, searchInputRef,

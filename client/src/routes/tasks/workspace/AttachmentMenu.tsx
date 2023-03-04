@@ -104,12 +104,12 @@ const LinkInput: FC<LinkInputProps> = ({ link, setLink }) => (
   />
 );
 
-interface INameInput {
+interface NameInputProps {
   name: string,
   setName: (updatedName: string) => void,
 };
 
-const NameInput: FC<INameInput> = ({ name, setName }) => (
+const NameInput: FC<NameInputProps> = ({ name, setName }) => (
   <TMInput
     classNames={['name-input', 'white']}
     formValue={name}

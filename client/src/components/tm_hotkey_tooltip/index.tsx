@@ -2,12 +2,12 @@ import './index.scss';
 
 import { FC } from 'react';
 
-interface IHotKeyTooltip {
+interface HotKeyTooltipProps {
   action: string,
   keyStroke: string[],
 };
 
-const HotKeyTooltip: FC<IHotKeyTooltip> = ({ action, keyStroke }) => {
+const HotKeyTooltip: FC<HotKeyTooltipProps> = ({ action, keyStroke }) => {
   const hotkey = keyStroke.join(' + ').split(' ');
 
   return (

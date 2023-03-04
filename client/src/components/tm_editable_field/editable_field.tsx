@@ -17,7 +17,7 @@ const DEFAULT_INITIAL_VALUE = {
 
 type EditableFieldValue = string | RichTextParentEntity[] | undefined | null;
 
-interface ITMEditableField {
+interface TMEditableFieldProps {
   onUpdateCallback: (nextValue: EditableFieldValue) => void,
 
   autoFocus?: boolean,
@@ -29,7 +29,7 @@ interface ITMEditableField {
   submitEventKey?: string,
 };
 
-const TMEditableField: FC<ITMEditableField> = ({
+const TMEditableField: FC<TMEditableFieldProps> = ({
   onUpdateCallback,
 
   autoFocus = false,

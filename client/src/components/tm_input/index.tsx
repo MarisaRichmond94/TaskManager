@@ -9,7 +9,7 @@ enum InputTypes {
   search = 'search',
 };
 
-interface ITMInput {
+interface TMInputProps {
   classNames?: string[],
   clearKey?: string,
   formValue?: string,
@@ -25,7 +25,7 @@ interface ITMInput {
 
 type Ref = HTMLInputElement;
 
-const TMInput = forwardRef<Ref, ITMInput>(({
+const TMInput = forwardRef<Ref, TMInputProps>(({
   classNames = [],
   clearKey,
   formValue,

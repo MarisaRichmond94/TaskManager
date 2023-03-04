@@ -2,7 +2,7 @@ import './index.scss';
 
 import { FC } from 'react';
 
-export interface ITMToggleButton {
+export interface TMToggleButtonProps {
   classNames?: string[],
   disabled?: boolean,
   selected?: boolean,
@@ -12,7 +12,7 @@ export interface ITMToggleButton {
   onClick: () => void,
 };
 
-export const TMToggleButton: FC<ITMToggleButton> = ({
+export const TMToggleButton: FC<TMToggleButtonProps> = ({
   classNames = [],
   disabled = false,
   selected = false,

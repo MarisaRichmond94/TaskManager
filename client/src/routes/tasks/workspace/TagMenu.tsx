@@ -47,12 +47,12 @@ const TagMenu: FC<TagMenuProps> = ({ onCloseCallback, reference, style }) => {
   );
 };
 
-interface IHeader {
+interface HeaderProps {
   isAddMenu: boolean,
   setIsAddMenu: (isAddMenu: boolean) => void,
 };
 
-const Header: FC<IHeader> = ({ isAddMenu, setIsAddMenu }) => (
+const Header: FC<HeaderProps> = ({ isAddMenu, setIsAddMenu }) => (
   <div className='tag-menu-header'>
     <TMButton
       type={ButtonType.underline}

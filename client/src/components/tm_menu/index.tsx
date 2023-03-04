@@ -4,7 +4,7 @@ import { cloneElement, FC, ReactElement, useRef, useState } from 'react';
 
 import { useOnClickOutside } from 'hooks';
 
-interface ITMMenu {
+interface TMMenuProps {
   children: ReactElement,
   id: string,
   menuContent: ReactElement[] | ReactElement,
@@ -16,7 +16,7 @@ interface ITMMenu {
   setShowMenu?: (showMenu: boolean) => void,
 };
 
-interface ITMUncontrolledMenu {
+interface TMUncontrolledMenuProps {
   children: ReactElement,
   id: string,
   menuContent: ReactElement[] | ReactElement,
@@ -26,7 +26,7 @@ interface ITMUncontrolledMenu {
   onCloseCallback?: () => void,
 };
 
-const TMMenu: FC<ITMMenu> = ({ setShowMenu, ...props }) => {
+const TMMenu: FC<TMMenuProps> = ({ setShowMenu, ...props }) => {
   const isControlledMenu = !!setShowMenu;
 
   return (
@@ -36,7 +36,7 @@ const TMMenu: FC<ITMMenu> = ({ setShowMenu, ...props }) => {
   );
 };
 
-const TMUncontrolledMenu: FC<ITMUncontrolledMenu> = ({
+const TMUncontrolledMenu: FC<TMUncontrolledMenuProps> = ({
   children,
   id,
   menuContent,
@@ -68,7 +68,7 @@ const TMUncontrolledMenu: FC<ITMUncontrolledMenu> = ({
   );
 };
 
-const TMControlledMenu: FC<ITMMenu> = ({
+const TMControlledMenu: FC<TMMenuProps> = ({
   children,
   id,
   menuContent,

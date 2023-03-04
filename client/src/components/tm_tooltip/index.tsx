@@ -10,7 +10,7 @@ export enum TooltipDirection {
   top = 'top',
 };
 
-interface ITMTooltip {
+interface TMTooltipProps {
   children: ReactElement,
   content: ReactElement | string,
   id: string,
@@ -21,7 +21,7 @@ interface ITMTooltip {
   duration?: number,
 };
 
-const TMTooltip: FC<ITMTooltip> = ({
+const TMTooltip: FC<TMTooltipProps> = ({
   children,
   content,
   id,

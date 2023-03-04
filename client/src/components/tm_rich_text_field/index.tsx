@@ -26,7 +26,7 @@ const DEFAULT_VALUE = [{
   children: [{ text: '' }],
 }];
 
-interface ITMRichTextField {
+interface TMRichTextFieldProps {
   autoFocus: boolean,
   placeholder: string,
   value?: Descendant[],
@@ -37,7 +37,7 @@ interface ITMRichTextField {
   onKeyDownCallback?: (event: KeyboardEvent<any>) => void,
 };
 
-const TMRichTextField: FC<ITMRichTextField> = ({
+const TMRichTextField: FC<TMRichTextFieldProps> = ({
   autoFocus,
   placeholder,
   onChangeCallback,

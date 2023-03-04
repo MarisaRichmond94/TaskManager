@@ -2,7 +2,7 @@ import { FC, MutableRefObject, ReactElement } from 'react';
 
 import TMCollapsableSection from 'components/tm_collapsable_section';
 
-interface ITMUncontrolledCollapsableSection {
+interface TMUncontrolledCollapsableSectionProps {
   children: ReactElement,
   id: string,
   isVisible: boolean,
@@ -17,7 +17,7 @@ interface ITMUncontrolledCollapsableSection {
   onToggleCallback?: () => void,
 };
 
-const TMUncontrolledCollapsableSection: FC<ITMUncontrolledCollapsableSection> = ({ ...props }) => (
+const TMUncontrolledCollapsableSection: FC<TMUncontrolledCollapsableSectionProps> = ({ ...props }) => (
   <TMCollapsableSection { ...props } />
 );
 

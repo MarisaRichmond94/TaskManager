@@ -11,7 +11,7 @@ interface SearchableOption {
   content: ReactElement | string,
 };
 
-interface ITMSearchableDropdown {
+interface TMSearchableDropdownProps {
   classNames?: string[],
   clearKey?: string,
   id?: string,
@@ -22,7 +22,7 @@ interface ITMSearchableDropdown {
   onOptionSelectCallback: (id: string) => void,
 };
 
-const TMSearchableDropdown: FC<ITMSearchableDropdown> = ({
+const TMSearchableDropdown: FC<TMSearchableDropdownProps> = ({
   classNames = [],
   clearKey = 'Escape',
   id = '',

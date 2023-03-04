@@ -2,7 +2,7 @@ import './index.scss';
 
 import { FC, KeyboardEvent, MutableRefObject, useCallback, useEffect } from 'react';
 
-interface ITMPlainTextField {
+interface TMPlainTextFieldProps {
   value: string,
   onChangeCallback: (nextInputValue: string) => void,
 
@@ -14,7 +14,7 @@ interface ITMPlainTextField {
   onKeyPressCallback?: (event: KeyboardEvent<any>) => void,
 };
 
-const TMPlainTextField: FC<ITMPlainTextField> = ({
+const TMPlainTextField: FC<TMPlainTextFieldProps> = ({
   value,
   onChangeCallback,
 

@@ -4,14 +4,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FC } from "react";
 import DatePicker from "react-datepicker";
 
-interface ITMDatePicker {
+interface TMDatePickerProps {
   date: Date,
   onChange: (date: Date) => void,
 
   showTimeSelect?: boolean,
 };
 
-const TMDatePicker: FC<ITMDatePicker> = ({
+const TMDatePicker: FC<TMDatePickerProps> = ({
   date,
   onChange,
   showTimeSelect = false,

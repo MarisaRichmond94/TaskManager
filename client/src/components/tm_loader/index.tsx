@@ -3,7 +3,7 @@ import './index.scss';
 import { FC } from 'react';
 import ReactLoading from 'react-loading';
 
-interface ITMLoader {
+interface TMLoaderProps {
   color?: string,
   height?: string,
   text?: string,
@@ -11,7 +11,7 @@ interface ITMLoader {
   width?: string,
 };
 
-const TMLoader: FC<ITMLoader> = ({ color, height, text, type, width }) => (
+const TMLoader: FC<TMLoaderProps> = ({ color, height, text, type, width }) => (
   <div className='tm-loader-container'>
     <ReactLoading
       className='tm-loader'

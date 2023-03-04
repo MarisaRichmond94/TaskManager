@@ -14,12 +14,12 @@ const DEFAULT_VALUE = [{
   children: [{ text: '' }],
 }];
 
-interface ITMRichTextViewer {
+interface TMRichTextViewerProps {
   classNames?: string[],
   value?: Descendant[],
 };
 
-const TMRichTextViewer: FC<ITMRichTextViewer> = ({
+const TMRichTextViewer: FC<TMRichTextViewerProps> = ({
   classNames = [],
   value = DEFAULT_VALUE,
 }) => {

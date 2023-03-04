@@ -3,7 +3,7 @@ import './index.scss';
 import { FC, MutableRefObject, ReactElement } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
-interface ITMCollapsableSection {
+interface TMCollapsableSectionProps {
   children: ReactElement,
   id: string,
   isVisible: boolean,
@@ -18,7 +18,7 @@ interface ITMCollapsableSection {
   onToggleCallback?: () => void,
 };
 
-const TMCollapsableSection: FC<ITMCollapsableSection> = ({
+const TMCollapsableSection: FC<TMCollapsableSectionProps> = ({
   children,
   id,
   isVisible,

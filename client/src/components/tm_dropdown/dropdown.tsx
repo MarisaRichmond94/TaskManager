@@ -5,7 +5,7 @@ import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 import { useOnClickOutside } from 'hooks';
 
-interface ITMDropdown {
+interface TMDropdownProps {
   classNames?: string[],
   isDisabled?: boolean,
   options?: DropdownOption[],
@@ -15,7 +15,7 @@ interface ITMDropdown {
   onOptionSelect?: (option: DropdownOption) => void,
 };
 
-const TMDropdown: FC<ITMDropdown> = ({
+const TMDropdown: FC<TMDropdownProps> = ({
   classNames = [],
   isDisabled = false,
   options,

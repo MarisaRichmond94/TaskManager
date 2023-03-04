@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FC } from "react";
 import DatePicker from "react-datepicker";
 
-interface ITMRangedDatePicker {
+interface TMRangedDatePickerProps {
   endDate: Date,
   onChange: (dates: Date[]) => void,
   startDate: Date,
@@ -12,7 +12,7 @@ interface ITMRangedDatePicker {
   placeholder?: string,
 };
 
-const TMRangedDatePicker: FC<ITMRangedDatePicker> = ({
+const TMRangedDatePicker: FC<TMRangedDatePickerProps> = ({
   endDate,
   onChange,
   startDate,
